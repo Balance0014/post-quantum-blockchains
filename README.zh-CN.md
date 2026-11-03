@@ -32,9 +32,11 @@
 
 ### 比特币迁移与治理
 
-新的花费规则可用之后，仍受旧规则控制的资金怎么办？[比特币专题](research/bitcoin-migration/r8-bruter/README.zh-CN.md)解释 r8 的框架、网络激活与持有人迁移的区别，以及未迁移资金涉及的权利问题。四张图提供内容对应的[中文](research/bitcoin-migration/r8-bruter/README.zh-CN.md)和[英文](research/bitcoin-migration/r8-bruter/README.md)版本，附高清 PNG、可编辑 SVG 与来源。
+新的花费规则可用之后，仍受旧规则控制的资金怎么办？[比特币专题](research/bitcoin-migration/r8-bruter/README.zh-CN.md)解释 r8 的框架、网络激活与持有人迁移的区别，以及未迁移资金涉及的权利问题。四张图提供原版[中文](research/bitcoin-migration/r8-bruter/README.zh-CN.md)和[英文](research/bitcoin-migration/r8-bruter/README.md)版本，附高清 PNG、可编辑 SVG 与来源。
 
-r8 的时间设定保留情景归属，历史容量算例单独说明。两者都不提供固定的量子破解日期或价格目标。
+r8 的时间设定保留情景归属，历史容量算例单独说明。原图中的日期与价格预测归属 r8，并非本资料库已经证实的结论。
+
+下列图片原样使用此前发布的中文四图。英文原版保留作者的市场情景，两版范围不同。
 
 ![BRUTER 框架：网络升级、持有人迁移与遗留资金。](research/bitcoin-migration/r8-bruter/charts/01-framework.zh-CN.png)
 

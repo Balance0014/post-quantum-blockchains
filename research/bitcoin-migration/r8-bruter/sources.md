@@ -38,13 +38,10 @@ The inputs, outputs and assumptions are in [capacity.json](capacity.json). From 
 python3 scripts/bitcoin_capacity.py --check
 ```
 
-## Rebuilding the diagrams
+## Original image editions
 
-Paired labels and panel content are in [panels.json](panels.json). Each English panel has the same subject and qualifications as its Chinese partner. The diagrams are this repository's own visual explanation; the original r8 images are linked above.
+The images are copied without re-rendering, rewriting or layout changes. [artifacts.json](artifacts.json) records each original filename, its SHA-256, dimensions and published edition. The English four-panel edition includes r8's attributed market and price scenarios. The later Chinese four-panel edition focuses on migration and holder rights. They differ in scope and are not presented as matching translations.
 
-```sh
-python3 scripts/build_bitcoin_charts.py
-python3 scripts/build_bitcoin_charts.py --check
-```
+The original English panels were published in [this reply](https://x.com/balance0014/status/2116493781637980202); the Chinese panels were published in [this post](https://x.com/balance0014/status/2116717628584779872). The repository preserves both original versions. New explanatory prose does not change any image text.
 
-This builds or checks the editable SVG files with the Python standard library. The committed PNGs are renders of those SVGs at 1,800 pixels wide, with Arial and PingFang SC available to the renderer. Use an SVG renderer with those fonts, or suitable Latin and CJK substitutes, to make PNGs locally. [artifacts.json](artifacts.json) records both formats and their SHA-256 hashes; `scripts/validate.py` checks those files and their language pairs. It does not certify the underlying cryptography.
+Run `python3 scripts/validate.py` to check the original-image hashes, recorded dimensions, complete English/Chinese file sets and capacity arithmetic. This checks file consistency, not cryptographic security.

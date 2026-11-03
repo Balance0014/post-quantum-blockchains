@@ -6,7 +6,7 @@ Where post-quantum cryptography is used in crypto, how signing schemes compare, 
 | --- | --- |
 | Project deployments | [17-project comparison](docs/projects.md): what is deployed, where, and with which limits. |
 | Algorithms | [Algorithm map](#algorithm-map) and [signature sizes](docs/signature-sizes.md): roles, parameters and encodings. |
-| Bitcoin migration | [r8's BRUTER framework and the coins left behind](#bitcoin-migration-and-governance): paired English and Chinese diagrams, sources and a reproducible capacity calculation. |
+| Bitcoin migration | [r8's BRUTER framework and the coins left behind](#bitcoin-migration-and-governance): original English and Chinese diagrams, sources and a reproducible capacity calculation. |
 
 The project and algorithm data remain an October 23, 2026 snapshot. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3. Each has its own scope and dates.
 
@@ -40,7 +40,9 @@ A project can sit under more than one scheme, and opt-in features, fallbacks, te
 
 If new spending rules become available, funds left under the old rules still need attention. The [Bitcoin migration note](research/bitcoin-migration/r8-bruter/README.md) explains r8's framework, the difference between activation and holder migration, and the rights of people whose funds haven't moved. Its four diagrams are available in [English](research/bitcoin-migration/r8-bruter/README.md) and [Chinese](research/bitcoin-migration/r8-bruter/README.zh-CN.md), as PNG and editable SVG.
 
-r8's timing assumptions are attributed scenarios. The separate historical capacity calculation measures idealized chain processing. Neither supplies a fixed quantum-attack date or a price target.
+r8's timing assumptions are attributed scenarios. The separate historical capacity calculation measures idealized chain processing. Dates and prices in the original images are r8's scenarios, not findings established by this repository.
+
+The images below reproduce the original English edition, including r8's market scenarios. The later Chinese edition has a different scope.
 
 ![BRUTER framework: network upgrade, holder migration and residual funds.](research/bitcoin-migration/r8-bruter/charts/01-framework.en.png)
 
@@ -48,7 +50,7 @@ r8's timing assumptions are attributed scenarios. The separate historical capaci
 
 ![Unmigrated funds and holder rights.](research/bitcoin-migration/r8-bruter/charts/03-ownership.en.png)
 
-![Questions a Bitcoin migration proposal needs to answer.](research/bitcoin-migration/r8-bruter/charts/04-proposal.en.png)
+![r8's attributed market scenarios and sources in the original English edition.](research/bitcoin-migration/r8-bruter/charts/04-proposal.en.png)
 
 ## Easy to misread
 
@@ -81,6 +83,6 @@ python3 scripts/validate.py   # checks the files agree: IDs, link format, checks
 python3 scripts/export.py     # rebuilds the readable tables and CSVs
 ```
 
-`validate.py` doesn't fetch the links or re-check claims; it catches mismatches between files. The original map PNGs are release artifacts, and the export script doesn't redraw them. Bitcoin diagrams have their own [source and build instructions](research/bitcoin-migration/r8-bruter/sources.md#rebuilding-the-diagrams).
+`validate.py` doesn't fetch the links or re-check claims; it catches mismatches between files. The original map PNGs are release artifacts, and the export script doesn't redraw them. Bitcoin diagrams preserve the [original published editions](research/bitcoin-migration/r8-bruter/sources.md#original-image-editions).
 
 [Follow the research on X](https://x.com/balance0014) · [Changelog](CHANGELOG.md) · [How to cite](CITATION.cff)

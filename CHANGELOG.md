@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 — November 3, 2026
+
+- Replaced the newly adapted Bitcoin diagrams with unchanged copies of the original English and Chinese four-panel editions.
+- Recorded original filenames, hashes, dimensions and publication links; identified the editions' different scope.
+- Removed the adaptation source and diagram builder. The homepage still displays all four panels after the two original maps.
+- Preserved all original project and algorithm data.
+
+
 ## 0.2.0 — November 3, 2026
 
 - Organized the research into project deployments, algorithm comparisons and Bitcoin migration.

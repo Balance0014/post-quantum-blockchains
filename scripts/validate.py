@@ -10,7 +10,6 @@ from urllib.parse import urlsplit
 
 from export import outputs
 from bitcoin_capacity import serialized as capacity_output
-from build_bitcoin_charts import outputs as bitcoin_svgs
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -27,40 +26,25 @@ def unique(rows, name):
 
 def validate_research():
     topic = ROOT / 'research/bitcoin-migration/r8-bruter'
-    panels = json.loads((topic/'panels.json').read_text(encoding='utf-8'))
     manifest = json.loads((topic/'artifacts.json').read_text(encoding='utf-8'))
-    require(panels['languages'] == ['en','zh-CN'], 'Research languages')
-    require(len(panels['panels']) == 4, 'Research needs four panels')
-    unique(panels['panels'], 'research panel')
-    source_ids = set(re.findall(r'^\| ([RP]\d+) \|', (topic/'sources.md').read_text(encoding='utf-8'), re.M))
-    for panel in panels['panels']:
-        require(panel['sources'] and set(panel['sources']) <= source_ids, f"Research sources: {panel['id']}")
-        for field in ['title','subtitle','note','alt']:
-            require(set(panel[field]) == set(panels['languages']) and all(panel[field].values()), f"Language pair: {panel['id']} {field}")
-        for row in panel['rows']:
-            for card in row['cards']:
-                for lang in panels['languages']:
-                    require(card['title'][lang] and card['body'][lang], 'Empty research card')
-                require(len(card['body']['en']) == len(card['body']['zh-CN']), 'Unpaired card paragraphs')
+    require(manifest['images_unchanged'] is True, 'Original image provenance required')
     for key in ['edition_date','source_edition_date']:
-        date.fromisoformat(panels[key])
-        require(manifest[key] == panels[key], 'Research edition dates differ')
-    expected = {f"charts/{p['id']}.{lang}.{ext}" for p in panels['panels'] for lang in panels['languages'] for ext in ['png','svg']}
+        date.fromisoformat(manifest[key])
+    expected = {f"charts/{stem}.{lang}.{ext}" for stem in ['01-framework','02-timing','03-ownership','04-proposal'] for lang in ['en','zh-CN'] for ext in ['png','svg']}
     paths = [a['path'] for a in manifest['files']]
-    require(len(paths) == len(set(paths)) and set(paths) == expected, 'Research artifacts or language pair missing')
+    require(len(paths) == len(set(paths)) and set(paths) == expected, 'Original research images missing')
     for artifact in manifest['files']:
         path = (topic/artifact['path']).resolve()
         require(path.is_relative_to(topic), 'Research path escapes topic')
         raw = path.read_bytes()
         require(hashlib.sha256(raw).hexdigest() == artifact['sha256'], f"Research checksum: {artifact['path']}")
+        require(artifact['sha256'] == artifact['original_sha256'], 'Image differs from recorded original')
+        require(artifact['original_filename'] and artifact['published_edition'].startswith('https://x.com/'), 'Missing image provenance')
         if path.suffix == '.png':
             require(raw[:8] == b'\x89PNG\r\n\x1a\n', 'Invalid PNG')
-            require(struct.unpack('>II',raw[16:24]) == (1800,1780), 'Research PNG dimensions')
-            require(artifact['source_svg_sha256'] == hashlib.sha256(path.with_suffix('.svg').read_bytes()).hexdigest(), f"PNG was rendered from a different SVG: {artifact['path']}")
-    for name, content in bitcoin_svgs().items():
-        require((topic/'charts'/name).read_text(encoding='utf-8') == content, f'Stale research SVG: {name}')
+            require(list(struct.unpack('>II',raw[16:24])) == artifact['dimensions'], 'Original PNG dimensions')
     require((topic/'capacity.json').read_text(encoding='utf-8') == capacity_output(), 'Stale capacity calculation')
-    print('OK: four bilingual research panels, sources, image hashes, SVG builds and capacity arithmetic')
+    print('OK: 16 unchanged original image files, provenance, dimensions and capacity arithmetic')
 
 def validate():
     projects=read('projects.json')['projects']

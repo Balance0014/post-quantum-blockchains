@@ -1,78 +1,152 @@
 {
   "edition_date": "2026-11-03",
   "source_edition_date": "2026-10-31",
+  "images_unchanged": true,
+  "scope": "Original published editions; English includes market scenarios, Chinese focuses on migration and holder rights.",
   "files": [
     {
       "path": "charts/01-framework.en.png",
-      "sha256": "d2e840e33a2ed55818918829aef2de88c1f653eedaa0716ea59115ad98e4c8b5",
-      "source_svg_sha256": "254a518edabbfd1c45d880dd960d2b9a0457cadd617920fd5f37f54212fb2f72"
+      "sha256": "a1ef752b8079576ac51e7314df64bf6b15ab61b34a59815fc814b26942eb1417",
+      "original_filename": "r8_Bitcoin_Mobile_EN_01.png",
+      "original_sha256": "a1ef752b8079576ac51e7314df64bf6b15ab61b34a59815fc814b26942eb1417",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202",
+      "dimensions": [
+        2700,
+        2288
+      ]
     },
     {
       "path": "charts/01-framework.en.svg",
-      "sha256": "254a518edabbfd1c45d880dd960d2b9a0457cadd617920fd5f37f54212fb2f72"
-    },
-    {
-      "path": "charts/01-framework.zh-CN.png",
-      "sha256": "05b75f4a6aa4f9bcbe1177ecbbd72a4ef67cb00d19438cde4abcd1ccc229a12a",
-      "source_svg_sha256": "97e4319d2935cd237754bdeda09698bf0aee3cfa03f5e3226c12cdedb69eb260"
-    },
-    {
-      "path": "charts/01-framework.zh-CN.svg",
-      "sha256": "97e4319d2935cd237754bdeda09698bf0aee3cfa03f5e3226c12cdedb69eb260"
+      "sha256": "840fe2d1465158b39522023ed4c04ec08e412867deae74858bd65f2186ead884",
+      "original_filename": "r8_Bitcoin_Mobile_EN_01.svg",
+      "original_sha256": "840fe2d1465158b39522023ed4c04ec08e412867deae74858bd65f2186ead884",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202"
     },
     {
       "path": "charts/02-timing.en.png",
-      "sha256": "5d49f54ddfbf2f2dbf13c05ff7ede4732a83ab5d12635b2f72787846d2cbe167",
-      "source_svg_sha256": "eb6061f7ac7491c80045133c023faf55ef077a3dea5ae71c3e211a12ef1a2489"
+      "sha256": "7e6c61f0678fafd7618d9cf4e116ffdfd67b4ef82da5ff690b00a0e84ff26e76",
+      "original_filename": "r8_Bitcoin_Mobile_EN_02.png",
+      "original_sha256": "7e6c61f0678fafd7618d9cf4e116ffdfd67b4ef82da5ff690b00a0e84ff26e76",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202",
+      "dimensions": [
+        2700,
+        2970
+      ]
     },
     {
       "path": "charts/02-timing.en.svg",
-      "sha256": "eb6061f7ac7491c80045133c023faf55ef077a3dea5ae71c3e211a12ef1a2489"
-    },
-    {
-      "path": "charts/02-timing.zh-CN.png",
-      "sha256": "b63998f7b5c7e0c80b42bfe983b6cfc738353f1a934a22579d602882cd7e1b9f",
-      "source_svg_sha256": "fc124a24d52df8e61e66b2d1849f137f36c796db1ce4d549d474155187a53e89"
-    },
-    {
-      "path": "charts/02-timing.zh-CN.svg",
-      "sha256": "fc124a24d52df8e61e66b2d1849f137f36c796db1ce4d549d474155187a53e89"
+      "sha256": "29103ca2910ae9cdc5055907dfe58e240b8d01ee3ac9da53d6e6e9cd86459a10",
+      "original_filename": "r8_Bitcoin_Mobile_EN_02.svg",
+      "original_sha256": "29103ca2910ae9cdc5055907dfe58e240b8d01ee3ac9da53d6e6e9cd86459a10",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202"
     },
     {
       "path": "charts/03-ownership.en.png",
-      "sha256": "d57950265fbd63a38765ae3a56851d804bf72745976c4f28c73e0967a7d22a69",
-      "source_svg_sha256": "e5398b715f8a6cafdea62fa5d947e677312c6802ed2ebed9b1abeb62c39115d5"
+      "sha256": "5bf7120ce8ba36ff5ae8c7010785f9b62af6b1c111b041c222bd67343790850a",
+      "original_filename": "r8_Bitcoin_Mobile_EN_03.png",
+      "original_sha256": "5bf7120ce8ba36ff5ae8c7010785f9b62af6b1c111b041c222bd67343790850a",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202",
+      "dimensions": [
+        2700,
+        2085
+      ]
     },
     {
       "path": "charts/03-ownership.en.svg",
-      "sha256": "e5398b715f8a6cafdea62fa5d947e677312c6802ed2ebed9b1abeb62c39115d5"
-    },
-    {
-      "path": "charts/03-ownership.zh-CN.png",
-      "sha256": "c00799e8b76ca971fbd83d0162fa42a730bb005ca85b351c31b898808b8e1751",
-      "source_svg_sha256": "a9e3daf687fc9fa3f7c53cf4168f92582904d642dab18de3d857365b7caba93f"
-    },
-    {
-      "path": "charts/03-ownership.zh-CN.svg",
-      "sha256": "a9e3daf687fc9fa3f7c53cf4168f92582904d642dab18de3d857365b7caba93f"
+      "sha256": "394e0658c85e9b36de14a6ba3ff2bcc175bcc5e7cf48151623f5d8691c451fc5",
+      "original_filename": "r8_Bitcoin_Mobile_EN_03.svg",
+      "original_sha256": "394e0658c85e9b36de14a6ba3ff2bcc175bcc5e7cf48151623f5d8691c451fc5",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202"
     },
     {
       "path": "charts/04-proposal.en.png",
-      "sha256": "d252e2293c3f49cf18b964943a3a3fcce5e8befc6d5a6839a6652bfa1866a941",
-      "source_svg_sha256": "40a299094ca22a9993824719e93e84857c3cad3e808f63a76b47d9ebd13a280f"
+      "sha256": "e607592fa81aa5564181ff426e2cae0a6211f1663efcb90872e5a634913a9b92",
+      "original_filename": "r8_Bitcoin_Mobile_EN_04.png",
+      "original_sha256": "e607592fa81aa5564181ff426e2cae0a6211f1663efcb90872e5a634913a9b92",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202",
+      "dimensions": [
+        2700,
+        1905
+      ]
     },
     {
       "path": "charts/04-proposal.en.svg",
-      "sha256": "40a299094ca22a9993824719e93e84857c3cad3e808f63a76b47d9ebd13a280f"
+      "sha256": "f92e04284b244d93ae09369fd97769266bd5dfd566bf3e206fad3e9dc6add792",
+      "original_filename": "r8_Bitcoin_Mobile_EN_04.svg",
+      "original_sha256": "f92e04284b244d93ae09369fd97769266bd5dfd566bf3e206fad3e9dc6add792",
+      "published_edition": "https://x.com/balance0014/status/2116493781637980202"
+    },
+    {
+      "path": "charts/01-framework.zh-CN.png",
+      "sha256": "51d97eaa64689bf1559498c94a83226c27b7c38a43f3241d5a746f7496fa7b94",
+      "original_filename": "r8_抗量子迁移_中文_01.png",
+      "original_sha256": "51d97eaa64689bf1559498c94a83226c27b7c38a43f3241d5a746f7496fa7b94",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872",
+      "dimensions": [
+        2700,
+        2310
+      ]
+    },
+    {
+      "path": "charts/01-framework.zh-CN.svg",
+      "sha256": "b1fc8265c1d8fd7e6a9c5bb1cdc3ee8188038ef180f1535a551e1b8ed6ed50dd",
+      "original_filename": "r8_抗量子迁移_中文_01.svg",
+      "original_sha256": "b1fc8265c1d8fd7e6a9c5bb1cdc3ee8188038ef180f1535a551e1b8ed6ed50dd",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872"
+    },
+    {
+      "path": "charts/02-timing.zh-CN.png",
+      "sha256": "7d75b11565ae7022b1390900b4d42c9d6f4c051e415c6acb83ae8116678965c1",
+      "original_filename": "r8_抗量子迁移_中文_02.png",
+      "original_sha256": "7d75b11565ae7022b1390900b4d42c9d6f4c051e415c6acb83ae8116678965c1",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872",
+      "dimensions": [
+        2700,
+        2970
+      ]
+    },
+    {
+      "path": "charts/02-timing.zh-CN.svg",
+      "sha256": "4318bf1229d8098a1a26f137f5b810eadc36ca3d57e89d2cf0e20f25c9676d6a",
+      "original_filename": "r8_抗量子迁移_中文_02.svg",
+      "original_sha256": "4318bf1229d8098a1a26f137f5b810eadc36ca3d57e89d2cf0e20f25c9676d6a",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872"
+    },
+    {
+      "path": "charts/03-ownership.zh-CN.png",
+      "sha256": "ff47e836556b7e9914295441d9a1031f2f081822968e57023266fc49f3e7c2ff",
+      "original_filename": "r8_抗量子迁移_中文_03.png",
+      "original_sha256": "ff47e836556b7e9914295441d9a1031f2f081822968e57023266fc49f3e7c2ff",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872",
+      "dimensions": [
+        2700,
+        2130
+      ]
+    },
+    {
+      "path": "charts/03-ownership.zh-CN.svg",
+      "sha256": "0ea6ed508e05c339bf7bdd22995af3bd366592ec56ac54fe60e8b1c69c79b540",
+      "original_filename": "r8_抗量子迁移_中文_03.svg",
+      "original_sha256": "0ea6ed508e05c339bf7bdd22995af3bd366592ec56ac54fe60e8b1c69c79b540",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872"
     },
     {
       "path": "charts/04-proposal.zh-CN.png",
-      "sha256": "bd8cbbaf29ce68f8e8b68abb4cd7b46822cd2e7dd3f637a68d96d225ba3b8687",
-      "source_svg_sha256": "d3110bde2d94a602fe902d677142b9b17a372e8f6a8b9014e427c041264e50f0"
+      "sha256": "1460a71ce67d5340df221092242fb3ea726ab724e60d1ed9e38238b3f08c7493",
+      "original_filename": "r8_抗量子迁移_中文_04.png",
+      "original_sha256": "1460a71ce67d5340df221092242fb3ea726ab724e60d1ed9e38238b3f08c7493",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872",
+      "dimensions": [
+        2700,
+        2205
+      ]
     },
     {
       "path": "charts/04-proposal.zh-CN.svg",
-      "sha256": "d3110bde2d94a602fe902d677142b9b17a372e8f6a8b9014e427c041264e50f0"
+      "sha256": "5b56b4fc2dc2d6de2f4af5a8100d64f90e466fcdd515812992b599ff5351bc06",
+      "original_filename": "r8_抗量子迁移_中文_04.svg",
+      "original_sha256": "5b56b4fc2dc2d6de2f4af5a8100d64f90e466fcdd515812992b599ff5351bc06",
+      "published_edition": "https://x.com/balance0014/status/2116717628584779872"
     }
   ]
 }

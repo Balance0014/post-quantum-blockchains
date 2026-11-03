@@ -28,4 +28,4 @@ Contributions to data, charts and prose follow CC BY 4.0; script contributions f
 
 For a research note, identify the author and source edition, distinguish an adopted rule from a proposal or scenario, and cite each calculation's inputs. Keep the English and Chinese diagrams consistent. An inactivity measure alone cannot establish that a holder has lost their keys. Earlier published editions may differ in scope; link and describe them rather than silently relabeling them as translations.
 
-For Bitcoin diagrams, edit `research/bitcoin-migration/r8-bruter/panels.json`, rebuild the SVGs with `python3 scripts/build_bitcoin_charts.py`, render the PNGs, and update the artifact hashes in the same change. Run `python3 scripts/validate.py` before submitting.
+The Bitcoin diagrams preserve their original published editions. Do not redraw or rewrite them as part of a data or navigation update. Any replacement needs a specific edition, provenance and file hash; describe differences in scope rather than claiming that different editions are matching translations. Run `python3 scripts/validate.py` before submitting.

@@ -65,15 +65,21 @@ A proposal should identify the spending conditions it changes, the funds it prot
 
 Nic Carter's discussion of voluntary migration is useful background for the time holders need beyond a software upgrade. It isn't an endorsement of r8's dates, price forecasts or whole framework. [Source P3](sources.md#other-research).
 
-![Questions for evaluating a migration proposal: protection scope, implementation and service support, holder action, deadlines and remaining spending rights.](charts/04-proposal.en.png)
 
-[Full-resolution PNG](charts/04-proposal.en.png) · [Editable SVG](charts/04-proposal.en.svg)
 
 ## Earlier X editions
 
 The [October 31 English post](https://x.com/balance0014/status/2116489959892775097) includes r8's market, price and timing scenarios. A [four-panel reply](https://x.com/balance0014/status/2116493781637980202) makes that original edition easier to read. The later [Chinese edition](https://x.com/balance0014/status/2116717628584779872) focuses on migration and holder rights. Those X editions differ in scope.
 
-The paired English and Chinese GitHub diagrams on this page cover the same migration and governance questions. The earlier forecasts remain attributed historical material at the links above; this note offers no price target or fixed quantum-attack date.
+The diagrams on this page are unchanged copies of the original English edition. The Chinese page uses the later Chinese edition, which has a different scope. No forecast in the original English images is a finding established by this repository.
+
+### Original English fourth panel: r8's scenarios
+
+The fourth panel retains his market and price forecasts exactly as published. They are attributed scenarios.
+
+![r8's market and price scenarios, explicitly attributed in the original English fourth panel.](charts/04-proposal.en.png)
+
+[Full-resolution PNG](charts/04-proposal.en.png) · [Editable SVG](charts/04-proposal.en.svg)
 
 ## Attribution and reuse
 
