@@ -6,7 +6,7 @@ Where post-quantum cryptography is used in crypto, how signing schemes compare, 
 | --- | --- |
 | Project deployments | [17-project comparison](docs/projects.md): what is deployed, where, and with which limits. |
 | Algorithms | [Algorithm map](#algorithm-map) and [signature sizes](docs/signature-sizes.md): roles, parameters and encodings. |
-| Bitcoin migration | [r8's BRUTER framework and the coins left behind](research/bitcoin-migration/r8-bruter/README.md): paired English and Chinese diagrams, sources and a reproducible capacity calculation. |
+| Bitcoin migration | [r8's BRUTER framework and the coins left behind](#bitcoin-migration-and-governance): paired English and Chinese diagrams, sources and a reproducible capacity calculation. |
 
 The project and algorithm data remain an October 23, 2026 snapshot. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3. Each has its own scope and dates.
 
@@ -22,7 +22,7 @@ It started as two maps I posted on [X](https://x.com/balance0014). This is the d
 
 Maintained by Balance Zhao ([@balance0014](https://x.com/balance0014)).
 
-## Project and algorithm maps
+## Research maps and explainers
 
 ### Deployment timeline
 
@@ -35,6 +35,20 @@ Each card's year is the milestone written on it: a chain launch, a later cryptog
 A project can sit under more than one scheme, and opt-in features, fallbacks, testnets and demos are labeled. STARK proofs and key-encapsulation mechanisms are shown apart because they don't sign transactions. [Full-resolution PNG](charts/algorithm-map-2026-10-23.png).
 
 ![Algorithm map grouping projects by cryptographic use, with a log-log chart of reference public-key and signature sizes.](charts/algorithm-map-2026-10-23.png)
+
+### Bitcoin migration and governance
+
+If new spending rules become available, funds left under the old rules still need attention. The [Bitcoin migration note](research/bitcoin-migration/r8-bruter/README.md) explains r8's framework, the difference between activation and holder migration, and the rights of people whose funds haven't moved. Its four diagrams are available in [English](research/bitcoin-migration/r8-bruter/README.md) and [Chinese](research/bitcoin-migration/r8-bruter/README.zh-CN.md), as PNG and editable SVG.
+
+r8's timing assumptions are attributed scenarios. The separate historical capacity calculation measures idealized chain processing. Neither supplies a fixed quantum-attack date or a price target.
+
+![BRUTER framework: network upgrade, holder migration and residual funds.](research/bitcoin-migration/r8-bruter/charts/01-framework.en.png)
+
+![Timing scenarios and the separate historical capacity model.](research/bitcoin-migration/r8-bruter/charts/02-timing.en.png)
+
+![Unmigrated funds and holder rights.](research/bitcoin-migration/r8-bruter/charts/03-ownership.en.png)
+
+![Questions a Bitcoin migration proposal needs to answer.](research/bitcoin-migration/r8-bruter/charts/04-proposal.en.png)
 
 ## Easy to misread
 
@@ -53,12 +67,6 @@ The size table gives raw public-key and signature bytes for specific parameter s
 When a claim cites the project's own documentation, read it as "the project says so", not as an audit. 19 of the 81 sources are pinned to a specific commit; project web pages can change or disappear.
 
 This is a selected comparison, not a list of every post-quantum project. The projects are the ones on the original maps plus those readers asked about; [methodology](docs/methodology.md) sets the minimum evidence bar.
-
-## Bitcoin migration and governance
-
-If new spending rules become available, funds left under the old rules still need attention. The [Bitcoin migration note](research/bitcoin-migration/r8-bruter/README.md) explains r8's framework, the difference between activation and holder migration, and the rights of people whose funds haven't moved. Its four diagrams are available in [English](research/bitcoin-migration/r8-bruter/README.md) and [Chinese](research/bitcoin-migration/r8-bruter/README.zh-CN.md), as PNG and editable SVG.
-
-r8's timing assumptions are attributed scenarios. The separate historical capacity calculation measures idealized chain processing. Neither supplies a fixed quantum-attack date or a price target.
 
 ## Reuse or contribute
 

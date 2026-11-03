@@ -5,8 +5,8 @@
 | 研究方向 | 阅读入口 |
 | --- | --- |
 | 项目部署 | [17 个项目对比](docs/projects.md)：已经部署什么、用在哪里、有什么限制。 |
-| 算法对比 | [算法地图](#项目与算法地图)与[签名尺寸](docs/signature-sizes.md)：用途、参数和编码。 |
-| 比特币迁移 | [r8 的 BRUTER 框架与未迁移资金](research/bitcoin-migration/r8-bruter/README.zh-CN.md)：中英文图解、来源和可复算的容量算例。 |
+| 算法对比 | [算法地图](#算法地图)与[签名尺寸](docs/signature-sizes.md)：用途、参数和编码。 |
+| 比特币迁移 | [r8 的 BRUTER 框架与未迁移资金](#比特币迁移与治理)：中英文图解、来源和可复算的容量算例。 |
 
 项目与算法数据仍为 2026 年 10 月 23 日快照。比特币专题采用 10 月 31 日核对的来源版本，GitHub 版整理于 11 月 3 日，各自保留日期和范围。
 
@@ -20,11 +20,29 @@
 
 这些数据来自我在 [X](https://x.com/balance0014) 上发的两张图:一张是各项目的抗量子部署时间线,一张是算法分布和签名尺寸对比。数据截至发图当天,10 月 28 日开源前又抽查了几项([抽查记录](docs/release-review.md))。图不会跟着更新,这不是实时数据,也不是安全排名。
 
-## 项目与算法地图
+## 研究图谱与图解
+
+### 部署时间线
 
 ![各项目抗量子部署时间线(截至 2026 年 10 月 23 日)](charts/deployment-timeline-2026-10-23.png)
 
+### 算法地图
+
 ![按密码学用途分组的算法分布,以及公钥和签名尺寸对比](charts/algorithm-map-2026-10-23.png)
+
+### 比特币迁移与治理
+
+新的花费规则可用之后，仍受旧规则控制的资金怎么办？[比特币专题](research/bitcoin-migration/r8-bruter/README.zh-CN.md)解释 r8 的框架、网络激活与持有人迁移的区别，以及未迁移资金涉及的权利问题。四张图提供内容对应的[中文](research/bitcoin-migration/r8-bruter/README.zh-CN.md)和[英文](research/bitcoin-migration/r8-bruter/README.md)版本，附高清 PNG、可编辑 SVG 与来源。
+
+r8 的时间设定保留情景归属，历史容量算例单独说明。两者都不提供固定的量子破解日期或价格目标。
+
+![BRUTER 框架：网络升级、持有人迁移与遗留资金。](research/bitcoin-migration/r8-bruter/charts/01-framework.zh-CN.png)
+
+![时间情景与独立的历史容量算例。](research/bitcoin-migration/r8-bruter/charts/02-timing.zh-CN.png)
+
+![未迁移资金与持有人权益。](research/bitcoin-migration/r8-bruter/charts/03-ownership.zh-CN.png)
+
+![比特币迁移提案需要说明的问题。](research/bitcoin-migration/r8-bruter/charts/04-proposal.zh-CN.png)
 
 ## 容易看错的几处
 
@@ -40,12 +58,6 @@
 - 尺寸表是特定参数下的公钥和签名字节数,不是整笔交易大小、手续费,也不是安全排名;表里的 UOV 数值不是 Raqcoin 交易的实测。
 - 出处是项目自己文档的,请理解为「项目方这么说」,不是审计结论。81 条出处里有 19 条固定到了具体代码版本;项目网页可能改动或下线。
 - 这是挑选过的对比,不是所有抗量子项目的全集:收录的是原来两张图上的项目,加上读者问得多的;最低证据门槛见[方法说明](docs/methodology.md)(英文)。
-
-## 比特币迁移与治理
-
-新的花费规则可用之后，仍受旧规则控制的资金怎么办？[比特币专题](research/bitcoin-migration/r8-bruter/README.zh-CN.md)解释 r8 的框架、网络激活与持有人迁移的区别，以及未迁移资金涉及的权利问题。四张图提供内容对应的[中文](research/bitcoin-migration/r8-bruter/README.zh-CN.md)和[英文](research/bitcoin-migration/r8-bruter/README.md)版本，附高清 PNG、可编辑 SVG 与来源。
-
-r8 的时间设定保留情景归属，历史容量算例单独说明。两者都不提供固定的量子破解日期或价格目标。
 
 ## 怎么用、怎么纠错
 
