@@ -2,7 +2,7 @@
 
 ## Scope
 
-This release opens the data behind the two October 23, 2026 maps. Projects were selected for the original comparison and community follow-up. Inclusion is not an endorsement or a claim of complete market coverage. A submission needs public technical material that identifies the project and supports a specific cryptographic use. A ticker or a marketing claim alone is not enough.
+The project dataset opens the data behind the two October 23, 2026 maps. Projects were selected for the original comparison and community follow-up. Inclusion is not an endorsement or a claim of complete market coverage. A submission needs public technical material that identifies the project and supports a specific cryptographic use. A ticker or a marketing claim alone is not enough.
 
 Projects with testnets, demonstrations or opt-in features can be included when those limits are explicit. A new submission does not need to claim whole-chain post-quantum security.
 
@@ -51,3 +51,7 @@ Engineering statements are tied to algorithm specifications: small signatures ca
 Change the affected claim, attach sources and update that entry's review date. Record substantive corrections in the changelog. Keep historical charts dated; a change to JSON does not silently update an old PNG. A new chart needs its own date and checksum.
 
 No scheduled refresh is running. Maintenance is manual, and a repository update date is not a promise that every network has been checked that day.
+
+## Bitcoin migration notes
+
+Migration notes sit outside the project dataset. They identify the framework author, source edition, adoption status and assumptions behind any calculation. The [BRUTER note](../research/bitcoin-migration/r8-bruter/README.md) separates r8's scenarios from a historical chain-capacity model and discusses the rights of holders whose funds remain under old rules. Source scope and bilingual diagram pairs are recorded with that note. Adding a note does not change the dated project's deployment classification.

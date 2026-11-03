@@ -23,3 +23,9 @@ Include the regenerated CSV files and tables in the same pull request. Keep `las
 Maintainers review evidence before merging. Promotional copy, price targets and unsupported whole-chain security labels will not be added. Source disagreement is useful information; describe it rather than hiding it.
 
 Contributions to data, charts and prose follow CC BY 4.0; script contributions follow MIT, as described in [LICENSE](LICENSE). Submit only work you have the right to contribute. Linked third-party material keeps its own license.
+
+## Migration research notes
+
+For a research note, identify the author and source edition, distinguish an adopted rule from a proposal or scenario, and cite each calculation's inputs. Keep the English and Chinese diagrams consistent. An inactivity measure alone cannot establish that a holder has lost their keys. Earlier published editions may differ in scope; link and describe them rather than silently relabeling them as translations.
+
+For Bitcoin diagrams, edit `research/bitcoin-migration/r8-bruter/panels.json`, rebuild the SVGs with `python3 scripts/build_bitcoin_charts.py`, render the PNGs, and update the artifact hashes in the same change. Run `python3 scripts/validate.py` before submitting.

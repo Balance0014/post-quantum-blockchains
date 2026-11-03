@@ -1,6 +1,14 @@
-# Post-Quantum Crypto Map
+# Post-Quantum Crypto Research
 
-**Which blockchains actually use post-quantum signatures, and where.** 17 projects, every claim linked to a source.
+Where post-quantum cryptography is used in crypto, how signing schemes compare, and what Bitcoin migration would ask of holders.
+
+| Research | Start here |
+| --- | --- |
+| Project deployments | [17-project comparison](docs/projects.md): what is deployed, where, and with which limits. |
+| Algorithms | [Algorithm map](#algorithm-map) and [signature sizes](docs/signature-sizes.md): roles, parameters and encodings. |
+| Bitcoin migration | [r8's BRUTER framework and the coins left behind](research/bitcoin-migration/r8-bruter/README.md): paired English and Chinese diagrams, sources and a reproducible capacity calculation. |
+
+The project and algorithm data remain an October 23, 2026 snapshot. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3. Each has its own scope and dates.
 
 [Browse the projects](docs/projects.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-crypto-map/issues/new/choose) · [中文](README.zh-CN.md)
 
@@ -14,7 +22,7 @@ It started as two maps I posted on [X](https://x.com/balance0014). This is the d
 
 Maintained by Balance Zhao ([@balance0014](https://x.com/balance0014)).
 
-## The two maps
+## Project and algorithm maps
 
 ### Deployment timeline
 
@@ -46,6 +54,12 @@ When a claim cites the project's own documentation, read it as "the project says
 
 This is a selected comparison, not a list of every post-quantum project. The projects are the ones on the original maps plus those readers asked about; [methodology](docs/methodology.md) sets the minimum evidence bar.
 
+## Bitcoin migration and governance
+
+If new spending rules become available, funds left under the old rules still need attention. The [Bitcoin migration note](research/bitcoin-migration/r8-bruter/README.md) explains r8's framework, the difference between activation and holder migration, and the rights of people whose funds haven't moved. Its four diagrams are available in [English](research/bitcoin-migration/r8-bruter/README.md) and [Chinese](research/bitcoin-migration/r8-bruter/README.zh-CN.md), as PNG and editable SVG.
+
+r8's timing assumptions are attributed scenarios. The separate historical capacity calculation measures idealized chain processing. Neither supplies a fixed quantum-attack date or a price target.
+
 ## Reuse or contribute
 
 Download the data, cite the snapshot date and link back here. If you change it, say what changed. Data, charts and prose are **CC BY 4.0**; scripts are **MIT**. Linked third-party material keeps its own terms. See [LICENSE](LICENSE).
@@ -59,6 +73,6 @@ python3 scripts/validate.py   # checks the files agree: IDs, link format, checks
 python3 scripts/export.py     # rebuilds the readable tables and CSVs
 ```
 
-`validate.py` doesn't fetch the links or re-check claims; it catches mismatches between files. The original PNGs are release artifacts, and the export script doesn't redraw them.
+`validate.py` doesn't fetch the links or re-check claims; it catches mismatches between files. The original map PNGs are release artifacts, and the export script doesn't redraw them. Bitcoin diagrams have their own [source and build instructions](research/bitcoin-migration/r8-bruter/sources.md#rebuilding-the-diagrams).
 
 [Follow the research on X](https://x.com/balance0014) · [Changelog](CHANGELOG.md) · [How to cite](CITATION.cff)

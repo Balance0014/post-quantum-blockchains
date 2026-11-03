@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1780" viewBox="0 0 1800 1780">
+<title>一份迁移提案需要说明什么？</title>
+<desc>核对迁移提案的花费规则与保护范围、激活与服务支持、持有人操作及恢复途径、期限与遗留资金权利。</desc>
+<rect width="1800" height="1780" fill="#F6F4EE"/>
+<g font-family="Arial, PingFang SC, Noto Sans CJK SC, sans-serif">
+<text x="80" y="80" font-size="27" font-weight="700" fill="#117F79">比特币 / 抗量子迁移</text>
+<text x="1570" y="80" font-size="27" font-weight="700" fill="#117F79">04 / 04</text>
+<text x="80" y="185" font-size="66" font-weight="700" fill="#172D35">一份迁移提案需要说明什么？</text>
+<text x="80" y="277" font-size="33" font-weight="400" fill="#52656B">沿着规则、服务方和持有人的迁移过程逐项核对。</text>
+<rect x="80.0" y="410" width="800.0" height="335" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="466" font-size="37" font-weight="700" fill="#172D35">保护范围</text>
+<text x="114.0" y="518" font-size="31" font-weight="400" fill="#172D35">改变哪些花费条件？</text>
+<text x="114.0" y="569" font-size="31" font-weight="400" fill="#172D35">新规则保护哪些资金？</text>
+<text x="114.0" y="620" font-size="31" font-weight="400" fill="#172D35">哪些资金仍留在旧规则下？</text>
+<rect x="920.0" y="410" width="800.0" height="335" rx="22" fill="#E7F1EC"/>
+<text x="954.0" y="466" font-size="37" font-weight="700" fill="#172D35">实现与服务支持</text>
+<text x="954.0" y="518" font-size="31" font-weight="400" fill="#172D35">提案是否通过？</text>
+<text x="954.0" y="569" font-size="31" font-weight="400" fill="#172D35">新规则是否激活？</text>
+<text x="954.0" y="620" font-size="31" font-weight="400" fill="#172D35">钱包、交易所和托管方是否支持？</text>
+<rect x="80.0" y="775" width="800.0" height="335" rx="22" fill="#F1EBDD"/>
+<text x="114.0" y="831" font-size="37" font-weight="700" fill="#172D35">持有人操作</text>
+<text x="114.0" y="883" font-size="31" font-weight="400" fill="#172D35">谁需要签名或转移资金？</text>
+<text x="114.0" y="934" font-size="31" font-weight="400" fill="#172D35">如何通知持有人？</text>
+<text x="114.0" y="985" font-size="31" font-weight="400" fill="#172D35">有哪些迁移和恢复途径？</text>
+<rect x="920.0" y="775" width="800.0" height="335" rx="22" fill="#F1EBDD"/>
+<text x="954.0" y="831" font-size="37" font-weight="700" fill="#172D35">未迁移资金</text>
+<text x="954.0" y="883" font-size="31" font-weight="400" fill="#172D35">是否设定期限？</text>
+<text x="954.0" y="934" font-size="31" font-weight="400" fill="#172D35">花费权利是否改变？</text>
+<text x="954.0" y="985" font-size="31" font-weight="400" fill="#172D35">限制旧规则的依据是什么？</text>
+<rect x="80.0" y="1140" width="1640.0" height="220" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="1196" font-size="37" font-weight="700" fill="#172D35">为自愿迁移留出时间</text>
+<text x="114.0" y="1248" font-size="31" font-weight="400" fill="#172D35">Nic Carter 也讨论了软件升级之外的迁移过程，这不代表他认可 r8 的日期或预测。</text>
+<text x="900" y="577.5" transform="rotate(-90 900 577.5)" text-anchor="middle" font-size="24" fill="#117F79" opacity="0.55">@balance0014</text>
+<path d="M80 1455 H1720" stroke="#C5CFC8" stroke-width="2"/>
+<text x="80" y="1505" font-size="30" font-weight="400" fill="#172D35">规则激活、服务支持与资金实际迁移，需要分别核对。</text>
+<text x="80" y="1625" font-size="29" font-weight="700" fill="#117F79">框架：@r8raq · 图解整理：Balance Zhao</text>
+<text x="80" y="1675" font-size="27" font-weight="400" fill="#52656B">来源：R1, R4, P2, P3 · 适用范围见 sources.md</text>
+<text x="80" y="1725" font-size="26" font-weight="400" fill="#52656B">来源核对 2026-10-31 · GitHub 版 2026-11-03</text>
+</g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1780" viewBox="0 0 1800 1780">
+<title>Who still controls the funds?</title>
+<desc>Keeping old rules can leave vulnerable funds exposed under the stated quantum-attack condition. Restricting those rules can lock out owners who still control funds. Inactivity alone does not establish lost keys.</desc>
+<rect width="1800" height="1780" fill="#F6F4EE"/>
+<g font-family="Arial, PingFang SC, Noto Sans CJK SC, sans-serif">
+<text x="80" y="80" font-size="27" font-weight="700" fill="#117F79">BITCOIN / POST-QUANTUM MIGRATION</text>
+<text x="1570" y="80" font-size="27" font-weight="700" fill="#117F79">03 / 04</text>
+<text x="80" y="185" font-size="66" font-weight="700" fill="#172D35">Who still controls the funds?</text>
+<text x="80" y="277" font-size="33" font-weight="400" fill="#52656B">A wallet can stay untouched for years while its owner still has the keys.</text>
+<rect x="80.0" y="410" width="800.0" height="360" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="466" font-size="37" font-weight="700" fill="#172D35">Keep the old spending rules</text>
+<text x="114.0" y="518" font-size="31" font-weight="400" fill="#172D35">Vulnerable funds may remain open to theft</text>
+<text x="114.0" y="559" font-size="31" font-weight="400" fill="#172D35">if attackers acquire the relevant quantum</text>
+<text x="114.0" y="600" font-size="31" font-weight="400" fill="#172D35">capability.</text>
+<text x="114.0" y="651" font-size="31" font-weight="400" fill="#172D35">Exposure depends on the funds and attack</text>
+<text x="114.0" y="692" font-size="31" font-weight="400" fill="#172D35">conditions.</text>
+<rect x="920.0" y="410" width="800.0" height="360" rx="22" fill="#F1EBDD"/>
+<text x="954.0" y="466" font-size="37" font-weight="700" fill="#172D35">Restrict the old spending rules</text>
+<text x="954.0" y="518" font-size="31" font-weight="400" fill="#172D35">Making funds unspendable may also lock</text>
+<text x="954.0" y="559" font-size="31" font-weight="400" fill="#172D35">out owners who still control them.</text>
+<text x="954.0" y="610" font-size="31" font-weight="400" fill="#172D35">r8 opposes forced disposal.</text>
+<rect x="80.0" y="800" width="1640.0" height="300" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="856" font-size="37" font-weight="700" fill="#172D35">Inactivity does not establish lost keys</text>
+<text x="114.0" y="908" font-size="31" font-weight="400" fill="#172D35">Early mining history, present control and migration status describe different things.</text>
+<text x="114.0" y="959" font-size="31" font-weight="400" fill="#172D35">Some holders can sign but have not acted. Others lack the credentials needed for an</text>
+<text x="114.0" y="1000" font-size="31" font-weight="400" fill="#172D35">ordinary migration.</text>
+<rect x="80.0" y="1130" width="1640.0" height="230" rx="22" fill="#F1EBDD"/>
+<text x="114.0" y="1186" font-size="37" font-weight="700" fill="#172D35">Most funds migrated: what remains?</text>
+<text x="114.0" y="1238" font-size="31" font-weight="400" fill="#172D35">The treatment of residual funds still needs a decision.</text>
+<text x="114.0" y="1289" font-size="31" font-weight="400" fill="#172D35">The May 2025 Milton/Shikhelman report separately examines this ownership dilemma.</text>
+<text x="900" y="590.0" transform="rotate(-90 900 590.0)" text-anchor="middle" font-size="24" fill="#117F79" opacity="0.55">@balance0014</text>
+<path d="M80 1455 H1720" stroke="#C5CFC8" stroke-width="2"/>
+<text x="80" y="1505" font-size="30" font-weight="400" fill="#172D35">Source agreement on an ownership dilemma does not imply agreement on every forecast or proposed</text>
+<text x="80" y="1547" font-size="30" font-weight="400" fill="#172D35">mechanism.</text>
+<text x="80" y="1625" font-size="29" font-weight="700" fill="#117F79">Framework: @r8raq · Explanation: Balance Zhao</text>
+<text x="80" y="1675" font-size="27" font-weight="400" fill="#52656B">Sources: R4, P2 · See sources.md for scope</text>
+<text x="80" y="1725" font-size="26" font-weight="400" fill="#52656B">Sources reviewed 2026-10-31 · GitHub edition 2026-11-03</text>
+</g>
+</svg>

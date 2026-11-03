@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-message: "Please cite the snapshot date when reusing this dataset or its charts."
-title: "Post-Quantum Crypto Map"
+message: "Please cite the date of the dataset or research note you use."
+title: "Post-Quantum Crypto Research"
 type: dataset
 authors:
   - family-names: Zhao
     given-names: Balance
-version: 0.1.0
-date-released: 2026-10-28
+version: 0.2.0
+date-released: 2026-11-03
 url: "https://github.com/Balance0014/post-quantum-crypto-map"
 license: CC-BY-4.0
-abstract: "Source-linked data behind a deployment timeline and algorithm map for selected post-quantum crypto projects. Initial snapshot: October 23, 2026."
+abstract: "Source-linked project deployments and signing parameters, plus a Bitcoin migration research note. Project data snapshot: October 23, 2026; BRUTER source edition: October 31, 2026."

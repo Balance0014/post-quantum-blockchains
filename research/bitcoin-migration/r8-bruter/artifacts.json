@@ -1,0 +1,78 @@
+{
+  "edition_date": "2026-11-03",
+  "source_edition_date": "2026-10-31",
+  "files": [
+    {
+      "path": "charts/01-framework.en.png",
+      "sha256": "d2e840e33a2ed55818918829aef2de88c1f653eedaa0716ea59115ad98e4c8b5",
+      "source_svg_sha256": "254a518edabbfd1c45d880dd960d2b9a0457cadd617920fd5f37f54212fb2f72"
+    },
+    {
+      "path": "charts/01-framework.en.svg",
+      "sha256": "254a518edabbfd1c45d880dd960d2b9a0457cadd617920fd5f37f54212fb2f72"
+    },
+    {
+      "path": "charts/01-framework.zh-CN.png",
+      "sha256": "05b75f4a6aa4f9bcbe1177ecbbd72a4ef67cb00d19438cde4abcd1ccc229a12a",
+      "source_svg_sha256": "97e4319d2935cd237754bdeda09698bf0aee3cfa03f5e3226c12cdedb69eb260"
+    },
+    {
+      "path": "charts/01-framework.zh-CN.svg",
+      "sha256": "97e4319d2935cd237754bdeda09698bf0aee3cfa03f5e3226c12cdedb69eb260"
+    },
+    {
+      "path": "charts/02-timing.en.png",
+      "sha256": "5d49f54ddfbf2f2dbf13c05ff7ede4732a83ab5d12635b2f72787846d2cbe167",
+      "source_svg_sha256": "eb6061f7ac7491c80045133c023faf55ef077a3dea5ae71c3e211a12ef1a2489"
+    },
+    {
+      "path": "charts/02-timing.en.svg",
+      "sha256": "eb6061f7ac7491c80045133c023faf55ef077a3dea5ae71c3e211a12ef1a2489"
+    },
+    {
+      "path": "charts/02-timing.zh-CN.png",
+      "sha256": "b63998f7b5c7e0c80b42bfe983b6cfc738353f1a934a22579d602882cd7e1b9f",
+      "source_svg_sha256": "fc124a24d52df8e61e66b2d1849f137f36c796db1ce4d549d474155187a53e89"
+    },
+    {
+      "path": "charts/02-timing.zh-CN.svg",
+      "sha256": "fc124a24d52df8e61e66b2d1849f137f36c796db1ce4d549d474155187a53e89"
+    },
+    {
+      "path": "charts/03-ownership.en.png",
+      "sha256": "d57950265fbd63a38765ae3a56851d804bf72745976c4f28c73e0967a7d22a69",
+      "source_svg_sha256": "e5398b715f8a6cafdea62fa5d947e677312c6802ed2ebed9b1abeb62c39115d5"
+    },
+    {
+      "path": "charts/03-ownership.en.svg",
+      "sha256": "e5398b715f8a6cafdea62fa5d947e677312c6802ed2ebed9b1abeb62c39115d5"
+    },
+    {
+      "path": "charts/03-ownership.zh-CN.png",
+      "sha256": "c00799e8b76ca971fbd83d0162fa42a730bb005ca85b351c31b898808b8e1751",
+      "source_svg_sha256": "a9e3daf687fc9fa3f7c53cf4168f92582904d642dab18de3d857365b7caba93f"
+    },
+    {
+      "path": "charts/03-ownership.zh-CN.svg",
+      "sha256": "a9e3daf687fc9fa3f7c53cf4168f92582904d642dab18de3d857365b7caba93f"
+    },
+    {
+      "path": "charts/04-proposal.en.png",
+      "sha256": "d252e2293c3f49cf18b964943a3a3fcce5e8befc6d5a6839a6652bfa1866a941",
+      "source_svg_sha256": "40a299094ca22a9993824719e93e84857c3cad3e808f63a76b47d9ebd13a280f"
+    },
+    {
+      "path": "charts/04-proposal.en.svg",
+      "sha256": "40a299094ca22a9993824719e93e84857c3cad3e808f63a76b47d9ebd13a280f"
+    },
+    {
+      "path": "charts/04-proposal.zh-CN.png",
+      "sha256": "bd8cbbaf29ce68f8e8b68abb4cd7b46822cd2e7dd3f637a68d96d225ba3b8687",
+      "source_svg_sha256": "d3110bde2d94a602fe902d677142b9b17a372e8f6a8b9014e427c041264e50f0"
+    },
+    {
+      "path": "charts/04-proposal.zh-CN.svg",
+      "sha256": "d3110bde2d94a602fe902d677142b9b17a372e8f6a8b9014e427c041264e50f0"
+    }
+  ]
+}

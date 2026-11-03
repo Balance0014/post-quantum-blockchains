@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "published_on": "2026-10-28",
+  "version": "0.2.0",
+  "published_on": "2026-11-03",
   "snapshot_date": "2026-10-23",
   "maintainer": "Balance Zhao",
   "x_url": "https://x.com/balance0014",
@@ -18,6 +18,19 @@
       "sha256": "e3a0033ed362b1baf80362cb606c4ce5b502e386dcb12baa440877b762237373"
     }
   ],
-  "scope": "Data behind the October 23 published charts; not a live security ranking",
-  "automated_refresh": false
+  "scope": "October 23 project and algorithm snapshot, plus separately dated Bitcoin migration research; not a live security ranking",
+  "automated_refresh": false,
+  "research_notes": [
+    {
+      "id": "bitcoin-migration-r8-bruter",
+      "path": "research/bitcoin-migration/r8-bruter/README.md",
+      "source_edition_date": "2026-10-31",
+      "edition_date": "2026-11-03",
+      "languages": [
+        "en",
+        "zh-CN"
+      ],
+      "artifacts": "research/bitcoin-migration/r8-bruter/artifacts.json"
+    }
+  ]
 }

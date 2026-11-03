@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1780" viewBox="0 0 1800 1780">
+<title>Bitcoin migration: who does what?</title>
+<desc>Six parts of r8&#x27;s framework: proposed block space and signing scheme, network upgrade, holder migration, disputed forced treatment and residual funds. r8 opposes forced disposal.</desc>
+<rect width="1800" height="1780" fill="#F6F4EE"/>
+<g font-family="Arial, PingFang SC, Noto Sans CJK SC, sans-serif">
+<text x="80" y="80" font-size="27" font-weight="700" fill="#117F79">BITCOIN / POST-QUANTUM MIGRATION</text>
+<text x="1570" y="80" font-size="27" font-weight="700" fill="#117F79">01 / 04</text>
+<text x="80" y="185" font-size="66" font-weight="700" fill="#172D35">Bitcoin migration: who does what?</text>
+<text x="80" y="277" font-size="33" font-weight="400" fill="#52656B">r8&#x27;s BRUTER framework separates the proposed conditions, network activation and the</text>
+<text x="80" y="323" font-size="33" font-weight="400" fill="#52656B">funds left behind.</text>
+<rect x="80.0" y="410" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="466" font-size="37" font-weight="700" fill="#172D35">B · More block space</text>
+<text x="114.0" y="518" font-size="31" font-weight="400" fill="#172D35">r8 proposes bigger blocks to make room</text>
+<text x="114.0" y="559" font-size="31" font-weight="400" fill="#172D35">for migration transactions.</text>
+<text x="114.0" y="610" font-size="31" font-weight="400" fill="#172D35">The need depends on the design.</text>
+<rect x="920.0" y="410" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="954.0" y="466" font-size="37" font-weight="700" fill="#172D35">R · Signing scheme</text>
+<text x="954.0" y="518" font-size="31" font-weight="400" fill="#172D35">r8 names Raqcoin as his example.</text>
+<text x="954.0" y="569" font-size="31" font-weight="400" fill="#172D35">This note doesn&#x27;t assess its</text>
+<text x="954.0" y="610" font-size="31" font-weight="400" fill="#172D35">implementation or establish it as</text>
+<text x="954.0" y="651" font-size="31" font-weight="400" fill="#172D35">Bitcoin&#x27;s choice.</text>
+<rect x="80.0" y="745" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="801" font-size="37" font-weight="700" fill="#172D35">U · Network upgrade</text>
+<text x="114.0" y="853" font-size="31" font-weight="400" fill="#172D35">The network accepts and validates new</text>
+<text x="114.0" y="894" font-size="31" font-weight="400" fill="#172D35">spending rules.</text>
+<text x="114.0" y="945" font-size="31" font-weight="400" fill="#172D35">Activation does not move every existing</text>
+<text x="114.0" y="986" font-size="31" font-weight="400" fill="#172D35">output.</text>
+<rect x="920.0" y="745" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="954.0" y="801" font-size="37" font-weight="700" fill="#172D35">T · Holder migration</text>
+<text x="954.0" y="853" font-size="31" font-weight="400" fill="#172D35">In a holder-signed approach, funds move</text>
+<text x="954.0" y="894" font-size="31" font-weight="400" fill="#172D35">into outputs protected by the new rules.</text>
+<text x="954.0" y="945" font-size="31" font-weight="400" fill="#172D35">Other designs can have different</text>
+<text x="954.0" y="986" font-size="31" font-weight="400" fill="#172D35">requirements.</text>
+<rect x="80.0" y="1080" width="800.0" height="305" rx="22" fill="#F1EBDD"/>
+<text x="114.0" y="1136" font-size="37" font-weight="700" fill="#172D35">E · Forced treatment</text>
+<text x="114.0" y="1188" font-size="31" font-weight="400" fill="#172D35">What happens to funds that do not</text>
+<text x="114.0" y="1229" font-size="31" font-weight="400" fill="#172D35">migrate?</text>
+<text x="114.0" y="1280" font-size="31" font-weight="400" fill="#172D35">r8 objects to forced freezing,</text>
+<text x="114.0" y="1321" font-size="31" font-weight="400" fill="#172D35">destruction or abandonment.</text>
+<rect x="920.0" y="1080" width="800.0" height="305" rx="22" fill="#F1EBDD"/>
+<text x="954.0" y="1136" font-size="37" font-weight="700" fill="#172D35">R · Residual funds</text>
+<text x="954.0" y="1188" font-size="31" font-weight="400" fill="#172D35">Some funds can remain under the old rules</text>
+<text x="954.0" y="1229" font-size="31" font-weight="400" fill="#172D35">after most holders migrate.</text>
+<text x="954.0" y="1280" font-size="31" font-weight="400" fill="#172D35">This is the final R added to BRUTE.</text>
+<text x="900" y="562.5" transform="rotate(-90 900 562.5)" text-anchor="middle" font-size="24" fill="#117F79" opacity="0.55">@balance0014</text>
+<path d="M80 1455 H1720" stroke="#C5CFC8" stroke-width="2"/>
+<text x="80" y="1505" font-size="30" font-weight="400" fill="#172D35">These are parts of an argument. No Bitcoin activation or schedule is established by this</text>
+<text x="80" y="1547" font-size="30" font-weight="400" fill="#172D35">diagram.</text>
+<text x="80" y="1625" font-size="29" font-weight="700" fill="#117F79">Framework: @r8raq · Explanation: Balance Zhao</text>
+<text x="80" y="1675" font-size="27" font-weight="400" fill="#52656B">Sources: R1, R2, R4 · See sources.md for scope</text>
+<text x="80" y="1725" font-size="26" font-weight="400" fill="#52656B">Sources reviewed 2026-10-31 · GitHub edition 2026-11-03</text>
+</g>
+</svg>

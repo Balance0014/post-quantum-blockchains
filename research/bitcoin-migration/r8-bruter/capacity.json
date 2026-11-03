@@ -1,0 +1,25 @@
+{
+  "source": "https://arxiv.org/html/2410.16965v1",
+  "snapshot": "June 2024",
+  "inputs": {
+    "utxos": 186676874,
+    "upgrades_per_block": 17020,
+    "minutes_per_block": 10
+  },
+  "whole_blocks": 10969,
+  "days_at_full_capacity": 76.17361111111111,
+  "days_at_quarter_capacity": 304.69444444444446,
+  "assumptions": [
+    "unchanged block rules",
+    "idealized packing",
+    "some overhead omitted"
+  ],
+  "excludes": [
+    "agreement",
+    "development",
+    "deployment",
+    "holder response",
+    "residual-fund policy"
+  ],
+  "scope": "Historical all-UTXO processing model; not total migration time or a value-weighted protection model."
+}

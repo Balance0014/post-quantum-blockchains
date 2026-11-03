@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1780" viewBox="0 0 1800 1780">
+<title>谁仍能控制这些资金？</title>
+<desc>保留旧规则可能留下有条件的盗取风险；限制旧规则可能影响仍能控制资产的人。长期未动不能证明私钥已丢失。</desc>
+<rect width="1800" height="1780" fill="#F6F4EE"/>
+<g font-family="Arial, PingFang SC, Noto Sans CJK SC, sans-serif">
+<text x="80" y="80" font-size="27" font-weight="700" fill="#117F79">比特币 / 抗量子迁移</text>
+<text x="1570" y="80" font-size="27" font-weight="700" fill="#117F79">03 / 04</text>
+<text x="80" y="185" font-size="66" font-weight="700" fill="#172D35">谁仍能控制这些资金？</text>
+<text x="80" y="277" font-size="33" font-weight="400" fill="#52656B">钱包多年没动，主人仍可能持有所需密钥。</text>
+<rect x="80.0" y="410" width="800.0" height="360" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="466" font-size="37" font-weight="700" fill="#172D35">保留旧花费规则</text>
+<text x="114.0" y="518" font-size="31" font-weight="400" fill="#172D35">在攻击者具备相应量子能力时，脆弱资金仍可能被盗。</text>
+<text x="114.0" y="569" font-size="31" font-weight="400" fill="#172D35">风险取决于具体资金和攻击条件。</text>
+<rect x="920.0" y="410" width="800.0" height="360" rx="22" fill="#F1EBDD"/>
+<text x="954.0" y="466" font-size="37" font-weight="700" fill="#172D35">限制旧花费规则</text>
+<text x="954.0" y="518" font-size="31" font-weight="400" fill="#172D35">让资金无法花费，也可能限制仍能控制资产的持有人。</text>
+<text x="954.0" y="569" font-size="31" font-weight="400" fill="#172D35">r8 反对强制处置。</text>
+<rect x="80.0" y="800" width="1640.0" height="300" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="856" font-size="37" font-weight="700" fill="#172D35">长期未动，不能证明私钥已丢失</text>
+<text x="114.0" y="908" font-size="31" font-weight="400" fill="#172D35">早期挖矿身份、现在能否控制、是否已经迁移，是不同问题。</text>
+<text x="114.0" y="959" font-size="31" font-weight="400" fill="#172D35">有人仍能签名但尚未操作，也有人缺少普通迁移所需的凭据。</text>
+<rect x="80.0" y="1130" width="1640.0" height="230" rx="22" fill="#F1EBDD"/>
+<text x="114.0" y="1186" font-size="37" font-weight="700" fill="#172D35">多数资金迁移后，还剩什么问题？</text>
+<text x="114.0" y="1238" font-size="31" font-weight="400" fill="#172D35">遗留资金的处置问题仍然存在。</text>
+<text x="114.0" y="1289" font-size="31" font-weight="400" fill="#172D35">Milton／Shikhelman 的 2025 年 5 月报告也独立讨论了这一权利困境。</text>
+<text x="900" y="590.0" transform="rotate(-90 900 590.0)" text-anchor="middle" font-size="24" fill="#117F79" opacity="0.55">@balance0014</text>
+<path d="M80 1455 H1720" stroke="#C5CFC8" stroke-width="2"/>
+<text x="80" y="1505" font-size="30" font-weight="400" fill="#172D35">对权益困境的讨论有所重合，不代表来源之间认可全部预测或处置办法。</text>
+<text x="80" y="1625" font-size="29" font-weight="700" fill="#117F79">框架：@r8raq · 图解整理：Balance Zhao</text>
+<text x="80" y="1675" font-size="27" font-weight="400" fill="#52656B">来源：R4, P2 · 适用范围见 sources.md</text>
+<text x="80" y="1725" font-size="26" font-weight="400" fill="#52656B">来源核对 2026-10-31 · GitHub 版 2026-11-03</text>
+</g>
+</svg>

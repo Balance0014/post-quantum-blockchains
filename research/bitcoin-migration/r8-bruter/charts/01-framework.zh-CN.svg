@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1780" viewBox="0 0 1800 1780">
+<title>比特币迁移：分别要做什么？</title>
+<desc>r8 框架的六个部分：区块空间和签名方案、网络升级、持有人迁移、强制处置争议与遗留资金。r8 反对强制处置。</desc>
+<rect width="1800" height="1780" fill="#F6F4EE"/>
+<g font-family="Arial, PingFang SC, Noto Sans CJK SC, sans-serif">
+<text x="80" y="80" font-size="27" font-weight="700" fill="#117F79">比特币 / 抗量子迁移</text>
+<text x="1570" y="80" font-size="27" font-weight="700" fill="#117F79">01 / 04</text>
+<text x="80" y="185" font-size="66" font-weight="700" fill="#172D35">比特币迁移：分别要做什么？</text>
+<text x="80" y="277" font-size="33" font-weight="400" fill="#52656B">r8 的 BRUTER 框架：方案条件、网络升级，以及未迁移资金。</text>
+<rect x="80.0" y="410" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="466" font-size="37" font-weight="700" fill="#172D35">B · 增加区块空间</text>
+<text x="114.0" y="518" font-size="31" font-weight="400" fill="#172D35">r8 提出扩大区块，为迁移交易留出空间。</text>
+<text x="114.0" y="569" font-size="31" font-weight="400" fill="#172D35">是否需要扩容，取决于具体方案。</text>
+<rect x="920.0" y="410" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="954.0" y="466" font-size="37" font-weight="700" fill="#172D35">R · 签名方案</text>
+<text x="954.0" y="518" font-size="31" font-weight="400" fill="#172D35">r8 点名 Raqcoin 作为示例。</text>
+<text x="954.0" y="569" font-size="31" font-weight="400" fill="#172D35">本篇不鉴定其实现，也不表示比特币已选择它。</text>
+<rect x="80.0" y="745" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="114.0" y="801" font-size="37" font-weight="700" fill="#172D35">U · 网络升级</text>
+<text x="114.0" y="853" font-size="31" font-weight="400" fill="#172D35">网络开始接受并验证新的花费规则。</text>
+<text x="114.0" y="904" font-size="31" font-weight="400" fill="#172D35">规则激活不会替所有已有输出完成迁移。</text>
+<rect x="920.0" y="745" width="800.0" height="305" rx="22" fill="#E7F1EC"/>
+<text x="954.0" y="801" font-size="37" font-weight="700" fill="#172D35">T · 持有人迁移</text>
+<text x="954.0" y="853" font-size="31" font-weight="400" fill="#172D35">在需要持有人签名的方式下，资金转入受新规则保护</text>
+<text x="954.0" y="894" font-size="31" font-weight="400" fill="#172D35">的输出。</text>
+<text x="954.0" y="945" font-size="31" font-weight="400" fill="#172D35">其他设计可能有不同要求。</text>
+<rect x="80.0" y="1080" width="800.0" height="305" rx="22" fill="#F1EBDD"/>
+<text x="114.0" y="1136" font-size="37" font-weight="700" fill="#172D35">E · 强制处置</text>
+<text x="114.0" y="1188" font-size="31" font-weight="400" fill="#172D35">没有迁移的资金怎么办？</text>
+<text x="114.0" y="1239" font-size="31" font-weight="400" fill="#172D35">r8 反对强制冻结、销毁或遗弃。</text>
+<rect x="920.0" y="1080" width="800.0" height="305" rx="22" fill="#F1EBDD"/>
+<text x="954.0" y="1136" font-size="37" font-weight="700" fill="#172D35">R · 遗留资金</text>
+<text x="954.0" y="1188" font-size="31" font-weight="400" fill="#172D35">多数持有人迁移之后，仍可能有资金留在旧规则下。</text>
+<text x="954.0" y="1239" font-size="31" font-weight="400" fill="#172D35">这是 BRUTE 后来增加的末尾 R。</text>
+<text x="900" y="562.5" transform="rotate(-90 900 562.5)" text-anchor="middle" font-size="24" fill="#117F79" opacity="0.55">@balance0014</text>
+<path d="M80 1455 H1720" stroke="#C5CFC8" stroke-width="2"/>
+<text x="80" y="1505" font-size="30" font-weight="400" fill="#172D35">这些部分组织的是作者的论述，并不表示比特币已采用这套方案或时间表。</text>
+<text x="80" y="1625" font-size="29" font-weight="700" fill="#117F79">框架：@r8raq · 图解整理：Balance Zhao</text>
+<text x="80" y="1675" font-size="27" font-weight="400" fill="#52656B">来源：R1, R2, R4 · 适用范围见 sources.md</text>
+<text x="80" y="1725" font-size="26" font-weight="400" fill="#52656B">来源核对 2026-10-31 · GitHub 版 2026-11-03</text>
+</g>
+</svg>
