@@ -38,13 +38,13 @@ r8 的时间设定保留情景归属，历史容量算例单独说明。原图�
 
 下列图片原样使用此前发布的中文四图。英文原版保留作者的市场情景，两版范围不同。
 
-![BRUTER 框架：网络升级、持有人迁移与遗留资金。](research/bitcoin-migration/r8-bruter/charts/01-framework.zh-CN.png)
+![BRUTER 框架：网络升级、持有人迁移与遗留资金。](research/bitcoin-migration/r8-bruter/charts/r8_抗量子迁移_中文_01.png)
 
-![时间情景与独立的历史容量算例。](research/bitcoin-migration/r8-bruter/charts/02-timing.zh-CN.png)
+![时间情景与独立的历史容量算例。](research/bitcoin-migration/r8-bruter/charts/r8_抗量子迁移_中文_02.png)
 
-![未迁移资金与持有人权益。](research/bitcoin-migration/r8-bruter/charts/03-ownership.zh-CN.png)
+![未迁移资金与持有人权益。](research/bitcoin-migration/r8-bruter/charts/r8_抗量子迁移_中文_03.png)
 
-![比特币迁移提案需要说明的问题。](research/bitcoin-migration/r8-bruter/charts/04-proposal.zh-CN.png)
+![比特币迁移提案需要说明的问题。](research/bitcoin-migration/r8-bruter/charts/r8_抗量子迁移_中文_04.png)
 
 ## 容易看错的几处
 

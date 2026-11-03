@@ -25,9 +25,9 @@ r8's earlier BRUTE diagram has five parts; BRUTER adds a final R for residual fu
 
 [Definitions and original diagrams: sources R1–R4.](sources.md#r8s-framework)
 
-![The six parts of r8's BRUTER framework, separating network activation, holder migration and residual funds.](charts/01-framework.en.png)
+![The six parts of r8's BRUTER framework, separating network activation, holder migration and residual funds.](charts/r8_Bitcoin_Mobile_EN_01.png)
 
-[Full-resolution PNG](charts/01-framework.en.png) · [Editable SVG](charts/01-framework.en.svg)
+[Full-resolution PNG](charts/r8_Bitcoin_Mobile_EN_01.png) · [Editable SVG](charts/r8_Bitcoin_Mobile_EN_01.svg)
 
 ## Activating new rules and migrating existing funds
 
@@ -45,9 +45,9 @@ ceil(186,676,874 / 17,020) = 10,969 blocks
 
 These are historical, idealized processing figures. The model keeps block rules unchanged, packs transactions unrealistically tightly and omits some overhead. It doesn't measure agreement, implementation, deployment or holder response, and it doesn't establish r8's 10–20 years. Counting all UTXOs also differs from protecting a chosen share of BTC value. The paper and calculator prose have small rounding/count discrepancies; [the calculation note](sources.md#capacity-calculation) records them. Run `python3 scripts/bitcoin_capacity.py --check` from the repository root to reproduce our numbers.
 
-![r8's 2030 plus 10–20 year scenario shown separately from a historical capacity calculation of about 76 or 305 days.](charts/02-timing.en.png)
+![r8's 2030 plus 10–20 year scenario shown separately from a historical capacity calculation of about 76 or 305 days.](charts/r8_Bitcoin_Mobile_EN_02.png)
 
-[Full-resolution PNG](charts/02-timing.en.png) · [Editable SVG](charts/02-timing.en.svg)
+[Full-resolution PNG](charts/r8_Bitcoin_Mobile_EN_02.png) · [Editable SVG](charts/r8_Bitcoin_Mobile_EN_02.svg)
 
 ## Who still controls the funds?
 
@@ -55,9 +55,9 @@ A long-dormant wallet may still have an owner who can sign. Other holders may ha
 
 Leaving old spending rules available may leave vulnerable funds open to theft if attackers acquire the required quantum capability. Making those funds unspendable could also lock out owners who still control them. r8 opposes forced freezing, deletion, destruction or abandonment through a fork. Milton and Shikhelman's May 2025 report separately discusses the property-rights dilemma and possible migration mechanisms; it doesn't endorse every part of his framework. See [sources R4 and P2](sources.md).
 
-![Keeping old rules can leave a theft risk under the stated attack condition; changing them can restrict owners who still control funds. Inactivity alone doesn't establish lost keys.](charts/03-ownership.en.png)
+![Keeping old rules can leave a theft risk under the stated attack condition; changing them can restrict owners who still control funds. Inactivity alone doesn't establish lost keys.](charts/r8_Bitcoin_Mobile_EN_03.png)
 
-[Full-resolution PNG](charts/03-ownership.en.png) · [Editable SVG](charts/03-ownership.en.svg)
+[Full-resolution PNG](charts/r8_Bitcoin_Mobile_EN_03.png) · [Editable SVG](charts/r8_Bitcoin_Mobile_EN_03.svg)
 
 ## What to check in a proposal
 
@@ -77,9 +77,9 @@ The diagrams on this page are unchanged copies of the original English edition. 
 
 The fourth panel retains his market and price forecasts exactly as published. They are attributed scenarios.
 
-![r8's market and price scenarios, explicitly attributed in the original English fourth panel.](charts/04-proposal.en.png)
+![r8's market and price scenarios, explicitly attributed in the original English fourth panel.](charts/r8_Bitcoin_Mobile_EN_04.png)
 
-[Full-resolution PNG](charts/04-proposal.en.png) · [Editable SVG](charts/04-proposal.en.svg)
+[Full-resolution PNG](charts/r8_Bitcoin_Mobile_EN_04.png) · [Editable SVG](charts/r8_Bitcoin_Mobile_EN_04.svg)
 
 ## Attribution and reuse
 

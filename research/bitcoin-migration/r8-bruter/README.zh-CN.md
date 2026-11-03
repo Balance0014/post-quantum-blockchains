@@ -25,9 +25,9 @@ r8 较早的 BRUTE 图有五个部分，后来的 BRUTER 增加了末尾的 R，
 
 [定义与原图：来源 R1—R4。](sources.md#r8s-framework)
 
-![r8 的 BRUTER 六个部分，区分网络升级、持有人迁移与遗留资金。](charts/01-framework.zh-CN.png)
+![r8 的 BRUTER 六个部分，区分网络升级、持有人迁移与遗留资金。](charts/r8_抗量子迁移_中文_01.png)
 
-[高清 PNG](charts/01-framework.zh-CN.png) · [可编辑 SVG](charts/01-framework.zh-CN.svg)
+[高清 PNG](charts/r8_抗量子迁移_中文_01.png) · [可编辑 SVG](charts/r8_抗量子迁移_中文_01.svg)
 
 ## 网络升级与资金迁移何时才算完成
 
@@ -45,9 +45,9 @@ ceil(186,676,874 ÷ 17,020) = 10,969 块
 
 这是历史快照下的理想化链上处理算例。模型保持区块规则不变，采用现实中无法完全达到的极限打包，并忽略部分开销；它没有计算共识、实现、部署和持有人响应，也不能证明 r8 所说的 10—20 年。按全部 UTXO 条数计算，与保护某一比例的 BTC 金额也不是同一口径。论文与计算器正文存在少量取整或块数差异，见[计算说明](sources.md#capacity-calculation)。在仓库根目录运行 `python3 scripts/bitcoin_capacity.py --check` 可以复算本篇数字。
 
-![r8 的 2030 年加 10—20 年情景，与历史容量模型中的约 76／305 天分开呈现。](charts/02-timing.zh-CN.png)
+![r8 的 2030 年加 10—20 年情景，与历史容量模型中的约 76／305 天分开呈现。](charts/r8_抗量子迁移_中文_02.png)
 
-[高清 PNG](charts/02-timing.zh-CN.png) · [可编辑 SVG](charts/02-timing.zh-CN.svg)
+[高清 PNG](charts/r8_抗量子迁移_中文_02.png) · [可编辑 SVG](charts/r8_抗量子迁移_中文_02.svg)
 
 ## 谁仍能控制这些资金
 
@@ -55,9 +55,9 @@ ceil(186,676,874 ÷ 17,020) = 10,969 块
 
 保留旧花费规则，在攻击者具备相应量子能力时，可能让脆弱资金暴露于盗取风险；让这些资金无法花费，也可能影响仍能控制资产的持有人。r8 反对强制冻结、删除、销毁或通过分叉遗弃。Milton 与 Shikhelman 的 2025 年 5 月报告独立讨论了财产权困境和迁移机制，并不为 r8 整套框架背书。见[来源 R4、P2](sources.md)。
 
-![保留旧规则可能留下有条件的盗取风险；改变规则可能限制仍能控制资金的人。长期未动不能证明私钥已丢失。](charts/03-ownership.zh-CN.png)
+![保留旧规则可能留下有条件的盗取风险；改变规则可能限制仍能控制资金的人。长期未动不能证明私钥已丢失。](charts/r8_抗量子迁移_中文_03.png)
 
-[高清 PNG](charts/03-ownership.zh-CN.png) · [可编辑 SVG](charts/03-ownership.zh-CN.svg)
+[高清 PNG](charts/r8_抗量子迁移_中文_03.png) · [可编辑 SVG](charts/r8_抗量子迁移_中文_03.svg)
 
 ## 看一份迁移提案，要查什么
 
@@ -65,9 +65,9 @@ ceil(186,676,874 ÷ 17,020) = 10,969 块
 
 Nic Carter 关于自愿迁移的讨论，补充了软件升级之外持有人需要时间这一点；这不表示他认可 r8 的日期、价格预测或整套框架。见[来源 P3](sources.md#other-research)。
 
-![核对迁移提案的保护范围、实现与服务支持、持有人操作、期限和遗留资金权利。](charts/04-proposal.zh-CN.png)
+![核对迁移提案的保护范围、实现与服务支持、持有人操作、期限和遗留资金权利。](charts/r8_抗量子迁移_中文_04.png)
 
-[高清 PNG](charts/04-proposal.zh-CN.png) · [可编辑 SVG](charts/04-proposal.zh-CN.svg)
+[高清 PNG](charts/r8_抗量子迁移_中文_04.png) · [可编辑 SVG](charts/r8_抗量子迁移_中文_04.svg)
 
 ## 之前在 X 上发布的版本
 

@@ -30,7 +30,7 @@ def validate_research():
     require(manifest['images_unchanged'] is True, 'Original image provenance required')
     for key in ['edition_date','source_edition_date']:
         date.fromisoformat(manifest[key])
-    expected = {f"charts/{stem}.{lang}.{ext}" for stem in ['01-framework','02-timing','03-ownership','04-proposal'] for lang in ['en','zh-CN'] for ext in ['png','svg']}
+    expected = {f"charts/{prefix}{i:02}.{ext}" for prefix in ['r8_Bitcoin_Mobile_EN_','r8_抗量子迁移_中文_'] for i in range(1,5) for ext in ['png','svg']}
     paths = [a['path'] for a in manifest['files']]
     require(len(paths) == len(set(paths)) and set(paths) == expected, 'Original research images missing')
     for artifact in manifest['files']:

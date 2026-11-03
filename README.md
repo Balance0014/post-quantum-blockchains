@@ -44,13 +44,13 @@ r8's timing assumptions are attributed scenarios. The separate historical capaci
 
 The images below reproduce the original English edition, including r8's market scenarios. The later Chinese edition has a different scope.
 
-![BRUTER framework: network upgrade, holder migration and residual funds.](research/bitcoin-migration/r8-bruter/charts/01-framework.en.png)
+![BRUTER framework: network upgrade, holder migration and residual funds.](research/bitcoin-migration/r8-bruter/charts/r8_Bitcoin_Mobile_EN_01.png)
 
-![Timing scenarios and the separate historical capacity model.](research/bitcoin-migration/r8-bruter/charts/02-timing.en.png)
+![Timing scenarios and the separate historical capacity model.](research/bitcoin-migration/r8-bruter/charts/r8_Bitcoin_Mobile_EN_02.png)
 
-![Unmigrated funds and holder rights.](research/bitcoin-migration/r8-bruter/charts/03-ownership.en.png)
+![Unmigrated funds and holder rights.](research/bitcoin-migration/r8-bruter/charts/r8_Bitcoin_Mobile_EN_03.png)
 
-![r8's attributed market scenarios and sources in the original English edition.](research/bitcoin-migration/r8-bruter/charts/04-proposal.en.png)
+![r8's attributed market scenarios and sources in the original English edition.](research/bitcoin-migration/r8-bruter/charts/r8_Bitcoin_Mobile_EN_04.png)
 
 ## Easy to misread
 
