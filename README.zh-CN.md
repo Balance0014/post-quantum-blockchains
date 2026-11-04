@@ -65,4 +65,4 @@ r8 的时间设定保留情景归属，历史容量算例单独说明。原图�
 
 可以下载[项目表 CSV](data/projects.csv) 或 [JSON](data/projects.json) 自己分析。引用时请注明数据日期并链回本仓库,改过的请说明改了什么。数据、图片和文字用 CC BY 4.0,脚本用 MIT,详见 [LICENSE](LICENSE)。
 
-发现错误或想补项目,请[提 issue](https://github.com/Balance0014/post-quantum-crypto-map/issues/new/choose),写清是哪一条、原始出处、对应的网络和版本,我核实后更新。
+发现错误或想补项目,请[提 issue](https://github.com/Balance0014/post-quantum-blockchains/issues/new/choose),写清是哪一条、原始出处、对应的网络和版本,我核实后更新。

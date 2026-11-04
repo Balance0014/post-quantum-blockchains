@@ -7,6 +7,6 @@ authors:
     given-names: Balance
 version: 0.2.1
 date-released: 2026-11-03
-url: "https://github.com/Balance0014/post-quantum-crypto-map"
+url: "https://github.com/Balance0014/post-quantum-blockchains"
 license: CC-BY-4.0
 abstract: "Source-linked project deployments and signing parameters, plus a Bitcoin migration research note. Project data snapshot: October 23, 2026; BRUTER source edition: October 31, 2026."

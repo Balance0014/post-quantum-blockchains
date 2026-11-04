@@ -1,4 +1,4 @@
-# Post-Quantum Crypto Research
+# Post-Quantum Blockchains
 
 Where post-quantum cryptography is used in crypto, how signing schemes compare, and what Bitcoin migration would ask of holders.
 
@@ -10,7 +10,7 @@ Where post-quantum cryptography is used in crypto, how signing schemes compare, 
 
 The project and algorithm data remain an October 23, 2026 snapshot. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3. Each has its own scope and dates.
 
-[Browse the projects](docs/projects.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-crypto-map/issues/new/choose) · [中文](README.zh-CN.md)
+[Browse the projects](docs/projects.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new/choose) · [中文](README.zh-CN.md)
 
 As of October 23, 2026:
 
@@ -74,7 +74,7 @@ This is a selected comparison, not a list of every post-quantum project. The pro
 
 Download the data, cite the snapshot date and link back here. If you change it, say what changed. Data, charts and prose are **CC BY 4.0**; scripts are **MIT**. Linked third-party material keeps its own terms. See [LICENSE](LICENSE).
 
-To correct something, send the specific claim, a primary source and the network or version it applies to. Project teams are welcome; changes go through the same evidence check. [Open a correction or project request](https://github.com/Balance0014/post-quantum-crypto-map/issues/new/choose).
+To correct something, send the specific claim, a primary source and the network or version it applies to. Project teams are welcome; changes go through the same evidence check. [Open a correction or project request](https://github.com/Balance0014/post-quantum-blockchains/issues/new/choose).
 
 The scripts need Python 3.10+ and nothing else (CI runs 3.12):
 
