@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "Please cite the date of the dataset or research note you use."
-title: "Post-Quantum Crypto Research"
+title: "Post-Quantum Blockchains"
 type: dataset
 authors:
   - family-names: Zhao
     given-names: Balance
-version: 0.2.1
-date-released: 2026-11-03
+version: 0.2.2
+date-released: 2026-11-04
 url: "https://github.com/Balance0014/post-quantum-blockchains"
 license: CC-BY-4.0
 abstract: "Source-linked project deployments and signing parameters, plus a Bitcoin migration research note. Project data snapshot: October 23, 2026; BRUTER source edition: October 31, 2026."

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 — November 4, 2026
+
+- Renamed the title to Post-Quantum Blockchains, matching the repository name. Old links to the repository redirect.
+- No data or research changes.
+
+
 ## 0.2.1 — November 3, 2026
 
 - Replaced the newly adapted Bitcoin diagrams with unchanged copies of the original English and Chinese four-panel editions.

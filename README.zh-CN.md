@@ -1,4 +1,4 @@
-# 抗量子加密研究（Post-Quantum Crypto Research）
+# 抗量子区块链研究（Post-Quantum Blockchains）
 
 研究抗量子方案在加密网络中的部署、算法差异，以及比特币迁移时持有人需要面对的问题。
 
