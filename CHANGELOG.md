@@ -8,7 +8,7 @@
 - A weekly patrol (`scripts/patrol.py`) reads each chain's newest block from its own RPC or explorer, its latest release and its commits in 90 days, checks every source link, and proposes the results in a pull request that a person reviews. It never changes a stage.
 - New CI checks: the chain schema and evidence rules (stage 3 and up needs primary evidence; a feature described only in a project's own documents is capped at stage 2), matching numbers in English and Chinese, banned words, every source link opens (`scripts/check_links.py`), every link inside the website resolves, and the share image shows current figures.
 - Corrections in `chains.json`, which differ from `projects.json` (not edited in this release): QANplatform is rated 2, because only its documentation describes post-quantum signing on the testnet and the testnet's newest block is from September 14, 2026; Quantus accepts both ML-DSA-87 and ML-DSA-65; QuantumCoin is also labelled "NIST family" for its pre-standard hybrid, which is still accepted.
-- Two dead source links now point to archived copies of the same pages (Abelian milestones, Neptune Cash genesis block).
+- Five source links that no longer open, or close the connection for automated clients, now point to archived copies of the same pages: Abelian milestones, the Neptune Cash genesis block and three Cellframe pages.
 
 ## 0.4.0 — November 27, 2026
 
