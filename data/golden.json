@@ -1,0 +1,97 @@
+{
+ "about": "Ten facts checked by hand against primary sources. scripts/golden.py fails CI if data/chains.json stops stating one of them, and (with --online) if the pinned source no longer shows it. When a fact really changes, update it here in the same pull request, with a new pinned source.",
+ "facts": [
+  {
+   "id": "algorand-v42-falcon",
+   "fact": "Algorand consensus version 42 (go-algorand v5.0.0) turns on native Falcon-1024 accounts; mainnet moved to it on 2026-08-22.",
+   "data": [
+    {"chain": "algorand", "field": "stage", "equals": 4},
+    {"chain": "algorand", "field": "milestones", "contains": ["consensus version 42", "Falcon-1024"]},
+    {"chain": "algorand", "field": "pq_mainnet_since.date", "equals": "2026-08-22"}
+   ],
+   "source": {"repo": "algorand/go-algorand", "ref": "da5946a14568c0cbaa2c9daf4241882de12f3c16", "path": "config/consensus.go", "lines": [1542, 1542], "contains": ["v42.EnablePQSchemeFalcon1024 = true"]}
+  },
+  {
+   "id": "near-protocol-85-mldsa",
+   "fact": "NEAR stabilizes ML-DSA-65 transaction signatures (PostQuantumSignatures) at protocol version 85.",
+   "data": [
+    {"chain": "near", "field": "stage", "equals": 4},
+    {"chain": "near", "field": "milestones", "contains": ["ML-DSA-65", "protocol version 85"]}
+   ],
+   "source": {"repo": "near/nearcore", "ref": "499283a5e3a6f8ea52bc068c28e3a7bebb1e38c0", "path": "core/primitives-core/src/version.rs", "lines": [567, 575], "contains": ["PostQuantumSignatures", "=> 85"]}
+  },
+  {
+   "id": "stellar-protocol-30",
+   "fact": "Stellar CAP-0087 (ML-DSA verification host functions) is Implemented for Protocol 30. Contracts can verify ML-DSA; accounts still sign with Ed25519, so the stage stays 2.",
+   "data": [
+    {"chain": "stellar", "field": "stage", "equals": 2},
+    {"chain": "stellar", "field": "milestones", "contains": ["Protocol 30", "ML-DSA"]}
+   ],
+   "source": {"repo": "stellar/stellar-protocol", "ref": "cd1b371e51182cb56ccdcf1ba7e5772aef496100", "path": "core/cap-0087.md", "lines": [10, 13], "contains": ["Status: Implemented", "Protocol version: 30"]}
+  },
+  {
+   "id": "sui-testnet-mldsa65",
+   "fact": "Sui turns on mldsa65_auth (ML-DSA-65 account signatures) for every chain except mainnet at protocol version 143; mainnet stays off.",
+   "data": [
+    {"chain": "sui", "field": "stage", "equals": 3},
+    {"chain": "sui", "field": "milestones", "contains": ["mldsa65_auth", "protocol 143"]}
+   ],
+   "source": {"repo": "MystenLabs/sui", "ref": "cca5091475331f668eb6410cd79eeeb24d49ce9a", "path": "crates/sui-protocol-config/src/lib.rs", "lines": [5040, 5051], "contains": ["143 =>", "if chain != Chain::Mainnet", "mldsa65_auth = true"]}
+  },
+  {
+   "id": "tron-nile-pq",
+   "fact": "The TRON Nile testnet build GreatVoyage-Nile-v4.8.2-PQ1 adds Falcon-512 (FN-DSA-512) and ML-DSA-44, each switched on by its own committee proposal; on Nile, Falcon-512 is on.",
+   "data": [
+    {"chain": "tron", "field": "stage", "equals": 3},
+    {"chain": "tron", "field": "milestones", "contains": ["getAllowFnDsa512 = 1"]}
+   ],
+   "source": {"release": "tron-nile-testnet/nile-testnet", "tag": "GreatVoyage-Nile-v4.8.2-PQ1-build1", "contains": ["FN-DSA-512", "committee proposal"]}
+  },
+  {
+   "id": "qrl-genesis",
+   "fact": "QRL mainnet genesis block: 2018-06-26 (timestamp 1530004179), XMSS from the start.",
+   "data": [
+    {"chain": "qrl", "field": "stage", "equals": 5},
+    {"chain": "qrl", "field": "pq_mainnet_since.date", "equals": "2018-06-26"},
+    {"chain": "qrl", "field": "pq_mainnet_since.basis", "equals": "genesis"}
+   ],
+   "source": {"repo": "theQRL/QRL", "ref": "0c2b205d3798a72e84ec4ddd9f8d8fa9ea17df9b", "path": "src/qrl/core/genesis.yml", "lines": [1, 8], "contains": ["1530004179"]}
+  },
+  {
+   "id": "tidecoin-genesis",
+   "fact": "Tidecoin signs with Falcon-512 from its genesis block of 2020-12-27.",
+   "data": [
+    {"chain": "tidecoin", "field": "stage", "equals": 5},
+    {"chain": "tidecoin", "field": "pq_mainnet_since.date", "equals": "2020-12-27"},
+    {"chain": "tidecoin", "field": "milestones", "contains": ["Falcon-512", "genesis"]}
+   ],
+   "source": {"repo": "tidecoin/tidecoin", "ref": "78aca4a6b656f43a1efe4b43cf884214219b6c09", "path": "README.md", "lines": [3, 3], "contains": ["Falcon-512 signatures from genesis"]}
+  },
+  {
+   "id": "raqcoin-config-274",
+   "fact": "Raqcoin's default key configuration is 274 (Rainbow SL1, RAINBOW16_72_8_48), a different parameter set from the publicly broken legacy Rainbow(16,32,32,32).",
+   "data": [
+    {"chain": "raqcoin", "field": "note.en", "contains": ["274", "RAINBOW16_72_8_48", "Rainbow(16,32,32,32)"]}
+   ],
+   "source": {"repo": "RAQ-coin/Raqcoin", "ref": "160790d5bedd1332722159ce0e0035d6c81f88aa", "path": "doc/MakeNewKey_Parameters_Guide.md", "lines": [38, 38], "contains": ["config_value = 274"]}
+  },
+  {
+   "id": "bitcoin-bip360-draft",
+   "fact": "BIP-360 (Pay-to-Merkle-Root) is in the BIPs repository at Draft status; it adds no post-quantum signature, so Bitcoin is at stage 2.",
+   "data": [
+    {"chain": "bitcoin", "field": "stage", "equals": 2},
+    {"chain": "bitcoin", "field": "milestones", "contains": ["BIP-360", "Pay-to-Merkle-Root"]}
+   ],
+   "source": {"repo": "bitcoin/bips", "ref": "9f3d3bc6a60db16efbdc71ac8f7ea30217fc0c39", "path": "bip-0360.mediawiki", "lines": [4, 8], "contains": ["Pay-to-Merkle-Root", "Status: Draft"]}
+  },
+  {
+   "id": "ethereum-eip8141-draft",
+   "fact": "EIP-8141 (Frame Transaction) is a Draft; it is scheduled for inclusion in the Hegotá upgrade with no activation date, so Ethereum is at stage 2.",
+   "data": [
+    {"chain": "ethereum", "field": "stage", "equals": 2},
+    {"chain": "ethereum", "field": "milestones", "contains": ["EIP-8141", "Scheduled for Inclusion"]}
+   ],
+   "source": {"repo": "ethereum/EIPs", "ref": "fbc43ec3a187f0b3dd448e995a041227f4baa7b1", "path": "EIPS/eip-8141.md", "lines": [3, 7], "contains": ["Frame Transaction", "status: Draft"]}
+  }
+ ]
+}

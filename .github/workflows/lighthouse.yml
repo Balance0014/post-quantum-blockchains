@@ -1,0 +1,58 @@
+name: Lighthouse
+# Audits the built website on a simulated phone (Lighthouse's default mobile settings). Performance, accessibility,
+# best practices and SEO must each score 95 or more on the English and Chinese home pages, a chain page and the
+# method page. The HTML reports are kept as the "lighthouse-reports" artifact of each run.
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build the website under its published path
+        run: python3 -B scripts/build_site.py --out "$RUNNER_TEMP/serve/post-quantum-blockchains"
+      - name: Audit four pages
+        run: |
+          python3 -m http.server 8080 --directory "$RUNNER_TEMP/serve" >/dev/null 2>&1 &
+          sleep 2
+          mkdir -p lighthouse
+          for page in home:/ zh-home:/zh/ chain-bitcoin:/chains/bitcoin/ method:/method/; do
+            name="${page%%:*}"; path="${page#*:}"
+            npx --yes lighthouse@12.6.1 "http://localhost:8080/post-quantum-blockchains$path" --quiet \
+              --chrome-flags="--headless=new --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json --output=html --output-path="lighthouse/$name"
+          done
+      - name: Every category scores 95 or more
+        run: |
+          python3 - <<'EOF'
+          import glob, json, os, sys
+          rows, low = [], []
+          for f in sorted(glob.glob('lighthouse/*.report.json')):
+              r = json.load(open(f))
+              name = os.path.basename(f).split('.')[0]
+              s = {k: round(v['score'] * 100) for k, v in r['categories'].items()}
+              rows.append(f"| {name} | {s['performance']} | {s['accessibility']} | {s['best-practices']} | {s['seo']} |")
+              low += [f'{name} {k} {v}' for k, v in s.items() if v < 95]
+          table = '\n'.join(['| Page | Performance | Accessibility | Best practices | SEO |', '| --- | --- | --- | --- | --- |'] + rows)
+          print(table)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              out.write('## Lighthouse, mobile\n\n' + table + '\n')
+          if len(rows) != 4 or low:
+              sys.exit('Below 95: ' + ', '.join(low) if low else f'expected 4 reports, found {len(rows)}')
+          EOF
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lighthouse
+          retention-days: 14

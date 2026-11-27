@@ -16,7 +16,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python3 -B scripts/validate.py
-      - run: python3 -B -m py_compile scripts/triage.py scripts/patrol.py scripts/rank.py scripts/check_links.py scripts/og_image.py scripts/indexnow.py
+      - name: Ten hand-checked facts are still stated in the data (data/golden.json)
+        run: python3 -B scripts/golden.py
+      - run: python3 -B -m py_compile scripts/triage.py scripts/patrol.py scripts/rank.py scripts/check_links.py scripts/og_image.py scripts/indexnow.py scripts/golden.py
       - name: Every top-100 coin is tracked or left out with a reason
         run: python3 -B scripts/rank.py --check
       - name: The website builds; Chinese pages use full-width punctuation; no banned words; every internal link resolves
@@ -46,5 +48,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 -B scripts/check_links.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: The pinned source of each golden fact still shows it
+        run: python3 -B scripts/golden.py --online
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
