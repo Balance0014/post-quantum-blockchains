@@ -6886,8 +6886,8 @@
     "zh": "委托权益证明（DPoS，CometBFT，Cosmos SDK）"
    },
    "holder_can_use_today": {
-    "en": "Holders use the classical signatures of the chain's EVM-style accounts; no post-quantum option is public.",
-    "zh": "持币人使用该链 EVM 类账户的传统签名；没有公开的抗量子选项。"
+    "en": "Holders sign with the chain's classical Cosmos SDK account keys; no post-quantum option is public.",
+    "zh": "持币人使用该链 Cosmos SDK 账户的传统签名密钥；没有公开的抗量子选项。"
    },
    "note": {
     "en": "Absence of public work is not a statement about the project's private plans; this tracker only counts what is public.",
@@ -6895,8 +6895,8 @@
    },
    "four": {
     "today": {
-     "en": "Holders use the classical signatures of the chain's EVM-style accounts; no post-quantum option is public.",
-     "zh": "持币人使用该链 EVM 类账户的传统签名；没有公开的抗量子选项。"
+     "en": "Holders sign with the chain's classical Cosmos SDK account keys; no post-quantum option is public.",
+     "zh": "持币人使用该链 Cosmos SDK 账户的传统签名密钥；没有公开的抗量子选项。"
     },
     "watch": {
      "en": "Absence of public work is not a statement about the project's private plans; this tracker only counts what is public.",
@@ -7193,7 +7193,7 @@
     },
     "can": {
      "en": "Use Splendor Wallet (Android/iOS) or the Splendor Quantum Wallet Chrome extension, hold SPLD at an SQ: address and send ML-DSA-65-signed transfers. Check the network and the SQ: prefix before sending; a 0x address is not a Quantum destination.",
-     "zh": "用 Splendor Wallet（Android/iOS）或 Splendor Quantum Wallet 浏览器扩展，把 SPLD 存在以「SQ:」开头的地址并发起 ML-DSA-65 签名的转账。转账前核对网络和 「SQ:」前缀；0x 地址不是 Quantum 链的收款地址。"
+     "zh": "用 Splendor Wallet（Android/iOS）或 Splendor Quantum Wallet 浏览器扩展，把 SPLD 存在以「SQ:」开头的地址并发起 ML-DSA-65 签名的转账。转账前核对网络和「SQ:」前缀；0x 地址不是 Quantum 链的收款地址。"
     },
     "next": {
      "en": "Publication of the bridge from chain 2691 (it starts the 90-day 1:1 migration window) and the opening of validator admission.",
@@ -7341,7 +7341,7 @@
    "stage_label": "Default",
    "algo": {
     "en": "SLH-DSA-SHA2-128s-bounded30: a reduced-usage SLH-DSA profile (3,680-byte signatures, 2^30 signatures per key)",
-    "zh": "SLH-DSA-SHA2-128s-bounded30：限次使用的 SLH-DSA 变体（签名 3,680 字节，每把钥匙最多 2^30 次签名）"
+    "zh": "SLH-DSA-SHA2-128s-bounded30：限次使用的 SLH-DSA 变体（签名 3,680 字节，每把密钥最多 2^30 次签名）"
    },
    "algo_chips": [
     "nonstd"
@@ -7369,11 +7369,11 @@
     },
     "can": {
      "en": "Hold QBT in Qbit Core or the Qbit Wallet Chrome extension and receive to fresh P2MR addresses; keep each key in one wallet only.",
-     "zh": "用 Qbit Core 或 Qbit Wallet 浏览器扩展持有 QBT，用新的 P2MR 地址收款；每把钥匙只放在一个钱包里。"
+     "zh": "用 Qbit Core 或 Qbit Wallet 浏览器扩展持有 QBT，用新的 P2MR 地址收款；每把密钥只放在一个钱包里。"
     },
     "next": {
      "en": "Any soft fork that activates one of the reserved P2MR leaf versions for another signature system.",
-     "zh": "任何为其他签名方案启用保留 P2MR 叶版本的软分叉。"
+     "zh": "启用 P2MR 预留叶版本、以支持其他签名方案的软分叉。"
     }
    },
    "stage_basis": {
@@ -7514,7 +7514,7 @@
    },
    "holder_can_use_today": {
     "en": "Every XDS output belongs to an ML-DSA-65 spend key and every spend carries an ML-DSA-65 signature; the chain has no elliptic-curve outputs to migrate.",
-    "zh": "每个 XDS 输出都归属一把 ML-DSA-65 花费钥匙，每次花费都带 ML-DSA-65 签名；链上没有需要日后迁移的椭圆曲线输出。"
+    "zh": "每个 XDS 输出都归属一把 ML-DSA-65 花费密钥，每次花费都带 ML-DSA-65 签名；链上没有需要日后迁移的椭圆曲线输出。"
    },
    "note": {
     "en": "Spending reveals the long-term spend key, so spends under one identity are linkable; amounts are public in Phase 1; finality is a node-local 10-block first-seen rule. The project itself says independent review of the cryptographic composition is still desirable.",
@@ -7523,7 +7523,7 @@
    "four": {
     "today": {
      "en": "Every XDS output belongs to an ML-DSA-65 spend key and every spend carries an ML-DSA-65 signature; the chain has no elliptic-curve outputs to migrate.",
-     "zh": "每个 XDS 输出都归属一把 ML-DSA-65 花费钥匙，每次花费都带 ML-DSA-65 签名；链上没有需要日后迁移的椭圆曲线输出。"
+     "zh": "每个 XDS 输出都归属一把 ML-DSA-65 花费密钥，每次花费都带 ML-DSA-65 签名；链上没有需要日后迁移的椭圆曲线输出。"
     },
     "watch": {
      "en": "Spending reveals the long-term spend key, so spends under one identity are linkable; amounts are public in Phase 1; finality is a node-local 10-block first-seen rule. The project itself says independent review of the cryptographic composition is still desirable.",
@@ -7660,7 +7660,7 @@
    },
    "holder_can_use_today": {
     "en": "DIL transfers are signed with ML-DSA-65-sized keys and signatures (1,952-byte public key, 3,309-byte signature); there is no ECDSA path on the chain.",
-    "zh": "DIL 转账用 ML-DSA-65 规格的钥匙和签名（公钥 1,952 字节，签名 3,309 字节）；链上没有 ECDSA 路径。"
+    "zh": "DIL 转账用 ML-DSA-65 规格的密钥和签名（公钥 1,952 字节，签名 3,309 字节）；链上没有 ECDSA 路径。"
    },
    "note": {
     "en": "DIL bridged to Base is held under Base's own (ECDSA) accounts and is not protected by Dilithium. The home page shows fixed block-height numbers that differ from the explorer.",
@@ -7669,7 +7669,7 @@
    "four": {
     "today": {
      "en": "DIL transfers are signed with ML-DSA-65-sized keys and signatures (1,952-byte public key, 3,309-byte signature); there is no ECDSA path on the chain.",
-     "zh": "DIL 转账用 ML-DSA-65 规格的钥匙和签名（公钥 1,952 字节，签名 3,309 字节）；链上没有 ECDSA 路径。"
+     "zh": "DIL 转账用 ML-DSA-65 规格的密钥和签名（公钥 1,952 字节，签名 3,309 字节）；链上没有 ECDSA 路径。"
     },
     "watch": {
      "en": "DIL bridged to Base is held under Base's own (ECDSA) accounts and is not protected by Dilithium. The home page shows fixed block-height numbers that differ from the explorer.",
@@ -7985,7 +7985,7 @@
    },
    "holder_can_use_today": {
     "en": "A holder can move funds to an account created from an ML-DSA key and spend it with type-0x50 transactions that carry no classical signature. Ordinary secp256k1 accounts, the default, stay exposed.",
-    "zh": "持币人可以把资金转到由 ML-DSA 钥匙生成的账户，并用不带经典签名的 0x50 类型交易花费。默认的 secp256k1 普通账户仍然暴露。"
+    "zh": "持币人可以把资金转到由 ML-DSA 密钥生成的账户，并用不带经典签名的 0x50 类型交易花费。默认的 secp256k1 普通账户仍然暴露。"
    },
    "note": {
     "en": "All 10 validators are run by the Aere Foundation, no third-party audit is complete, and node-to-node transport and part of every consensus message still use secp256k1 (the project's own published limits).",
@@ -7994,7 +7994,7 @@
    "four": {
     "today": {
      "en": "A holder can move funds to an account created from an ML-DSA key and spend it with type-0x50 transactions that carry no classical signature. Ordinary secp256k1 accounts, the default, stay exposed.",
-     "zh": "持币人可以把资金转到由 ML-DSA 钥匙生成的账户，并用不带经典签名的 0x50 类型交易花费。默认的 secp256k1 普通账户仍然暴露。"
+     "zh": "持币人可以把资金转到由 ML-DSA 密钥生成的账户，并用不带经典签名的 0x50 类型交易花费。默认的 secp256k1 普通账户仍然暴露。"
     },
     "watch": {
      "en": "All 10 validators are run by the Aere Foundation, no third-party audit is complete, and node-to-node transport and part of every consensus message still use secp256k1 (the project's own published limits).",
@@ -8139,28 +8139,28 @@
    },
    "holder_can_use_today": {
     "en": "On mainnet, transfers on the Cosmos lane must carry an ML-DSA-87 signature in addition to the classical one; an account without a registered PQ key cannot use the EVM lane at all.",
-    "zh": "主网上，Cosmos 通道的转账除经典签名外还必须带 ML-DSA-87 签名；没有登记抗量子钥匙的账户完全不能使用 EVM 通道。"
+    "zh": "主网上，Cosmos 通道的转账除经典签名外还必须带 ML-DSA-87 签名；没有登记抗量子密钥的账户完全不能使用 EVM 通道。"
    },
    "note": {
     "en": "Inside an open EVM window (up to 17,280 blocks, 1,000 transactions and a set outflow cap), EVM transactions are authorized by secp256k1 alone. Validator consensus keys on mainnet are Ed25519.",
-    "zh": "EVM 窗口开启期间（最多 17,280 个区块、1,000 笔交易和设定的流出上限），EVM 交易只靠 secp256k1 授权。主网验证者的共识钥匙是 Ed25519。"
+    "zh": "EVM 窗口开启期间（最多 17,280 个区块、1,000 笔交易和设定的流出上限），EVM 交易只靠 secp256k1 授权。主网验证者的共识密钥是 Ed25519。"
    },
    "four": {
     "today": {
      "en": "On mainnet, transfers on the Cosmos lane must carry an ML-DSA-87 signature in addition to the classical one; an account without a registered PQ key cannot use the EVM lane at all.",
-     "zh": "主网上，Cosmos 通道的转账除经典签名外还必须带 ML-DSA-87 签名；没有登记抗量子钥匙的账户完全不能使用 EVM 通道。"
+     "zh": "主网上，Cosmos 通道的转账除经典签名外还必须带 ML-DSA-87 签名；没有登记抗量子密钥的账户完全不能使用 EVM 通道。"
     },
     "watch": {
      "en": "Inside an open EVM window (up to 17,280 blocks, 1,000 transactions and a set outflow cap), EVM transactions are authorized by secp256k1 alone. Validator consensus keys on mainnet are Ed25519.",
-     "zh": "EVM 窗口开启期间（最多 17,280 个区块、1,000 笔交易和设定的流出上限），EVM 交易只靠 secp256k1 授权。主网验证者的共识钥匙是 Ed25519。"
+     "zh": "EVM 窗口开启期间（最多 17,280 个区块、1,000 笔交易和设定的流出上限），EVM 交易只靠 secp256k1 授权。主网验证者的共识密钥是 Ed25519。"
     },
     "can": {
      "en": "Register an ML-DSA-87 key for the account with the wallet adapter and send hybrid-signed transfers; keep EVM windows short and their outflow caps small.",
-     "zh": "用钱包适配器为账户登记 ML-DSA-87 钥匙并发起混合签名转账；EVM 窗口尽量短、流出上限尽量小。"
+     "zh": "用钱包适配器为账户登记 ML-DSA-87 密钥并发起混合签名转账；EVM 窗口尽量短、流出上限尽量小。"
     },
     "next": {
      "en": "Moving validator consensus keys off Ed25519, and any governance change to hybrid_signature_mode.",
-     "zh": "验证者共识钥匙是否换掉 Ed25519，以及治理对 hybrid_signature_mode 的任何修改。"
+     "zh": "验证者共识密钥是否换掉 Ed25519，以及治理对 hybrid_signature_mode 的任何修改。"
     }
    },
    "stage_basis": {
@@ -8270,7 +8270,7 @@
    "stage_label": "Default",
    "algo": {
     "en": "Winternitz one-time signatures in a Merkle key tree (TreeKey; SHA3-256, w = 8)",
-    "zh": "Winternitz 一次性签名组成的 Merkle 钥匙树（TreeKey；SHA3-256，w = 8）"
+    "zh": "Winternitz 一次性签名组成的 Merkle 密钥树（TreeKey；SHA3-256，w = 8）"
    },
    "algo_chips": [
     "wots"
@@ -8281,7 +8281,7 @@
    },
    "holder_can_use_today": {
     "en": "Every MINIMA coin is spent with a hash-based Winternitz signature from the owner's key tree; there is no elliptic-curve path. A default key allows 262,144 signatures (64 keys per level, 3 levels).",
-    "zh": "每枚 MINIMA 都用持币人钥匙树中的 Winternitz 哈希签名花费，没有椭圆曲线路径。默认钥匙可签 262,144 次（每层 64 把钥匙，共 3 层）。"
+    "zh": "每枚 MINIMA 都用持币人密钥树中的 Winternitz 哈希签名花费，没有椭圆曲线路径。默认密钥可签 262,144 次（每层 64 把密钥，共 3 层）。"
    },
    "note": {
     "en": "Winternitz keys are one-time: reusing one weakens it, so the wallet must track which keys have been used (TreeKey keeps a use counter). The construction is the project's own combination of Winternitz signatures and a key tree, not a standardized scheme such as XMSS or LMS.",
@@ -8290,7 +8290,7 @@
    "four": {
     "today": {
      "en": "Every MINIMA coin is spent with a hash-based Winternitz signature from the owner's key tree; there is no elliptic-curve path. A default key allows 262,144 signatures (64 keys per level, 3 levels).",
-     "zh": "每枚 MINIMA 都用持币人钥匙树中的 Winternitz 哈希签名花费，没有椭圆曲线路径。默认钥匙可签 262,144 次（每层 64 把钥匙，共 3 层）。"
+     "zh": "每枚 MINIMA 都用持币人密钥树中的 Winternitz 哈希签名花费，没有椭圆曲线路径。默认密钥可签 262,144 次（每层 64 把密钥，共 3 层）。"
     },
     "watch": {
      "en": "Winternitz keys are one-time: reusing one weakens it, so the wallet must track which keys have been used (TreeKey keeps a use counter). The construction is the project's own combination of Winternitz signatures and a key tree, not a standardized scheme such as XMSS or LMS.",
@@ -8298,11 +8298,11 @@
     },
     "can": {
      "en": "Run a node or use the official wallet; avoid running the same seed on two nodes at once so the key-use counter stays in step.",
-     "zh": "运行节点或使用官方钱包；不要在两个节点上同时运行同一个种子，以免钥匙使用计数不同步。"
+     "zh": "运行节点或使用官方钱包；不要在两个节点上同时运行同一个种子，以免密钥使用计数不同步。"
     },
     "next": {
      "en": "Repository activity (last push 2026-08-31) and any change to the default key tree.",
-     "zh": "代码仓动态（最近一次推送是 2026-08-31）以及默认钥匙树的任何改动。"
+     "zh": "代码仓动态（最近一次推送是 2026-08-31）以及默认密钥树的任何改动。"
     }
    },
    "stage_basis": {
