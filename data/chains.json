@@ -1737,10 +1737,10 @@
    "last_reviewed": "2026-11-27",
    "migration": {
     "value": "available",
-    "en": "An Algorand holder can rekey an existing Ed25519 account to a Falcon-1024 account, keeping the same address, now that mainnet consensus version 42 accepts native Falcon accounts.",
-    "zh": "Algorand 持币人可以把已有的 Ed25519 账户 rekey 到 Falcon-1024 账户，地址不变；主网共识版本 42 已接受原生 Falcon 账户。",
-    "source_url": "https://algorand.co/blog/algorand-post-quantum-ledger",
-    "grade": "official",
+    "en": "Since mainnet moved to consensus version 42 (block 64,318,659), the protocol authorizes transactions signed with Falcon-1024, so a holder can move ALGO to a Falcon-1024 account.",
+    "zh": "主网在第 64,318,659 个区块切换到共识版本 42 后，协议接受 Falcon-1024 签名的交易，持币人可以把 ALGO 转到 Falcon-1024 账户。",
+    "source_url": "https://lora.algokit.io/mainnet/block/64318659",
+    "grade": "primary",
     "date": "2026-08-22"
    },
    "audit": {
@@ -3276,9 +3276,9 @@
     "date": "2026-10-13"
    },
    "audit": {
-    "value": "audited",
-    "en": "Halborn audited the ML-DSA-44 code, signature aggregation and wallet (Feb to Mar 2026); every finding is marked solved.",
-    "zh": "Halborn 审计了 ML-DSA-44 代码、签名聚合和钱包（2026 年 2 月至 3 月），所有发现都标为已修复。",
+    "value": "partial",
+    "en": "Halborn audited the ML-DSA-44 code, signature aggregation and wallet in Feb to Mar 2026 and marked every finding solved; the mainnet launched in October 2026, and later changes were not in scope.",
+    "zh": "Halborn 在 2026 年 2 月至 3 月审计了 ML-DSA-44 代码、签名聚合和钱包，所有发现都标为已修复；主网 2026 年 10 月才上线，之后的改动不在审计范围内。",
     "source_url": "https://www.halborn.com/audits/soqucoin/soqucoin-blockchain-node-a4f1f7",
     "grade": "primary",
     "auditor": "Halborn",
@@ -4663,8 +4663,8 @@
    },
    "audit": {
     "value": "none_found",
-    "en": "No independent audit of the ML-DSA-65 integration was found; the design document leaves an outside audit undecided.",
-    "zh": "没有找到对 ML-DSA-65 集成的独立审计；设计文档里是否请外部审计还没有定。",
+    "en": "No independent audit of the ML-DSA-65 integration was found.",
+    "zh": "没有找到对 ML-DSA-65 集成的独立审计。",
     "source_url": "https://github.com/near/nearcore/blob/499283a5e3a6f8ea52bc068c28e3a7bebb1e38c0/docs/architecture/how/post_quantum_signatures.md",
     "grade": "primary"
    }

@@ -147,7 +147,7 @@ const UI = {
     q_move_h: "Moving now", q_move_r: (d) => `At least one post-quantum milestone with a primary source in the 90 days to ${d}. Newest first.`,
     q_quiet_h: "No post-quantum progress in the past year", q_quiet_r: (d) => `Top-100 chains at stage 0 or 1 with no post-quantum milestone recorded here in the 12 months to ${d}.`,
     q_risk_h: "Worth a closer look", q_risk_r: "Select a line to list those chains.",
-    risk: { broken: "use a scheme or parameters that were publicly broken", custom: "use their own construction, not assessed by an outside body", claim: "rest a key date or their stage on the project's own statement" },
+    risk: { broken: "used, or still allow, a scheme or parameters that were publicly broken", custom: "use their own construction, not assessed by an outside body", claim: "rest a key date or their stage on the project's own statement" },
     q_show: (n) => `Show ${plural(n, "chain", "chains")} in the table`, q_more: (n) => `+${n} more`, q_none: "None at the moment.",
     dagger_key: "† The project's own statement (official claim): shown, never used to raise a stage.",
     rng: { all: "All · by year", y2: "2 years · by month", m3: "3 months · by week" }, rng_label: "Range",
