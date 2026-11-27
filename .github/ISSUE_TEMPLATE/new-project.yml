@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for submitting. Each claim is checked against its sources before the project is listed, and the entry records the date it was checked. Listing is free and isn't for sale. See [what gets listed](https://github.com/Balance0014/post-quantum-blockchains#submit-a-project).
+        Thanks for submitting. You'll get an automatic reply with link and duplicate checks, and a maintainer replies within 7 days. Each claim is checked against its sources before anything is listed, and the entry records the date it was checked. Listing is free and isn't for sale. See [what gets listed](https://github.com/Balance0014/post-quantum-blockchains#submit-a-project).
   - type: input
     id: name
     attributes:
@@ -51,10 +51,10 @@ body:
     id: scheme
     attributes:
       label: Scheme and parameter set
-      description: What it is used for (transaction signatures, key exchange, proofs).
+      description: What it is used for (transaction signatures, key exchange, proofs). For a proposal or standard that doesn't pick a scheme yet, write "None yet".
       placeholder: "ML-DSA-65 for transaction signatures"
     validations:
-      required: true
+      required: false
   - type: textarea
     id: facts
     attributes:
@@ -80,6 +80,8 @@ body:
     id: affiliation
     attributes:
       label: Your relationship to the project
+      description: Choose all that apply.
+      multiple: true
       options:
         - I work on or for this project
         - I hold its token or have another financial interest

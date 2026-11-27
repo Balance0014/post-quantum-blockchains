@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — November 27, 2026
+
+- New submissions and corrections get an automatic reply that checks their links and looks for an existing entry; a maintainer replies within 7 days.
+- Added a [resource list](docs/resources.md) for wallets, libraries, standards and proposals, starting with NIST FIPS 203–205 and BIP-360/361.
+- The submission form takes "None yet" for proposals without a scheme, allows more than one relationship to the project, and blank issues are off.
+
 ## 0.3.0 — November 27, 2026
 
 - Opened the map to new projects. A submission form asks for the deployment status, scheme, primary sources, limits and the submitter's relationship to the project; no fork or pull request is needed.

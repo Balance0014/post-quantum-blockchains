@@ -8,14 +8,15 @@ Found a wrong date, a missing condition or a project we should add? Project team
 
 ## What gets listed
 
-Any blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state, backed by public primary sources. Wallets, libraries and standards are welcome and go into a separate resource list. Opt-in features, testnets, demos and planned work are listed with that status; a project doesn't need to claim whole-chain post-quantum security. The evidence bar is in [the methodology](docs/methodology.md).
+Any blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state, backed by public primary sources. Wallets, libraries and standards are welcome and go into the [resource list](docs/resources.md). Opt-in features, testnets, demos and planned work are listed with that status; a project doesn't need to claim whole-chain post-quantum security. The evidence bar is in [the methodology](docs/methodology.md).
 
 ## How review works
 
-1. Every claim is checked against its sources. Anything the sources don't support is narrowed or left out, and the reason is given on the issue.
-2. Accepted entries are added to `data/`, the tables are regenerated, and the change is noted in [CHANGELOG.md](CHANGELOG.md). The entry's `last_reviewed` date is the day its claims were checked.
-3. Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
-4. If you work on the project or have a financial interest in it, say so. It doesn't block a listing; it's recorded with the submission.
+1. A new submission or correction gets an automatic reply that checks the links and looks for an existing entry. A maintainer replies within 7 days.
+2. Every claim is checked against its sources. Anything the sources don't support is narrowed or left out, and the reason is given on the issue.
+3. Accepted entries are added to `data/`, the tables are regenerated, and the change is noted in [CHANGELOG.md](CHANGELOG.md). The entry's `last_reviewed` date is the day its claims were checked.
+4. Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
+5. If you work on the project or have a financial interest in it, say so. It doesn't block a listing; it's recorded with the submission.
 
 ## Pull requests
 

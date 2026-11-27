@@ -12,7 +12,7 @@ This is an open, source-checked map. Project teams and readers can [submit a pro
 
 The 17 original project entries and both maps date from October 23, 2026. New and corrected entries go through the same evidence check and carry their own review date; every change is logged in the [changelog](CHANGELOG.md). The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3.
 
-**[Submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml)** · [Browse the projects](docs/projects.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) · [中文](README.zh-CN.md)
+**[Submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml)** · [Browse the projects](docs/projects.md) · [Resources](docs/resources.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) · [中文](README.zh-CN.md)
 
 As of October 23, 2026:
 
@@ -78,12 +78,13 @@ Building with post-quantum cryptography, or know a project that is? [Open a subm
 
 **What gets listed**
 
-- A blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state. Wallets, libraries and standards are welcome too; they'll go into a separate resource list.
+- A blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state. Wallets, libraries and standards are welcome too; they go into the [resource list](docs/resources.md).
 - A public primary source for each claim: release notes, a specification, governance records or code pinned to a commit. An announcement or press coverage isn't enough on its own.
 - A clear status: on by default on mainnet, opt-in on mainnet, testnet, demo or planned. Planned work is listed as planned.
 
 **How review works**
 
+- You get an automatic reply that checks your links and looks for an existing entry. A maintainer replies within 7 days.
 - Every claim is checked against its sources before it's added, and the entry records the date it was checked.
 - Accepted entries appear in the [project comparison](docs/projects.md) and the CSV, and the change is noted in the [changelog](CHANGELOG.md). The two maps above stay dated October 23 until they're redrawn.
 - Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.

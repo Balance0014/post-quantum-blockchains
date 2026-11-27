@@ -13,3 +13,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 -B scripts/validate.py
+      - run: python3 -B -m py_compile scripts/triage.py
