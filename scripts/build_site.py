@@ -560,6 +560,20 @@ def critical_css(css, first_html):
     return walk(css)
 
 
+def meta_desc(text, lang):
+    """A search-result description: whole sentences, up to about 155 characters (90 in Chinese, whose characters are
+    wider); the first sentence always stays, so it never ends mid-sentence."""
+    limit = 90 if lang == 'zh' else 155
+    parts = re.split(r'(?<=[。！？])' if lang == 'zh' else r'(?<=[.!?])\s+(?=[A-Z0-9"“(])', text.strip())
+    out = parts[0]
+    for p in parts[1:]:
+        nxt = out + ('' if lang == 'zh' else ' ') + p
+        if len(nxt) > limit:
+            break
+        out = nxt
+    return out
+
+
 def one_lang(x, lang):
     """Keep only the page's language in an {en, zh} text (English stays as the fallback when Chinese is missing)."""
     if isinstance(x, dict) and 'en' in x and 'zh' in x:
@@ -844,7 +858,7 @@ def main():
         t = TEXT[lang]
         other = 'zh' if lang == 'en' else 'en'
         fill = {
-            'html_lang': 'zh-Hans' if lang == 'zh' else 'en', 'title': esc(title), 'description': esc(desc),
+            'html_lang': 'zh-Hans' if lang == 'zh' else 'en', 'title': esc(title), 'description': esc(meta_desc(desc, lang) if d['page'] == 'chain' else desc),
             'canonical': ORIGIN + path_for(lang, rel), 'url_en': ORIGIN + path_for('en', rel), 'url_zh': ORIGIN + path_for('zh', rel),
             'brand': esc(t['brand']), 'og_locale': t['og_locale'], 'base': base, 'v': version, 'home': path_for(lang, ''),
             'alt': d['alt'], 'alt_lang': 'zh-Hans' if other == 'zh' else 'en', 'other_lang': t['other_lang'],
