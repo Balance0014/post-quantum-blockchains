@@ -1073,7 +1073,9 @@ function syncSort() {
   document.querySelectorAll("#sortdd [role=option]").forEach((o) => o.setAttribute("aria-selected", String(o.dataset.v === state.sort)));
 }
 /* show "More" only where the two-line clamp actually hides text */
+let clampOn = false; // measured only once the table is near the screen, so loading the page forces no layout of it
 function clampCheck() {
+  if (!clampOn) return;
   document.querySelectorAll(".latest").forEach((l) => { const x = l.querySelector(".x"), b = l.querySelector(".more"); if (b) b.hidden = !(x.scrollHeight > x.clientHeight + 2 || l.classList.contains("open")); });
 }
 /* the sort dropdown's behaviour: click or Enter opens; arrows, Home and End move; Enter or click picks; Escape closes */
@@ -1167,7 +1169,12 @@ function renderHome() {
     ${dataHTML()}
     ${contactHTML()}</div>`);
   if (PRE) return;
-  syncSort(); clampCheck();
+  syncSort();
+  const tbody = document.getElementById("tbody");
+  if ("IntersectionObserver" in window) {
+    const near = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { near.disconnect(); clampOn = true; clampCheck(); } }, { rootMargin: "800px 0px" });
+    near.observe(tbody);
+  } else { clampOn = true; clampCheck(); }
   const app = document.getElementById("app");
   const q = document.getElementById("q");
   const toTable = () => document.getElementById("chains").scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });

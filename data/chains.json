@@ -4475,7 +4475,8 @@
       "zh": "未合并；等待作者修改"
      },
      "source_url": "https://github.com/cardano-foundation/CIPs/pull/1242",
-     "verified": true
+     "verified": true,
+     "progress": false
     },
     {
      "date": "2026-08-19",
@@ -4502,7 +4503,8 @@
       "zh": "未合并；处于 Last Check 阶段"
      },
      "source_url": "https://github.com/cardano-foundation/CIPs/pull/1300",
-     "verified": true
+     "verified": true,
+     "progress": false
     },
     {
      "date": "2026-11-11",
@@ -6377,8 +6379,8 @@
     "date": "2026-11-11",
     "basis": "activation",
     "event": {
-     "en": "Mainnet switched on hashed accounts, which allow ML-DSA-65 and Falcon keys, at block 9,484,619.",
-     "zh": "主网在第 9,484,619 个区块打开哈希账户开关，允许使用 ML-DSA-65 和 Falcon 密钥。"
+     "en": "Mainnet switched on hashed accounts, which allow ML-DSA-65 and Falcon keys, at block 9,484,619. This site read an archive node on 2026-11-27: the switch is unset at block 9,484,618 and on at block 9,484,619.",
+     "zh": "主网在第 9,484,619 个区块打开哈希账户开关，允许使用 ML-DSA-65 和 Falcon 密钥。本站 2026-11-27 读取归档节点：第 9,484,618 个区块时开关未设置，第 9,484,619 个区块时已打开。"
     },
     "source_url": "https://www.taostats.io/block/9484619",
     "grade": "primary"
@@ -6427,6 +6429,19 @@
       "zh": "已发布"
      },
      "source_url": "https://github.com/RaoFoundation/subtensor/releases/tag/v488",
+     "verified": true
+    },
+    {
+     "date": "2026-11-11",
+     "type": "mainnet",
+     "grade": "primary",
+     "name": "Mainnet turns on hashed accounts, which allow ML-DSA-65 and Falcon keys, at block 9,484,619 (17:46 UTC). An archive-node read by this site shows AdminUtils.HashedAccountsEnabled unset at block 9,484,618 and true at block 9,484,619.",
+     "zh": "主网在第 9,484,619 个区块（UTC 17:46）打开哈希账户开关，允许使用 ML-DSA-65 和 Falcon 密钥。本站读取归档节点：第 9,484,618 个区块时 AdminUtils.HashedAccountsEnabled 未设置，第 9,484,619 个区块时为开启。",
+     "status": {
+      "en": "Live on mainnet",
+      "zh": "主网已上线"
+     },
+     "source_url": "https://www.taostats.io/block/9484619",
      "verified": true
     },
     {

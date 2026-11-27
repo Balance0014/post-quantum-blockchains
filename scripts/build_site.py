@@ -484,6 +484,82 @@ def min_css(css):
     return css.replace(';}', '}').strip() + '\n'
 
 
+def css_blocks(css):
+    """Split minified CSS into top-level blocks: (prelude, body). An at-rule's body is itself CSS."""
+    out, i, n = [], 0, len(css)
+    while i < n:
+        j = css.find('{', i)
+        if j < 0:
+            break
+        depth, k = 1, j + 1
+        while depth and k < n:
+            depth += {'{': 1, '}': -1}.get(css[k], 0)
+            k += 1
+        out.append((css[i:j].strip(), css[j + 1:k - 1]))
+        i = k
+    return out
+
+
+def split_top(sel):
+    """Split a selector list on commas that are not inside parentheses."""
+    parts, depth, cur = [], 0, ''
+    for ch in sel:
+        depth += {'(': 1, ')': -1}.get(ch, 0)
+        if ch == ',' and not depth:
+            parts.append(cur)
+            cur = ''
+        else:
+            cur += ch
+    return parts + [cur]
+
+
+# how much of a page's HTML counts as its first screen (on the home page: the answer, the figures and the first two charts)
+CRITICAL_CHARS = 26000
+
+# classes the script adds before or right after the first paint
+RUNTIME_CLASSES = {'anim', 'in', 'enter', 'open', 'act', 'pinned', 'later'}
+
+
+def sel_needs(sel):
+    """The classes, ids and element names a selector needs; negations and pseudo-classes need nothing."""
+    s = sel
+    while True:
+        t = re.sub(r'::?[\w-]+\([^()]*\)', '', s)
+        if t == s:
+            break
+        s = t
+    s = re.sub(r'\[[^\]]*\]', '', s)
+    s = re.sub(r'::?[\w-]+', '', s)
+    need = {('.', m) for m in re.findall(r'\.([\w-]+)', s)} | {('#', m) for m in re.findall(r'#([\w-]+)', s)}
+    need |= {('t', m.lower()) for m in re.findall(r'(?:^|[\s>+~(])([a-zA-Z][a-zA-Z0-9]*)', s)}
+    return need
+
+
+def critical_css(css, first_html):
+    """The rules the first screen can use: every selector whose classes, ids and elements all occur in first_html.
+    The full stylesheet still loads (without blocking the first paint) and covers everything else."""
+    have = {('.', c) for v in re.findall(r'class="([^"]*)"', first_html) for c in v.split()}
+    have |= {('.', c) for c in RUNTIME_CLASSES}
+    have |= {('#', i) for i in re.findall(r'id="([^"]*)"', first_html)}
+    have |= {('t', t.lower()) for t in re.findall(r'<([a-zA-Z][a-zA-Z0-9]*)', first_html)} | {('t', 'html'), ('t', 'body')}
+
+    def walk(text):
+        out = []
+        for pre, body in css_blocks(text):
+            if pre.startswith(('@media', '@supports', '@layer')):
+                inner = walk(body)
+                if inner:
+                    out.append(f'{pre}{{{inner}}}')
+            elif pre.startswith('@'):
+                out.append(f'{pre}{{{body}}}')
+            else:
+                keep = [x for x in split_top(pre) if sel_needs(x) <= have]
+                if keep:
+                    out.append(f'{",".join(keep)}{{{body}}}')
+        return ''.join(out)
+    return walk(css)
+
+
 def one_lang(x, lang):
     """Keep only the page's language in an {en, zh} text (English stays as the fallback when Chinese is missing)."""
     if isinstance(x, dict) and 'en' in x and 'zh' in x:
@@ -700,6 +776,7 @@ def main():
 
     asset_src = {name: (SITE_SRC / name).read_bytes() for name in ('app.js', 'style.css')}
     asset_src['style.css'] = min_css(asset_src['style.css'].decode('utf-8')).encode('utf-8')
+    css_text = asset_src['style.css'].decode('utf-8')
     version = hashlib.sha256(b''.join(asset_src.values())).hexdigest()[:10]
     page_tpl = (SITE_SRC / 'page.html').read_text(encoding='utf-8')
 
@@ -778,7 +855,14 @@ def main():
             'og_type': 'article' if d['page'] == 'chain' else 'website', 'og_image': ORIGIN + base + 'assets/og.png',
             'og_alt': esc(t['og_alt'].format(n=len(views))),
         }
+        # the first screen's rules are inlined; the full stylesheet loads without blocking the first paint
+        fill['css'] = '\x00css\x00'
         page = re.sub(r'\{\{(\w+)\}\}', lambda m: str(fill[m.group(1)]), page_tpl)
+        crit = critical_css(css_text, page[page.index('<body>'):page.index('<main>') + 6] + r['app'][:CRITICAL_CHARS])
+        sheet = f'{base}assets/style.css?v={version}'
+        css = (f'<style>{crit}</style><link rel="preload" href="{sheet}" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">'
+               f'<noscript><link rel="stylesheet" href="{sheet}"></noscript>')
+        page = page.replace('\x00css\x00', css)
         dest = out / ('zh' if lang == 'zh' else '') / rel / 'index.html'
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(page, encoding='utf-8')

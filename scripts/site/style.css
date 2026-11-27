@@ -843,3 +843,19 @@ tbody.enter tr{animation:rowin 250ms ease both}
 .cap .fls{margin:0 0 0 auto}
 /* narrow phones: the brand name wraps onto two lines instead of being cut off */
 @media (max-width:440px){.brand .bn{white-space:normal;overflow:visible;text-overflow:clip;font-size:14px;line-height:1.15}}
+/* the browser skips layout and paint for sections far below the first screen until they come near;
+   the sizes are placeholders, and "auto" keeps each section's real size once it has been drawn */
+.layer + .layer,.duo,#fig-algo,footer.site{content-visibility:auto;contain-intrinsic-size:auto 1000px}
+#questions{contain-intrinsic-size:auto 2200px}
+#chains{contain-intrinsic-size:auto 6900px}
+#timeline{contain-intrinsic-size:auto 2700px}
+.duo{contain-intrinsic-size:auto 1200px}
+footer.site{contain-intrinsic-size:auto 400px}
+@media (min-width:900px){
+  .layer + .layer,#fig-algo{contain-intrinsic-size:auto 700px}
+  #questions{contain-intrinsic-size:auto 900px}
+  #chains{contain-intrinsic-size:auto 3600px}
+  #timeline{contain-intrinsic-size:auto 1700px}
+  .duo{contain-intrinsic-size:auto 560px}
+  footer.site{contain-intrinsic-size:auto 260px}
+}
