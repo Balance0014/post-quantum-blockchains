@@ -167,7 +167,7 @@ const UI = {
     mig: { native: "No old keys to move", available: "Existing coins can move", testnet: "Moving coins: testnet only", planned: "Moving coins: planned", none: "No way to move coins yet", unknown: "Moving coins: unknown" },
     mig_s: { native: "Native", available: "Available", testnet: "Testnet only", planned: "Planned", none: "None", unknown: "Unknown" },
     audit: { audited: "Audited", partial: "Partly audited", none_found: "No audit found", unknown: "Audit unknown" },
-    scope: { top: "Top 100", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Added later", notyet: "Not yet" },
+    scope: { top: "Top 100", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Added later", notyet: "Not yet" }, early_tag: "Early · testnet only", design_built: "Designed as post-quantum native",
     fl: { custom: "Own construction", var: "Variant not reviewed", noaudit: "No audit found", projdata: "No independent network data" }, proposed: "Proposed, not deployed", netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
     scope_label: "Scope", design_label: "Design", ss_label: "Standard", cov_label: "Coverage", mig_label: "Migration", audit_label: "Audit", netw_label: "Network", net_label2: "Block status", view_label: "Showing",
     more_filters: "More filters", more_bg: "includes background",
@@ -336,7 +336,7 @@ const UI = {
     mig: { native: "原生链，没有旧密钥要迁移", available: "已有的币可以迁移", testnet: "迁移：仅限测试网", planned: "迁移：计划中", none: "还没有迁移办法", unknown: "迁移：情况不明" },
     mig_s: { native: "原生", available: "可迁移", testnet: "仅测试网", planned: "计划中", none: "没有", unknown: "不明" },
     audit: { audited: "已审计", partial: "部分审计", none_found: "未找到审计", unknown: "审计情况不明" },
-    scope: { top: "市值前 100", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来加上", notyet: "还没有" },
+    scope: { top: "市值前 100", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来加上", notyet: "还没有" }, early_tag: "早期 · 只有测试网", design_built: "设计为原生抗量子",
     fl: { custom: "自研方案", var: "变体未审", noaudit: "未找到审计", projdata: "无独立出块数据" }, proposed: "提案中，未部署", netw: { mainnet: "主网", testnet: "还没上主网" },
     scope_label: "范围", design_label: "设计", ss_label: "标准状态", cov_label: "覆盖", mig_label: "迁移路径", audit_label: "审计", netw_label: "网络", net_label2: "出块状态", view_label: "正在看",
     more_filters: "更多筛选", more_bg: "含背景信息",
@@ -1322,6 +1322,7 @@ function renderChain() {
   const sizes = ap.params.filter((p) => p.pk && p.sig).map((p) => esc(L("size_row")(p.name, p.pk, p.sig)) + (p.ref ? `<br><span class="note-small">${esc(L("size_ref")(p.ref))}</span>` : "")).join("<br>");
   const algo = `<div class="card dcard kvgrid">
     ${kv(L("d_algo"), `${esc(T(c.algo))}${chips(c.chips)}`, DF.th_algo)}
+    ${c.group === "early" ? kv(L("design_label"), esc(L("design_built")), DF.design[c.design]) : ""}
     ${kv(L("k_status"), ssChips(c, true) + (c.stage < 3 && c.schemes.some(([k]) => k !== "none") ? term(`<span class="chip">${esc(L("proposed"))}</span>`, DF.proposed, L("proposed"), "plain") : ""), [...new Set(c.schemes.map(([, st]) => st))].map((st) => `${L("ss")[st]}${CO()}${DF.ss[st]}`).join("\n"))}
     ${c.stage < 3 ? kv(L("k_level"), esc(L("na_deploy")), DF.proposed) : ap.level != null ? kv(L("k_level"), esc(L("level")(ap.level, ap.open)), DF.level) : ""}
     ${kv(L("k_hybrid"), esc(c.stage >= 3 ? L(c.hybrid ? "yes" : "no") : L("na_deploy")), DF.hybrid)}
@@ -1347,7 +1348,7 @@ function renderChain() {
     ${c.consensus ? kv(L("e_consensus"), esc(T(c.consensus))) : ""}
     ${c.supply ? kv(L("k_supply"), `${esc(T(c.supply))}<br><span class="note-small">${esc(L("source"))}${CO()}${srcLink(c.supply.source_url)}${dagger(c.supply.grade)}</span>`, DF.supply) : ""}
     ${kv(L("d_checked"), `<span class="mono">${esc(fmtDate(c.checked) || "—")}</span>`, DF.th_checked)}</div>`;
-  const meta = [`<span class="mono">${esc(c.ticker)}</span>`, c.rank ? `<span>${termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap"))}</span>` : "", `<span>${termRef(esc(L("design")[c.design]), "design." + c.design, L("design_label"))}</span>`,
+  const meta = [`<span class="mono">${esc(c.ticker)}</span>`, c.rank ? `<span>${termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap"))}</span>` : "", `<span>${c.group === "early" ? termRef(esc(L("early_tag")), "k_early", L("early_tag")) : termRef(esc(L("design")[c.design]), "design." + c.design, L("design_label"))}</span>`,
     `<span>${term(esc(L("e_reviewed")), DF.reviewed)} <span class="mono">${esc(c.reviewed)}</span></span>`].filter(Boolean).join('<span aria-hidden="true">·</span>');
   const toc = [["d-algo", "d_algo_h"], ["d-cov", "d_cov_h"], ["d-prog", "d_prog_h"], ["d-ev", "d_ev_h"], ["d-bg", "d_bg_h"]];
   put("app", () => `<div class="page">
