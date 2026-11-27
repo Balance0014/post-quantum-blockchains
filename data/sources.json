@@ -212,19 +212,19 @@
     },
     {
       "id": "cell-consensus",
-      "url": "https://cellframe.net/blog/worklog-october-results-2024/",
+      "url": "https://web.archive.org/web/20260308211455/https://cellframe.net/blog/worklog-october-results-2024/",
       "supports": "ESBOCS and DAG-PoA roles.",
       "source_type": "project documentation"
     },
     {
       "id": "cell-assets",
-      "url": "https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/",
+      "url": "https://web.archive.org/web/20260608143702/https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/",
       "supports": "Native assets versus wrapped assets.",
       "source_type": "project documentation"
     },
     {
       "id": "cell-wallet",
-      "url": "https://cellframe.net/",
+      "url": "https://web.archive.org/web/20261013062703/https://cellframe.net/",
       "supports": "Native wallet and supported cryptography.",
       "source_type": "project website"
     },

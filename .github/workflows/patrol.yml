@@ -31,6 +31,8 @@ jobs:
       - name: Check that every source link still opens
         id: links
         continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 -B scripts/check_links.py --report "$RUNNER_TEMP/links.md"
       - name: Open an issue for broken source links
         if: steps.links.outcome == 'failure'

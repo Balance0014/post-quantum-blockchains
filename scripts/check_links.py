@@ -7,12 +7,16 @@ data/link-allowlist.json with the reason; they are reported but do not fail the 
 (the RPC endpoints in chains.json, which only answer POST requests) are checked by patrol.py instead, and are
 skipped here wherever they appear.
 
+github.com links are checked through the GitHub API (with GITHUB_TOKEN when set): github.com answers 503 to
+many page requests from CI machines, and the API also confirms that a pinned file exists at its pinned commit.
+
 Usage:
   python3 scripts/check_links.py               # exit 1 on any broken link
   python3 scripts/check_links.py --report FILE # also write a Markdown report (used by the weekly patrol)
 """
 import argparse
 import json
+import os
 import sys
 import threading
 import time
@@ -20,7 +24,7 @@ import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, quote, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data'
@@ -73,7 +77,55 @@ def host_slot(host):
         return _host_locks.setdefault(host, threading.BoundedSemaphore(PER_HOST))
 
 
+def github_api(url):
+    """The GitHub API address that confirms a github.com link, or None for pages the API does not cover."""
+    u = urlparse(url)
+    parts = [p for p in u.path.split('/') if p]
+    if not parts:
+        return None
+    if len(parts) == 1:
+        return f'https://api.github.com/users/{parts[0]}'
+    if parts[0] == 'orgs':  # organisation pages and discussions: the organisation must exist
+        return f'https://api.github.com/orgs/{parts[1]}'
+    repo = f'https://api.github.com/repos/{parts[0]}/{parts[1]}'
+    kind, rest = (parts[2], parts[3:]) if len(parts) > 2 else ('', [])
+    if kind in ('blob', 'tree') and rest:
+        path = '/'.join(rest[1:])
+        return f'{repo}/contents/{quote(path)}?ref={quote(rest[0])}' if path else f'{repo}/commits/{quote(rest[0])}'
+    if kind == 'pull' and rest:
+        return f'{repo}/pulls/{rest[0]}'
+    if kind == 'issues' and rest:
+        return f'{repo}/issues/{rest[0]}'
+    if kind == 'releases' and rest[:1] == ['tag'] and len(rest) > 1:
+        return f'{repo}/releases/tags/{quote("/".join(rest[1:]))}'
+    if kind == 'commit' and rest:
+        return f'{repo}/commits/{rest[0]}'
+    if kind == 'commits' and rest:
+        return f'{repo}/commits?sha={quote("/".join(rest))}&per_page=1'
+    return repo  # repository home, issue searches, release lists, discussions: the repository must exist
+
+
 def fetch(url):
+    if urlparse(url).netloc == 'github.com':
+        api = github_api(url)
+        if api:
+            headers = {'User-Agent': UA, 'Accept': 'application/vnd.github+json'}
+            if os.environ.get('GITHUB_TOKEN'):
+                headers['Authorization'] = 'Bearer ' + os.environ['GITHUB_TOKEN']
+            last = (0, '')
+            for attempt in range(3):
+                try:
+                    with host_slot('api.github.com'):
+                        with urllib.request.urlopen(urllib.request.Request(api, headers=headers), timeout=20) as r:
+                            return r.status, ''
+                except urllib.error.HTTPError as e:
+                    last = (e.code, 'GitHub API ' + api)
+                    if e.code == 404:
+                        return last
+                except Exception as e:
+                    last = (0, type(e).__name__ + ': ' + str(e)[:120])
+                time.sleep(2 + 4 * attempt)
+            return last
     """Return (status, note). Status 0 means the request did not complete."""
     last = (0, '')
     for attempt in range(2):

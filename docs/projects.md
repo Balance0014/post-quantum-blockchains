@@ -219,9 +219,9 @@ Sources:
 Sources:
 
 - [cell-launch](https://cellframe.medium.com/ama-with-ceo-dmitry-gerasimov-july-13-2023-f317f5fb1de0) — July 12, 2023 mainnet launch. (project documentation)
-- [cell-consensus](https://cellframe.net/blog/worklog-october-results-2024/) — ESBOCS and DAG-PoA roles. (project documentation)
-- [cell-assets](https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/) — Native assets versus wrapped assets. (project documentation)
-- [cell-wallet](https://cellframe.net/) — Native wallet and supported cryptography. (project website)
+- [cell-consensus](https://web.archive.org/web/20260308211455/https://cellframe.net/blog/worklog-october-results-2024/) — ESBOCS and DAG-PoA roles. (project documentation)
+- [cell-assets](https://web.archive.org/web/20260608143702/https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/) — Native assets versus wrapped assets. (project documentation)
+- [cell-wallet](https://web.archive.org/web/20261013062703/https://cellframe.net/) — Native wallet and supported cryptography. (project website)
 
 ## QuantumCoin
 
