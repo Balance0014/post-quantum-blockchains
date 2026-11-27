@@ -12,6 +12,18 @@
   {
    "host": "www.sec.gov",
    "reason": "SEC.gov answers 403 to automated requests that do not declare a contact email in the User-Agent (sec.gov/os/accessing-edgar-data); the PDF opens in a browser."
+  },
+  {
+   "host": "cryptobriefing.com",
+   "reason": "Crypto Briefing answers 403 to automated requests (bot protection); the article opens in a browser. Cited only as an unverified lead."
+  },
+  {
+   "host": "techflowpost.com",
+   "reason": "TechFlow answers 403 to automated requests (bot protection); the article opens in a browser. Cited only as an unverified lead."
+  },
+  {
+   "host": "www.coingecko.com",
+   "reason": "CoinGecko coin pages answer 403 to automated requests (bot challenge); they open in a browser. Market-cap ranks come from the CoinGecko API in scripts/rank.py."
   }
  ]
 }

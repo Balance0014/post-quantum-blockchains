@@ -184,7 +184,24 @@
      "label": "BIP-362 PR"
     }
    ],
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "planned",
+    "en": "BIP-361 (Draft) would first bar sends to quantum-vulnerable outputs and later restrict old signature spends, but it depends on a post-quantum signature BIP that does not exist yet.",
+    "zh": "BIP-361（草案）提议先禁止向易受量子攻击的输出转账，之后再限制用旧签名花费；但它依赖一个还不存在的抗量子签名 BIP。",
+    "source_url": "https://github.com/bitcoin/bips/blob/da7cc678d522c7ff09d3d4e3b5de1a1ccc1e90c9/bip-0361.mediawiki#L24-L26",
+    "grade": "primary",
+    "date": "2026-04-14"
+   },
+   "exposure": {
+    "figure": "6.04 million BTC (30.2% of issued supply)",
+    "en": "Bitcoin in outputs whose public key is already visible on chain. Other published estimates differ, for example Google Quantum AI (arXiv 2603.28846, 2026-03-30).",
+    "zh": "公钥已经在链上可见的输出里的比特币。其他已发表的估算不尽相同，例如 Google Quantum AI（arXiv 2603.28846，2026-03-30）。",
+    "publisher": "Glassnode",
+    "date": "2026-05-20",
+    "source_url": "https://research.glassnode.com/measuring-bitcoins-quantum-exposed-supply/",
+    "grade": "primary"
+   }
   },
   {
    "id": "ethereum",
@@ -374,7 +391,24 @@
      "label": "EIP-8141"
     }
    ],
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "planned",
+    "en": "Ethereum's post-quantum plan moves accounts to post-quantum signatures through account abstraction and signature-verification precompiles; no activation date is set.",
+    "zh": "以太坊的抗量子计划是通过账户抽象和签名验证预编译，让账户改用抗量子签名；还没有定启用日期。",
+    "source_url": "https://pq.ethereum.org/",
+    "grade": "official",
+    "date": "2026-06-27"
+   },
+   "exposure": {
+    "figure": "At least 20.5 million ETH",
+    "en": "ETH in the 1,000 largest accounts whose public key is exposed; a floor, not a total (section V.1).",
+    "zh": "公钥已暴露的前 1,000 个最大账户里的 ETH；是下限，不是总数（第 V.1 节）。",
+    "publisher": "Google Quantum AI (Babbush et al.), arXiv 2603.28846",
+    "date": "2026-03-30",
+    "source_url": "https://arxiv.org/abs/2603.28846",
+    "grade": "primary"
+   }
   },
   {
    "id": "bnb-chain",
@@ -758,8 +792,8 @@
    "stage": 3,
    "stage_label": "Testnet",
    "stage_basis": {
-    "en": "Falcon-512 is switched on in the Nile testnet's chain parameters, so holders can sign with it there. Mainnet has no post-quantum parameter.",
-    "zh": "Nile 测试网的链参数已启用 Falcon-512，持币人可以在测试网上用它签名；主网链参数中没有抗量子选项。"
+    "en": "Falcon-512 is switched on in the Nile testnet by committee proposal 20628, so holders can sign with it there. The latest mainnet release has no post-quantum parameter.",
+    "zh": "Nile 测试网经委员会第 20628 号提案启用了 Falcon-512，持币人可以在测试网上用它签名；最新主网版本没有抗量子参数。"
    },
    "algo": {
     "en": "Falcon-512 on in testnet; ML-DSA-44 built, off",
@@ -787,8 +821,8 @@
      "zh": "主网没有。TRON 是市值前十中唯一能在官方公开测试网上用抗量子密钥签名的链：Nile 测试网已启用 Falcon-512。"
     },
     "watch": {
-     "en": "Mainnet chain parameters show no post-quantum switch, and press reports of a Q3 2026 mainnet launch did not come true. TIP-899 is still a Draft.",
-     "zh": "主网链参数中没有抗量子开关；媒体所说的 2026 年第三季度上主网并未发生。TIP-899 仍是草案。"
+     "en": "The latest mainnet release has no post-quantum switch, and press reports of a Q3 2026 mainnet launch did not come true. TIP-899 is still a Draft.",
+     "zh": "最新主网版本没有抗量子开关；媒体所说的 2026 年第三季度上主网并未发生。TIP-899 仍是草案。"
     },
     "can": {
      "en": "Developers can try Falcon-512 accounts on the Nile testnet. Mainnet holders have no post-quantum option yet.",
@@ -801,8 +835,8 @@
    },
    "latest_step": {
     "date": "2026-11-18",
-    "text": "TIP-899 is still Draft. Its author wrote that an independent review before activation is 'planned but not yet confirmed'. Mainnet chain parameters show no post-quantum switch.",
-    "zh": "TIP-899 仍是草案。作者表示，启用前的独立审计「已在计划中，但尚未确定」。主网链参数中没有抗量子开关。"
+    "text": "TIP-899 is still Draft. Its author wrote that an independent review before activation is 'planned but not yet confirmed'. The latest mainnet release has no post-quantum switch.",
+    "zh": "TIP-899 仍是草案。作者表示，启用前的独立审计「已在计划中，但尚未确定」。最新主网版本没有抗量子开关。"
    },
    "milestones": [
     {
@@ -832,32 +866,30 @@
      "verified": true
     },
     {
-     "date": "2026-11-27",
+     "date": "2026-07-02",
      "type": "testnet",
      "grade": "primary",
-     "name": "Nile chain parameters: getAllowFnDsa512 = 1 (Falcon-512 on), getAllowMlDsa44 unset (off)",
-     "zh": "Nile 链参数：getAllowFnDsa512 = 1（Falcon-512 已启用），getAllowMlDsa44 未设置（未启用）",
+     "name": "Nile committee proposal 20628 sets ALLOW_FN_DSA_512 (parameter 1000 in the Nile code) to 1, switching Falcon-512 on; it was approved. No proposal has switched on ML-DSA-44 (parameter 1001). Proposal state read from a public Nile node on 2026-11-27.",
+     "zh": "Nile 委员会第 20628 号提案把 ALLOW_FN_DSA_512（Nile 代码中的第 1000 号参数）设为 1，启用 Falcon-512，已获通过。ML-DSA-44（第 1001 号参数）还没有提案启用。提案状态于 2026-11-27 从公开的 Nile 节点读取。",
      "status": {
       "en": "Live on testnet",
       "zh": "测试网运行中"
      },
-     "source_url": "https://nile.trongrid.io/wallet/getchainparameters",
-     "verified": true,
-     "checked": true
+     "source_url": "https://github.com/tron-nile-testnet/nile-testnet/blob/bc7752b638d9aa4da413c78645dcff1a1aa8e40a/actuator/src/main/java/org/tron/core/utils/ProposalUtil.java#L1095-L1096",
+     "verified": true
     },
     {
-     "date": "2026-11-27",
+     "date": "2026-10-22",
      "type": "mainnet",
      "grade": "primary",
-     "name": "Mainnet: no post-quantum parameter in chain parameters; latest mainnet release GreatVoyage-v4.8.2.4 has no post-quantum changes",
-     "zh": "主网：链参数中没有抗量子参数；最新主网版本 GreatVoyage-v4.8.2.4 不含抗量子改动",
+     "name": "The latest mainnet release, GreatVoyage-v4.8.2.4, has no post-quantum committee parameter: its parameter list ends at ALLOW_OPTIMIZE_TVM_STORAGE_KEY (102), so a Falcon-512 or ML-DSA-44 switch cannot yet be proposed on mainnet.",
+     "zh": "最新主网版本 GreatVoyage-v4.8.2.4 没有抗量子委员会参数：参数表止于 ALLOW_OPTIMIZE_TVM_STORAGE_KEY（第 102 号），所以主网还无法发起启用 Falcon-512 或 ML-DSA-44 的提案。",
      "status": {
       "en": "Not on mainnet",
       "zh": "未上主网"
      },
-     "source_url": "https://api.trongrid.io/wallet/getchainparameters",
-     "verified": true,
-     "checked": true
+     "source_url": "https://github.com/tronprotocol/java-tron/blob/4e8389f159d0782f1ebcd9dab2fd88388c0e6fe9/actuator/src/main/java/org/tron/core/utils/ProposalUtil.java#L1064",
+     "verified": true
     },
     {
      "date": "2026-11-18",
@@ -876,7 +908,7 @@
    "unverified": [],
    "sources": [
     "https://github.com/tronprotocol/tips/issues/899",
-    "https://nile.trongrid.io/wallet/getchainparameters",
+    "https://github.com/tron-nile-testnet/nile-testnet/blob/bc7752b638d9aa4da413c78645dcff1a1aa8e40a/actuator/src/main/java/org/tron/core/utils/ProposalUtil.java#L1095-L1096",
     "https://github.com/tron-nile-testnet/nile-testnet/releases/tag/GreatVoyage-Nile-v4.8.2-PQ1-build1"
    ],
    "network": {
@@ -898,7 +930,22 @@
      "label": "TIP-899"
     }
    ],
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "testnet",
+    "en": "On TRON's Nile testnet an account can add Falcon-512 signers and sign with them; mainnet has no post-quantum parameter switched on.",
+    "zh": "在 TRON 的 Nile 测试网上，账户可以添加 Falcon-512 签名者并用它签名；主网没有启用任何抗量子参数。",
+    "source_url": "https://github.com/tronprotocol/tips/issues/899",
+    "grade": "primary",
+    "date": "2026-06-30"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No audit yet: the TIP-899 author said in July 2026 that the third-party audit plan is not decided.",
+    "zh": "还没有审计：TIP-899 作者 2026 年 7 月表示，第三方审计计划尚未确定。",
+    "source_url": "https://github.com/tronprotocol/tips/issues/899",
+    "grade": "primary"
+   }
   },
   {
    "id": "hyperliquid",
@@ -1113,7 +1160,15 @@
    "code": {
     "repo": "ZcashFoundation/zebra"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "planned",
+    "en": "Zcash puts new shielded funds in the Ironwood pool, and older Sapling or Orchard funds are meant to move there; the Recovery Protocol that would use it is not specified yet.",
+    "zh": "Zcash 把新的屏蔽资金放进 Ironwood 池，较早的 Sapling 或 Orchard 资金需要迁到那里；会用到它的恢复协议还没有写成规范。",
+    "source_url": "https://github.com/zcash/zips/blob/a389d2a7e6054b366d31db9362c8f04ca525daa5/zips/zip-2005.md#L98-L101",
+    "grade": "primary",
+    "date": "2026-07-28"
+   }
   },
   {
    "id": "dogecoin",
@@ -1455,7 +1510,22 @@
      "zh": "提交分布在两个分支上"
     }
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "available",
+    "en": "A Nexus holder can switch a signature chain from Brainpool to Falcon-512 through the profile update command, so existing coins can move to a post-quantum key in place.",
+    "zh": "Nexus 持币人可以用 profile update 命令把签名链从 Brainpool 换成 Falcon-512，已有的币原地换上抗量子密钥。",
+    "source_url": "https://github.com/Nexusoft/LLL-TAO/blob/8af9c3387244b4d396c0e00ee81cea78bb9c0177/src/TAO/API/commands/profiles/update.cpp#L44",
+    "grade": "primary",
+    "date": "2019-11-12"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the Falcon-512 signature-chain code was found.",
+    "zh": "没有找到对 Falcon-512 签名链代码的独立审计。",
+    "source_url": "https://github.com/Nexusoft/LLL-TAO",
+    "grade": "primary"
+   }
   },
   {
    "id": "starknet",
@@ -1556,7 +1626,21 @@
      "eqlabs/pathfinder"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "available",
+    "en": "A Starknet holder can deploy an account from one of three Falcon-512 account classes declared on mainnet and send funds to it. None of the three is audited, and one is a pre-release.",
+    "zh": "Starknet 持币人可以用主网上已声明的三个 Falcon-512 账户类之一部署账户，再把资金转过去；这三个都没有经过审计，其中一个还是预发布版本。",
+    "source_url": "https://github.com/starknet-io/starknet.js/blob/6594d7644ad836c2c66338e37ddefc5a310c2880/src/falcon/accountType.ts#L1",
+    "grade": "primary"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the Falcon-512 account classes was found; OpenZeppelin's verifier repository calls itself experimental and unaudited.",
+    "zh": "没有找到对 Falcon-512 账户类的独立审计；OpenZeppelin 的验证器仓库自己写明是实验性的、未经审计。",
+    "source_url": "https://github.com/OpenZeppelin/cairo-pq-verifiers",
+    "grade": "primary"
+   }
   },
   {
    "id": "algorand",
@@ -1650,7 +1734,22 @@
    "code": {
     "repo": "algorand/go-algorand"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "available",
+    "en": "An Algorand holder can rekey an existing Ed25519 account to a Falcon-1024 account, keeping the same address, now that mainnet consensus version 42 accepts native Falcon accounts.",
+    "zh": "Algorand 持币人可以把已有的 Ed25519 账户 rekey 到 Falcon-1024 账户，地址不变；主网共识版本 42 已接受原生 Falcon 账户。",
+    "source_url": "https://algorand.co/blog/algorand-post-quantum-ledger",
+    "grade": "official",
+    "date": "2026-08-22"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the Falcon-1024 account code was found.",
+    "zh": "没有找到对 Falcon-1024 账户代码的独立审计。",
+    "source_url": "https://github.com/algorand/falcon/tree/19f185792c39326bebc173b2a100c2c247423be3",
+    "grade": "primary"
+   }
   },
   {
    "id": "nervos-ckb",
@@ -1733,7 +1832,24 @@
    "code": {
     "repo": "nervosnetwork/ckb"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "available",
+    "en": "A CKB holder can move coins into cells locked by the SPHINCS+ lock script deployed on mainnet in January 2026.",
+    "zh": "CKB 持币人可以把币转进由 SPHINCS+ 锁定脚本锁定的 cell，这个脚本 2026 年 1 月已部署到主网。",
+    "source_url": "https://github.com/nervosnetwork/quantum-resistant-lock-script/blob/082c0a19ce4e0b2c0b00f7b46f423f59a30afc71/README.md#L28-L61",
+    "grade": "primary",
+    "date": "2026-01-13"
+   },
+   "audit": {
+    "value": "audited",
+    "en": "ScaleBit audited the SPHINCS+ lock script (one minor finding, acknowledged); the SPHINCS+ library underneath was not in scope.",
+    "zh": "ScaleBit 审计了 SPHINCS+ 锁定脚本（一项轻微问题，项目方已确认）；底层 SPHINCS+ 库不在审计范围内。",
+    "source_url": "https://scalebit.xyz/reports/20251216-Quantum-Resistant-Lock-Script-Final-Audit-Report.pdf",
+    "grade": "primary",
+    "auditor": "ScaleBit",
+    "date": "2025-12-16"
+   }
   },
   {
    "id": "raqcoin",
@@ -1828,7 +1944,22 @@
      "abcmint/abcmint"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Raqcoin addresses have signed with Rainbow multivariate signatures since the 2018 genesis, so there are no classical-key coins to move. Keys made with the older Rainbow(16,32,32,32) parameters are publicly broken, which is a separate risk (see Algorithm).",
+    "zh": "自 2018 年创世起，Raqcoin 的每个地址都用 Rainbow 多变量签名，没有传统密钥下的币需要迁移。用旧参数 Rainbow（16,32,32,32）生成的密钥已被公开破解，这是另一项风险，见「算法」。",
+    "source_url": "https://github.com/abcmint/abcmint/blob/50594f47b04b1f0119804eafda9fc9d58ad712cb/src/main.cpp#L2836",
+    "grade": "primary",
+    "date": "2018-06-18"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the Rainbow signature code was found; the abcmint repository has no audit report.",
+    "zh": "没有找到对 Rainbow 签名代码的独立审计；abcmint 仓库里没有审计报告。",
+    "source_url": "https://github.com/abcmint/abcmint/blob/50594f47b04b1f0119804eafda9fc9d58ad712cb/README.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "mochimo",
@@ -1926,7 +2057,22 @@
    "code": {
     "repo": "mochimodev/mochimo"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Mochimo transfers have been signed with WOTS+ one-time signatures since the 2018 launch, so there are no classical-key coins to move.",
+    "zh": "自 2018 年上线起，Mochimo 的转账都用 WOTS+ 一次性签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/mochimodev/mochimo/wiki",
+    "grade": "official",
+    "date": "2018-06-25"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No named independent audit report was found; the changelog mentions fixes from an unnamed audit.",
+    "zh": "没有找到署名的独立审计报告；更新日志提到过一次未署名审计后的修复。",
+    "source_url": "https://github.com/mochimodev/mochimo/blob/bbbaceabe5c21b5d8a094cf34c050d28e4ae93f4/CHANGELOG.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "qrl",
@@ -2104,13 +2250,13 @@
      "date": "2026-11-27",
      "type": "mainnet",
      "grade": "primary",
-     "name": "Network check: QRL 1.x mainnet block #4,442,254 at 11:32 UTC, 1 min before the check.",
-     "zh": "网络核查：QRL 1.x 主网最新区块为第 4,442,254 号，UTC 11:32 出块，距核查 1 分钟。",
+     "name": "Network check: QRL 1.x mainnet block #4,442,254 at 11:32 UTC.",
+     "zh": "网络核查：QRL 1.x 主网第 4,442,254 号区块，UTC 11:32 出块。",
      "status": {
       "en": "Producing blocks",
       "zh": "正常出块"
      },
-     "source_url": "https://explorer.theqrl.org/api/status",
+     "source_url": "https://explorer.theqrl.org/block/4442254",
      "verified": true,
      "checked": true
     }
@@ -2140,7 +2286,24 @@
      "theQRL/go-qrl"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Every QRL 1.x account has signed with XMSS since the June 2018 launch, so there are no classical-key coins to move.",
+    "zh": "自 2018 年 6 月创世起，QRL 1.x 的每个账户都用 XMSS 签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/theQRL/QRL/blob/0c2b205d3798a72e84ec4ddd9f8d8fa9ea17df9b/src/qrl/core/genesis.yml#L1-L8",
+    "grade": "primary",
+    "date": "2018-06-26"
+   },
+   "audit": {
+    "value": "partial",
+    "en": "X41 D-Sec reviewed the XMSS code in 2018. No later audit of the code the 1.x mainnet runs was found; newer audits cover QRL 2.0.",
+    "zh": "X41 D-Sec 在 2018 年审查过 XMSS 代码。没有找到对 1.x 主网现行代码的后续审计；较新的审计针对的是 QRL 2.0。",
+    "source_url": "https://github.com/theQRL/audits/blob/553740e9005b856d76482f529c109d4d2d557c4b/X41-theQRL-Review-2018-Final-Report.pdf",
+    "grade": "primary",
+    "auditor": "X41 D-Sec",
+    "date": "2018-09-01"
+   }
   },
   {
    "id": "tidecoin",
@@ -2233,7 +2396,22 @@
    "code": {
     "repo": "tidecoin/tidecoin"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Tidecoin has signed every mainnet transfer with Falcon-512 since its 2020 genesis, so there are no classical-key coins to move.",
+    "zh": "自 2020 年创世起，Tidecoin 主网每笔转账都用 Falcon-512 签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/tidecoin/tidecoin/blob/78aca4a6b656f43a1efe4b43cf884214219b6c09/README.md#L3",
+    "grade": "primary",
+    "date": "2020-12-27"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the Falcon-512 code was found; the repository has a reporting policy and its own design notes only.",
+    "zh": "没有找到对 Falcon-512 代码的独立审计；仓库里只有漏洞报告政策和项目自己的设计文档。",
+    "source_url": "https://github.com/tidecoin/tidecoin/blob/78aca4a6b656f43a1efe4b43cf884214219b6c09/SECURITY.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "abelian",
@@ -2315,7 +2493,22 @@
    "code": {
     "repo": "pqabelian/abec"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Abelian has used its own lattice-based PQRingCT/PQRingCTX schemes for every transfer since the April 2022 genesis, so there are no classical-key coins to move.",
+    "zh": "自 2022 年 4 月创世起，Abelian 每笔转账都用项目自研的格密码方案 PQRingCT / PQRingCTX，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/pqabelian/abec/blob/35799bed12f326b10df8227aa93646c563d79cb7/chaincfg/genesis.go#L5101",
+    "grade": "primary",
+    "date": "2022-04-17"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit report for the PQRingCT and PQRingCTX code was found.",
+    "zh": "没有找到 PQRingCT 和 PQRingCTX 代码的独立审计报告。",
+    "source_url": "https://github.com/pqabelian/abec/blob/35799bed12f326b10df8227aa93646c563d79cb7/SECURITY.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "cellframe",
@@ -2405,7 +2598,34 @@
      "label": "dap-sdk: Dilithium modes 0 to 3 (dilithium_params.h)",
      "url": "https://github.com/demlabs-cellframe/dap-sdk/blob/0ba2a892e270a844d5d55db612317270896edfa4/crypto/src/sig_dilithium/dilithium_params.h#L30"
     }
-   ]
+   ],
+   "migration": {
+    "value": "native",
+    "en": "The Cellframe node's current code creates Dilithium wallets by default, and every signing option (Dilithium, Falcon, SPHINCS+) is post-quantum, so there are no classical-key native coins to move. This rests on the current code, not on the code at genesis.",
+    "zh": "Cellframe 节点现行代码默认创建 Dilithium 钱包，可选的签名方案（Dilithium、Falcon、SPHINCS+）也都是抗量子的，所以没有传统密钥下的原生币需要迁移。这一点依据的是现行代码，不是创世时的代码。",
+    "source_url": "https://github.com/demlabs-cellframe/cellframe-sdk/blob/efec97eb18b84b4f2705ffe253f35ccb7ac9a015/modules/net/dap_chain_node_cli_cmd.c#L2396-L2401",
+    "grade": "primary",
+    "date": "2026-11-26"
+   },
+   "pq_mainnet_since": {
+    "date": "2023-07-12",
+    "basis": "relaunch",
+    "event": {
+     "en": "The Backbone mainnet went live on new software; its wallets have signed with Dilithium by default since then.",
+     "zh": "Backbone 主网换用新软件上线；此后钱包默认用 Dilithium 签名。"
+    },
+    "source_url": "https://t.me/s/cellframeworld/483",
+    "grade": "official"
+   },
+   "audit": {
+    "value": "partial",
+    "en": "CyStack audited the node and SDK in 2024 but left out the crypto folder, where the Dilithium, Falcon and SPHINCS+ code lives.",
+    "zh": "CyStack 在 2024 年审计了节点和 SDK，但没有包括存放 Dilithium、Falcon、SPHINCS+ 代码的加密目录。",
+    "source_url": "https://s.cystack.net/portal/projects/cellframe_protocol/CyStack_Report_Cellframe_Protocol.pdf",
+    "grade": "primary",
+    "auditor": "CyStack",
+    "date": "2024-10-22"
+   }
   },
   {
    "id": "quantumcoin",
@@ -2495,7 +2715,21 @@
      "label": "Switch block 3,426,263 (defaults/config.go)",
      "url": "https://github.com/quantumcoinproject/quantum-coin-go/blob/a8952bb87e4d0bfe3c8d550662d0bcbbc40c2abd/defaults/config.go#L323"
     }
-   ]
+   ],
+   "migration": {
+    "value": "native",
+    "en": "QuantumCoin has only ever signed with post-quantum hybrids (Ed25519 with Dilithium and SPHINCS+, now ML-DSA and SLH-DSA), so there are no classical-only coins; coins under the earlier pre-standard hybrid are still accepted.",
+    "zh": "QuantumCoin 只用过抗量子混合签名（先是 Ed25519 加 Dilithium 和 SPHINCS+，现在是 ML-DSA 和 SLH-DSA），没有只靠传统签名的币；早期标准发布前版本混合签名下的币仍然有效。",
+    "source_url": "https://github.com/quantumcoinproject/quantum-coin-go/blob/a8952bb87e4d0bfe3c8d550662d0bcbbc40c2abd/crypto/cryptobase/cryptobase.go#L309-L320",
+    "grade": "primary"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit report for the hybrid signing code was found.",
+    "zh": "没有找到混合签名代码的独立审计报告。",
+    "source_url": "https://github.com/quantumcoinproject/quantum-coin-go/blob/a8952bb87e4d0bfe3c8d550662d0bcbbc40c2abd/README.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "neptune-cash",
@@ -2602,7 +2836,7 @@
       "en": "No public block API was reachable (explorer.neptune.cash returned HTTP 502 on 2026-11-27), so block height and timing could not be checked.",
       "zh": "没有可用的公开出块接口（2026-11-27 访问 explorer.neptune.cash 返回 HTTP 502），所以无法核对区块高度和出块时间。"
      },
-     "url": "https://explorer.neptune.cash"
+     "url": "https://neptune.cash/"
     }
    ],
    "network": {
@@ -2617,7 +2851,22 @@
    "code": {
     "repo": "Neptune-Crypto/neptune-core"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Neptune spends are authorised by hash-preimage locks checked in STARK proofs, with no elliptic-curve signature, so there are no classical-key coins to move.",
+    "zh": "Neptune 的花费由 STARK 证明中校验的哈希原像锁授权，不用椭圆曲线签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/Neptune-Crypto/neptune-core/commit/8b155690e8a1d4e29b29e073f6dc6726ed565f1e",
+    "grade": "primary",
+    "date": "2025-08-05"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No published audit report was found. Spending uses hash locks checked in a STARK proof, not a signature.",
+    "zh": "没有找到公开的审计报告。花费用 STARK 证明中校验的哈希锁，不用签名。",
+    "source_url": "https://github.com/Neptune-Crypto/neptune-core/blob/4b239d87fc1ca82955c9351dd77045c89f1972ae/README.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "quantus",
@@ -2717,7 +2966,24 @@
      "label": "quantus-cli: command-line wallet default scheme",
      "url": "https://github.com/Quantus-Network/quantus-cli/blob/702c4ff7843adae36cb647580282212d6913f52b/src/wallet/keystore.rs#L40-L43"
     }
-   ]
+   ],
+   "migration": {
+    "value": "native",
+    "en": "Quantus mainnet has signed with ML-DSA by default since its 9 September 2026 launch, so there are no classical-key coins to move.",
+    "zh": "自 2026 年 9 月 9 日主网上线起，Quantus 默认用 ML-DSA 签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/Quantus-Network/chain/blob/75fe2ccc8a77f93a016259b9e8772cb386cb23ee/primitives/dilithium-crypto/src/types.rs#L71-L74",
+    "grade": "primary",
+    "date": "2026-09-09"
+   },
+   "audit": {
+    "value": "partial",
+    "en": "Neodyme audited the ML-DSA-87 library and HD wallet in late 2025; mainnet runs a later version that added ML-DSA-65 and rewrote large parts.",
+    "zh": "Neodyme 在 2025 年底审计了 ML-DSA-87 库和分层钱包；主网运行的是之后的版本，加入了 ML-DSA-65，并大幅改写。",
+    "source_url": "https://neodyme.io/reports/Quantus_Dilithium_HDWallet.pdf",
+    "grade": "primary",
+    "auditor": "Neodyme",
+    "date": "2025-12-15"
+   }
   },
   {
    "id": "xcoin",
@@ -2791,7 +3057,22 @@
    "code": {
     "repo": "SystemThreat/xCoin"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "xCoin spends use only ML-DSA-65 or SLH-DSA leaves with no ECDSA or Schnorr path, and mainnet began in September 2026, so there are no classical-key coins to move.",
+    "zh": "xCoin 的花费只走 ML-DSA-65 或 SLH-DSA 叶子，没有 ECDSA 或 Schnorr 路径，主网 2026 年 9 月才开始，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/SystemThreat/xCoin/blob/4e81e950d73e273011594cb7a93babb601b3357b/README.md#L562",
+    "grade": "primary",
+    "date": "2026-09-26"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit was found; the ML-DSA-65 code is a modified PQClean copy whose upstream version is not recorded.",
+    "zh": "没有找到独立审计；ML-DSA-65 代码是改动过的 PQClean 副本，没有记录上游版本。",
+    "source_url": "https://github.com/SystemThreat/xCoin/blob/4e81e950d73e273011594cb7a93babb601b3357b/src/pqcrypto/ml-dsa-65/PQCLEAN",
+    "grade": "primary"
+   }
   },
   {
    "id": "qtcchain",
@@ -2893,7 +3174,22 @@
    "code": {
     "repo": "qtcchain/qtc"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "qtcchain v2 mainnet has signed with ML-DSA-44 by default since its October 2026 genesis, so there are no classical-key coins to move.",
+    "zh": "自 2026 年 10 月创世起，qtcchain v2 主网默认用 ML-DSA-44 签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/qtcchain/qtc/releases/tag/v0.2.0",
+    "grade": "primary",
+    "date": "2026-10-05"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit was found; the repository has the project's own review and an audit of inherited code outside the signature path.",
+    "zh": "没有找到独立审计；仓库里只有项目自查，以及一份不涉及签名代码的继承代码审计。",
+    "source_url": "https://github.com/qtcchain/qtc/blob/5adbc7d5c2ac252804fd3c61fce3b9bbc3ad9c24/QTC-SECURITY-REVIEW.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "soqucoin",
@@ -2970,7 +3266,24 @@
    "code": {
     "repo": "soqucoin/soqucoin"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "native",
+    "en": "Soqucoin has taken ECDSA out of transaction authorisation since block 0 and uses ML-DSA-44, so there are no classical-key coins to move.",
+    "zh": "Soqucoin 从第 0 个区块起就把 ECDSA 移出了交易授权，改用 ML-DSA-44，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/soqucoin/soqucoin/blob/019f5ab3af10d49a3e1f386516fb821f54cd8b20/README.md#L145",
+    "grade": "primary",
+    "date": "2026-10-13"
+   },
+   "audit": {
+    "value": "audited",
+    "en": "Halborn audited the ML-DSA-44 code, signature aggregation and wallet (Feb to Mar 2026); every finding is marked solved.",
+    "zh": "Halborn 审计了 ML-DSA-44 代码、签名聚合和钱包（2026 年 2 月至 3 月），所有发现都标为已修复。",
+    "source_url": "https://www.halborn.com/audits/soqucoin/soqucoin-blockchain-node-a4f1f7",
+    "grade": "primary",
+    "auditor": "Halborn",
+    "date": "2026-04-17"
+   }
   },
   {
    "id": "qanplatform",
@@ -3046,7 +3359,15 @@
      "zh": "未找到公开的节点代码库"
     }
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "unknown",
+    "en": "QAN documents ML-DSA pairing with secp256k1 on its testnet only; no mainnet migration mechanism could be confirmed from primary sources.",
+    "zh": "QAN 只写了测试网上 ML-DSA 与 secp256k1 配对使用；从原始出处无法确认主网有迁移办法。",
+    "source_url": "https://github.com/QANplatform/docs/commit/86e989de7ddee89ae737a5d191f7f806ba6c8e1a",
+    "grade": "official",
+    "date": "2026-04-17"
+   }
   },
   {
    "id": "bitcoin-cash",
@@ -3380,7 +3701,15 @@
    "code": {
     "repo": "litecoin-project/litecoin"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "none",
+    "en": "Litecoin has no post-quantum signature or migration proposal; a maintainer said in September 2026 that the team is looking into it.",
+    "zh": "莱特币没有抗量子签名或迁移提案；一位维护者 2026 年 9 月表示团队正在研究。",
+    "source_url": "https://github.com/litecoin-project/litecoin/issues/1104",
+    "grade": "primary",
+    "date": "2026-09-09"
+   }
   },
   {
    "id": "ethereum-classic",
@@ -4323,7 +4652,22 @@
      "near/near-cli-rs"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "available",
+    "en": "A NEAR holder can add an ML-DSA-65 access key to an existing account with near-cli-rs and then delete the classical keys.",
+    "zh": "NEAR 持币人可以用 near-cli-rs 给已有账户加一把 ML-DSA-65 访问密钥，再删掉传统密钥。",
+    "source_url": "https://github.com/near/nearcore/releases/tag/2.13.0",
+    "grade": "primary",
+    "date": "2026-07-20"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the ML-DSA-65 integration was found; the design document leaves an outside audit undecided.",
+    "zh": "没有找到对 ML-DSA-65 集成的独立审计；设计文档里是否请外部审计还没有定。",
+    "source_url": "https://github.com/near/nearcore/blob/499283a5e3a6f8ea52bc068c28e3a7bebb1e38c0/docs/architecture/how/post_quantum_signatures.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "avalanche",
@@ -4716,18 +5060,17 @@
      "verified": true
     },
     {
-     "date": "2026-11-27",
+     "date": "2026-11-09",
      "type": "mainnet",
      "grade": "primary",
-     "name": "Cosmos Hub node_info: gaia v29.1.0 built on Cosmos SDK v0.53.8; auth parameters have signature costs only for ed25519 and secp256k1.",
-     "zh": "Cosmos Hub 节点信息：gaia v29.1.0，基于 Cosmos SDK v0.53.8；auth 参数只有 ed25519 和 secp256k1 的签名成本。",
+     "name": "gaia v29.1.0, the latest Cosmos Hub release, is built on Cosmos SDK v0.53.8, whose auth parameters price only ed25519 and secp256k1 signatures.",
+     "zh": "Cosmos Hub 最新版本 gaia v29.1.0 基于 Cosmos SDK v0.53.8，其 auth 参数只给 ed25519 和 secp256k1 签名定价。",
      "status": {
       "en": "Not on the Hub",
       "zh": "Hub 未上线"
      },
-     "source_url": "https://cosmos-rest.publicnode.com/cosmos/base/tendermint/v1beta1/node_info",
-     "verified": true,
-     "checked": true
+     "source_url": "https://github.com/cosmos/gaia/blob/f4e63e3abe4a4ced05533ca572d344bf774a2cad/go.mod#L25",
+     "verified": true
     }
    ],
    "unverified": [],
@@ -4745,7 +5088,7 @@
     "https://github.com/cosmos/cosmos-sdk/pull/26472",
     "https://github.com/cosmos/cosmos-sdk/blob/main/CHANGELOG.md",
     "https://github.com/cosmos/cosmos-sdk/pull/26872",
-    "https://cosmos-rest.publicnode.com/cosmos/base/tendermint/v1beta1/node_info",
+    "https://github.com/cosmos/gaia/blob/f4e63e3abe4a4ced05533ca572d344bf774a2cad/go.mod#L25",
     "https://github.com/cosmos/cosmos-sdk/issues/26954"
    ],
    "network": {
@@ -5017,13 +5360,13 @@
      "date": "2026-11-23",
      "type": "mainnet",
      "grade": "primary",
-     "name": "Protocol 30 live on mainnet from ledger 65633432 (Horizon reports current_protocol_version 30): Soroban contracts can verify ML-DSA-44/65/87 signatures. Classic accounts and transaction signatures are unchanged.",
-     "zh": "Protocol 30 自第 65633432 号账本起在主网生效（Horizon 显示 current_protocol_version 为 30）：Soroban 合约可以验证 ML-DSA-44/65/87 签名。经典账户和交易签名不变。",
+     "name": "Protocol 30 live on mainnet from ledger 65633432 (StellarExpert shows protocol 30 from this ledger; the ledger before it is protocol 29): Soroban contracts can verify ML-DSA-44/65/87 signatures. Classic accounts and transaction signatures are unchanged.",
+     "zh": "Protocol 30 自第 65633432 号账本起在主网生效（StellarExpert 显示从这个账本起为协议版本 30，前一个账本为 29）：Soroban 合约可以验证 ML-DSA-44/65/87 签名。经典账户和交易签名不变。",
      "status": {
       "en": "Live on mainnet, contract level only (does not raise the stage)",
       "zh": "主网已上线，仅限合约层（不提升档位）"
      },
-     "source_url": "https://horizon.stellar.org/ledgers/65633432",
+     "source_url": "https://stellar.expert/explorer/public/ledger/65633432",
      "verified": true
     }
    ],
@@ -5042,7 +5385,7 @@
     "https://github.com/stellar/stellar-protocol/blob/master/core/cap-0087.md",
     "https://github.com/stellar/stellar-core/releases/tag/v30.0.0",
     "https://github.com/orgs/stellar/discussions/2057",
-    "https://horizon.stellar.org/ledgers/65633432"
+    "https://stellar.expert/explorer/public/ledger/65633432"
    ],
    "network": {
     "probe": {
@@ -5059,7 +5402,14 @@
      "stellar/stellar-protocol"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "planned",
+    "en": "Stellar's Quantum Preparedness Plan would let classic accounts add a post-quantum signer through set_options in 2027, after which the old signer can be removed.",
+    "zh": "Stellar 的量子准备计划提出，2027 年让经典账户通过 set_options 添加抗量子签名者，之后可以移除旧签名者。",
+    "source_url": "https://stellar.org/blog/foundation-news/introducing-the-quantum-preparedness-plan",
+    "grade": "official"
+   }
   },
   {
    "id": "ton",
@@ -5252,13 +5602,13 @@
     }
    },
    "stage_basis": {
-    "en": "ML-DSA-65 account signatures are switched on in Sui's public testnet (protocol 144). Mainnet, at protocol 142, still has them off.",
-    "zh": "Sui 公开测试网（协议版本 144）已启用 ML-DSA-65 账户签名；主网仍在协议版本 142，尚未启用。"
+    "en": "ML-DSA-65 account signatures are switched on in Sui's public testnet (protocol 143 and later). The latest mainnet release, at protocol 142, still has them off.",
+    "zh": "Sui 公开测试网（协议版本 143 起）已启用 ML-DSA-65 账户签名；最新主网版本处于协议版本 142，尚未启用。"
    },
    "latest_step": {
-    "date": "2026-11-26",
-    "text": "Sui testnet moved to protocol version 144 at the start of epoch 1296, switching on ML-DSA-65 account signatures (enabled from protocol 143).",
-    "zh": "Sui 测试网在第 1296 个纪元开始时升级到协议版本 144，ML-DSA-65 账户签名随之开启（自协议版本 143 起启用）。"
+    "date": "2026-11-24",
+    "text": "Sui testnet release testnet-v1.85.1 moved testnet to protocol 143, switching on ML-DSA-65 account signatures.",
+    "zh": "Sui 测试网版本 testnet-v1.85.1 把测试网升到协议版本 143，ML-DSA-65 账户签名随之开启。"
    },
    "milestones": [
     {
@@ -5327,31 +5677,30 @@
      "verified": true
     },
     {
-     "date": "2026-11-26",
+     "date": "2026-11-24",
      "type": "testnet",
      "grade": "primary",
-     "name": "Testnet reaches protocol 144 (epoch 1296); GraphQL protocolConfigs shows mldsa65_auth = true, so ML-DSA-65 signatures can authorise testnet transfers.",
-     "zh": "测试网升级到协议版本 144（第 1296 个纪元）；GraphQL protocolConfigs 显示 mldsa65_auth = true，ML-DSA-65 签名可以授权测试网转账。",
+     "name": "Testnet release testnet-v1.85.1 moves Sui testnet to protocol 143, from which the protocol config switches on mldsa65_auth (ML-DSA-65 account signatures) on every network except mainnet, so ML-DSA-65 signatures can authorise testnet transfers.",
+     "zh": "测试网版本 testnet-v1.85.1 把 Sui 测试网升到协议版本 143（protocol 143）；从这个版本起，协议配置在主网以外的所有网络打开 mldsa65_auth（ML-DSA-65 账户签名），ML-DSA-65 签名可以授权测试网转账。",
      "status": {
       "en": "Live on testnet",
       "zh": "测试网已上线"
      },
-     "source_url": "https://graphql.testnet.sui.io/graphql",
+     "source_url": "https://github.com/MystenLabs/sui/releases/tag/testnet-v1.85.1",
      "verified": true
     },
     {
-     "date": "2026-11-27",
+     "date": "2026-11-20",
      "type": "mainnet",
      "grade": "primary",
-     "name": "Mainnet at protocol 142; GraphQL protocolConfigs shows mldsa65_auth = false.",
-     "zh": "主网处于协议版本 142；GraphQL protocolConfigs 显示 mldsa65_auth = false。",
+     "name": "The latest mainnet release, mainnet-v1.84.2, is at protocol 142; the protocol config leaves mldsa65_auth off on mainnet.",
+     "zh": "最新主网版本 mainnet-v1.84.2 处于协议版本 142；协议配置让主网的 mldsa65_auth 保持关闭。",
      "status": {
       "en": "Not on mainnet",
       "zh": "主网未上线"
      },
-     "source_url": "https://graphql.mainnet.sui.io/graphql",
-     "verified": true,
-     "checked": true
+     "source_url": "https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.84.2",
+     "verified": true
     }
    ],
    "unverified": [],
@@ -5369,8 +5718,8 @@
     "https://github.com/MystenLabs/fastcrypto/pull/1001",
     "https://github.com/MystenLabs/sui/pull/27810",
     "https://github.com/MystenLabs/sui/pull/28530",
-    "https://graphql.testnet.sui.io/graphql",
-    "https://graphql.mainnet.sui.io/graphql"
+    "https://github.com/MystenLabs/sui/releases/tag/testnet-v1.85.1",
+    "https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.84.2"
    ],
    "network": {
     "probe": {
@@ -5401,7 +5750,22 @@
      "sui-foundation/sips"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "testnet",
+    "en": "On Sui testnet an account can sign with ML-DSA-65, so test coins can be sent to a post-quantum address; mainnet still has it off, and in-place address aliases are a Q1 2027 target.",
+    "zh": "在 Sui 测试网上，账户可以用 ML-DSA-65 签名，测试币可以转到抗量子地址；主网仍未开启，原地启用地址别名的目标是 2027 年第一季度。",
+    "source_url": "https://github.com/MystenLabs/sui/releases/tag/testnet-v1.85.1",
+    "grade": "primary",
+    "date": "2026-11-24"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the Sui integration was found. The underlying mldsa-native library has formal proofs, which Mysten Labs re-ran.",
+    "zh": "没有找到对 Sui 集成代码的独立审计。底层 mldsa-native 库有形式化证明，Mysten Labs 重新跑过。",
+    "source_url": "https://github.com/MystenLabs/mysten-mldsa-native-rs/blob/6026df816483127133f464f3be7c08fd98ff4904/VERIFICATION.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "hedera",
@@ -6026,7 +6390,22 @@
      "opentensor/bittensor"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-27",
+   "migration": {
+    "value": "available",
+    "en": "A Bittensor holder can create an ML-DSA-65 or Falcon account and transfer TAO to it; the spec says changing scheme creates a new identity, so assets move by ordinary transfer.",
+    "zh": "Bittensor 持币人可以新建 ML-DSA-65 或 Falcon 账户，再把 TAO 转过去；规范写明换签名方案就是换一个新身份，所以资产靠普通转账迁移。",
+    "source_url": "https://github.com/RaoFoundation/subtensor/blob/24e1fc7b12ea7ce9d390925dac602ba961997824/docs/design/ml-dsa-accounts-spec.md#L83",
+    "grade": "primary",
+    "date": "2026-11-05"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the ML-DSA-65 and Falcon account code was found.",
+    "zh": "没有找到对 ML-DSA-65 和 Falcon 账户代码的独立审计。",
+    "source_url": "https://github.com/RaoFoundation/subtensor/blob/b6a81d144078eac18bd25c3af7cb31579bb670f3/docs/design/ml-dsa-accounts-spec.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "cronos",
@@ -7765,17 +8144,6 @@
       "zh": "只是线索；未打开交易所公告核对。"
      },
      "url": "https://x.com/i/status/2120897299991929216"
-    },
-    {
-     "claim": {
-      "en": "CoinGecko lists SPLD (id 'splendor').",
-      "zh": "CoinGecko 收录了 SPLD（id 为 splendor）。"
-     },
-     "reason": {
-      "en": "We did not check whether that listing tracks the legacy chain-2691 asset or native Quantum SPLD, so it is not used as this chain's heat signal or coingecko_id.",
-      "zh": "未核对该条目跟踪的是旧链 2691 上的资产还是 Quantum 链原生 SPLD，所以不作为本链的热度信号，也不填 coingecko_id。"
-     },
-     "url": "https://api.coingecko.com/api/v3/search?query=splendor"
     }
    ],
    "searched": [
@@ -7818,7 +8186,32 @@
     ]
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "splendor-quantum"
+   "projects_id": "splendor-quantum",
+   "migration": {
+    "value": "planned",
+    "en": "Native SPLD on Splendor Quantum is ML-DSA-65 from genesis, but SPLD still on the legacy EVM chain 2691 moves only through a planned 1:1 migration whose bridge is not yet published.",
+    "zh": "Splendor Quantum 上的原生 SPLD 从创世起就用 ML-DSA-65；但仍在旧 EVM 链 2691 上的 SPLD，只能通过计划中的 1:1 迁移转过来，迁移桥还没有公布。",
+    "source_url": "https://splendor.org/news/splendor-quantum-migration",
+    "grade": "official",
+    "date": "2026-11-13"
+   },
+   "pq_mainnet_since": {
+    "date": "2026-09-21",
+    "basis": "relaunch",
+    "event": {
+     "en": "The current splendor-quantum-1 mainnet was re-minted with ML-DSA-65 accounts, transactions and blocks from genesis.",
+     "zh": "现在的 splendor-quantum-1 主网重新铸造创世区块，从创世起账户、交易和区块都用 ML-DSA-65。"
+    },
+    "source_url": "https://github.com/Splendor-Protocol/splendor-quantum-blockchain/blob/ee3e84e2b58399cd5ea2f0e3c69958f06f1d0f39/readme.md",
+    "grade": "official"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "The project states there has been no independent audit of the codebase or its ML-DSA-65 code.",
+    "zh": "项目自己说明，代码库和 ML-DSA-65 实现都没有经过独立审计。",
+    "source_url": "https://github.com/Splendor-Protocol/splendor-quantum-blockchain/blob/ee3e84e2b58399cd5ea2f0e3c69958f06f1d0f39/readme.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "qbit",
@@ -7991,7 +8384,22 @@
     "repo": "Qbit-Org/qbit"
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "qbit"
+   "projects_id": "qbit",
+   "migration": {
+    "value": "native",
+    "en": "Qbit mainnet has allowed only post-quantum P2MR outputs with SLH-DSA-family spends since its July 2026 genesis, so there are no classical-key coins to move.",
+    "zh": "自 2026 年 7 月创世起，Qbit 主网只允许抗量子的 P2MR 输出，用 SLH-DSA 家族签名花费，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/Qbit-Org/qbit/blob/d868462af42b38820c22ecf3d9016e775d922bb6/src/kernel/chainparams.cpp#L152-L199",
+    "grade": "primary",
+    "date": "2026-07-15"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit was found; the bounded SLH-DSA profile is reviewed and fuzzed in-house only.",
+    "zh": "没有找到独立审计；受限的 SLH-DSA 配置只有项目内部审查和模糊测试。",
+    "source_url": "https://github.com/Qbit-Org/qbit/blob/d868462af42b38820c22ecf3d9016e775d922bb6/doc/subtrees/libbitcoinpqc.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "discrete",
@@ -8086,20 +8494,6 @@
      },
      "source_url": "https://github.com/discretecoin/discrete/releases/tag/v.0.9.10",
      "verified": true
-    },
-    {
-     "date": "2026-11-27",
-     "type": "mainnet",
-     "grade": "primary",
-     "name": "Mainnet node answers getlastblockheader at height 118,279.",
-     "zh": "主网节点 getlastblockheader 返回高度 118,279。",
-     "status": {
-      "en": "Checked",
-      "zh": "已核实"
-     },
-     "source_url": "https://seed1.discrete.cash:9332/json_rpc",
-     "verified": true,
-     "checked": true
     }
    ],
    "unverified": [],
@@ -8112,7 +8506,6 @@
    "sources": [
     "https://discrete.cash/",
     "https://github.com/discretecoin/discrete/releases/tag/v.0.9.10",
-    "https://seed1.discrete.cash:9332/json_rpc",
     "https://github.com/discretecoin/discrete/commit/95271fc6b72a434014c53308f2820553417527e3"
    ],
    "network": {
@@ -8148,7 +8541,22 @@
     ]
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "discrete"
+   "projects_id": "discrete",
+   "migration": {
+    "value": "native",
+    "en": "Every Discrete output belongs to an ML-DSA-65 spend key from the July 2026 genesis, so there are no classical-key coins to move.",
+    "zh": "自 2026 年 7 月创世起，Discrete 的每个输出都属于一个 ML-DSA-65 花费密钥，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/discretecoin/discrete/releases/tag/v.0.9.10",
+    "grade": "primary",
+    "date": "2026-07-15"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit was found; the ML-DSA code is vendored liboqs, and the project says outside review is still needed.",
+    "zh": "没有找到独立审计；ML-DSA 代码来自内置的 liboqs，项目自己说仍需要外部审查。",
+    "source_url": "https://github.com/discretecoin/discrete/blob/95271fc6b72a434014c53308f2820553417527e3/README.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "dilithion",
@@ -8321,7 +8729,22 @@
     ]
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "dilithion"
+   "projects_id": "dilithion",
+   "migration": {
+    "value": "native",
+    "en": "Dilithion has signed every DIL transfer with ML-DSA-65-sized keys since its January 2026 launch, so there are no classical-key coins to move on the native chain.",
+    "zh": "自 2026 年 1 月上线起，Dilithion 每笔 DIL 转账都用 ML-DSA-65 规格的密钥签名，原生链上没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/README.md#L44-L46",
+    "grade": "official",
+    "date": "2026-01-28"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No audit report is published; the README says a Hacken engagement is planned.",
+    "zh": "没有公开的审计报告；README 说计划请 Hacken 审计。",
+    "source_url": "https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/README.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "parano1d",
@@ -8495,7 +8918,22 @@
     ]
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "parano1d"
+   "projects_id": "parano1d",
+   "migration": {
+    "value": "native",
+    "en": "Parano1d spends use hash-based zero-knowledge proofs of a secret and no public-key signature since the August 2026 genesis, so there are no classical-key coins to move.",
+    "zh": "自 2026 年 8 月创世起，Parano1d 的花费都用基于哈希的零知识证明来证明掌握秘密，不用公钥签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/ignotusnemo/parano1d/blob/bf9175a2aa8a95998e8b25c8ae9ce7ac03eed1f2/README.md#L125",
+    "grade": "primary",
+    "date": "2026-08-21"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit was found; the proof system is the project's own design, reviewed only by its authors.",
+    "zh": "没有找到独立审计；证明系统是项目自己设计的，只有作者自己的审查。",
+    "source_url": "https://github.com/ignotusnemo/parano1d/blob/bf9175a2aa8a95998e8b25c8ae9ce7ac03eed1f2/docs/protocol/security-model.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "aere-network",
@@ -8660,7 +9098,22 @@
     ]
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "aere-network"
+   "projects_id": "aere-network",
+   "migration": {
+    "value": "available",
+    "en": "An Aere holder can send funds to an account made from an ML-DSA key and spend it with type-0x50 transactions that carry no classical signature.",
+    "zh": "Aere 持币人可以把资金转到由 ML-DSA 密钥生成的账户，再用不带传统签名的 0x50 类型交易花费。",
+    "source_url": "https://git.aere.network/aere-network/aere-research/src/commit/6e0f7d6363bfde59f4703c371648aa1bbcd58949/aips/AIP-20.md",
+    "grade": "primary",
+    "date": "2026-09-23"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "The project's audits page says no external audit has been completed.",
+    "zh": "项目的审计页面写明还没有完成任何外部审计。",
+    "source_url": "https://aere.network/audits.html",
+    "grade": "official"
+   }
   },
   {
    "id": "qorechain",
@@ -8711,8 +9164,8 @@
     }
    },
    "stage_basis": {
-    "en": "Mainnet x/pqc parameters read from https://api.qore.host/qorechain/pqc/v1/params: hybrid_signature_mode = required, allow_classical_fallback = false, default algorithm Dilithium-5 (ML-DSA-87). Cosmos-lane transactions therefore need an ML-DSA-87 signature alongside the classical one, and the EVM lane only accepts transactions inside a window opened by a PQ-signed message (README). Inside an open window, EVM transactions are authorized by secp256k1 alone.",
-    "zh": "从主网接口读到的 x/pqc 参数：hybrid_signature_mode = required，allow_classical_fallback = false，默认算法 Dilithium-5（ML-DSA-87）。所以 Cosmos 通道的交易除传统签名外还必须带 ML-DSA-87 签名；EVM 通道只接受在抗量子签名消息开启的时间窗口内提交的交易（见 README）。窗口开启期间，EVM 交易只靠 secp256k1 授权。"
+    "en": "The x/pqc defaults in qorechain-core v3.2.8, which the mainnet init script does not override: hybrid_signature_mode = required, allow_classical_fallback = false, default algorithm Dilithium-5 (ML-DSA-87). Cosmos-lane transactions therefore need an ML-DSA-87 signature alongside the classical one, and the EVM lane only accepts transactions inside a window opened by a PQ-signed message (README). Inside an open window, EVM transactions are authorized by secp256k1 alone.",
+    "zh": "qorechain-core v3.2.8 中 x/pqc 的默认参数（主网初始化脚本没有改动）：hybrid_signature_mode = required，allow_classical_fallback = false，默认算法 Dilithium-5（ML-DSA-87）。所以 Cosmos 通道的交易除传统签名外还必须带 ML-DSA-87 签名；EVM 通道只接受在抗量子签名消息开启的时间窗口内提交的交易（见 README）。窗口开启期间，EVM 交易只靠 secp256k1 授权。"
    },
    "pq_mainnet_since": {
     "date": "2026-06-29",
@@ -8740,7 +9193,7 @@
       "en": "Live",
       "zh": "运行中"
      },
-     "source_url": "https://rpc.qore.host/block?height=1",
+     "source_url": "https://explore.qore.network/block/1",
      "verified": true
     },
     {
@@ -8757,18 +9210,17 @@
      "verified": true
     },
     {
-     "date": "2026-11-27",
+     "date": "2026-11-24",
      "type": "mainnet",
      "grade": "primary",
-     "name": "Mainnet PQC parameters: hybrid signatures required, classical fallback off.",
-     "zh": "主网抗量子参数：混合签名必需，经典回退关闭。",
+     "name": "qorechain-core v3.2.8 sets the x/pqc defaults to hybrid signatures required, classical fallback off and Dilithium-5 (ML-DSA-87) as the default algorithm; the mainnet init script does not override them.",
+     "zh": "qorechain-core v3.2.8 的 x/pqc 默认参数：混合签名必需、经典回退关闭、默认算法 Dilithium-5（ML-DSA-87）；主网初始化脚本没有改动这些默认值。",
      "status": {
       "en": "Checked",
       "zh": "已核实"
      },
-     "source_url": "https://api.qore.host/qorechain/pqc/v1/params",
-     "verified": true,
-     "checked": true
+     "source_url": "https://github.com/qorechain/qorechain-core/blob/f0860795c974042c4a160933bae38c4b83549356/x/pqc/types/params.go#L22-L34",
+     "verified": true
     }
    ],
    "unverified": [
@@ -8787,14 +9239,13 @@
    "searched": [
     "qorechain/qorechain-core README (hybrid signatures, EVM windows, enforcement modes), releases",
     "download.qore.host/mainnet/latest.json and /testnet/latest.json (chain ids, RPC servers)",
-    "rpc.qore.host: /status, /validators (Ed25519 keys), /block?height=1",
-    "api.qore.host: /qorechain/pqc/v1/params, node_info (qorechain-vladi)",
-    "CoinGecko search 'qorechain': listed as qorechain (QOR)"
+    "CoinGecko search 'qorechain': listed as qorechain (QOR)",
+    "Live x/pqc parameters and block heights were read from the project's public node on 2026-11-27 to confirm the code defaults; no web page shows them."
    ],
    "sources": [
-    "https://rpc.qore.host/block?height=1",
+    "https://explore.qore.network/block/1",
     "https://github.com/qorechain/qorechain-core/releases/tag/v3.2.8",
-    "https://api.qore.host/qorechain/pqc/v1/params"
+    "https://github.com/qorechain/qorechain-core/blob/f0860795c974042c4a160933bae38c4b83549356/x/pqc/types/params.go#L22-L34"
    ],
    "network": {
     "probe": {
@@ -8813,7 +9264,22 @@
     ]
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "qorechain"
+   "projects_id": "qorechain",
+   "migration": {
+    "value": "native",
+    "en": "QoreChain has required an ML-DSA-87 signature alongside the classical one since mainnet began in June 2026; an account registers its ML-DSA key once, so there are no classical-only coins to move.",
+    "zh": "自 2026 年 6 月主网开始，QoreChain 就要求在传统签名之外再带 ML-DSA-87 签名；账户只需登记一次 ML-DSA 密钥，没有只靠传统签名的币需要迁移。",
+    "source_url": "https://github.com/qorechain/qorechain-core/blob/dbd55d11c125de066cd6958bd57c76023bd5bd93/README.md#L169",
+    "grade": "primary",
+    "date": "2026-06-29"
+   },
+   "audit": {
+    "value": "none_found",
+    "en": "No independent audit of the ML-DSA-87 code was found; the changelog mentions an unnamed earlier audit.",
+    "zh": "没有找到对 ML-DSA-87 代码的独立审计；更新日志提到过一次未署名的早期审计。",
+    "source_url": "https://github.com/qorechain/qorechain-core/blob/dbd55d11c125de066cd6958bd57c76023bd5bd93/SECURITY.md",
+    "grade": "primary"
+   }
   },
   {
    "id": "minima",
@@ -8951,7 +9417,22 @@
     "repo": "minima-global/Minima"
    },
    "last_reviewed": "2026-11-27",
-   "projects_id": "minima"
+   "projects_id": "minima",
+   "migration": {
+    "value": "native",
+    "en": "Minima coins are spent with Winternitz hash-based signatures from a key tree, and the node has no elliptic-curve code, so there are no classical-key coins to move.",
+    "zh": "Minima 的币用密钥树里的 Winternitz 哈希签名花费，节点里没有椭圆曲线代码，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/objects/keys/Winternitz.java",
+    "grade": "primary"
+   },
+   "audit": {
+    "value": "partial",
+    "en": "Hacken's 2023 audit of the protocol lists signatures in scope, but at a 2022 commit; the key-tree code changed again in 2025.",
+    "zh": "Hacken 2023 年对协议的审计把签名列入范围，但审的是 2022 年的提交；密钥树代码 2025 年又改过。",
+    "source_url": "https://hacken.io/audits/minima",
+    "grade": "primary",
+    "auditor": "Hacken"
+   }
   }
  ],
  "not_listed_reasons": {

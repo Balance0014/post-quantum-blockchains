@@ -40,10 +40,10 @@
   },
   {
    "id": "tron-nile-pq",
-   "fact": "The TRON Nile testnet build GreatVoyage-Nile-v4.8.2-PQ1 adds Falcon-512 (FN-DSA-512) and ML-DSA-44, each switched on by its own committee proposal; on Nile, Falcon-512 is on.",
+   "fact": "The TRON Nile testnet build GreatVoyage-Nile-v4.8.2-PQ1 adds Falcon-512 (FN-DSA-512) and ML-DSA-44, each switched on by its own committee proposal; Nile proposal 20628 switched Falcon-512 on.",
    "data": [
     {"chain": "tron", "field": "stage", "equals": 3},
-    {"chain": "tron", "field": "milestones", "contains": ["getAllowFnDsa512 = 1"]}
+    {"chain": "tron", "field": "milestones", "contains": ["ALLOW_FN_DSA_512", "20628"]}
    ],
    "source": {"release": "tron-nile-testnet/nile-testnet", "tag": "GreatVoyage-Nile-v4.8.2-PQ1-build1", "contains": ["FN-DSA-512", "committee proposal"]}
   },

@@ -170,6 +170,28 @@ def validate_chains():
             require(n.get('probe'),f'An independent check needs a probe to check: {cid}')
             https(n['check']['url'],f'{cid}.network.check')
         require(n.get('source_kind') in (None,'project','community'),f'network.source_kind is project or community: {cid}')
+        # Researched dimensions: how existing coins move (stage 2 and up), whether the post-quantum code is audited
+        # (stage 3 and up), and coins behind exposed public keys (published research only). Each carries its source.
+        for key,values,min_stage in (('migration',{'native','available','testnet','planned','none','unknown'},2),
+                                     ('audit',{'audited','partial','none_found','unknown'},3)):
+            x=c.get(key)
+            if c['stage']>=min_stage and key=='migration':
+                require(x,f'Stage {c["stage"]} needs a migration entry: {cid}')
+            if x:
+                require(c['stage']>=min_stage,f'{key} is recorded only from stage {min_stage}: {cid}')
+                require(x.get('value') in values,f'{key}.value is one of {sorted(values)}: {cid}')
+                bilingual(x,f'{cid}.{key}')
+                require(x.get('grade') in ('primary','official'),f'{key}.grade is primary or official: {cid}')
+                if x['value']!='unknown' or x.get('source_url'):
+                    https(x.get('source_url'),f'{cid}.{key}.source_url')
+                if x.get('date'):
+                    date.fromisoformat(x['date'])
+        e=c.get('exposure')
+        if e:
+            bilingual(e,f'{cid}.exposure')
+            require(e.get('figure') and e.get('publisher'),f'exposure names its figure and publisher: {cid}')
+            https(e.get('source_url'),f'{cid}.exposure.source_url')
+            date.fromisoformat(e['date'])
         for w in c.get('watch',[]):
             require(w['type'] in {'pr','issue','file'} and w['label'] and w['repo'],f'Watch entry: {cid}')
         date.fromisoformat(c['last_reviewed'])

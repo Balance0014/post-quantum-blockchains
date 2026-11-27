@@ -17,6 +17,7 @@ Usage:
 import argparse
 import json
 import os
+import ssl
 import sys
 import threading
 import time
@@ -32,6 +33,9 @@ FILES = ['chains.json', 'projects.json', 'sources.json', 'source-revision-checks
 SKIP_KEYS = {'probe', 'check'}
 UA = 'post-quantum-blockchains-link-check/1.0 (+https://github.com/Balance0014/post-quantum-blockchains)'
 PER_HOST = 3
+CTX = ssl.create_default_context()
+if os.path.exists('/etc/ssl/cert.pem'):  # macOS Python ships without a CA bundle
+    CTX.load_verify_locations('/etc/ssl/cert.pem')
 _host_locks = {}
 _host_guard = threading.Lock()
 
@@ -116,7 +120,7 @@ def fetch(url):
             for attempt in range(3):
                 try:
                     with host_slot('api.github.com'):
-                        with urllib.request.urlopen(urllib.request.Request(api, headers=headers), timeout=20) as r:
+                        with urllib.request.urlopen(urllib.request.Request(api, headers=headers), timeout=20, context=CTX) as r:
                             return r.status, ''
                 except urllib.error.HTTPError as e:
                     last = (e.code, 'GitHub API ' + api)
@@ -133,7 +137,7 @@ def fetch(url):
             req = urllib.request.Request(url, method=method, headers={'User-Agent': UA, 'Accept': '*/*'})
             try:
                 with host_slot(urlparse(url).netloc):
-                    with urllib.request.urlopen(req, timeout=20) as r:
+                    with urllib.request.urlopen(req, timeout=20, context=CTX) as r:
                         return r.status, ''
             except urllib.error.HTTPError as e:
                 last = (e.code, e.reason if isinstance(e.reason, str) else '')

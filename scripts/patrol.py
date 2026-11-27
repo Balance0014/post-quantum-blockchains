@@ -213,11 +213,29 @@ def gh(path):
     return json.loads(raw), hdr
 
 
+COMMIT_PAGES_MAX = 30  # 3,000 commits in 90 days is more than any tracked repository makes
+
+
+def is_bot(c):
+    """GitHub App and bot accounts (dependabot[bot], github-actions[bot] and so on) are not people maintaining the code."""
+    login = ((c.get('author') or {}).get('login') or '').lower()
+    name = ((c.get('commit') or {}).get('author') or {}).get('name', '').lower()
+    return login.endswith('[bot]') or name.endswith('[bot]')
+
+
 def count_commits(repo, since):
-    items, hdr = gh(f'repos/{repo}/commits?since={since}&per_page=1')
-    link = hdr.get('Link') or hdr.get('link') or ''
-    m = re.search(r'[?&]page=(\d+)>; rel="last"', link)
-    return int(m.group(1)) if m else len(items)
+    """Commits on the default branch since the date, leaving out commits by bot accounts. Returns (people, bots)."""
+    people = bots = 0
+    for page in range(1, COMMIT_PAGES_MAX + 1):
+        items, _ = gh(f'repos/{repo}/commits?since={since}&per_page=100&page={page}')
+        for c in items:
+            if is_bot(c):
+                bots += 1
+            else:
+                people += 1
+        if len(items) < 100:
+            break
+    return people, bots
 
 
 def code_activity(repo, since):
@@ -232,7 +250,10 @@ def code_activity(repo, since):
         if tags:
             c, _ = gh(f"repos/{repo}/commits/{tags[0]['commit']['sha']}")
             out.update(release=tags[0]['name'], release_date=c['commit']['committer']['date'][:10], tag_only=True)
-    out['commits_90d'] = count_commits(repo, since)
+    info, _ = gh(f'repos/{repo}')
+    out['branch'] = info.get('default_branch')
+    out['commits_90d'], out['bot_commits_90d'] = count_commits(repo, since)
+    out['queried_at_utc'] = iso(datetime.now(timezone.utc))
     last, _ = gh(f'repos/{repo}/commits?per_page=1')
     if last:
         out['last_commit'] = last[0]['commit']['committer']['date'][:10]
