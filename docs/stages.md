@@ -31,6 +31,8 @@ Rules:
 | Official claim | Project websites, blogs, roadmaps | Shown on the timeline as a plan |
 | Unverified | Media, third parties, social posts | Listed apart until a primary source confirms it |
 
+Every date is the day the event happened, in UTC, not the day we read about it. When an entry records our own check (for example, "no post-quantum proposal in the repository" or a block height read from an explorer), it is dated on the check day and marked **checked**, and it is left out of the monthly milestone chart. A data source run by the project itself, or by its community, is labelled as such on the chain page.
+
 ## Which chains are listed
 
 - **The largest blockchains.** Every coin in the CoinGecko top 100 by market cap that pays fees or secures consensus on a network of its own, layer 1 or layer 2. Stablecoins, tokenized funds and commodities, wrapped and staked tokens, and exchange, app, governance or meme tokens without their own network are left out. Each coin left out is in `not_listed` in `data/chains.json` with its reason, and [`scripts/rank.py`](../scripts/rank.py) fails CI when a top-100 coin is in neither list.
@@ -47,12 +49,12 @@ Each chain names the explorer or public RPC it is read from (`network.probe` in 
 | --- | --- |
 | Running | The newest block is within the limit, and the main repository had at least one commit in the last 90 days (or no repository is tracked). |
 | Blocks yes, code quiet | The newest block is within the limit, but the main repository had no commits in the last 90 days. |
-| Blocks stopped | The newest block is older than the limit. |
-| Could not check | The endpoint did not answer after three tries, or the chain has no public endpoint. |
+| Blocks stopped | The chain's endpoint and an independent explorer both show a newest block older than the limit. |
+| Could not check | The endpoint did not answer, the chain has no public endpoint, or the endpoint shows an old block and no independent explorer confirms it. |
 
 **The limit** is `max(10 minutes, 6 × target block time)`. Most chains get 10 minutes. Chains whose target block time is longer than 100 seconds get six target block times, for example 60 minutes for Bitcoin. Block times follow a roughly exponential distribution on proof-of-work chains, so a healthy chain shows a block older than six target times in about 1 check in 400 (e⁻⁶). A slow chain must state its target block time and the source of that number (`block_interval_s` and `block_interval_source`).
 
-Public RPCs often sit behind load balancers, and a lagging node can answer with an old block. Before marking a chain stopped, the patrol reads it twice more, five seconds apart, and keeps the newest block.
+Public RPCs often sit behind load balancers, and a lagging node can answer with an old block. The patrol reads every endpoint at least twice, three seconds apart, and a third time when the two reads disagree; it keeps the highest block and records when it read it and every height it saw. When the newest block is older than the limit, the patrol reads an independent explorer (`network.check`), if the chain has one. A chain is marked stopped only when both sources agree; with one source, it is marked could not check.
 
 **The 90-day window** runs from the patrol date minus 90 days. Commits are counted on the default branch of the repository in `code.repo`; repositories in `code.also` are shown but don't change the status. The latest release is the newest non-draft GitHub release, or the newest tag if the repository publishes no releases.
 
@@ -88,4 +90,5 @@ Public RPCs often sit behind load balancers, and a lagging node can answer with 
 
 - **Weekly**, every Monday at 01:00 UTC, [`.github/workflows/patrol.yml`](../.github/workflows/patrol.yml) runs the patrol and proposes the new data in a pull request. A person checks each change against its source before merging.
 - **Monthly**, on the first Monday, the patrol also refreshes the market-cap list and opens a re-check issue: every row is checked against its sources, `last_reviewed` is updated, and any coin new to the top 100 is classified.
+- **On every change**, CI checks ten facts in [`data/golden.json`](../data/golden.json) that were checked by hand against pinned primary sources (for example Algorand's consensus version 42, NEAR's protocol version 85 and Raqcoin's default key configuration 274). An edit that drops or contradicts one fails, and [`scripts/golden.py`](../scripts/golden.py) `--online` confirms that each pinned source still shows its fact.
 - **Any time**, anyone can [report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) or [submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml) with primary sources.

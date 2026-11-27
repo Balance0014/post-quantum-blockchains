@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<script>try{var t=localStorage.getItem("pq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<meta name="theme-color" content="#f8f8fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0c13" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="{{base}}assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{base}}assets/apple-touch-icon.png">
 <title>{{title}}</title>
 <meta name="description" content="{{description}}">
 <link rel="canonical" href="{{canonical}}">
@@ -27,19 +32,22 @@
 <meta name="twitter:image" content="{{og_image}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600&display=swap" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{base}}assets/style.css?v={{v}}">
 {{jsonld}}
 </head>
 <body>
-<div class="top"><div class="wrap">
-  <a class="brand" href="{{home}}"><span class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span>{{brand}}</span></a>
-  <nav class="main" id="nav">{{nav}}</nav>
+<header class="top"><div class="wrap">
+  <a class="brand" href="{{home}}">{{logo}}<span class="bn">{{brand}}</span></a>
+  <nav class="main" id="nav" aria-label="{{menu}}">{{nav}}</nav>
   <div class="tools">
     <a class="btn" id="lang" href="{{alt}}" hreflang="{{alt_lang}}" lang="{{alt_lang}}" aria-label="{{other_lang_label}}">{{other_lang}}</a>
-    <a class="btn primary" id="gh" href="{{repo}}" target="_blank" rel="noopener">{{gh}} ↗</a>
+    <button class="btn icon theme" id="theme" type="button" aria-pressed="false" aria-label="{{theme_label}}" title="{{theme_label}}"><svg class="moon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.6 5.6 0 016.4 2.5a5.6 5.6 0 107.1 7.1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><svg class="sun" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    <a class="btn primary gh" href="{{repo}}" target="_blank" rel="noopener">{{gh}} ↗</a>
+    <details class="menu"><summary aria-label="{{menu}}"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+      <div class="menu-pop"><nav aria-label="{{menu}}">{{nav}}</nav><a href="{{repo}}" target="_blank" rel="noopener">{{gh}} ↗</a></div></details>
   </div>
-</div></div>
+</div></header>
 <main><div class="wrap" id="app">{{app}}</div></main>
 <footer class="site"><div class="wrap" id="foot">{{foot}}</div></footer>
 <div id="pop" role="tooltip" hidden></div>

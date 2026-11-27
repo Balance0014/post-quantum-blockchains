@@ -11,6 +11,8 @@ runs it once in Node (scripts/site/prerender.js) so the HTML is complete before 
 Usage: python3 scripts/build_site.py [--out _site] [--base /post-quantum-blockchains/]
 """
 import argparse
+import csv
+import io
 import hashlib
 import html
 from html.parser import HTMLParser
@@ -37,10 +39,45 @@ CHIPS = {
     'sphincs': {'tone': 'fam', 'en': 'SPHINCS+ · basis of SLH-DSA', 'zh': 'SPHINCS+ · SLH-DSA 的前身'},
     'wots': {'tone': 'warn', 'en': 'Hash-based · not a standard on its own', 'zh': '哈希签名 · 单独使用无对应标准'},
     'nonstd': {'tone': 'warn', 'en': 'Not a NIST standard', 'zh': '非 NIST 标准'},
-    'custom': {'tone': 'warn', 'en': 'Custom construction', 'zh': '自研方案'},
+    'custom': {'tone': 'warn', 'en': 'Custom construction', 'zh': '项目自研构造'},
     'broken': {'tone': 'bad', 'en': 'Older parameters publicly broken', 'zh': '旧参数已被公开破解'},
     'none': {'tone': 'fam', 'en': 'No post-quantum scheme yet', 'zh': '尚无抗量子方案'},
 }
+
+# Algorithm families for the home page filter, from the algorithm labels (and the algorithm text for 'family' labels).
+FAMILIES = ('mldsa', 'falcon', 'slhdsa', 'hash', 'other', 'none')
+
+
+def families(c):
+    chips, text = set(c['algo_chips']), (c['algo'].get('en') or '').lower()
+    f = set()
+    if 'fips204' in chips:
+        f.add('mldsa')
+    if 'falcon' in chips:
+        f.add('falcon')
+    if chips & {'fips205', 'sphincs'}:
+        f.add('slhdsa')
+    if chips & {'xmss', 'wots'}:
+        f.add('hash')
+    if 'custom' in chips:
+        f.add('other')
+    if 'nonstd' in chips:  # outside a standard, but of a known family when the text names one
+        f.add('slhdsa' if any(w in text for w in ('slh-dsa', 'sphincs')) else
+              'hash' if any(w in text for w in ('xmss', 'wots', 'winternitz')) else 'other')
+    if 'family' in chips:
+        for k, words in (('mldsa', ('dilithium', 'ml-dsa')), ('falcon', ('falcon',)), ('slhdsa', ('sphincs', 'slh-dsa'))):
+            if any(w in text for w in words):
+                f.add(k)
+    if 'none' in chips:
+        f.add('none')
+    return [k for k in FAMILIES if k in f] or ['other']
+
+
+# The site mark: a staircase of six steps, one per stage, on a dark tile. Inline in the header; also the favicon.
+LOGO_BARS = ''.join(f'<rect x="{6 + i * 3.4:.1f}" y="{25 - (i + 1) * 3}" width="3.5" height="{(i + 1) * 3}" fill="{col}"/>'
+                    for i, col in enumerate(('#5a4d9c', '#6f5dc2', '#8873e0', '#a596f4', '#c5bcfd', '#ece8ff')))
+LOGO_SVG = f'<svg class="logo" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1c1630"/>{LOGO_BARS}</svg>'
+
 
 STAGE_NAMES = {'en': ['Nothing public', 'Research', 'Formal proposal', 'Testnet', 'Mainnet opt-in', 'Default'],
                'zh': ['无公开进展', '仅有研究', '已有正式提案', '仅限测试网', '主网可选用', '默认抗量子']}
@@ -57,9 +94,9 @@ KIND_ZH = {
 }
 
 TEXT = {
-    'en': {'brand': 'Post-Quantum Blockchains', 'other_lang': '中文', 'other_lang_label': '切换到中文', 'gh': 'Data on GitHub', 'og_locale': 'en_US',
+    'en': {'brand': 'Post-Quantum Blockchains', 'other_lang': '中文', 'other_lang_label': '切换到中文', 'gh': 'Data on GitHub', 'menu': 'Menu', 'theme': 'Dark mode', 'og_locale': 'en_US',
            'home_title': 'Post-Quantum Blockchains: which chains are quantum-resistant today',
-           'home_desc': 'Is Bitcoin quantum-resistant? A source-checked tracker of post-quantum signatures on the largest blockchains and on chains built post-quantum: {n} chains, each rated 0 to 5 and checked every week.',
+           'home_desc': 'Is Bitcoin quantum-resistant? A source-checked tracker of post-quantum signatures on the largest blockchains and on chains built post-quantum: {n} chains, each rated 0 to 5, with network data checked every week.',
            'chain_title': 'Is {name}{sp}quantum-resistant? Post-quantum status, sources and date',
            'chain_q': 'Is {name} quantum-resistant?', 'og_alt': 'Post-Quantum Blockchains: {n} chains rated from stage 0 to 5, each checked against primary sources.',
            'method_title': 'How we rate post-quantum readiness · Post-Quantum Blockchains',
@@ -67,11 +104,11 @@ TEXT = {
            'changes_title': 'This week in post-quantum blockchains · Post-Quantum Blockchains',
            'changes_desc': 'What the weekly patrol found: new releases, proposal status changes, network status changes and stage changes, each with its source.',
            'nf_title': 'Page not found · Post-Quantum Blockchains', 'nf_h': 'This page does not exist.', 'nf_p': 'Go to the list of chains:'},
-    'zh': {'brand': '抗量子区块链进度表', 'other_lang': 'English', 'other_lang_label': 'Switch to English', 'gh': '数据在 GitHub', 'og_locale': 'zh_CN',
+    'zh': {'brand': '抗量子区块链进度表', 'other_lang': 'English', 'other_lang_label': 'Switch to English', 'gh': '数据在 GitHub', 'menu': '菜单', 'theme': '深色模式', 'og_locale': 'zh_CN',
            'home_title': '抗量子区块链进度表：哪些链已经能用抗量子签名',
-           'home_desc': '比特币能抗量子吗？逐条核对出处的抗量子进度表，覆盖市值最大的区块链和原生抗量子链，共 {n} 条，每条评 0 到 5 档，每周巡查一次。',
+           'home_desc': '比特币能抗量子吗？逐条核对出处的抗量子进度表，覆盖市值最大的区块链和原生抗量子链，共 {n} 条，每条评 0 到 5 档；网络数据每周巡查，出处每月重核。',
            'chain_title': '{name}{sp}能抗量子吗？抗量子进展、出处和核对日期',
-           'chain_q': '{name}{sp}能抗量子吗？', 'og_alt': '抗量子区块链进度表：{n} 条链按 0 到 5 档评级，每条都对照原始出处核对。',
+           'chain_q': '{name}{sp}能抗量子吗？', 'og_alt': '抗量子区块链进度表：{n} 条链按 0 到 5 档评定，每条都对照原始出处核对。',
            'method_title': '评档方法 · 抗量子区块链进度表',
            'method_desc': '六个档位、评档规则、网络核查及其时限、算法标签、证据分级，以及每个数据字段的来源和脚本。',
            'changes_title': '本周抗量子进展 · 抗量子区块链进度表',
@@ -89,7 +126,7 @@ class ZhText(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag in ('script', 'style'):
             self.skip += 1
-        self.out += [v for k, v in attrs if k in ('data-def', 'data-title', 'aria-label', 'placeholder', 'title', 'content') and v]
+        self.out += [v for k, v in attrs if k in ('data-def', 'data-title', 'data-tip', 'aria-label', 'placeholder', 'title', 'content') and v]
 
     def handle_endtag(self, tag):
         if tag in ('script', 'style'):
@@ -237,7 +274,9 @@ def chain_view(c, net, ranks, projects, sources):
     b = n.get('block', {})
     block = {'ok': bool(b.get('ok')), 'url': b.get('source'), 'q': b.get('queried_at_utc')}
     if b.get('ok'):
-        block.update(h=b['height'], t=b['time_utc'], age=b['age_minutes'])
+        block.update(h=b['height'], t=b['time_utc'], age=b['age_minutes'], reads=b.get('reads'))
+    x = n.get('check')
+    xchk = {'ok': bool(x.get('ok')), 'url': x.get('source'), 'h': x.get('height'), 'age': x.get('age_minutes')} if x else None
     spec = c.get('code') or {}
     code = None
     if spec:
@@ -265,24 +304,131 @@ def chain_view(c, net, ranks, projects, sources):
     ls = c['latest_step']
     return {
         'id': c['id'], 'name': c['name'], 'zh_name': c.get('zh_name'), 'ticker': c['ticker'], 'kind': c['kind'],
-        'group': group_of(c, rank), 'rank': rank, 'stage': c['stage'], 'algo': c['algo'], 'chips': c['algo_chips'],
+        'group': group_of(c, rank), 'rank': rank, 'stage': c['stage'], 'algo': c['algo'], 'chips': c['algo_chips'], 'fam': families(c),
         'consensus': c.get('consensus'), 'holder': c['holder_can_use_today'], 'note': c.get('note'), 'four': c.get('four'),
         'latest': {'date': ls.get('date'), 'en': ls.get('text'), 'zh': ls.get('zh'), 'checked': bool(ls.get('is_check_date'))},
         'checked': (n.get('block', {}).get('queried_at_utc') or net.get('checked_at_utc') or '')[:10] or None,
         'reviewed': c['last_reviewed'], 'basis': c['stage_basis'],
         'basis_src': basis_source(c, projects, sources),
+        'since': c.get('pq_mainnet_since'),
         'net': {'status': n.get('status', 'unknown'), 'threshold': n.get('threshold_min'), 'block': block, 'code': code,
-                'reason': c['network'].get('no_probe_reason')},
+                'reason': c['network'].get('no_probe_reason'), 'own': c['network'].get('source_kind'), 'check': xchk},
         'timeline': [{'date': m.get('date'), 'type': m['type'], 'grade': m.get('grade', 'primary'), 'en': m['name'], 'zh': m.get('zh'),
-                      'status': m.get('status'), 'url': m.get('source_url')} for m in c.get('milestones', []) if m.get('verified', True)],
+                      'status': m.get('status'), 'url': m.get('source_url'), 'checked': bool(m.get('checked'))}
+                     for m in c.get('milestones', []) if m.get('verified', True)],
         'unverified': c.get('unverified', []),
         'sources': srcs,
     }
 
 
 def home_view(v):
-    """The home page only needs what the table and its expandable rows show."""
-    return {k: v[k] for k in v if k not in ('timeline', 'four', 'sources', 'basis_src')}
+    """The home page only needs what its table and charts show; everything else is on the chain's own page."""
+    n, b, code = v['net'], v['net']['block'], v['net']['code']
+    return {'id': v['id'], 'name': v['name'], 'zh_name': v['zh_name'], 'ticker': v['ticker'], 'kind': v['kind'],
+            'group': v['group'], 'rank': v['rank'], 'stage': v['stage'], 'algo': v['algo'], 'chips': v['chips'], 'fam': v['fam'],
+            'latest': v['latest'], 'since': {k: v['since'][k] for k in ('date', 'basis')} if v['since'] else None,
+            'net': {'status': n['status'], 'block': {'ok': bool(b.get('ok')), 'age': b.get('age'), 'url': bool(b.get('url'))},
+                    'code': {'repo': bool(code.get('repo')), 'c90': code.get('c90')} if code else None}}
+
+
+# The monthly milestone chart covers this many months, ending with the month of the latest check.
+CHART_MONTHS = 24
+CHART_TYPES = ('proposal', 'testnet', 'mainnet')
+
+
+def milestone_months(views, checked):
+    """Dated proposal, testnet and mainnet milestones per month across all chains, for the home page chart.
+    Entries marked as our own checks (checked: true) are not project events, so they are left out, as are entries dated
+    only to a quarter or undated."""
+    y, m = int(checked[:4]), int(checked[5:7])
+    months = []
+    for _ in range(CHART_MONTHS):
+        months.append(f'{y:04d}-{m:02d}')
+        y, m = (y, m - 1) if m > 1 else (y - 1, 12)
+    months.reverse()
+    counts = {k: [0] * len(CHART_TYPES) for k in months}
+    for v in views:
+        for t in v['timeline']:
+            d = t.get('date') or ''
+            if t['type'] in CHART_TYPES and re.match(r'^\d{4}-\d{2}(-\d{2})?$', d) and not t['checked'] and d[:7] in counts:
+                counts[d[:7]][CHART_TYPES.index(t['type'])] += 1
+    return {'types': list(CHART_TYPES), 'months': [[k] + counts[k] for k in months]}
+
+
+CSV_COLUMNS = ('id', 'name', 'ticker', 'group', 'kind', 'market_cap_rank', 'stage', 'stage_name', 'algorithm',
+               'network_status', 'pq_mainnet_since', 'pq_mainnet_since_basis', 'pq_mainnet_since_source', 'stage_basis',
+               'stage_source', 'last_reviewed', 'page')
+
+
+def write_data_files(out, views, checked, release, base, has_changes):
+    """Data downloads and llms.txt, served next to the pages so people and AI assistants can read the tracker without
+    the website. They are written fresh from data/ on every build, so they always match the pages."""
+    d = out / 'data'
+    d.mkdir()
+    for name in ('chains.json', 'network.json', 'projects.json', 'sources.json'):
+        shutil.copyfile(ROOT / 'data' / name, d / name)
+    page = lambda v: ORIGIN + base + f"chains/{v['id']}/"
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator='\n')
+    w.writerow(CSV_COLUMNS)
+    for v in sorted(views, key=lambda v: (v['rank'] or 999, -v['stage'], v['name'])):
+        s = v['since'] or {}
+        w.writerow([v['id'], v['name'], v['ticker'], v['group'], v['kind'], v['rank'] or '', v['stage'], STAGE_NAMES['en'][v['stage']],
+                    v['algo']['en'], v['net']['status'], s.get('date', ''), s.get('basis', ''), s.get('source_url', ''),
+                    v['basis']['en'], v['basis_src'] or '', v['reviewed'], page(v)])
+    (d / 'chains.csv').write_text(buf.getvalue(), encoding='utf-8')
+    top = [v for v in views if v['rank'] is not None]
+    by_stage = lambda vs: ', '.join(f'stage {s}: {sum(1 for v in vs if v["stage"] == s)}' for s in range(6))
+    lines = [f'# {TEXT["en"]["brand"]}', '',
+             f'> An open, source-checked tracker of post-quantum signatures on blockchains. {len(views)} chains, each rated on '
+             f'a 0 to 5 scale from primary sources (0 nothing public, 1 research, 2 formal proposal, 3 testnet, 4 mainnet opt-in, '
+             f'5 post-quantum by default). Network data checked {checked}; version {release["version"]}. It rates only what is '
+             f'already live, does not predict when current cryptography might be broken and says nothing about prices.', '',
+             f'Largest blockchains (CoinGecko top 100 with their own network, {len(top)} chains): {by_stage(top)}.', '',
+             '## Pages',
+             f'- [All chains]({ORIGIN + base}): table, stage charts and timeline; Chinese version at {ORIGIN + base}zh/',
+             f'- [Method]({ORIGIN + base}method/): how stages are rated, evidence grades, network checks, coverage and limits']
+    if has_changes:
+        lines.append(f'- [This week]({ORIGIN + base}changes/): changes found by the weekly patrol')
+    lines += ['',
+             '## Data (CC BY 4.0)',
+             f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, network status, '
+             f'post-quantum mainnet start date, the sentence the stage rests on and its source',
+             f'- [chains.json]({ORIGIN + base}data/chains.json): every chain with its stage, evidence, milestones and sources',
+             f'- [network.json]({ORIGIN + base}data/network.json): the latest weekly network check (newest block, code activity)',
+             f'- [projects.json]({ORIGIN + base}data/projects.json) and [sources.json]({ORIGIN + base}data/sources.json): '
+             f'projects that already use post-quantum signatures, with pinned primary sources',
+             f'- Repository: {REPO}', '',
+             '## How to cite',
+             f'Post-Quantum Blockchains (version {release["version"]}, {release["date"]}). {ORIGIN + base} . '
+             f'Cite the chain page and the date you read it; stages change when primary sources do.', '',
+             '## Chains']
+    for v in sorted(views, key=lambda v: (-v['stage'], v['rank'] or 999, v['name'])):
+        since = f"; post-quantum on mainnet since {v['since']['date']}" if v['since'] else ''
+        lines.append(f"- [{v['name']} ({v['ticker']})]({page(v)}): stage {v['stage']}, {STAGE_NAMES['en'][v['stage']]}{since}")
+    (out / 'llms.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+
+def write_csv(path, header, rows):
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator='\n')
+    w.writerow(header)
+    w.writerows(rows)
+    path.write_text(buf.getvalue(), encoding='utf-8')
+
+
+def write_chart_files(out, views, months):
+    """One CSV per home page chart, holding exactly the numbers the chart draws ("Download data" under each chart)."""
+    d = out / 'data'
+    top = [v for v in views if v['rank'] is not None]
+    write_csv(d / 'chart-top-stages.csv', ('stage', 'stage_name', 'chains', 'chain_ids'),
+              [(s, STAGE_NAMES['en'][s], sum(1 for v in top if v['stage'] == s),
+                ' '.join(v['id'] for v in sorted(top, key=lambda v: v['rank']) if v['stage'] == s)) for s in range(6)])
+    dated = sorted((v for v in views if v['stage'] >= 4 and v['since']), key=lambda v: (v['since']['date'], v['name']))
+    write_csv(d / 'chart-mainnet-since.csv', ('date', 'chain_id', 'chain', 'stage', 'basis', 'grade', 'running_total', 'source_url'),
+              [(v['since']['date'], v['id'], v['name'], v['stage'], v['since']['basis'], v['since']['grade'], i + 1, v['since']['source_url'])
+               for i, v in enumerate(dated)])
+    write_csv(d / 'chart-milestones-month.csv', ('month',) + tuple(months['types']), months['months'])
 
 
 def script_json(obj):
@@ -311,6 +457,7 @@ def main():
     today = date.fromisoformat(checked)
     for v in views:
         v['stale_days'] = (today - date.fromisoformat(v['reviewed'])).days
+    months = milestone_months(views, checked)
     release = load('data/release.json')
     release = {'version': release['version'], 'date': release['published_on']}
     # One example chain per stage for the stage table: the highest-ranked coin at that stage, else the first listed.
@@ -319,7 +466,7 @@ def main():
         at = sorted((v for v in views if v['stage'] == s), key=lambda v: (v['rank'] or 999, v['name']))
         examples.append({k: at[0][k] for k in ('id', 'name', 'zh_name')} if at else None)
     answer = {'en': lambda v, nm: f"As of {v['reviewed']}, {nm} is at stage {v['stage']} of 5: {STAGE_NAMES['en'][v['stage']]}. {v['basis']['en']}",
-              'zh': lambda v, nm: f"截至 {v['reviewed']}，{nm} 处于第 {v['stage']} 档（满档 5 档）：{STAGE_NAMES['zh'][v['stage']]}。{v['basis']['zh']}"}
+              'zh': lambda v, nm: f"截至 {v['reviewed']}，{nm}{' ' if nm[-1].isascii() else ''}处于第 {v['stage']} 档（最高 5 档）：{STAGE_NAMES['zh'][v['stage']]}。{v['basis']['zh']}"}
     cited = {'en': lambda v: f" {'Where we looked' if v['stage'] == 0 else 'Source'}: {v['basis_src']}" if v['basis_src'] else '',
              'zh': lambda v: f"{'查过的地方' if v['stage'] == 0 else '出处'}：{v['basis_src']}" if v['basis_src'] else ''}
     names = {v['id']: {'en': v['name'], 'zh': v['zh_name']} for v in views}
@@ -341,13 +488,12 @@ def main():
         common = {'lang': lang, 'base': base, 'repo': REPO, 'chips': CHIPS, 'checked': checked, 'mcap_date': mcap_date,
                   'has_changes': bool(changes), 'data_url': REPO + '/tree/main/data', 'chain_count': len(views),
                   'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, '')}
-        home = dict(common, page='home', chains=[home_view(v) for v in views], left_out=left_out)
+        home = dict(common, page='home', chains=[home_view(v) for v in views], left_out=left_out, months=months)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),
               'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'dateModified': checked,
-              'distribution': [{'@type': 'DataDownload', 'encodingFormat': 'application/json',
-                                'contentUrl': f'https://raw.githubusercontent.com/Balance0014/post-quantum-blockchains/main/data/{f}'}
-                               for f in ('chains.json', 'network.json')]}
+              'distribution': [{'@type': 'DataDownload', 'encodingFormat': enc, 'contentUrl': ORIGIN + base + 'data/' + f}
+                               for f, enc in (('chains.csv', 'text/csv'), ('chains.json', 'application/json'), ('network.json', 'application/json'))]}
         pages.append((lang, '', home, t['home_title'], t['home_desc'].format(n=len(views)), ld))
         for v in views:
             nm = v['zh_name'] if lang == 'zh' and v['zh_name'] else v['name']
@@ -386,6 +532,11 @@ def main():
     # IndexNow: the key file sits next to the pages; .github/workflows/pages.yml pings IndexNow after each deploy.
     key = (SITE_SRC / 'indexnow-key.txt').read_text(encoding='utf-8').strip()
     (out / f'{key}.txt').write_text(key + '\n', encoding='utf-8')
+    write_data_files(out, views, checked, release, base, bool(changes))
+    write_chart_files(out, views, months)
+    (out / 'assets' / 'logo.svg').write_text(LOGO_SVG.replace(' class="logo"', ' xmlns="http://www.w3.org/2000/svg" width="32" height="32"')
+                                             .replace(' aria-hidden="true" focusable="false"', '') + '\n', encoding='utf-8')
+    shutil.copyfile(SITE_SRC / 'apple-touch-icon.png', out / 'assets' / 'apple-touch-icon.png')
     esc = lambda s: html.escape(s or '', quote=True)
     zh_errors = []
     for (lang, rel, d, title, desc, ld), r in zip(pages, rendered):
@@ -396,7 +547,8 @@ def main():
             'canonical': ORIGIN + path_for(lang, rel), 'url_en': ORIGIN + path_for('en', rel), 'url_zh': ORIGIN + path_for('zh', rel),
             'brand': esc(t['brand']), 'og_locale': t['og_locale'], 'base': base, 'v': version, 'home': path_for(lang, ''),
             'alt': d['alt'], 'alt_lang': 'zh-Hans' if other == 'zh' else 'en', 'other_lang': t['other_lang'],
-            'other_lang_label': t['other_lang_label'], 'repo': REPO, 'gh': esc(t['gh']),
+            'other_lang_label': t['other_lang_label'], 'repo': REPO, 'gh': esc(t['gh']), 'menu': esc(t['menu']),
+            'logo': LOGO_SVG, 'theme_label': esc(t['theme']),
             'nav': r['nav'], 'app': r['app'], 'foot': r['foot'], 'data': script_json(d),
             'jsonld': f'<script type="application/ld+json">{script_json(ld)}</script>' if ld else '',
             'og_type': 'article' if d['page'] == 'chain' else 'website', 'og_image': ORIGIN + base + 'assets/og.png',
