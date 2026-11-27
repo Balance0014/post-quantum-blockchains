@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — November 27, 2026
+
+- The repository is now a continuously maintained map rather than an October 23 snapshot. The READMEs open with what it is, separate chains and projects from resources, and state what gets listed and how quickly submissions are reviewed (within 7 days).
+- Both charts are now drawn from the data by `scripts/charts.py` as SVG, with a "data as of" date: a deployment timeline and an algorithm map with a log-scale size comparison. They replace the hand-drawn October 23 PNGs, which remain in the git history.
+- The summary counts at the top of both READMEs are generated from the data too. CI regenerates the charts, tables and summaries, fails on any difference, and now runs Python 3.9 and 3.12 on Ubuntu 24.04.
+- Listed projects can link back to their entry with a [badge](CONTRIBUTING.md#listed-badge).
+- The resource list has a section for papers. The methodology explains how the charts sort projects by deployment status.
+- No project, source or size data changed.
+
 ## 0.3.1 — November 27, 2026
 
 - New submissions and corrections get an automatic reply that checks their links and looks for an existing entry; a maintainer replies within 7 days.

@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="2038" viewBox="0 0 960 2038" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+<title id="title">Post-quantum blockchain deployment timeline</title>
+<desc id="desc">Timeline of 17 blockchain projects by milestone year, with consensus, post-quantum cryptography, crypto-agility and limits. 12 on by default on mainnet; 4 opt-in or demo on mainnet; 1 not on mainnet yet. Data as of October 23, 2026.</desc>
+<rect x="0" y="0" width="960" height="2038" fill="#fcfcfb"/>
+<text x="32" y="48" font-size="24" fill="#0b0b0b" font-weight="700">Post-Quantum Blockchains · Deployment timeline</text>
+<text x="928" y="48" font-size="13" fill="#52514e" text-anchor="end">Data as of October 23, 2026</text>
+<text x="32" y="76" font-size="14" fill="#52514e">17 projects, placed by the milestone year on each card: a chain launch, a later cryptographic upgrade or a public testnet. Consensus</text>
+<text x="32" y="96" font-size="14" fill="#52514e">and cryptography are as of each entry's last review.</text>
+<text x="32" y="128" font-size="12.5" fill="#6e6c66" font-weight="600">Deployment</text>
+<rect x="124.3" y="116" width="5" height="15" fill="#2b3440" rx="2"/>
+<text x="138.3" y="128" font-size="12.5" fill="#52514e">On by default on mainnet (12)</text>
+<rect x="337.6" y="116" width="5" height="15" fill="#9a978f" rx="2"/>
+<text x="351.6" y="128" font-size="12.5" fill="#52514e">Opt-in or demo on mainnet (4)</text>
+<rect x="553.1" y="116" width="5" height="15" fill="#d6d3cb" rx="2"/>
+<text x="567.1" y="128" font-size="12.5" fill="#52514e">Not on mainnet yet (1)</text>
+<text x="32" y="150" font-size="12.5" fill="#6e6c66" font-weight="600">Scheme family</text>
+<rect x="137.8" y="140" width="12" height="12" fill="#2a78d6" rx="2"/>
+<text x="155.8" y="150" font-size="12.5" fill="#52514e">Lattice-based</text>
+<rect x="255.4" y="140" width="12" height="12" fill="#eb6834" rx="2"/>
+<text x="273.4" y="150" font-size="12.5" fill="#52514e">Hash-based</text>
+<rect x="364.8" y="140" width="12" height="12" fill="#1baf7a" rx="2"/>
+<text x="382.8" y="150" font-size="12.5" fill="#52514e">Multivariate</text>
+<rect x="470.5" y="140" width="12" height="12" fill="#8f8d86" rx="2"/>
+<text x="488.5" y="150" font-size="12.5" fill="#52514e">Validity proofs</text>
+<line x1="32" y1="168" x2="928" y2="168" stroke="#e2e0d9"/>
+<line x1="120" y1="216" x2="120" y2="1565" stroke="#e2e0d9" stroke-width="2"/>
+<circle cx="120" cy="216" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="508" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="659" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="810" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="961" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="1112" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="1263" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="1414" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="120" cy="1565" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="2"/>
+<text x="32" y="222" font-size="24" fill="#0b0b0b" font-weight="700">2018</text>
+<text x="32" y="242" font-size="12.5" fill="#6e6c66">3 projects</text>
+<rect x="156" y="190" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="200" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="222" font-size="16" fill="#0b0b0b" font-weight="700">Raqcoin<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">RAQ</tspan></text>
+<rect x="476.6" y="208" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="222" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="242" font-size="12.5" fill="#6e6c66">Jun · ABCMint genesis</text>
+<rect x="176" y="254" width="9" height="9" fill="#1baf7a" rx="1.5"/>
+<text x="189" y="264" font-size="14" fill="#0b0b0b">RainbowPro / UOV; multisig</text>
+<text x="176" y="284" font-size="12.5" fill="#52514e">Agility: multiple signature schemes</text>
+<text x="176" y="304" font-size="12.5" fill="#6e6c66">Renamed in 2022; old Rainbow parameters broken</text>
+<rect x="549" y="190" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="555" y="200" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="569" y="222" font-size="16" fill="#0b0b0b" font-weight="700">Mochimo<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">MCM</tspan></text>
+<rect x="873" y="208" width="41" height="20" fill="#f1f0ec" rx="10"/>
+<text x="893.5" y="222" font-size="11.5" fill="#52514e" text-anchor="middle">PoS</text>
+<text x="569" y="242" font-size="12.5" fill="#6e6c66">Jun · Mainnet launch</text>
+<rect x="569" y="254" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="582" y="264" font-size="14" fill="#0b0b0b">WOTS+ transaction signatures</text>
+<text x="569" y="284" font-size="12.5" fill="#52514e">Agility: WOTS+ only today</text>
+<text x="569" y="304" font-size="12.5" fill="#6e6c66">Switched from PoW to PoS in Oct 2026</text>
+<rect x="156" y="331" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="341" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="363" font-size="16" fill="#0b0b0b" font-weight="700">QRL<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">QRL</tspan></text>
+<rect x="476.6" y="349" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="363" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="383" font-size="12.5" fill="#6e6c66">Jun · Mainnet launch</text>
+<rect x="176" y="395" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="189" y="405" font-size="14" fill="#0b0b0b">XMSS transaction signatures</text>
+<text x="176" y="425" font-size="12.5" fill="#52514e">Agility: hash choice; descriptor extensions</text>
+<text x="176" y="445" font-size="12.5" fill="#6e6c66">1.x mainnet: PoW; 2.0 PoS: testnet</text>
+<text x="32" y="514" font-size="24" fill="#0b0b0b" font-weight="700">2019</text>
+<text x="32" y="534" font-size="12.5" fill="#6e6c66">1 project</text>
+<rect x="156" y="482" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="492" width="5" height="109" fill="#9a978f" rx="2.5"/>
+<text x="176" y="514" font-size="16" fill="#0b0b0b" font-weight="700">Nexus<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">NXS</tspan></text>
+<rect x="439.6" y="500" width="81.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="480.3" y="514" font-size="11.5" fill="#52514e" text-anchor="middle">PoW + PoS</text>
+<text x="176" y="534" font-size="12.5" fill="#6e6c66">Nov · Tritium mainnet upgrade</text>
+<rect x="458.3" y="521" width="62.7" height="18" fill="#ffffff" rx="9" stroke="#9a978f"/>
+<text x="489.6" y="534" font-size="10.5" fill="#52514e" font-weight="700" text-anchor="middle" letter-spacing="0.6">OPT-IN</text>
+<rect x="176" y="546" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="189" y="556" font-size="14" fill="#0b0b0b">Opt-in Falcon-512; Brainpool also valid</text>
+<text x="176" y="576" font-size="12.5" fill="#52514e">Agility: signature-chain key / scheme rotation</text>
+<text x="176" y="596" font-size="12.5" fill="#6e6c66">Falcon is optional; Brainpool remains classical</text>
+<text x="32" y="665" font-size="24" fill="#0b0b0b" font-weight="700">2020</text>
+<text x="32" y="685" font-size="12.5" fill="#6e6c66">1 project</text>
+<rect x="156" y="633" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="643" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="665" font-size="16" fill="#0b0b0b" font-weight="700">Tidecoin<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">TDC</tspan></text>
+<rect x="476.6" y="651" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="665" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="685" font-size="12.5" fill="#6e6c66">Dec · Mainnet launch</text>
+<rect x="176" y="697" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="189" y="707" font-size="14" fill="#0b0b0b">Falcon-512 live; ML-DSA in upgrade code</text>
+<text x="176" y="727" font-size="12.5" fill="#52514e">Agility: upgrade-gated scheme support</text>
+<text x="176" y="747" font-size="12.5" fill="#6e6c66">Multi-scheme upgrade not active on mainnet</text>
+<text x="32" y="816" font-size="24" fill="#0b0b0b" font-weight="700">2021</text>
+<text x="32" y="836" font-size="12.5" fill="#6e6c66">1 project</text>
+<rect x="156" y="784" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="794" width="5" height="109" fill="#9a978f" rx="2.5"/>
+<text x="176" y="816" font-size="16" fill="#0b0b0b" font-weight="700">Starknet<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">STRK</tspan></text>
+<rect x="419.7" y="802" width="101.3" height="20" fill="#f1f0ec" rx="10"/>
+<text x="470.3" y="816" font-size="11.5" fill="#52514e" text-anchor="middle">L2 · PoS rollout</text>
+<text x="176" y="836" font-size="12.5" fill="#6e6c66">Nov · L2 Mainnet Alpha</text>
+<rect x="462.9" y="823" width="58.1" height="18" fill="#ffffff" rx="9" stroke="#9a978f"/>
+<text x="492" y="836" font-size="10.5" fill="#52514e" font-weight="700" text-anchor="middle" letter-spacing="0.6">DEMO</text>
+<rect x="176" y="848" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<rect x="189" y="848" width="9" height="9" fill="#8f8d86" rx="1.5"/>
+<text x="202" y="858" font-size="14" fill="#0b0b0b">STARK proofs; Falcon-512 account demo</text>
+<text x="176" y="878" font-size="12.5" fill="#52514e">Agility: account abstraction / contract upgrades</text>
+<text x="176" y="898" font-size="12.5" fill="#6e6c66">Independent L1: research proposal stage</text>
+<text x="32" y="967" font-size="24" fill="#0b0b0b" font-weight="700">2022</text>
+<text x="32" y="987" font-size="12.5" fill="#6e6c66">2 projects</text>
+<rect x="156" y="935" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="945" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="967" font-size="16" fill="#0b0b0b" font-weight="700">Abelian<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">ABEL</tspan></text>
+<rect x="448.1" y="953" width="72.9" height="20" fill="#f1f0ec" rx="10"/>
+<text x="484.6" y="967" font-size="11.5" fill="#52514e" text-anchor="middle">Dual PoW</text>
+<text x="176" y="987" font-size="12.5" fill="#6e6c66">Apr · Mainnet launch</text>
+<rect x="176" y="999" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="189" y="1009" font-size="14" fill="#0b0b0b">PQRingCT / PQRingCTX lattice schemes</text>
+<text x="176" y="1029" font-size="12.5" fill="#52514e">Agility: versioned cryptographic schemes</text>
+<text x="176" y="1049" font-size="12.5" fill="#6e6c66">Jan 2026: ABEL-ETHash + ABEL-Nakamoto</text>
+<rect x="549" y="935" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="555" y="945" width="5" height="109" fill="#9a978f" rx="2.5"/>
+<text x="569" y="967" font-size="16" fill="#0b0b0b" font-weight="700">Algorand<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">ALGO</tspan></text>
+<rect x="873" y="953" width="41" height="20" fill="#f1f0ec" rx="10"/>
+<text x="893.5" y="967" font-size="11.5" fill="#52514e" text-anchor="middle">PoS</text>
+<text x="569" y="987" font-size="12.5" fill="#6e6c66">State Proofs deployed on mainnet</text>
+<rect x="851.3" y="974" width="62.7" height="18" fill="#ffffff" rx="9" stroke="#9a978f"/>
+<text x="882.6" y="987" font-size="10.5" fill="#52514e" font-weight="700" text-anchor="middle" letter-spacing="0.6">OPT-IN</text>
+<rect x="569" y="999" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="582" y="1009" font-size="14" fill="#0b0b0b">Opt-in Falcon accounts; State Proofs</text>
+<text x="569" y="1029" font-size="12.5" fill="#52514e">Agility: rekeying / programmable authorization</text>
+<text x="569" y="1049" font-size="12.5" fill="#6e6c66">Chain launched in 2019; consensus still classical</text>
+<text x="32" y="1118" font-size="24" fill="#0b0b0b" font-weight="700">2023</text>
+<text x="32" y="1138" font-size="12.5" fill="#6e6c66">2 projects</text>
+<rect x="156" y="1086" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="1096" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="1118" font-size="16" fill="#0b0b0b" font-weight="700">Cellframe<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">CELL</tspan></text>
+<rect x="443" y="1104" width="78" height="20" fill="#f1f0ec" rx="10"/>
+<text x="482" y="1118" font-size="11.5" fill="#52514e" text-anchor="middle">PoS + PoA</text>
+<text x="176" y="1138" font-size="12.5" fill="#6e6c66">Jul · Native mainnet launch</text>
+<rect x="176" y="1150" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<rect x="189" y="1150" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="202" y="1160" font-size="14" fill="#0b0b0b">Dilithium / Falcon / SPHINCS+</text>
+<text x="176" y="1180" font-size="12.5" fill="#52514e">Agility: multiple native signing schemes</text>
+<text x="176" y="1200" font-size="12.5" fill="#6e6c66">Main chain: PoS; zerochain: PoA · CF-20 only</text>
+<rect x="549" y="1086" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="555" y="1096" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="569" y="1118" font-size="16" fill="#0b0b0b" font-weight="700">QuantumCoin<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">Q</tspan></text>
+<rect x="873" y="1104" width="41" height="20" fill="#f1f0ec" rx="10"/>
+<text x="893.5" y="1118" font-size="11.5" fill="#52514e" text-anchor="middle">PoS</text>
+<text x="569" y="1138" font-size="12.5" fill="#6e6c66">Dec · Mainnet launch</text>
+<rect x="569" y="1150" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<rect x="582" y="1150" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="595" y="1160" font-size="14" fill="#0b0b0b">Hybrid PQ + Ed25519 signatures</text>
+<text x="569" y="1180" font-size="12.5" fill="#52514e">Agility: protocol switching / emergency mode</text>
+<text x="569" y="1200" font-size="12.5" fill="#6e6c66">Signing modes activate at protocol thresholds</text>
+<text x="32" y="1269" font-size="24" fill="#0b0b0b" font-weight="700">2024</text>
+<text x="32" y="1289" font-size="12.5" fill="#6e6c66">1 project</text>
+<rect x="156" y="1237" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="1247" width="5" height="109" fill="#d6d3cb" rx="2.5"/>
+<text x="176" y="1269" font-size="16" fill="#0b0b0b" font-weight="700">QANplatform<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">QANX</tspan></text>
+<rect x="429.1" y="1255" width="91.9" height="20" fill="#f1f0ec" rx="10"/>
+<text x="475.1" y="1269" font-size="11.5" fill="#52514e" text-anchor="middle">PoA · Testnet</text>
+<text x="176" y="1289" font-size="12.5" fill="#6e6c66">May · Public testnet launch announced</text>
+<rect x="444.2" y="1276" width="76.8" height="18" fill="#f1f0ec" rx="9" stroke="#d6d3cb"/>
+<text x="482.6" y="1289" font-size="10.5" fill="#52514e" font-weight="700" text-anchor="middle" letter-spacing="0.6">TESTNET</text>
+<rect x="176" y="1301" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="189" y="1311" font-size="14" fill="#0b0b0b">ML-DSA-65; XLINK links to secp256k1</text>
+<text x="176" y="1331" font-size="12.5" fill="#52514e">Agility: fixed XLINK signature pairing</text>
+<text x="176" y="1351" font-size="12.5" fill="#6e6c66">Testnet uses PoA; transition to PoS is planned</text>
+<text x="32" y="1420" font-size="24" fill="#0b0b0b" font-weight="700">2025</text>
+<text x="32" y="1440" font-size="12.5" fill="#6e6c66">1 project</text>
+<rect x="156" y="1388" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="1398" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="1420" font-size="16" fill="#0b0b0b" font-weight="700">Neptune Cash<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">NPT</tspan></text>
+<rect x="476.6" y="1406" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="1420" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="1440" font-size="12.5" fill="#6e6c66">Feb · First launch; Aug · Relaunch</text>
+<rect x="176" y="1452" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<rect x="189" y="1452" width="9" height="9" fill="#8f8d86" rx="1.5"/>
+<text x="202" y="1462" font-size="14" fill="#0b0b0b">Hash-based spending; STARK proofs</text>
+<text x="176" y="1482" font-size="12.5" fill="#52514e">Agility: programmable lock scripts</text>
+<text x="176" y="1502" font-size="12.5" fill="#6e6c66">Current chain relaunched on Aug 5</text>
+<text x="32" y="1571" font-size="24" fill="#0b0b0b" font-weight="700">2026</text>
+<text x="32" y="1591" font-size="12.5" fill="#6e6c66">5 projects</text>
+<rect x="156" y="1539" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="1549" width="5" height="109" fill="#9a978f" rx="2.5"/>
+<text x="176" y="1571" font-size="16" fill="#0b0b0b" font-weight="700">Nervos CKB<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">CKB</tspan></text>
+<rect x="476.6" y="1557" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="1571" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="1591" font-size="12.5" fill="#6e6c66">Jan · SPHINCS+ lock deployed on mainnet</text>
+<rect x="458.3" y="1578" width="62.7" height="18" fill="#ffffff" rx="9" stroke="#9a978f"/>
+<text x="489.6" y="1591" font-size="10.5" fill="#52514e" font-weight="700" text-anchor="middle" letter-spacing="0.6">OPT-IN</text>
+<rect x="176" y="1603" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="189" y="1613" font-size="14" fill="#0b0b0b">Opt-in SPHINCS+ lock script</text>
+<text x="176" y="1633" font-size="12.5" fill="#52514e">Agility: deployable lock scripts</text>
+<text x="176" y="1653" font-size="12.5" fill="#6e6c66">Chain launched in 2019; existing funds must migrate</text>
+<rect x="549" y="1539" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="555" y="1549" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="569" y="1571" font-size="16" fill="#0b0b0b" font-weight="700">Quantus<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">QTC</tspan></text>
+<rect x="869.6" y="1557" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="891.8" y="1571" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="569" y="1591" font-size="12.5" fill="#6e6c66">Sep 9 · Mainnet launch</text>
+<rect x="569" y="1603" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="582" y="1613" font-size="14" fill="#0b0b0b">ML-DSA-87 / ML-DSA-65 signatures</text>
+<text x="569" y="1633" font-size="12.5" fill="#52514e">Agility: parameter-set selection</text>
+<text x="569" y="1653" font-size="12.5" fill="#6e6c66">ML-DSA-65 requires runtime spec 139+</text>
+<rect x="156" y="1680" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="1690" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="1712" font-size="16" fill="#0b0b0b" font-weight="700">xCoin<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">XID</tspan></text>
+<rect x="476.6" y="1698" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="1712" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="1732" font-size="12.5" fill="#6e6c66">Sep 26 · Mainnet launch</text>
+<rect x="176" y="1744" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<rect x="189" y="1744" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="202" y="1754" font-size="14" fill="#0b0b0b">ML-DSA-65; SLH-DSA fallback</text>
+<text x="176" y="1774" font-size="12.5" fill="#52514e">Agility: precommitted fallback leaves</text>
+<text x="176" y="1794" font-size="12.5" fill="#6e6c66">Fallback key must be in the spending tree</text>
+<rect x="549" y="1680" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="555" y="1690" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="569" y="1712" font-size="16" fill="#0b0b0b" font-weight="700">qtcchain<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">QTC</tspan></text>
+<rect x="869.6" y="1698" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="891.8" y="1712" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="569" y="1732" font-size="12.5" fill="#6e6c66">Sep 30 · v1 mainnet launch</text>
+<rect x="569" y="1744" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<rect x="582" y="1744" width="9" height="9" fill="#eb6834" rx="1.5"/>
+<text x="595" y="1754" font-size="14" fill="#0b0b0b">ML-DSA-44; SLH-DSA fallback</text>
+<text x="569" y="1774" font-size="12.5" fill="#52514e">Agility: multi-scheme script leaves</text>
+<text x="569" y="1794" font-size="12.5" fill="#6e6c66">Oct 5 v2 re-genesis; unrelated to Quantus</text>
+<rect x="156" y="1821" width="379" height="129" fill="#ffffff" rx="8" stroke="#e2e0d9"/>
+<rect x="162" y="1831" width="5" height="109" fill="#2b3440" rx="2.5"/>
+<text x="176" y="1853" font-size="16" fill="#0b0b0b" font-weight="700">Soqucoin<tspan dx="7" font-size="12" font-weight="400" fill="#6e6c66" letter-spacing="0.4">SOQ</tspan></text>
+<rect x="476.6" y="1839" width="44.4" height="20" fill="#f1f0ec" rx="10"/>
+<text x="498.8" y="1853" font-size="11.5" fill="#52514e" text-anchor="middle">PoW</text>
+<text x="176" y="1873" font-size="12.5" fill="#6e6c66">Oct 13 · Mainnet launch</text>
+<rect x="176" y="1885" width="9" height="9" fill="#2a78d6" rx="1.5"/>
+<text x="189" y="1895" font-size="14" fill="#0b0b0b">ML-DSA-44 transaction signatures</text>
+<text x="176" y="1915" font-size="12.5" fill="#52514e">Agility: one active signing scheme</text>
+<text x="176" y="1935" font-size="12.5" fill="#6e6c66">Scrypt PoW with AuxPoW support</text>
+<line x1="32" y1="1976" x2="928" y2="1976" stroke="#e2e0d9"/>
+<text x="32" y="2000" font-size="12" fill="#6e6c66">Drawn by scripts/charts.py from data/projects.json. Data and chart: CC BY 4.0.</text>
+<text x="32" y="2018" font-size="12" fill="#6e6c66">github.com/Balance0014/post-quantum-blockchains · Balance Zhao (@balance0014)</text>
+</svg>

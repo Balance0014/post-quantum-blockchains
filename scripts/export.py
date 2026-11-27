@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
-"""Export the shared JSON data as CSV and readable Markdown tables."""
+"""Export the shared JSON data as CSV, Markdown tables, SVG charts and the README summaries."""
 import csv
 import io
 import json
+import re
+from datetime import date
 from pathlib import Path
 
+from charts import charts, long_date, status
+
 ROOT = Path(__file__).resolve().parents[1]
+SUBMIT = 'https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml'
+SUMMARY = re.compile(r'(<!-- summary: [^\n]*-->\n).*?(\n<!-- /summary -->)', re.S)
+ZH_NETWORK = {'testnet': '测试网', 'devnet': '开发网', 'demo': '演示', 'planned': '计划中'}
 
 def read(name):
     return json.loads((ROOT / 'data' / name).read_text(encoding='utf-8'))
@@ -39,8 +46,8 @@ def outputs():
     size_rows = [{**{k: p[k] for k in ['id', 'name', 'family', 'public_key_bytes', 'signature_bytes', 'nist_category', 'encoding', 'status_note', 'shown_in_published_chart']},
                   'source_url': refs[p['sources'][0]]['url']} for p in parameters]
     lines = ['# Project comparison', '',
-        'Each entry shows the date it was last checked. The original 17 entries were reviewed **October 23, 2026**, the date of the published maps. [Methodology](methodology.md) · [Release-day checks](release-review.md) · [Submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml)', '',
-        'The timeline uses the milestone shown. The cryptography listed reflects the review date; it may have been introduced after the chain launched. QANplatform is a testnet; Starknet is an L2.', '',
+        f'Every network in the map: what is deployed, where, and with which limits. Each entry shows the date its claims were last checked; the first 17 were reviewed **October 23, 2026**. [Methodology](methodology.md) · [Release-day checks](release-review.md) · [Resources](resources.md) · [Submit a project]({SUBMIT})', '',
+        'The [deployment timeline](../charts/deployment-timeline.svg) and [algorithm map](../charts/algorithm-map.svg) are drawn from the same data. The timeline uses the milestone shown. The cryptography listed reflects the review date; it may have been introduced after the chain launched. QANplatform is a testnet; Starknet is an L2.', '',
         '| Project | Consensus | Milestone | Signing / proof scope |',
         '| --- | --- | --- | --- |']
     for p in projects:
@@ -53,8 +60,10 @@ def outputs():
         for id in p['sources']:
             s=refs[id]
             lines.append(f"- [{id}]({s['url']}) — {s['supports']} ({s['source_type']})")
+    sizes_meta = read('signature-sizes.json')
+    shown = sum(p['shown_in_published_chart'] for p in parameters)
     sizes = ['# Reference public-key and signature sizes', '',
-        'Snapshot: **October 23, 2026**. Units: **bytes**. These are algorithm encodings, not complete transaction sizes. Eight rows appear in the published chart; four additional reference rows are included in the data.', '',
+        f"Data as of **{long_date(sizes_meta['snapshot_date'])}**. Units: **bytes**. These are algorithm encodings, not complete transaction sizes. {spell(shown).capitalize()} rows appear in the [algorithm map](../charts/algorithm-map.svg); the other {spell(len(parameters) - shown)} are reference rows in the data only.", '',
         '| Parameter set | Public key | Signature | NIST category | In chart | Source |',
         '| --- | ---: | ---: | --- | --- | --- |']
     for p in parameters:
@@ -71,9 +80,61 @@ def outputs():
         'data/signature-sizes.csv': csv_text(size_rows,list(size_rows[0])),
         'docs/projects.md': '\n'.join(lines)+'\n',
         'docs/signature-sizes.md': '\n'.join(sizes),
+        **charts(),
+        'README.md': with_summary('README.md', summary_en(projects)),
+        'README.zh-CN.md': with_summary('README.zh-CN.md', summary_zh(projects)),
     }
+
+def spell(n):
+    words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+    return words[n] if n < len(words) else str(n)
+
+def groups(projects):
+    return {k: [p for p in projects if status(p) == k] for k in ('default', 'optin', 'offmain')}
+
+def as_of(projects):
+    return max(p['last_reviewed'] for p in projects)
+
+def and_list(names):
+    return names[0] if len(names) == 1 else ', '.join(names[:-1]) + ' and ' + names[-1]
+
+def summary_en(projects):
+    g, n = groups(projects), len(projects)
+    out = [f'Across the {n} listed projects (data as of {long_date(as_of(projects))}):', '']
+    if g['default']:
+        k = len(g['default'])
+        out.append(f"- **{k} of the {n}** {'uses' if k == 1 else 'use'} a post-quantum scheme on {'its' if k == 1 else 'their'} default transaction path.")
+    if g['optin']:
+        k = len(g['optin'])
+        out.append(f"- **{k}** {'offers' if k == 1 else 'offer'} it only as an opt-in account, lock or demo: {and_list([p['name'] for p in g['optin']])}.")
+    if g['offmain']:
+        k = len(g['offmain'])
+        names = [f"{p['name']} ({p['network_status']})" for p in g['offmain']]
+        out.append(f"- **{k}** {'isn' if k == 1 else 'aren'}'t on mainnet yet: {and_list(names)}.")
+    return '\n'.join(out)
+
+def summary_zh(projects):
+    g, n = groups(projects), len(projects)
+    d = date.fromisoformat(as_of(projects))
+    out = [f'已收录 {n} 个项目（数据截至 {d.year} 年 {d.month} 月 {d.day} 日）：', '']
+    if g['default']:
+        out.append(f"- **{n} 个里有 {len(g['default'])} 个**，日常交易默认就走抗量子方案。")
+    if g['optin']:
+        out.append(f"- **{len(g['optin'])} 个**只把它做成可选账户、可选锁或演示：{'、'.join(p['name'] for p in g['optin'])}。")
+    if g['offmain']:
+        names = '、'.join(f"{p['name']}（{ZH_NETWORK.get(p['network_status'], p['network_status'])}）" for p in g['offmain'])
+        out.append(f"- **{len(g['offmain'])} 个**还没上主网：{names}。")
+    return '\n'.join(out)
+
+def with_summary(relative, block):
+    text = (ROOT / relative).read_text(encoding='utf-8')
+    new, count = SUMMARY.subn(lambda m: m.group(1) + block + m.group(2), text)
+    if count != 1:
+        raise ValueError(f'{relative}: expected one <!-- summary: ... --> block')
+    return new
 
 if __name__ == '__main__':
     for relative, text in outputs().items():
+        (ROOT / relative).parent.mkdir(exist_ok=True)
         (ROOT / relative).write_text(text,encoding='utf-8')
         print(relative)

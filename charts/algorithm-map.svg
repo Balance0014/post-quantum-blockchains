@@ -1,0 +1,266 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1885" viewBox="0 0 960 1885" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+<title id="title">Post-quantum blockchain algorithm map</title>
+<desc id="desc">Scheme families used by 17 blockchain projects (lattice-based, hash-based, multivariate, validity proofs), and public-key and signature sizes for 8 reference parameter sets. Data as of October 23, 2026.</desc>
+<rect x="0" y="0" width="960" height="1885" fill="#fcfcfb"/>
+<text x="32" y="48" font-size="24" fill="#0b0b0b" font-weight="700">Post-Quantum Blockchains · Algorithm map</text>
+<text x="928" y="48" font-size="13" fill="#52514e" text-anchor="end">Data as of October 23, 2026</text>
+<text x="32" y="76" font-size="14" fill="#52514e">Which post-quantum scheme families each project uses, and for what. Validity proofs are shown apart because they don't sign</text>
+<text x="32" y="96" font-size="14" fill="#52514e">transactions.</text>
+<rect x="190" y="130" width="178.5" height="4" fill="#2a78d6" rx="2"/>
+<text x="190" y="154" font-size="13.5" fill="#0b0b0b" font-weight="700">Lattice-based</text>
+<text x="190" y="171" font-size="11.5" fill="#6e6c66">signatures and spending</text>
+<rect x="376.5" y="130" width="178.5" height="4" fill="#eb6834" rx="2"/>
+<text x="376.5" y="154" font-size="13.5" fill="#0b0b0b" font-weight="700">Hash-based</text>
+<text x="376.5" y="171" font-size="11.5" fill="#6e6c66">signatures and spending</text>
+<rect x="563" y="130" width="178.5" height="4" fill="#1baf7a" rx="2"/>
+<text x="563" y="154" font-size="13.5" fill="#0b0b0b" font-weight="700">Multivariate</text>
+<text x="563" y="171" font-size="11.5" fill="#6e6c66">signatures and spending</text>
+<rect x="749.5" y="130" width="178.5" height="4" fill="#8f8d86" rx="2"/>
+<text x="749.5" y="154" font-size="13.5" fill="#0b0b0b" font-weight="700">Validity proofs</text>
+<text x="749.5" y="171" font-size="11.5" fill="#6e6c66">not signatures</text>
+<text x="32" y="154" font-size="13.5" fill="#0b0b0b" font-weight="700">Project</text>
+<text x="32" y="171" font-size="11.5" fill="#6e6c66">ticker · consensus</text>
+<line x1="32" y1="184" x2="928" y2="184" stroke="#ecebe6"/>
+<text x="32" y="204" font-size="13.5" fill="#0b0b0b" font-weight="700">Raqcoin</text>
+<text x="32" y="220" font-size="11.5" fill="#6e6c66">RAQ · PoW</text>
+<rect x="563" y="190" width="178.5" height="45" fill="#e8f7f2" rx="5"/>
+<rect x="563" y="190" width="3" height="45" fill="#1baf7a" rx="1.5"/>
+<text x="573" y="208" font-size="12.5" fill="#0b0b0b" font-weight="700">RainbowPro / UOV</text>
+<text x="573" y="223" font-size="11.5" fill="#52514e">configuration-dependent</text>
+<line x1="32" y1="241" x2="928" y2="241" stroke="#ecebe6"/>
+<text x="32" y="261" font-size="13.5" fill="#0b0b0b" font-weight="700">Mochimo</text>
+<text x="32" y="277" font-size="11.5" fill="#6e6c66">MCM · PoS</text>
+<rect x="376.5" y="247" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="247" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="265" font-size="12.5" fill="#0b0b0b" font-weight="700">WOTS+</text>
+<text x="386.5" y="280" font-size="11.5" fill="#52514e">transaction signing</text>
+<line x1="32" y1="298" x2="928" y2="298" stroke="#ecebe6"/>
+<text x="32" y="318" font-size="13.5" fill="#0b0b0b" font-weight="700">QRL</text>
+<text x="32" y="334" font-size="11.5" fill="#6e6c66">QRL · PoW</text>
+<rect x="376.5" y="304" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="304" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="322" font-size="12.5" fill="#0b0b0b" font-weight="700">XMSS</text>
+<text x="386.5" y="337" font-size="11.5" fill="#52514e">transaction signing</text>
+<line x1="32" y1="355" x2="928" y2="355" stroke="#ecebe6"/>
+<text x="32" y="375" font-size="13.5" fill="#0b0b0b" font-weight="700">Nexus</text>
+<text x="32" y="391" font-size="11.5" fill="#6e6c66">NXS · PoW + PoS</text>
+<rect x="190" y="361" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="361" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="379" font-size="12.5" fill="#0b0b0b" font-weight="700">Falcon-512</text>
+<text x="200" y="394" font-size="11.5" fill="#52514e">opt-in authorization</text>
+<line x1="32" y1="412" x2="928" y2="412" stroke="#ecebe6"/>
+<text x="32" y="432" font-size="13.5" fill="#0b0b0b" font-weight="700">Tidecoin</text>
+<text x="32" y="448" font-size="11.5" fill="#6e6c66">TDC · PoW</text>
+<rect x="190" y="418" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="418" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="436" font-size="12.5" fill="#0b0b0b" font-weight="700">Falcon-512</text>
+<text x="200" y="451" font-size="11.5" fill="#52514e">mainnet transaction signing</text>
+<line x1="32" y1="469" x2="928" y2="469" stroke="#ecebe6"/>
+<text x="32" y="489" font-size="13.5" fill="#0b0b0b" font-weight="700">Starknet</text>
+<text x="32" y="505" font-size="11.5" fill="#6e6c66">STRK · L2 · PoS rollout</text>
+<rect x="190" y="475" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="475" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="493" font-size="12.5" fill="#0b0b0b" font-weight="700">Falcon-512</text>
+<text x="200" y="508" font-size="11.5" fill="#52514e">account demonstration</text>
+<rect x="749.5" y="475" width="178.5" height="45" fill="#f4f4f3" rx="5"/>
+<rect x="749.5" y="475" width="3" height="45" fill="#8f8d86" rx="1.5"/>
+<text x="759.5" y="493" font-size="12.5" fill="#0b0b0b" font-weight="700">STARK</text>
+<text x="759.5" y="508" font-size="11.5" fill="#52514e">validity proofs</text>
+<line x1="32" y1="526" x2="928" y2="526" stroke="#ecebe6"/>
+<text x="32" y="546" font-size="13.5" fill="#0b0b0b" font-weight="700">Abelian</text>
+<text x="32" y="562" font-size="11.5" fill="#6e6c66">ABEL · Dual PoW</text>
+<rect x="190" y="532" width="178.5" height="60" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="532" width="3" height="60" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="550" font-size="12.5" fill="#0b0b0b" font-weight="700">PQRingCT / PQRingCTX</text>
+<text x="200" y="565" font-size="11.5" fill="#52514e">custom transaction</text>
+<text x="200" y="580" font-size="11.5" fill="#52514e">authorization</text>
+<line x1="32" y1="598" x2="928" y2="598" stroke="#ecebe6"/>
+<text x="32" y="618" font-size="13.5" fill="#0b0b0b" font-weight="700">Algorand</text>
+<text x="32" y="634" font-size="11.5" fill="#6e6c66">ALGO · PoS</text>
+<rect x="190" y="604" width="178.5" height="60" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="604" width="3" height="60" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="622" font-size="12.5" fill="#0b0b0b" font-weight="700">Falcon</text>
+<text x="200" y="637" font-size="11.5" fill="#52514e">opt-in accounts and State</text>
+<text x="200" y="652" font-size="11.5" fill="#52514e">Proofs</text>
+<line x1="32" y1="670" x2="928" y2="670" stroke="#ecebe6"/>
+<text x="32" y="690" font-size="13.5" fill="#0b0b0b" font-weight="700">Cellframe</text>
+<text x="32" y="706" font-size="11.5" fill="#6e6c66">CELL · PoS + PoA</text>
+<rect x="190" y="676" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="676" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="694" font-size="12.5" fill="#0b0b0b" font-weight="700">Dilithium / Falcon</text>
+<text x="200" y="709" font-size="11.5" fill="#52514e">native wallet options</text>
+<rect x="376.5" y="676" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="676" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="694" font-size="12.5" fill="#0b0b0b" font-weight="700">SPHINCS+</text>
+<text x="386.5" y="709" font-size="11.5" fill="#52514e">native wallet option</text>
+<line x1="32" y1="727" x2="928" y2="727" stroke="#ecebe6"/>
+<text x="32" y="747" font-size="13.5" fill="#0b0b0b" font-weight="700">QuantumCoin</text>
+<text x="32" y="763" font-size="11.5" fill="#6e6c66">Q · PoS</text>
+<rect x="190" y="733" width="178.5" height="60" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="733" width="3" height="60" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="751" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA</text>
+<text x="200" y="766" font-size="11.5" fill="#52514e">hybrid component;</text>
+<text x="200" y="781" font-size="11.5" fill="#52514e">protocol-dependent</text>
+<rect x="376.5" y="733" width="178.5" height="75" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="733" width="3" height="75" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="751" font-size="12.5" fill="#0b0b0b" font-weight="700">SLH-DSA</text>
+<text x="386.5" y="766" font-size="11.5" fill="#52514e">hybrid/emergency</text>
+<text x="386.5" y="781" font-size="11.5" fill="#52514e">component;</text>
+<text x="386.5" y="796" font-size="11.5" fill="#52514e">protocol-dependent</text>
+<line x1="32" y1="814" x2="928" y2="814" stroke="#ecebe6"/>
+<text x="32" y="834" font-size="13.5" fill="#0b0b0b" font-weight="700">QANplatform</text>
+<text x="32" y="850" font-size="11.5" fill="#6e6c66">QANX · PoA · Testnet</text>
+<rect x="190" y="820" width="178.5" height="60" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="820" width="3" height="60" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="838" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA-65</text>
+<text x="200" y="853" font-size="11.5" fill="#52514e">XLINK testnet pairing with</text>
+<text x="200" y="868" font-size="11.5" fill="#52514e">secp256k1</text>
+<line x1="32" y1="886" x2="928" y2="886" stroke="#ecebe6"/>
+<text x="32" y="906" font-size="13.5" fill="#0b0b0b" font-weight="700">Neptune Cash</text>
+<text x="32" y="922" font-size="11.5" fill="#6e6c66">NPT · PoW</text>
+<rect x="376.5" y="892" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="892" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="910" font-size="12.5" fill="#0b0b0b" font-weight="700">Hash preimages</text>
+<text x="386.5" y="925" font-size="11.5" fill="#52514e">spending conditions</text>
+<rect x="749.5" y="892" width="178.5" height="45" fill="#f4f4f3" rx="5"/>
+<rect x="749.5" y="892" width="3" height="45" fill="#8f8d86" rx="1.5"/>
+<text x="759.5" y="910" font-size="12.5" fill="#0b0b0b" font-weight="700">Triton STARK</text>
+<text x="759.5" y="925" font-size="11.5" fill="#52514e">validity proofs</text>
+<line x1="32" y1="943" x2="928" y2="943" stroke="#ecebe6"/>
+<text x="32" y="963" font-size="13.5" fill="#0b0b0b" font-weight="700">Nervos CKB</text>
+<text x="32" y="979" font-size="11.5" fill="#6e6c66">CKB · PoW</text>
+<rect x="376.5" y="949" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="949" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="967" font-size="12.5" fill="#0b0b0b" font-weight="700">SPHINCS+</text>
+<text x="386.5" y="982" font-size="11.5" fill="#52514e">opt-in spending lock</text>
+<line x1="32" y1="1000" x2="928" y2="1000" stroke="#ecebe6"/>
+<text x="32" y="1020" font-size="13.5" fill="#0b0b0b" font-weight="700">Quantus</text>
+<text x="32" y="1036" font-size="11.5" fill="#6e6c66">QTC · PoW</text>
+<rect x="190" y="1006" width="178.5" height="76" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="1006" width="3" height="76" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="1024" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA-87 /</text>
+<text x="200" y="1040" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA-65</text>
+<text x="200" y="1055" font-size="11.5" fill="#52514e">transaction signing; runtime</text>
+<text x="200" y="1070" font-size="11.5" fill="#52514e">conditions apply</text>
+<line x1="32" y1="1088" x2="928" y2="1088" stroke="#ecebe6"/>
+<text x="32" y="1108" font-size="13.5" fill="#0b0b0b" font-weight="700">xCoin</text>
+<text x="32" y="1124" font-size="11.5" fill="#6e6c66">XID · PoW</text>
+<rect x="190" y="1094" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="1094" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="1112" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA-65</text>
+<text x="200" y="1127" font-size="11.5" fill="#52514e">primary signing</text>
+<rect x="376.5" y="1094" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="1094" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="1112" font-size="12.5" fill="#0b0b0b" font-weight="700">SLH-DSA-SHA2-128s</text>
+<text x="386.5" y="1127" font-size="11.5" fill="#52514e">precommitted fallback</text>
+<line x1="32" y1="1145" x2="928" y2="1145" stroke="#ecebe6"/>
+<text x="32" y="1165" font-size="13.5" fill="#0b0b0b" font-weight="700">qtcchain</text>
+<text x="32" y="1181" font-size="11.5" fill="#6e6c66">QTC · PoW</text>
+<rect x="190" y="1151" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="1151" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="1169" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA-44</text>
+<text x="200" y="1184" font-size="11.5" fill="#52514e">primary signing</text>
+<rect x="376.5" y="1151" width="178.5" height="45" fill="#fdf0eb" rx="5"/>
+<rect x="376.5" y="1151" width="3" height="45" fill="#eb6834" rx="1.5"/>
+<text x="386.5" y="1169" font-size="12.5" fill="#0b0b0b" font-weight="700">SLH-DSA</text>
+<text x="386.5" y="1184" font-size="11.5" fill="#52514e">fallback/multisig</text>
+<line x1="32" y1="1202" x2="928" y2="1202" stroke="#ecebe6"/>
+<text x="32" y="1222" font-size="13.5" fill="#0b0b0b" font-weight="700">Soqucoin</text>
+<text x="32" y="1238" font-size="11.5" fill="#6e6c66">SOQ · PoW</text>
+<rect x="190" y="1208" width="178.5" height="45" fill="#eaf2fb" rx="5"/>
+<rect x="190" y="1208" width="3" height="45" fill="#2a78d6" rx="1.5"/>
+<text x="200" y="1226" font-size="12.5" fill="#0b0b0b" font-weight="700">ML-DSA-44</text>
+<text x="200" y="1241" font-size="11.5" fill="#52514e">transaction signing</text>
+<line x1="32" y1="1259" x2="928" y2="1259" stroke="#ecebe6"/>
+<text x="32" y="1305" font-size="18" fill="#0b0b0b" font-weight="700">Public-key and signature sizes</text>
+<text x="32" y="1327" font-size="13" fill="#52514e">Reference parameter sets in bytes, on a log scale. These are algorithm encodings, not transaction sizes.</text>
+<text x="32" y="1355" font-size="12.5" fill="#6e6c66" font-weight="600">Marks</text>
+<circle cx="89" cy="1351" r="5.5" fill="none" stroke="#52514e" stroke-width="2"/>
+<text x="101" y="1355" font-size="12.5" fill="#52514e">Public key</text>
+<circle cx="187.3" cy="1351" r="4" fill="#52514e"/>
+<text x="199.3" y="1355" font-size="12.5" fill="#52514e">Signature</text>
+<text x="828" y="1389" font-size="11.5" fill="#6e6c66" text-anchor="end">Public key</text>
+<text x="928" y="1389" font-size="11.5" fill="#6e6c66" text-anchor="end">Signature</text>
+<line x1="252" y1="1399" x2="252" y2="1719" stroke="#ecebe6"/>
+<text x="252" y="1737" font-size="11.5" fill="#6e6c66" text-anchor="middle">10</text>
+<line x1="345.2" y1="1399" x2="345.2" y2="1719" stroke="#ecebe6"/>
+<text x="345.2" y="1737" font-size="11.5" fill="#6e6c66" text-anchor="middle">100</text>
+<line x1="438.4" y1="1399" x2="438.4" y2="1719" stroke="#ecebe6"/>
+<text x="438.4" y="1737" font-size="11.5" fill="#6e6c66" text-anchor="middle">1k</text>
+<line x1="531.6" y1="1399" x2="531.6" y2="1719" stroke="#ecebe6"/>
+<text x="531.6" y="1737" font-size="11.5" fill="#6e6c66" text-anchor="middle">10k</text>
+<line x1="624.8" y1="1399" x2="624.8" y2="1719" stroke="#ecebe6"/>
+<text x="624.8" y="1737" font-size="11.5" fill="#6e6c66" text-anchor="middle">100k</text>
+<line x1="718" y1="1399" x2="718" y2="1719" stroke="#ecebe6"/>
+<text x="718" y="1737" font-size="11.5" fill="#6e6c66" text-anchor="middle">1M</text>
+<text x="485" y="1755" font-size="11.5" fill="#6e6c66" text-anchor="middle">bytes (log scale)</text>
+<rect x="32" y="1404" width="4" height="30" fill="#8f8d86" rx="2"/>
+<text x="44" y="1417" font-size="13" fill="#0b0b0b" font-weight="700">Ed25519</text>
+<text x="44" y="1433" font-size="11.5" fill="#6e6c66">Classical reference</text>
+<line x1="299.1" y1="1419" x2="327.1" y2="1419" stroke="#cdccc9" stroke-width="2"/>
+<circle cx="299.1" cy="1419" r="6.5" fill="#fcfcfb" stroke="#8f8d86" stroke-width="2"><title>Ed25519: public key 32 bytes</title></circle>
+<circle cx="327.1" cy="1419" r="4" fill="#8f8d86"><title>Ed25519: signature 64 bytes</title></circle>
+<text x="828" y="1424" font-size="13" fill="#0b0b0b" text-anchor="end">32</text>
+<text x="928" y="1424" font-size="13" fill="#0b0b0b" text-anchor="end">64</text>
+<rect x="32" y="1444" width="4" height="30" fill="#8f8d86" rx="2"/>
+<text x="44" y="1457" font-size="13" fill="#0b0b0b" font-weight="700">RSA-2048</text>
+<text x="44" y="1473" font-size="11.5" fill="#6e6c66">Classical reference</text>
+<line x1="385.4" y1="1459" x2="383.2" y2="1459" stroke="#cdccc9" stroke-width="2"/>
+<circle cx="385.4" cy="1459" r="6.5" fill="#fcfcfb" stroke="#8f8d86" stroke-width="2"><title>RSA-2048: public key 270 bytes</title></circle>
+<circle cx="383.2" cy="1459" r="4" fill="#8f8d86"><title>RSA-2048: signature 256 bytes</title></circle>
+<text x="828" y="1464" font-size="13" fill="#0b0b0b" text-anchor="end">270</text>
+<text x="928" y="1464" font-size="13" fill="#0b0b0b" text-anchor="end">256</text>
+<rect x="32" y="1484" width="4" height="30" fill="#2a78d6" rx="2"/>
+<text x="44" y="1497" font-size="13" fill="#0b0b0b" font-weight="700">Falcon-512</text>
+<text x="44" y="1513" font-size="11.5" fill="#6e6c66">Lattice-based · NIST category 1</text>
+<line x1="434" y1="1499" x2="421.9" y2="1499" stroke="#9fc2ed" stroke-width="2"/>
+<circle cx="434" cy="1499" r="6.5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>Falcon-512: public key 897 bytes</title></circle>
+<circle cx="421.9" cy="1499" r="4" fill="#2a78d6"><title>Falcon-512: signature 666 bytes</title></circle>
+<text x="828" y="1504" font-size="13" fill="#0b0b0b" text-anchor="end">897</text>
+<text x="928" y="1504" font-size="13" fill="#0b0b0b" text-anchor="end">666</text>
+<rect x="32" y="1524" width="4" height="30" fill="#2a78d6" rx="2"/>
+<text x="44" y="1537" font-size="13" fill="#0b0b0b" font-weight="700">ML-DSA-44</text>
+<text x="44" y="1553" font-size="11.5" fill="#6e6c66">Lattice-based · NIST category 2</text>
+<line x1="449.4" y1="1539" x2="474.2" y2="1539" stroke="#9fc2ed" stroke-width="2"/>
+<circle cx="449.4" cy="1539" r="6.5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>ML-DSA-44: public key 1,312 bytes</title></circle>
+<circle cx="474.2" cy="1539" r="4" fill="#2a78d6"><title>ML-DSA-44: signature 2,420 bytes</title></circle>
+<text x="828" y="1544" font-size="13" fill="#0b0b0b" text-anchor="end">1,312</text>
+<text x="928" y="1544" font-size="13" fill="#0b0b0b" text-anchor="end">2,420</text>
+<rect x="32" y="1564" width="4" height="30" fill="#eb6834" rx="2"/>
+<text x="44" y="1577" font-size="13" fill="#0b0b0b" font-weight="700">SLH-DSA-SHA2-128s</text>
+<text x="44" y="1593" font-size="11.5" fill="#6e6c66">Hash-based · NIST category 1</text>
+<line x1="299.1" y1="1579" x2="521.8" y2="1579" stroke="#f6bba4" stroke-width="2"/>
+<circle cx="299.1" cy="1579" r="6.5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>SLH-DSA-SHA2-128s: public key 32 bytes</title></circle>
+<circle cx="521.8" cy="1579" r="4" fill="#eb6834"><title>SLH-DSA-SHA2-128s: signature 7,856 bytes</title></circle>
+<text x="828" y="1584" font-size="13" fill="#0b0b0b" text-anchor="end">32</text>
+<text x="928" y="1584" font-size="13" fill="#0b0b0b" text-anchor="end">7,856</text>
+<rect x="32" y="1604" width="4" height="30" fill="#eb6834" rx="2"/>
+<text x="44" y="1617" font-size="13" fill="#0b0b0b" font-weight="700">XMSS-SHA2_10_256</text>
+<text x="44" y="1633" font-size="11.5" fill="#6e6c66">Hash-based</text>
+<line x1="329.6" y1="1619" x2="475.5" y2="1619" stroke="#f6bba4" stroke-width="2"/>
+<circle cx="329.6" cy="1619" r="6.5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>XMSS-SHA2_10_256: public key 68 bytes</title></circle>
+<circle cx="475.5" cy="1619" r="4" fill="#eb6834"><title>XMSS-SHA2_10_256: signature 2,500 bytes</title></circle>
+<text x="828" y="1624" font-size="13" fill="#0b0b0b" text-anchor="end">68</text>
+<text x="928" y="1624" font-size="13" fill="#0b0b0b" text-anchor="end">2,500</text>
+<rect x="32" y="1644" width="4" height="30" fill="#1baf7a" rx="2"/>
+<text x="44" y="1657" font-size="13" fill="#0b0b0b" font-weight="700">UOV-Is, compact public key</text>
+<text x="44" y="1673" font-size="11.5" fill="#6e6c66">Multivariate · target category 1</text>
+<line x1="608.3" y1="1659" x2="343.5" y2="1659" stroke="#98dbc3" stroke-width="2"/>
+<circle cx="608.3" cy="1659" r="6.5" fill="#fcfcfb" stroke="#1baf7a" stroke-width="2"><title>UOV-Is, compact public key: public key 66,576 bytes</title></circle>
+<circle cx="343.5" cy="1659" r="4" fill="#1baf7a"><title>UOV-Is, compact public key: signature 96 bytes</title></circle>
+<text x="828" y="1664" font-size="13" fill="#0b0b0b" text-anchor="end">66,576</text>
+<text x="928" y="1664" font-size="13" fill="#0b0b0b" text-anchor="end">96</text>
+<rect x="32" y="1684" width="4" height="30" fill="#1baf7a" rx="2"/>
+<text x="44" y="1697" font-size="13" fill="#0b0b0b" font-weight="700">UOV-Is, expanded public key</text>
+<text x="44" y="1713" font-size="11.5" fill="#6e6c66">Multivariate · target category 1</text>
+<line x1="682.1" y1="1699" x2="343.5" y2="1699" stroke="#98dbc3" stroke-width="2"/>
+<circle cx="682.1" cy="1699" r="6.5" fill="#fcfcfb" stroke="#1baf7a" stroke-width="2"><title>UOV-Is, expanded public key: public key 412,160 bytes</title></circle>
+<circle cx="343.5" cy="1699" r="4" fill="#1baf7a"><title>UOV-Is, expanded public key: signature 96 bytes</title></circle>
+<text x="828" y="1704" font-size="13" fill="#0b0b0b" text-anchor="end">412,160</text>
+<text x="928" y="1704" font-size="13" fill="#0b0b0b" text-anchor="end">96</text>
+<text x="32" y="1781" font-size="12" fill="#6e6c66">Key-encapsulation mechanisms such as ML-KEM aren't signatures and aren't shown. Encoding notes for each row, and four more parameter sets, are in</text>
+<text x="32" y="1798" font-size="12" fill="#6e6c66">docs/signature-sizes.md.</text>
+<line x1="32" y1="1823" x2="928" y2="1823" stroke="#e2e0d9"/>
+<text x="32" y="1847" font-size="12" fill="#6e6c66">Drawn by scripts/charts.py from data/projects.json and data/signature-sizes.json. Data and chart: CC BY 4.0.</text>
+<text x="32" y="1865" font-size="12" fill="#6e6c66">github.com/Balance0014/post-quantum-blockchains · Balance Zhao (@balance0014)</text>
+</svg>

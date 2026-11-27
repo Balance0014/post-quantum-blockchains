@@ -1,6 +1,6 @@
 # Reference public-key and signature sizes
 
-Snapshot: **October 23, 2026**. Units: **bytes**. These are algorithm encodings, not complete transaction sizes. Eight rows appear in the published chart; four additional reference rows are included in the data.
+Data as of **October 23, 2026**. Units: **bytes**. These are algorithm encodings, not complete transaction sizes. Eight rows appear in the [algorithm map](../charts/algorithm-map.svg); the other four are reference rows in the data only.
 
 | Parameter set | Public key | Signature | NIST category | In chart | Source |
 | --- | ---: | ---: | --- | --- | --- |

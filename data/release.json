@@ -1,25 +1,24 @@
 {
-  "version": "0.2.1",
-  "published_on": "2026-11-03",
-  "snapshot_date": "2026-10-23",
+  "version": "0.4.0",
+  "published_on": "2026-11-27",
+  "first_review_date": "2026-10-23",
   "maintainer": "Balance Zhao",
   "x_url": "https://x.com/balance0014",
   "charts": [
     {
-      "path": "charts/deployment-timeline-2026-10-23.png",
-      "snapshot_date": "2026-10-23",
+      "path": "charts/deployment-timeline.svg",
       "language": "en",
-      "sha256": "7718d18ba35c6a0f67a51ac65e077654e673b23bcfaae74a8debec4a49d924fa"
+      "generated_by": "scripts/charts.py"
     },
     {
-      "path": "charts/algorithm-map-2026-10-23.png",
-      "snapshot_date": "2026-10-23",
+      "path": "charts/algorithm-map.svg",
       "language": "en",
-      "sha256": "e3a0033ed362b1baf80362cb606c4ce5b502e386dcb12baa440877b762237373"
+      "generated_by": "scripts/charts.py"
     }
   ],
-  "scope": "October 23 project and algorithm snapshot, plus separately dated Bitcoin migration research; not a live security ranking",
-  "automated_refresh": false,
+  "scope": "Continuously maintained, source-checked map of post-quantum cryptography in blockchains, plus separately dated Bitcoin migration research; each project entry carries its own review date; not a security ranking",
+  "submission_review_days": 7,
+  "scheduled_network_recheck": false,
   "research_notes": [
     {
       "id": "bitcoin-migration-r8-bruter",

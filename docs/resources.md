@@ -1,6 +1,6 @@
 # Resources
 
-Wallets, libraries, standards and proposals for post-quantum cryptography in blockchains. Networks themselves are in the [project comparison](projects.md).
+Wallets, libraries, standards, proposals and papers on post-quantum cryptography in blockchains. Networks themselves are in the [project comparison](projects.md).
 
 Anything here was checked against its primary source on the date shown. Listing is free and isn't for sale. [Submit a resource](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml) with the same form as a project.
 
@@ -20,5 +20,9 @@ Anything here was checked against its primary source on the date shown. Listing 
 None listed yet. [Submit one](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml).
 
 ## Libraries and SDKs
+
+None listed yet. [Submit one](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml).
+
+## Papers and research
 
 None listed yet. [Submit one](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml).

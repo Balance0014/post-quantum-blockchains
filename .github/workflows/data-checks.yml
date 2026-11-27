@@ -6,11 +6,20 @@ permissions:
   contents: read
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.12']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python-version }}
       - run: python3 -B scripts/validate.py
       - run: python3 -B -m py_compile scripts/triage.py
+      - name: Generated charts, tables and README summaries match the data
+        run: |
+          python3 -B scripts/export.py
+          git status --short
+          git diff --exit-code
+          test -z "$(git status --porcelain)"

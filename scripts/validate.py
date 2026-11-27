@@ -74,19 +74,20 @@ def validate():
         require(p['nist_category'] in {None,1,2,3,4,5},f"Invalid category: {p['id']}")
         require(p['family'] in {'classical','lattice-based','hash-based','multivariate'},f"Non-signature family: {p['id']}")
         require(type(p['shown_in_published_chart']) is bool,f"Chart inclusion must be Boolean: {p['id']}")
-    for chart in release['charts']:
-        path=(ROOT/chart['path']).resolve()
-        require(path.is_relative_to(ROOT), 'Chart path escapes repository')
-        require(hashlib.sha256(path.read_bytes()).hexdigest()==chart['sha256'],f"Chart checksum: {chart['path']}")
-    for relative,text in outputs().items():
+    generated=outputs()
+    require({c['path'] for c in release['charts']}=={k for k in generated if k.startswith('charts/')},'release.json must list the generated charts')
+    for relative,text in generated.items():
         require((ROOT/relative).read_text(encoding='utf-8')==text,f'Generated file is stale: {relative}; run scripts/export.py')
+    # docs/projects.md headings become anchors; badge and table links use the project ID.
+    for p in projects:
+        require(re.sub(r'[^a-z0-9 -]','',p['name'].lower()).replace(' ','-')==p['id'],f"ID must match the heading anchor: {p['id']}")
     # These are scope safeguards for the original snapshot, not security ratings.
     by_name={p['name']:p for p in projects}
     require(by_name['QANplatform']['network_status']=='testnet','QANplatform snapshot must retain testnet scope')
     require(by_name['Mochimo']['consensus']=='PoS','Mochimo snapshot must retain post-transition PoS')
     require('L2' in by_name['Starknet']['consensus'],'Starknet snapshot must retain L2 scope')
     validate_research()
-    print(f"OK: {len(projects)} projects, {len(parameters)} size references, {len(sources)} sources, chart hashes and generated files")
+    print(f"OK: {len(projects)} projects, {len(parameters)} size references, {len(sources)} sources, generated charts, tables and README summaries")
 
 if __name__=='__main__':
     validate()

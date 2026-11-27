@@ -8,15 +8,35 @@ Found a wrong date, a missing condition or a project we should add? Project team
 
 ## What gets listed
 
-Any blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state, backed by public primary sources. Wallets, libraries and standards are welcome and go into the [resource list](docs/resources.md). Opt-in features, testnets, demos and planned work are listed with that status; a project doesn't need to claim whole-chain post-quantum security. The evidence bar is in [the methodology](docs/methodology.md).
+Any blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state, backed by public primary sources. Wallets, libraries, standards and papers are welcome and go into the [resource list](docs/resources.md). Opt-in features, testnets, demos and planned work are listed with that status; a project doesn't need to claim whole-chain post-quantum security. The evidence bar is in [the methodology](docs/methodology.md).
 
 ## How review works
 
 1. A new submission or correction gets an automatic reply that checks the links and looks for an existing entry. A maintainer replies within 7 days.
 2. Every claim is checked against its sources. Anything the sources don't support is narrowed or left out, and the reason is given on the issue.
-3. Accepted entries are added to `data/`, the tables are regenerated, and the change is noted in [CHANGELOG.md](CHANGELOG.md). The entry's `last_reviewed` date is the day its claims were checked.
+3. Accepted entries are added to `data/`, the tables and charts are regenerated, and the change is noted in [CHANGELOG.md](CHANGELOG.md). The entry's `last_reviewed` date is the day its claims were checked.
 4. Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
 5. If you work on the project or have a financial interest in it, say so. It doesn't block a listing; it's recorded with the submission.
+
+## Listed badge
+
+Once your project is listed, you can link your README to its entry:
+
+[![Listed on Post-Quantum Blockchains](badges/listed.svg)](docs/projects.md)
+
+Markdown:
+
+```markdown
+[![Listed on Post-Quantum Blockchains](https://raw.githubusercontent.com/Balance0014/post-quantum-blockchains/main/badges/listed.svg)](https://github.com/Balance0014/post-quantum-blockchains/blob/main/docs/projects.md#PROJECT-ID)
+```
+
+HTML:
+
+```html
+<a href="https://github.com/Balance0014/post-quantum-blockchains/blob/main/docs/projects.md#PROJECT-ID"><img src="https://raw.githubusercontent.com/Balance0014/post-quantum-blockchains/main/badges/listed.svg" alt="Listed on Post-Quantum Blockchains" height="20"></a>
+```
+
+Replace `PROJECT-ID` with your entry's `id` from [data/projects.csv](data/projects.csv), for example `nervos-ckb`. The badge only says the project is listed. It isn't an endorsement or a security rating, and your entry describes limits as well as features.
 
 ## Pull requests
 
@@ -36,7 +56,7 @@ python3 scripts/export.py
 python3 scripts/validate.py
 ```
 
-Include the regenerated CSV files and tables in the same pull request. Keep `last_reviewed` tied to the claims you actually checked. A source lookup or code change is not a mainnet activation record.
+Include the regenerated CSVs, tables, charts and README summaries in the same pull request; CI fails if they don't match the data. A new project's `id` must match its heading anchor in `docs/projects.md` (the name in lowercase, spaces as hyphens), because the table and the badge link to it. Keep `last_reviewed` tied to the claims you actually checked. A source lookup or code change is not a mainnet activation record.
 
 Maintainers review evidence before merging. Promotional copy, price targets and unsupported whole-chain security labels will not be added. Source disagreement is useful information; describe it rather than hiding it.
 
