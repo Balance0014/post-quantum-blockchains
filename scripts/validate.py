@@ -110,14 +110,27 @@ def validate_chains():
         ls=c['latest_step']
         require(ls.get('date') is None or DATE_RE.match(ls['date']),f'Latest step date: {cid}')
         bilingual({'en':ls.get('text'),'zh':ls.get('zh')},f'{cid}.latest_step')
+        # A date on the review day is either our own check or a project event that happened that day: say which.
+        require(ls.get('date')!=c['last_reviewed'] or isinstance(ls.get('is_check_date'),bool),f'Latest step dated on the review day needs is_check_date true or false: {cid}')
         for i,m in enumerate(c['milestones']):
             w=f'{cid}.milestones[{i}]'
             require(m['type'] in MILESTONE_TYPES and m.get('grade') in {'primary','official'},f'Milestone type or grade: {w}')
+            require(m.get('date')!=c['last_reviewed'] or isinstance(m.get('checked'),bool),f'Milestone dated on the review day needs checked true or false: {w}')
             require(m.get('date') is None or DATE_RE.match(m['date']),f'Milestone date: {w}')
             bilingual({'en':m.get('name'),'zh':m.get('zh')},w)
             if m.get('status'):
                 bilingual(m['status'],f'{w}.status')
             https(m.get('source_url'),w)
+        # The day post-quantum signatures became usable on the current mainnet: genesis for native chains, the
+        # upgrade's activation (or first deployment) for the rest. Only stage 4 and 5 chains have one.
+        since=c.get('pq_mainnet_since')
+        if since is not None:
+            w=f'{cid}.pq_mainnet_since'
+            require(c['stage']>=4,f'Only stage 4 and 5 chains have a post-quantum mainnet date: {w}')
+            require(re.fullmatch(r'\d{4}-\d{2}-\d{2}',since.get('date') or '') and date.fromisoformat(since['date'])<=date.fromisoformat(c['last_reviewed']),f'Date (YYYY-MM-DD, not after last_reviewed): {w}')
+            require(since.get('basis') in {'genesis','relaunch','activation','deployment'} and since.get('grade') in {'primary','official'},f'Basis or grade: {w}')
+            bilingual(since.get('event'),f'{w}.event')
+            https(since.get('source_url'),w)
         for i,u in enumerate(c['unverified']):
             bilingual(u['claim'],f'{cid}.unverified[{i}].claim')
             bilingual(u['reason'],f'{cid}.unverified[{i}].reason')
@@ -152,6 +165,11 @@ def validate_chains():
             https(n['probe']['url'],f'{cid}.network.probe')
         else:
             bilingual(n.get('no_probe_reason'),f'{cid}.network.no_probe_reason')
+        # An independent explorer that confirms or overrules the chain's own endpoint before a chain is called stopped.
+        if n.get('check'):
+            require(n.get('probe'),f'An independent check needs a probe to check: {cid}')
+            https(n['check']['url'],f'{cid}.network.check')
+        require(n.get('source_kind') in (None,'project','community'),f'network.source_kind is project or community: {cid}')
         for w in c.get('watch',[]):
             require(w['type'] in {'pr','issue','file'} and w['label'] and w['repo'],f'Watch entry: {cid}')
         date.fromisoformat(c['last_reviewed'])
