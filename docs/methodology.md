@@ -2,7 +2,7 @@
 
 ## Scope
 
-The project dataset opens the data behind the two October 23, 2026 maps. Projects were selected for the original comparison and community follow-up. Inclusion is not an endorsement or a claim of complete market coverage. A submission needs public technical material that identifies the project and supports a specific cryptographic use. A ticker or a marketing claim alone is not enough.
+The project dataset started with the data behind the two October 23, 2026 maps and is open to new submissions. Any project that meets the evidence bar below can be listed. Inclusion is not an endorsement or a claim of complete market coverage, and listing is never paid. A submission needs public technical material that identifies the project and supports a specific cryptographic use. A ticker or a marketing claim alone is not enough.
 
 Projects with testnets, demonstrations or opt-in features can be included when those limits are explicit. A new submission does not need to claim whole-chain post-quantum security.
 
@@ -20,7 +20,7 @@ Each project has a `last_reviewed` date, source IDs and notes on milestones, con
 
 `timeline_year` refers to the milestone shown, not always the chain's genesis. Algorand is placed at its 2022 State Proofs deployment; its mainnet launched in 2019. QANplatform is placed at its 2024 public testnet announcement. Raqcoin's 2018 entry refers to predecessor genesis, not adoption of every current signing option.
 
-Consensus and cryptographic features describe the snapshot date, not necessarily the original milestone date. Mainnet, testnet, optional accounts, demonstrations and planned upgrades must remain distinct.
+Consensus and cryptographic features describe the entry's `last_reviewed` date, not necessarily the original milestone date. Mainnet, testnet, optional accounts, demonstrations and planned upgrades must remain distinct.
 
 ## Cryptographic roles
 

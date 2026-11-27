@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — November 27, 2026
+
+- Opened the map to new projects. A submission form asks for the deployment status, scheme, primary sources, limits and the submitter's relationship to the project; no fork or pull request is needed.
+- Wrote down what gets listed and how review works in the README, the Chinese README and CONTRIBUTING. Listing is free and isn't for sale.
+- Each entry now carries its own review date. The 17 original entries and both maps still date from October 23, 2026.
+- No data, chart or research changes.
+
 ## 0.2.2 — November 4, 2026
 
 - Renamed the title to Post-Quantum Blockchains, matching the repository name. Old links to the repository redirect.

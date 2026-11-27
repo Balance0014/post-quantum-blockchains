@@ -1,8 +1,25 @@
 # Contributing
 
-Found a wrong date, a missing condition or a project we should add? Open an issue or send a pull request. Project teams and independent readers use the same process.
+Found a wrong date, a missing condition or a project we should add? Project teams and independent readers use the same process.
 
-Please include:
+- **Add a project:** [submit it with the form](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml). No fork or pull request needed.
+- **Fix a claim:** [report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml).
+- **Edit the data yourself:** send a pull request as described below.
+
+## What gets listed
+
+Any blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state, backed by public primary sources. Wallets, libraries and standards are welcome and go into a separate resource list. Opt-in features, testnets, demos and planned work are listed with that status; a project doesn't need to claim whole-chain post-quantum security. The evidence bar is in [the methodology](docs/methodology.md).
+
+## How review works
+
+1. Every claim is checked against its sources. Anything the sources don't support is narrowed or left out, and the reason is given on the issue.
+2. Accepted entries are added to `data/`, the tables are regenerated, and the change is noted in [CHANGELOG.md](CHANGELOG.md). The entry's `last_reviewed` date is the day its claims were checked.
+3. Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
+4. If you work on the project or have a financial interest in it, say so. It doesn't block a listing; it's recorded with the submission.
+
+## Pull requests
+
+For an issue or a pull request, please include:
 
 1. The project and the specific claim you want to change.
 2. A primary source: release notes, deployment details, governance records, an algorithm specification or code pinned to a commit.

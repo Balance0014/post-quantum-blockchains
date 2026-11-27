@@ -1,8 +1,8 @@
 # Project comparison
 
-Snapshot: **October 23, 2026**. These entries describe the dated charts, not a live network feed. [Methodology](methodology.md) · [Release-day checks](release-review.md)
+Each entry shows the date it was last checked. The original 17 entries were reviewed **October 23, 2026**, the date of the published maps. [Methodology](methodology.md) · [Release-day checks](release-review.md) · [Submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml)
 
-The timeline uses the milestone shown. The cryptography listed reflects the snapshot date; it may have been introduced after the chain launched. QANplatform is a testnet; Starknet is an L2.
+The timeline uses the milestone shown. The cryptography listed reflects the review date; it may have been introduced after the chain launched. QANplatform is a testnet; Starknet is an L2.
 
 | Project | Consensus | Milestone | Signing / proof scope |
 | --- | --- | --- | --- |

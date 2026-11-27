@@ -1,24 +1,99 @@
-name: Suggest a project
-description: Suggest a project with public technical evidence.
+name: Submit a project
+description: Add a project to the post-quantum blockchain map. Every claim needs a public primary source.
 title: "Project: "
+labels: ["project submission"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for submitting. Each claim is checked against its sources before the project is listed, and the entry records the date it was checked. Listing is free and isn't for sale. See [what gets listed](https://github.com/Balance0014/post-quantum-blockchains#submit-a-project).
   - type: input
     id: name
     attributes:
       label: Project name and ticker
+      placeholder: "Example Chain (EXC)"
+    validations:
+      required: true
+  - type: input
+    id: links
+    attributes:
+      label: Website and code repository
+      placeholder: "https://… · https://github.com/…"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: What is it?
+      options:
+        - Layer 1 blockchain
+        - Layer 2 or rollup
+        - Sidechain, appchain or other network
+        - Wallet
+        - Library or SDK
+        - Standard, proposal or research
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Deployment status of the post-quantum feature
+      options:
+        - On by default on mainnet
+        - Opt-in on mainnet (accounts, locks or scripts users choose)
+        - Testnet or devnet
+        - Demo or prototype
+        - Planned or proposed
+    validations:
+      required: true
+  - type: input
+    id: scheme
+    attributes:
+      label: Scheme and parameter set
+      description: What it is used for (transaction signatures, key exchange, proofs).
+      placeholder: "ML-DSA-65 for transaction signatures"
     validations:
       required: true
   - type: textarea
     id: facts
     attributes:
       label: What has been deployed?
-      description: Include the network, consensus, milestone, scheme and protection scope.
+      description: Network, consensus, milestone and date, and what the post-quantum scheme protects.
     validations:
       required: true
   - type: textarea
     id: sources
     attributes:
-      label: Primary sources and limits
-      description: Link technical evidence and describe remaining classical dependencies or conditions.
+      label: Primary sources
+      description: Release notes, specifications, governance records or code pinned to a commit. One link per line, each with the claim it supports.
     validations:
       required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: Limits and classical dependencies
+      description: Anything still on classical cryptography (old accounts, consensus keys, bridges, fallbacks), or conditions on the feature.
+    validations:
+      required: true
+  - type: dropdown
+    id: affiliation
+    attributes:
+      label: Your relationship to the project
+      options:
+        - I work on or for this project
+        - I hold its token or have another financial interest
+        - No affiliation
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you submit
+      options:
+        - label: Every claim above links to a public source, not only an announcement or press coverage.
+          required: true
+        - label: I haven't included seed phrases, private keys, private infrastructure details or personal contact information.
+          required: true
+        - label: My text can be published under CC BY 4.0, as described in the repository's LICENSE.
+          required: true

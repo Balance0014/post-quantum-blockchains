@@ -1,6 +1,7 @@
 name: Correct a claim
 description: Report an incorrect or outdated detail with sources.
 title: "Correction: "
+labels: ["correction"]
 body:
   - type: input
     id: project

@@ -2,15 +2,17 @@
 
 Where post-quantum cryptography is used in crypto, how signing schemes compare, and what Bitcoin migration would ask of holders.
 
+This is an open, source-checked map. Project teams and readers can [submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml) or a correction, and every entry shows the date it was last checked.
+
 | Research | Start here |
 | --- | --- |
 | Project deployments | [17-project comparison](docs/projects.md): what is deployed, where, and with which limits. |
 | Algorithms | [Algorithm map](#algorithm-map) and [signature sizes](docs/signature-sizes.md): roles, parameters and encodings. |
 | Bitcoin migration | [r8's BRUTER framework and the coins left behind](#bitcoin-migration-and-governance): original English and Chinese diagrams, sources and a reproducible capacity calculation. |
 
-The project and algorithm data remain an October 23, 2026 snapshot. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3. Each has its own scope and dates.
+The 17 original project entries and both maps date from October 23, 2026. New and corrected entries go through the same evidence check and carry their own review date; every change is logged in the [changelog](CHANGELOG.md). The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3.
 
-[Browse the projects](docs/projects.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new/choose) · [中文](README.zh-CN.md)
+**[Submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml)** · [Browse the projects](docs/projects.md) · [Compare signature sizes](docs/signature-sizes.md) · [Download CSV](data/projects.csv) · [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) · [中文](README.zh-CN.md)
 
 As of October 23, 2026:
 
@@ -18,7 +20,7 @@ As of October 23, 2026:
 - **4** offer it only as an opt-in account, lock or demo: Nexus, Starknet, Algorand and Nervos CKB.
 - **1** is testnet-only: QANplatform.
 
-It started as two maps I posted on [X](https://x.com/balance0014). This is the data behind them, so you can check my work and tell me what I got wrong. The data is a snapshot from the day the charts went up; I published it on October 28 after [a few re-checks](docs/release-review.md). It isn't a live feed or a security ranking.
+It started as two maps I posted on [X](https://x.com/balance0014). This is the data behind them, so you can check my work and tell me what I got wrong. I published it on October 28 after [a few re-checks](docs/release-review.md), and it's now open for new projects. It isn't a security ranking or a price signal.
 
 Maintained by Balance Zhao ([@balance0014](https://x.com/balance0014)).
 
@@ -68,13 +70,30 @@ The size table gives raw public-key and signature bytes for specific parameter s
 
 When a claim cites the project's own documentation, read it as "the project says so", not as an audit. 19 of the 81 sources are pinned to a specific commit; project web pages can change or disappear.
 
-This is a selected comparison, not a list of every post-quantum project. The projects are the ones on the original maps plus those readers asked about; [methodology](docs/methodology.md) sets the minimum evidence bar.
+The list started with the projects on the original maps. It's open to any project that meets the evidence bar in the [methodology](docs/methodology.md); see [Submit a project](#submit-a-project).
+
+## Submit a project
+
+Building with post-quantum cryptography, or know a project that is? [Open a submission](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml). You don't need to fork the repository or send a pull request.
+
+**What gets listed**
+
+- A blockchain, layer 2 or other network that uses a post-quantum scheme to sign transactions, exchange keys or prove state. Wallets, libraries and standards are welcome too; they'll go into a separate resource list.
+- A public primary source for each claim: release notes, a specification, governance records or code pinned to a commit. An announcement or press coverage isn't enough on its own.
+- A clear status: on by default on mainnet, opt-in on mainnet, testnet, demo or planned. Planned work is listed as planned.
+
+**How review works**
+
+- Every claim is checked against its sources before it's added, and the entry records the date it was checked.
+- Accepted entries appear in the [project comparison](docs/projects.md) and the CSV, and the change is noted in the [changelog](CHANGELOG.md). The two maps above stay dated October 23 until they're redrawn.
+- Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
+- If you work on the project, say so in the form. Team submissions are welcome and get the same check.
 
 ## Reuse or contribute
 
-Download the data, cite the snapshot date and link back here. If you change it, say what changed. Data, charts and prose are **CC BY 4.0**; scripts are **MIT**. Linked third-party material keeps its own terms. See [LICENSE](LICENSE).
+Download the data, cite the review date of the entries you use and link back here. If you change it, say what changed. Data, charts and prose are **CC BY 4.0**; scripts are **MIT**. Linked third-party material keeps its own terms. See [LICENSE](LICENSE).
 
-To correct something, send the specific claim, a primary source and the network or version it applies to. Project teams are welcome; changes go through the same evidence check. [Open a correction or project request](https://github.com/Balance0014/post-quantum-blockchains/issues/new/choose).
+To correct something, send the specific claim, a primary source and the network or version it applies to. Project teams are welcome; changes go through the same evidence check. [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) or [submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml).
 
 The scripts need Python 3.10+ and nothing else (CI runs 3.12):
 
