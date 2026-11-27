@@ -1282,8 +1282,8 @@
    "stage": 1,
    "stage_label": "Research",
    "stage_basis": {
-    "en": "Post-quantum signatures are open research topics in the Monero Research Lab (issues #159 and #151). There is no proposal or code for spending.",
-    "zh": "抗量子签名在 Monero 研究实验室仍是开放的研究议题（#159 和 #151），还没有针对花费的提案或代码。"
+    "en": "Post-quantum signatures are an open research topic in the Monero Research Lab (issue #159). There is no proposal or code for spending.",
+    "zh": "抗量子签名在 Monero 研究实验室仍是开放的研究议题（#159），还没有针对花费的提案或代码。"
    },
    "algo": {
     "en": "None for spending",
@@ -1324,19 +1324,6 @@
      "verified": true
     },
     {
-     "date": "2025-10-24",
-     "type": "research",
-     "grade": "primary",
-     "name": "Monero Research Lab issue #151: post-quantum encryption for the future Jamtis address scheme; describes Carrot's partial forward secrecy against a quantum adversary",
-     "zh": "门罗研究实验室议题 #151：为未来的 Jamtis 地址方案引入抗量子加密；介绍 Carrot 面对量子攻击者时的部分前向保密",
-     "status": {
-      "en": "Open research discussion",
-      "zh": "研究讨论中"
-     },
-     "source_url": "https://github.com/monero-project/research-lab/issues/151",
-     "verified": true
-    },
-    {
      "date": "2026-10-17",
      "type": "mainnet",
      "grade": "primary",
@@ -1353,7 +1340,6 @@
    "unverified": [],
    "sources": [
     "https://github.com/monero-project/research-lab/issues/159",
-    "https://github.com/monero-project/research-lab/issues/151",
     "https://github.com/monero-project/monero/blob/master/src/hardforks/hardforks.cpp"
    ],
    "network": {
@@ -1382,12 +1368,6 @@
      "number": 159,
      "type": "issue",
      "label": "MRL #159"
-    },
-    {
-     "repo": "monero-project/research-lab",
-     "number": 151,
-     "type": "issue",
-     "label": "MRL #151"
     }
    ],
    "last_reviewed": "2026-11-27"
@@ -1862,8 +1842,8 @@
    "stage": 5,
    "stage_label": "Default",
    "stage_basis": {
-    "en": "Every mainnet transfer is signed with multivariate Rainbow or UOV keys by default. That older Rainbow parameters are publicly broken is shown in the algorithm labels.",
-    "zh": "主网每笔转账默认使用多变量 Rainbow 或 UOV 密钥签名。旧版 Rainbow 参数已被公开破解，这一点标在算法标签里。"
+    "en": "Every mainnet transfer is signed with multivariate Rainbow or UOV keys by default. The early Rainbow(16,32,32,32) parameters were publicly broken; the default configuration 274 is a different parameter set with no public analysis.",
+    "zh": "主网每笔转账默认使用多变量 Rainbow 或 UOV 密钥签名。早期 Rainbow（16,32,32,32）参数已被公开破解；默认配置 274 是另一套参数，目前没有公开分析。"
    },
    "pq_mainnet_since": {
     "date": "2018-06-18",
@@ -4027,19 +4007,6 @@
      "verified": true
     },
     {
-     "date": "2025-12-07",
-     "type": "research",
-     "grade": "primary",
-     "name": "KIP-16 merged (zero-knowledge verification precompiles); it notes that STARK receipts are quantum-resistant and Groth16 proofs are not. It does not change holder signatures.",
-     "zh": "KIP-16 合并（零知识证明验证预编译）；文中指出 STARK 证明抗量子、Groth16 不抗量子。不涉及持币人签名。",
-     "status": {
-      "en": "Not about holder signatures; does not count",
-      "zh": "与持币人签名无关，不计入档位"
-     },
-     "source_url": "https://github.com/kaspanet/kips/blob/master/kip-0016.md",
-     "verified": true
-    },
-    {
      "date": "2025-12-08",
      "type": "research",
      "grade": "official",
@@ -5820,9 +5787,9 @@
     "zh": "Hedera 官方路线图计划在 2027 年推出抗量子用户密钥类型，目前没有签名相关的 HIP 合并。"
    },
    "latest_step": {
-    "date": "2026-05-07",
-    "text": "A consensus-node pull request documenting options for post-quantum TLS (ML-KEM) was opened; it is still open.",
-    "zh": "共识节点仓库新开拉取请求，整理抗量子 TLS（ML-KEM）的可选方案，目前仍未合并。"
+    "date": "2026-04-10",
+    "text": "Hedera's blog set out its plan: hybrid Ed25519 and FN-DSA event signing, then a post-quantum user key type targeted for 2027.",
+    "zh": "Hedera 官方博客公布计划：先用 Ed25519 加 FN-DSA 的混合事件签名，再推出抗量子用户密钥类型，目标 2027 年。"
    },
    "milestones": [
     {
@@ -5839,19 +5806,6 @@
      "verified": true
     },
     {
-     "date": "2026-03-11",
-     "type": "proposal",
-     "grade": "primary",
-     "name": "HIP-1424 \"Block and State Merkle Tree Hashing Scheme\" (Approved) chooses SHA-384 partly so that network hashing stays post-quantum; it does not change keys or signatures.",
-     "zh": "HIP-1424「区块与状态默克尔树哈希方案」（已批准）选用 SHA-384，部分理由是让网络哈希保持抗量子；不涉及密钥和签名。",
-     "status": {
-      "en": "Approved; hashing only, does not protect holders",
-      "zh": "已批准；只涉及哈希，不保护持币人"
-     },
-     "source_url": "https://github.com/hiero-ledger/hiero-improvement-proposals/blob/main/HIP/hip-1424.md",
-     "verified": true
-    },
-    {
      "date": "2026-03-25",
      "type": "proposal",
      "grade": "primary",
@@ -5862,19 +5816,6 @@
       "zh": "已关闭，未合并"
      },
      "source_url": "https://github.com/hiero-ledger/hiero-improvement-proposals/pull/1437",
-     "verified": true
-    },
-    {
-     "date": "2026-04-08",
-     "type": "research",
-     "grade": "primary",
-     "name": "hiero-consensus-node issue #24840: investigate ML-KEM for TLS and its performance impact.",
-     "zh": "hiero-consensus-node issue #24840：评估在 TLS 中使用 ML-KEM 及其性能影响。",
-     "status": {
-      "en": "Open (TLS only, not account keys)",
-      "zh": "进行中（仅 TLS，不涉及账户密钥）"
-     },
-     "source_url": "https://github.com/hiero-ledger/hiero-consensus-node/issues/24840",
      "verified": true
     },
     {
@@ -5900,7 +5841,6 @@
    ],
    "sources": [
     "https://github.com/hiero-ledger/hiero-improvement-proposals/pull/1103",
-    "https://github.com/hiero-ledger/hiero-improvement-proposals/blob/main/HIP/hip-1424.md",
     "https://github.com/hiero-ledger/hiero-improvement-proposals/pull/1437",
     "https://github.com/hiero-ledger/hiero-consensus-node/issues/24840",
     "https://hedera.com/blog/post-quantum-cryptography-and-blockchain",
@@ -6690,8 +6630,8 @@
     }
    },
    "stage_basis": {
-    "en": "No post-quantum research, roadmap or proposal for KCC. KuCoin's only related item is a web-gateway test, not a chain change.",
-    "zh": "KCC 没有抗量子研究、路线图或提案；KuCoin 唯一相关的是一个网页网关测试，与链本身无关。"
+    "en": "No post-quantum research, roadmap or proposal for KCC.",
+    "zh": "KCC 没有抗量子研究、路线图或提案。"
    },
    "latest_step": {
     "date": "2026-11-27",
@@ -6700,19 +6640,6 @@
     "is_check_date": true
    },
    "milestones": [
-    {
-     "date": "2025-12",
-     "type": "thirdparty",
-     "grade": "official",
-     "name": "KuCoin (the exchange) published a post-quantum HTTPS gateway proof of concept. It concerns web connections, not the KCC chain.",
-     "zh": "KuCoin（交易所）发布了抗量子 HTTPS 网关的概念验证，针对的是网页连接，与 KCC 链无关。",
-     "status": {
-      "en": "Not a chain change",
-      "zh": "不是链上改动"
-     },
-     "source_url": "https://www.kucoin.com/blog/en-kucoin-releases-post-quantum-cryptography-pqc-gateway-proof-of-concept",
-     "verified": true
-    },
     {
      "date": "2026-11-27",
      "type": "research",
@@ -6750,7 +6677,6 @@
     "Web search: KuCoin / KCC post-quantum — only the exchange's HTTPS gateway PoC"
    ],
    "sources": [
-    "https://www.kucoin.com/blog/en-kucoin-releases-post-quantum-cryptography-pqc-gateway-proof-of-concept",
     "https://github.com/kcc-community/KIPs",
     "https://github.com/kcc-community/kcc"
    ],

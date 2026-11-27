@@ -34,7 +34,7 @@ CHIPS = {
     'fips204': {'tone': 'std', 'en': 'ML-DSA · NIST FIPS 204', 'zh': 'ML-DSA · NIST 标准 FIPS 204'},
     'fips205': {'tone': 'std', 'en': 'SLH-DSA · NIST FIPS 205', 'zh': 'SLH-DSA · NIST 标准 FIPS 205'},
     'falcon': {'tone': 'std', 'en': 'Falcon · NIST-selected (FN-DSA)', 'zh': 'Falcon · NIST 选定（FN-DSA）'},
-    'xmss': {'tone': 'std', 'en': 'XMSS · IETF RFC 8391', 'zh': 'XMSS · IETF 标准 RFC 8391'},
+    'xmss': {'tone': 'std', 'en': 'XMSS · IETF RFC 8391, NIST SP 800-208', 'zh': 'XMSS · IETF 标准 RFC 8391、NIST SP 800-208'},
     'family': {'tone': 'fam', 'en': 'NIST family · version not reviewed', 'zh': 'NIST 同族方案 · 版本未核实'},
     'sphincs': {'tone': 'fam', 'en': 'SPHINCS+ · basis of SLH-DSA', 'zh': 'SPHINCS+ · SLH-DSA 的前身'},
     'wots': {'tone': 'warn', 'en': 'Hash-based · not a standard on its own', 'zh': '哈希签名 · 单独使用无对应标准'},
@@ -73,23 +73,55 @@ def families(c):
     return [k for k in FAMILIES if k in f] or ['other']
 
 
-# One standard-status label per chain, from its algorithm labels: where its scheme stands as a standard.
-STATUSES = ('std', 'sel', 'hash', 'custom', 'broken', 'none')
+# Standard status is given per scheme, not per chain: a chain that names ML-DSA and Falcon gets one label for each.
+# 'var' marks a variant or pre-standard version of a NIST scheme whose version no outside body has reviewed. Publicly
+# broken parameters are a separate flag (the 'broken' label), not a standard status.
+STATUSES = ('std', 'sel', 'var', 'hash', 'custom', 'none')
+SCHEME_NAMES = {'mldsa': 'ML-DSA', 'falcon': 'Falcon', 'slhdsa': 'SLH-DSA', 'xmss': 'XMSS', 'wots': 'WOTS+',
+                'other': None, 'none': None}
+
+
+def schemes(c):
+    """[(scheme, status)] in the order the chain names them."""
+    chips, text = set(c['algo_chips']), (c['algo'].get('en') or '').lower()
+    out = []
+    add = lambda k, st: out.append((k, st)) if (k, st) not in out else None
+    variant = 'variant' in text or "project's own" in text
+    if 'fips204' in chips:
+        add('mldsa', 'std')
+    if 'falcon' in chips:
+        add('falcon', 'var' if 'falcon' in text and variant and 'family' not in chips else 'sel')
+    if 'fips205' in chips:
+        add('slhdsa', 'std')
+    if 'sphincs' in chips:
+        add('slhdsa', 'sel')
+    if 'family' in chips:
+        for k, words in (('mldsa', ('dilithium',)), ('falcon', ('falcon',)), ('slhdsa', ('sphincs',))):
+            if any(w in text for w in words):
+                out[:] = [x for x in out if x[0] != k]
+                add(k, 'var')
+    if 'nonstd' in chips:
+        if any(w in text for w in ('slh-dsa', 'sphincs')):
+            add('slhdsa', 'var')
+        elif any(w in text for w in ('xmss', 'wots', 'winternitz')):
+            add('xmss', 'var')
+        else:
+            add('other', 'custom')
+    if 'xmss' in chips:
+        add('xmss', 'hash')
+    if 'wots' in chips:
+        add('wots', 'hash')
+    if 'custom' in chips:
+        add('other', 'custom')
+    if not out:
+        add('none', 'none')
+    return out
 
 
 def standard_status(c):
-    chips = set(c['algo_chips'])
-    if chips & {'fips204', 'fips205'}:
-        return 'std'
-    if chips & {'falcon', 'sphincs'}:
-        return 'sel'
-    if chips & {'xmss', 'wots'}:
-        return 'hash'
-    if chips & {'custom', 'nonstd', 'family'}:
-        return 'custom'
-    if 'broken' in chips:
-        return 'broken'
-    return 'none'
+    """The chain's best standard status, used where one value is needed (the security level, the sort order)."""
+    sts = {st for _, st in schemes(c)}
+    return next(st for st in STATUSES if st in sts)
 
 
 # Parameter sets named in the algorithm text, with their NIST security category (FIPS 204 and 205, the Falcon
@@ -103,7 +135,7 @@ def algo_params(c, sizes):
     """Security level and reference sizes of the parameter sets the chain's algorithm text names.
     A project's own construction or variant is 'unassessed': we do not rate a scheme no outside body has reviewed."""
     st = standard_status(c)
-    if st in ('custom', 'broken'):
+    if st in ('custom', 'var'):
         return {'level': 'unassessed', 'params': []}
     if st == 'none':
         return {'level': None, 'params': []}
@@ -114,9 +146,7 @@ def algo_params(c, sizes):
         if m:
             s = sizes.get(sid) or {}
             found.append((m.start(), {'name': label, 'level': cat, 'pk': s.get('public_key_bytes'), 'sig': s.get('signature_bytes')}))
-    if 'xmss' in c['algo_chips']:
-        s = sizes.get('xmss') or {}
-        found.append((0, {'name': 'XMSS', 'level': None, 'pk': s.get('public_key_bytes'), 'sig': s.get('signature_bytes'), 'ref': s.get('name')}))
+    # XMSS: no reference size unless the entry names the parameter set the mainnet uses (tree height and hash).
     params = [p for _, p in sorted(found, key=lambda x: x[0])]
     levels = sorted({p['level'] for p in params if p['level']})
     # A family the chain names without a parameter set (e.g. "ML-DSA" beside "Falcon-512") is listed as open,
@@ -401,7 +431,7 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
         'reviewed': c['last_reviewed'], 'basis': c['stage_basis'],
         'basis_src': bsrc, 'basis_grade': bgrade,
         'since': since,
-        'status': standard_status(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
+        'status': standard_status(c), 'schemes': schemes(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
         'cov': COVERAGE.get(c['stage'], 'none'), 'mig': field(c, 'migration'), 'audit': field(c, 'audit'), 'expo': field(c, 'exposure'),
         'prog': progress(c, checked), 'scope': 'top' if rank is not None else 'other',
         'design': 'native' if c['kind'] == 'native' else 'upgraded', 'netw': 'mainnet' if c['network_status'] == 'mainnet' else 'testnet',
@@ -419,8 +449,8 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
 def home_view(v):
     """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page."""
     n, b, code = v['net'], v['net']['block'], v['net']['code']
-    keep = ('id', 'name', 'zh_name', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'hybrid',
-            'cov', 'prog', 'scope', 'design', 'netw', 'claim')
+    keep = ('id', 'name', 'zh_name', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'hybrid',
+            'cov', 'prog', 'scope', 'design', 'netw', 'claim', 'basis_grade')
     h = {k: v[k] for k in keep}
     h['level'] = v['ap']['level']
     h['level_open'] = v['ap'].get('open') or []
@@ -470,12 +500,17 @@ def milestone_events(views):
 
 
 CSV_COLUMNS = ('id', 'name', 'ticker', 'group', 'kind', 'market_cap_rank', 'stage', 'stage_name', 'algorithm',
-               'standard_status', 'security_level', 'coverage', 'migration', 'migration_source', 'audit', 'audit_source',
+               'default_signature', 'standard_status', 'security_level', 'publicly_broken_parameters', 'coverage', 'migration', 'migration_source', 'audit', 'audit_source',
                'pq_progress_90d', 'latest_pq_progress', 'network_status', 'pq_mainnet_since', 'pq_mainnet_since_basis',
                'pq_mainnet_since_source', 'stage_basis', 'stage_source', 'last_reviewed', 'page')
 
-CSV_STATUS = {'std': 'nist_standard', 'sel': 'nist_selected', 'hash': 'stateful_hash_based', 'custom': 'own_construction',
-              'broken': 'publicly_broken', 'none': 'none'}
+CSV_STATUS = {'std': 'nist_standard', 'sel': 'nist_selected', 'var': 'variant_not_reviewed', 'hash': 'stateful_hash_based',
+              'custom': 'own_construction', 'none': 'none'}
+
+
+def status_csv(v):
+    return '; '.join(f"{SCHEME_NAMES[k] or 'own'}={CSV_STATUS[st]}" if SCHEME_NAMES.get(k) or st == 'custom' else CSV_STATUS[st]
+                     for k, st in v['schemes'])
 
 
 def level_csv(ap):
@@ -500,7 +535,8 @@ def write_data_files(out, views, checked, release, base, has_changes):
         s = v['since'] or {}
         mig, aud, prog = v['mig'] or {}, v['audit'] or {}, v['prog']
         w.writerow([v['id'], v['name'], v['ticker'], v['group'], v['kind'], v['rank'] or '', v['stage'], STAGE_NAMES['en'][v['stage']],
-                    v['algo']['en'], CSV_STATUS[v['status']], level_csv(v['ap']), v['cov'], mig.get('value', ''), mig.get('source_url', ''),
+                    v['algo']['en'], 'post-quantum' if v['stage'] == 5 else 'classical', status_csv(v), level_csv(v['ap']),
+                    'yes' if 'broken' in v['chips'] else '', v['cov'], mig.get('value', ''), mig.get('source_url', ''),
                     aud.get('value', ''), aud.get('source_url', ''), prog['n90'], (prog['latest'] or {}).get('date', ''),
                     v['net']['status'], s.get('date', ''), s.get('basis', ''), s.get('source_url', ''),
                     v['basis']['en'], v['basis_src'] or '', v['reviewed'], page(v)])
@@ -520,8 +556,8 @@ def write_data_files(out, views, checked, release, base, has_changes):
         lines.append(f'- [This week]({ORIGIN + base}changes/): changes found by the weekly patrol')
     lines += ['',
              '## Data (CC BY 4.0)',
-             f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, standard status '
-             f'(nist_standard, nist_selected, stateful_hash_based, own_construction, publicly_broken, none), NIST security level, coverage '
+             f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, default signature (post-quantum or classical), standard status per scheme '
+             f'(nist_standard, nist_selected, variant_not_reviewed, stateful_hash_based, own_construction, none), publicly broken parameters, NIST security level, coverage '
              f'(default, opt-in, testnet, none), how existing coins move (migration), audit of the post-quantum code, '
              f'post-quantum milestones with a primary source in the last 90 days and the latest one, network status, '
              f'post-quantum mainnet start date, the sentence the stage rests on and its source',
