@@ -5,7 +5,10 @@
 /* scripts/build_site.py also runs this file in Node (no document) to write the same HTML into each page ahead of time. */
 const PRE = typeof document === "undefined";
 const OUT = {};
-const put = (id, html) => { if (PRE) OUT[id] = html; else document.getElementById(id).innerHTML = html; };
+/* the build prerenders every page; in the browser the same markup is kept (hydrated) instead of being built again,
+   so the first paint stays and the main thread is free. A page without prerendered markup is rendered here. */
+const HYD = !PRE && !!document.querySelector("#app > *");
+const put = (id, html) => { if (HYD) return; const h = typeof html === "function" ? html() : html; if (PRE) OUT[id] = h; else document.getElementById(id).innerHTML = h; };
 const D = window.PQ;
 const lang = D.lang;
 const REPO = D.repo;
@@ -88,7 +91,8 @@ const UI = {
     threshold: (m) => `Counts as running while the newest block is under ${m} min old.`,
     queried: "queried",
     st_ok: "Running", st_quiet: "Blocks flowing, code quiet", st_stalled: "Blocks stopped", st_unknown: "Could not check",
-    checked_tag: "checked",
+    checked_tag: "checked", np_tag: "Not counted", k_supply: "Supply", k_algo_note: "Signing details",
+    today_lead: (s) => s === 5 ? "Yes, by default." : s === 4 ? "Yes, if you opt in." : s === 3 ? "Only on a testnet." : "No.",
     xchk_ok: (h, a) => `Independent explorer: block #${h}, ${a} min old.`, xchk_no: "The independent explorer did not answer.", xchk_none: "Only this source shows an old block, and no independent explorer confirms it, so the network is marked “could not check”.",
     own_src: { project: "Read from the project's own node or explorer, not an independent one.", community: "Read from a community-run explorer." },
     e_src: "Sources", e_consensus: "Consensus", e_release: "Latest release", e_code: "Code activity", e_reviewed: "Claims last reviewed",
@@ -163,7 +167,8 @@ const UI = {
     mig: { native: "No old keys to move", available: "Existing coins can move", testnet: "Moving coins: testnet only", planned: "Moving coins: planned", none: "No way to move coins yet", unknown: "Moving coins: unknown" },
     mig_s: { native: "Native", available: "Available", testnet: "Testnet only", planned: "Planned", none: "None", unknown: "Unknown" },
     audit: { audited: "Audited", partial: "Partly audited", none_found: "No audit found", unknown: "Audit unknown" },
-    scope: { top: "Top 100", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Upgraded later" }, netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
+    scope: { top: "Top 100", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Added later", notyet: "Not yet" },
+    fl: { custom: "Own construction", var: "Variant not reviewed", noaudit: "No audit found", projdata: "No independent network data" }, proposed: "Proposed, not deployed", netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
     scope_label: "Scope", design_label: "Design", ss_label: "Standard", cov_label: "Coverage", mig_label: "Migration", audit_label: "Audit", netw_label: "Network", net_label2: "Block status", view_label: "Showing",
     more_filters: "More filters", more_bg: "includes background",
     view: { use: "Usable today", close: "Closest", move: "Moving now", quiet: "No progress in a year", broken: "Publicly broken parameters", custom: "Own construction", claim: "Project's own statement" },
@@ -255,7 +260,8 @@ const UI = {
     threshold: (m) => `最新区块在 ${m} 分钟以内，算正常出块。`,
     queried: "查询时间",
     st_ok: "运行中", st_quiet: "在出块，代码 90 天无提交", st_stalled: "出块停了", st_unknown: "无法核实",
-    checked_tag: "核对于",
+    checked_tag: "核对于", np_tag: "不计入进展", k_supply: "供应说明", k_algo_note: "签名细节",
+    today_lead: (s) => s === 5 ? "能，默认就是。" : s === 4 ? "能，需要自己选用。" : s === 3 ? "只在测试网上。" : "不能。",
     xchk_ok: (h, a) => `独立区块浏览器：第 ${h} 号区块，${a} 分钟前。`, xchk_no: "独立区块浏览器没有响应。", xchk_none: "只有这一个来源显示区块过旧，没有独立的区块浏览器可以印证，所以网络状态记为「无法核实」。",
     own_src: { project: "数据来自项目自己的节点或浏览器，不是独立来源。", community: "数据来自社区运营的区块浏览器。" },
     e_src: "出处", e_consensus: "共识机制", e_release: "最新版本", e_code: "代码活跃度", e_reviewed: "说法最近核对",
@@ -330,7 +336,8 @@ const UI = {
     mig: { native: "原生链，没有旧密钥要迁移", available: "已有的币可以迁移", testnet: "迁移：仅限测试网", planned: "迁移：计划中", none: "还没有迁移办法", unknown: "迁移：情况不明" },
     mig_s: { native: "原生", available: "可迁移", testnet: "仅测试网", planned: "计划中", none: "没有", unknown: "不明" },
     audit: { audited: "已审计", partial: "部分审计", none_found: "未找到审计", unknown: "审计情况不明" },
-    scope: { top: "市值前 100", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来升级的" }, netw: { mainnet: "主网", testnet: "还没上主网" },
+    scope: { top: "市值前 100", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来加上", notyet: "还没有" },
+    fl: { custom: "自研方案", var: "变体未审", noaudit: "未找到审计", projdata: "无独立出块数据" }, proposed: "提案中，未部署", netw: { mainnet: "主网", testnet: "还没上主网" },
     scope_label: "范围", design_label: "设计", ss_label: "标准状态", cov_label: "覆盖", mig_label: "迁移路径", audit_label: "审计", netw_label: "网络", net_label2: "出块状态", view_label: "正在看",
     more_filters: "更多筛选", more_bg: "含背景信息",
     view: { use: "今天已能用", close: "最接近的", move: "正在推进", quiet: "近一年没有进展", broken: "参数已被公开破解", custom: "项目自研", claim: "只有项目方说法" },
@@ -374,8 +381,8 @@ const DEFS = {
     f_fam: "The post-quantum signature family a chain uses or proposes. NIST selected ML-DSA (Dilithium), Falcon and SLH-DSA (SPHINCS+). Other hash-based schemes include XMSS and WOTS+. Custom or other covers schemes without an outside standard.",
     stage: [
       "No public post-quantum research, roadmap or proposal from the core developers, the foundation or the main client teams.",
-      "Official research, a roadmap, an open proposal or prototype code exists, but nothing is merged into the official proposal repository yet.",
-      "A quantum-related protocol change is merged into the official proposal repository (BIP, EIP, ZIP and so on) at Draft status or later.",
+      "Official research, a roadmap, an open proposal or prototype code from the core developers, the foundation or the main client teams exists, but nothing is merged into the official proposal repository yet. Outside contributors' proposals are shown on the timeline and do not set a stage.",
+      "A quantum-related protocol change is merged into the official proposal repository (BIP, EIP, ZIP and so on) at Draft status or later. A chain with no public proposal process counts a formal protocol specification published by its core team.",
       "On the chain's official public testnet, holders can authorize a transfer with a post-quantum signature.",
       "On mainnet, holders can choose post-quantum protection for their funds at the protocol level.",
       "New accounts use post-quantum signatures by default, or transfers require them.",
@@ -456,9 +463,13 @@ const DEFS = {
       unknown: "We could not tell.",
     },
     scope: { top: "In the CoinGecko top 100 by market cap, with a network of its own (layer 1 or layer 2).", other: "Outside the top 100: chains that already offer post-quantum signatures, or projects built post-quantum." },
-    design: { native: "The current mainnet's default signature has been post-quantum since its genesis block (or the chain has no mainnet yet and is built that way).", upgraded: "Launched with classical signatures; post-quantum signatures were added or switched on later, or are proposed." },
+    design: { native: "The current mainnet's default signature has been post-quantum since its genesis block (or the chain has no mainnet yet and is built that way).", upgraded: "Launched with classical signatures; post-quantum signatures were added later and run on a public testnet or mainnet (stage 3 and up).", notyet: "Launched with classical signatures; no post-quantum signature runs on a public network yet (stage 0 to 2)." },
+    fl: { custom: "The chain signs with a construction the project designed itself, with no outside standard. The stage is unchanged; this marks where the evidence stops.", var: "The chain uses a variant of a NIST scheme whose version no outside body has reviewed. The stage is unchanged.", noaudit: "No audit by an outside firm covering the post-quantum signature code was found. The stage is unchanged.", projdata: "Outside the top 100, and the network data this site reads comes only from the project's own node or explorer, with no independent explorer to confirm it. The stage is unchanged." },
+    proposed: "The scheme is proposed in the official process but runs on no public network yet, so deployment properties such as security level and hybrid signing do not apply.",
     netw: { mainnet: "A mainnet is running.", testnet: "Public code or a public testnet, but no mainnet." },
-    prog: "Post-quantum milestones recorded on this site with a primary source: a merged proposal or pull request, a release, or a testnet or mainnet activation. One rule for every chain. Our own checks are not counted.",
+    prog: "Post-quantum events with a primary source, one rule for every chain. Counted: the core team opens or merges a post-quantum proposal in the official process; the official client merges post-quantum code; a testnet or mainnet turns on or changes a post-quantum scheme; an official release whose notes include a post-quantum change; an audit report of the post-quantum code; the mainnet launch of a post-quantum native chain. Not counted: ordinary releases, comments, target dates and roadmaps, checks that found nothing new, proposals by outside contributors, and changes that touch only validators, not holders' signatures.",
+    supply: "A neutral note on a premine, treasury or developer share, with its source. Background only; it never changes a stage.",
+    np: "Shown for context, not counted as post-quantum progress: an ordinary release, a comment, a target date, a check that found nothing new, an outside contributor's proposal, or a change that touches only validators.",
     bg_rank: "Background, not a post-quantum measure: CoinGecko market-cap rank, a rough guide to how much value is at stake.",
     bg_dot: "Background: is the chain still producing blocks? Details on the chain's page.",
     view: "A preset from the five questions above the table.",
@@ -470,8 +481,8 @@ const DEFS = {
     f_fam: "链所用或提议的抗量子签名类别。ML-DSA（Dilithium）、Falcon 和 SLH-DSA（SPHINCS+）由 NIST 选定；其他哈希签名包括 XMSS 和 WOTS+；「自研或其他」指没有外部标准的方案。",
     stage: [
       "核心开发者、基金会和主要客户端团队都没有公开的抗量子研究、路线图或提案。",
-      "有官方研究、路线图、未合并的提案或原型代码，但还没有内容合并进官方提案库。",
-      "与量子相关的协议改动已合并进官方提案库（如 BIP、EIP、ZIP），状态为草案或更高。",
+      "核心开发者、基金会或主要客户端团队有官方研究、路线图、未合并的提案或原型代码，但还没有内容合并进官方提案库。外部贡献者的提案只列在时间线上，不计档。",
+      "与量子相关的协议改动已合并进官方提案库（如 BIP、EIP、ZIP），状态为草案或更高。没有公开提案流程的链，以核心团队发布的正式协议规范为准。",
       "在该链官方的公开测试网上，持币人可以用抗量子签名授权转账。",
       "在主网上，持币人可自行选择，在协议层为资产启用抗量子保护。",
       "新账户默认使用抗量子签名，或转账必须使用抗量子签名。",
@@ -552,9 +563,13 @@ const DEFS = {
       unknown: "无法判断。",
     },
     scope: { top: "CoinGecko 市值前 100 中，有自己网络（L1 或 L2）的币。", other: "市值前 100 以外：已经提供抗量子签名的链，或按抗量子设计的项目。" },
-    design: { native: "现行主网从创世区块起默认就用抗量子签名（还没有主网的，则是按这种方式设计的）。", upgraded: "上线时用传统签名，抗量子签名是后来加入、启用或提议的。" },
+    design: { native: "现行主网从创世区块起默认就用抗量子签名（还没有主网的，则是按这种方式设计的）。", upgraded: "上线时用传统签名，抗量子签名是后来加上的，已在公开测试网或主网运行（第 3 档及以上）。", notyet: "上线时用传统签名，还没有抗量子签名在公开网络上运行（第 0 到 2 档）。" },
+    fl: { custom: "这条链用项目自己设计的方案签名，没有外部标准。档位不变，这里标出证据的边界。", var: "这条链用 NIST 方案的变体，所用版本没有经过外部机构评估。档位不变。", noaudit: "没有找到外部机构对抗量子签名代码的审计。档位不变。", projdata: "不在市值前 100，本站读取的出块数据只来自项目自己的节点或浏览器，没有独立浏览器可以印证。档位不变。" },
+    proposed: "方案已在官方流程中提出，但还没有在任何公开网络上运行，所以强度等级、混合签名这类部署属性不适用。",
     netw: { mainnet: "主网在运行。", testnet: "有公开代码或公开测试网，但还没有主网。" },
-    prog: "本站收录的、带原始出处的抗量子进展：提案或拉取请求合并、版本发布、测试网或主网启用。所有链用同一条规则；本站自己的核查记录不计。",
+    prog: "带原始出处的抗量子事件，所有链用同一条规则。计入：核心团队在官方流程里开出或合并抗量子提案；官方客户端合并抗量子代码；测试网或主网启用或调整抗量子方案；发布说明含抗量子改动的官方版本；抗量子实现的审计报告发布；原生抗量子链主网上线。不计：普通版本发布、评论表态、目标日期和路线图、没有新发现的核查、外部贡献者的提案、只涉及验证者而不涉及持币人签名的改动。",
+    supply: "关于预铸、金库或开发者分成的中性说明，附出处。只是背景信息，不影响档位。",
+    np: "列出来供参考，不计入抗量子进展：普通版本发布、评论表态、目标日期、没有新发现的核查、外部贡献者的提案，或只涉及验证者的改动。",
     bg_rank: "背景信息，不是抗量子指标：CoinGecko 市值排名，大致说明有多少价值面临风险。",
     bg_dot: "背景信息：这条链是否还在出块。详情见链的页面。",
     view: "表格上方五个问题之一的预设筛选。",
@@ -600,6 +615,8 @@ function bar6(s) {
   return h + "</span>";
 }
 const stageCell = (s, withTerm) => `<div class="stagecell">${withTerm ? badgeTerm(s) : badge(s)}${bar6(s)}</div>`;
+/* where the evidence behind a stage 4 or 5 rating stops; the stage itself is unchanged */
+const flagsHTML = (c) => c.flags && c.flags.length ? `<span class="fls">${c.flags.map((f) => term(`<span class="fl">${esc(L("fl")[f])}</span>`, DF.fl[f], L("fl")[f], "plain")).join("")}</span>` : "";
 /* milestone types take the colour of the stage they point to */
 const TYPE_STAGE = { research: 1, proposal: 2, code: 2, testnet: 3, mainnet: 4, wallet: 4, thirdparty: 0, tracker: 0, network: 0 };
 
@@ -642,7 +659,7 @@ const SORTS = ["default", "stage_d", "stage_a", "prog", "n90", "since", "name"];
 const F = {
   scope: { vals: ["top", "other"], lab: (v) => L("scope")[v], def: (v) => DF.scope[v], test: (c, v) => c.scope === v },
   stage: { vals: [0, 1, 2, 3, 4, 5], lab: (v) => stageTitle(v), def: (v) => DF.stage[v], test: (c, v) => c.stage === v },
-  design: { vals: ["native", "upgraded"], lab: (v) => L("design")[v], def: (v) => DF.design[v], test: (c, v) => c.design === v },
+  design: { vals: ["native", "upgraded", "notyet"], lab: (v) => L("design")[v], def: (v) => DF.design[v], test: (c, v) => c.design === v },
   ss: { vals: STATUSES, lab: (v) => L("ss")[v], def: (v) => DF.ss[v], test: (c, v) => hasSS(c, v) },
   cov: { vals: COVS, lab: (v) => L("cov")[v], def: (v) => DF.cov[v], test: (c, v) => c.cov === v },
   fam: { vals: FAMS, lab: (v) => L("fam")[v], def: () => DF.f_fam, test: (c, v) => c.fam.includes(v) },
@@ -742,13 +759,13 @@ function progCell(c) {
 }
 /* the list shows the first rows, then a "show all" button (no-JS pages list everything) */
 const FIRST = 20;
-let expanded = PRE;
+let expanded = false;
 function rowHTML(c, later) {
   const sub = [esc(c.ticker), c.rank ? termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap")) : ""].filter(Boolean).join(" · ");
   return `<tr class="row${later ? " later" : ""}" data-id="${c.id}">
     <td class="c-chain"><div class="chain"><span class="nmr"><a class="nm" href="${chainURL(c.id)}">${esc(name(c))}</a>${dotHTML(c)}</span><span class="sub">${sub}</span></div></td>
-    <td class="c-stage">${stageCell(c.stage)}${dagger(c.basis_grade)}</td>
-    <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span><span class="chips">${ssChips(c)}${c.hybrid ? termRef(`<span class="chip">${esc(L("hybrid"))}</span>`, "hybrid", L("hybrid"), "plain") : ""}${c.chips.includes("broken") ? termRef(`<span class="chip bad">${esc(T(D.chips.broken))}</span>`, "chips.broken", T(D.chips.broken), "plain") : ""}</span>${c.level != null ? `<span class="lvl">${levelText(c.level, c.level_open)}</span>` : ""}</div></td>
+    <td class="c-stage">${stageCell(c.stage)}${dagger(c.basis_grade)}${flagsHTML(c)}</td>
+    <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span><span class="chips">${ssChips(c)}${c.stage < 3 && c.schemes.some(([k]) => k !== "none") ? term(`<span class="chip">${esc(L("proposed"))}</span>`, DF.proposed, L("proposed"), "plain") : ""}${c.hybrid ? termRef(`<span class="chip">${esc(L("hybrid"))}</span>`, "hybrid", L("hybrid"), "plain") : ""}${c.chips.includes("broken") ? termRef(`<span class="chip bad">${esc(T(D.chips.broken))}</span>`, "chips.broken", T(D.chips.broken), "plain") : ""}</span>${c.level != null && c.stage >= 3 ? `<span class="lvl">${levelText(c.level, c.level_open)}</span>` : ""}</div></td>
     <td class="c-cov">${covCell(c)}</td>
     <td class="c-since${c.stage >= 4 ? "" : " none"}">${sinceCell(c)}</td>
     <td class="c-latest">${progCell(c)}</td>
@@ -759,9 +776,9 @@ function tableBody() {
   const grouped = state.sort === "default" && isDefault();
   let html = "", last = null, i = 0;
   for (const c of rows) {
-    const later = !expanded && i >= FIRST;
-    if (grouped && c.group !== last) { last = c.group; html += `<tr class="grp${later ? " later" : ""}"><td colspan="7"><span class="gt">${term(esc(L("g_" + c.group)), DF["g_" + c.group], L("g_" + c.group))}</span><span class="gs">${esc(L("g_" + c.group + "_s"))}</span></td></tr>`; }
-    html += rowHTML(c, later); i++;
+    if (!expanded && i >= FIRST) { i++; continue; } /* rows after the first ones are built only when the reader asks for them */
+    if (grouped && c.group !== last) { last = c.group; html += `<tr class="grp"><td colspan="7"><span class="gt">${term(esc(L("g_" + c.group)), DF["g_" + c.group], L("g_" + c.group))}</span><span class="gs">${esc(L("g_" + c.group + "_s"))}</span></td></tr>`; }
+    html += rowHTML(c, false); i++;
   }
   if (!rows.length) html = `<tr class="none"><td colspan="7" class="empty"><div class="ei"><b>${esc(L("empty_h"))}</b><span>${esc(L("empty_p"))}</span><button type="button" class="btn" data-clear>${esc(L("clear_filters"))}</button></div></td></tr>`;
   return { html, count: L("shown")(rows.length, D.chains.length), hidden: expanded ? 0 : Math.max(0, rows.length - FIRST) };
@@ -1114,7 +1131,7 @@ function renderHome() {
   const check = `<form class="check" id="check" role="search"><label for="check-q">${esc(L("check_l"))}</label><span class="search">${ICON_SEARCH}<input id="check-q" list="check-l" autocomplete="off" placeholder="${esc(L("check_ph"))}"></span><button type="submit" class="btn primary">${esc(L("check_go"))}</button>
     <datalist id="check-l">${[...D.chains].sort((a, b) => (a.rank || 999) - (b.rank || 999)).map((c) => `<option value="${esc(name(c))}">${esc(c.ticker)}</option>`).join("")}</datalist></form>`;
   const verdict = L("verdict")(usable.length, top.length).replace(/<em>(.*?)<\/em>/, (m, t) => `<em>${term(t, DF.pqsig, t)}</em>`);
-  put("app", `<div class="page">
+  put("app", () => `<div class="page">
     <section id="overview" class="layer" aria-label="${esc(L("nav_overview"))}">
       <div class="hero"><span class="eyebrow">${esc(L("scope_eyebrow")(top.length, fmtDate(D.mcap_date || D.checked)))}</span><h1>${verdict}</h1><p class="who">${esc(L("who"))}</p><p>${esc(L("verdict_sub")(list(usable.map(name)), list(t3)))}</p><p class="big">${bigLine}</p>${check}${strip}</div>
       <div class="kpis">
@@ -1137,7 +1154,7 @@ function renderHome() {
       <div class="tablebox"><table class="ledger">
         <thead><tr>${th("th_chain", "name", "c-chain")}${th("th_stage", "stage", "c-stage")}${th("th_algo", null, "c-algo")}${th("th_cov", null, "c-cov")}${th("th_since", "since", "c-since")}${th("th_prog", "prog", "c-latest")}<th scope="col" class="c-go"><span class="sr">${esc(L("th_open"))}</span></th></tr></thead>
         <tbody id="tbody">${tb.html}</tbody></table></div>
-      <div class="showall" id="showall"${tb.hidden ? "" : " hidden"}><button type="button" class="btn">${esc(L("show_all")(tb.hidden + FIRST))}</button></div>
+      <div class="showall" id="showall"${tb.hidden ? "" : " hidden"}><button type="button" class="btn">${esc(L("show_all")(tb.hidden + FIRST))}</button><noscript><a class="btn" href="${D.base}data/chains.csv">chains.csv</a></noscript></div>
     </section>
     <section id="timeline" class="layer" aria-labelledby="timeline-h">
       ${secH("timeline", L("nav_timeline"), L("tl_h"), "")}
@@ -1263,8 +1280,8 @@ function codeHTML(code) {
 const srcLink = (u, label) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(label || host(u))} ↗</a>` : "";
 function tlItem(m) {
   const grade = m.grade || "primary", ts = TYPE_STAGE[m.type] ?? 0;
-  return `<li class="tl s${ts}${grade === "official" ? " off" : ""}"><span class="when">${m.checked ? `<small>${esc(L("checked_tag"))}</small>` : ""}${esc(fmtDate(m.date))}</span><span class="pin" aria-hidden="true"></span>
-    <div class="body"><div class="tags">${term(`<span class="ttag s${ts}">${esc(L("types")[m.type])}</span>`, DF.types[m.type], L("types")[m.type], "plain")}${term(`<span class="grade ${grade}">${grade === "official" ? "† " : ""}${esc(L("grades")[grade])}</span>`, DF.grades[grade], L("grades")[grade])}</div>
+  return `<li class="tl s${ts}${grade === "official" ? " off" : ""}${m.np ? " np" : ""}"><span class="when">${m.checked ? `<small>${esc(L("checked_tag"))}</small>` : ""}${esc(fmtDate(m.date))}</span><span class="pin" aria-hidden="true"></span>
+    <div class="body"><div class="tags">${m.np ? term(`<span class="ttag np">${esc(L("np_tag"))}</span>`, DF.np, L("np_tag"), "plain") : ""}${term(`<span class="ttag s${ts}">${esc(L("types")[m.type])}</span>`, DF.types[m.type], L("types")[m.type], "plain")}${term(`<span class="grade ${grade}">${grade === "official" ? "† " : ""}${esc(L("grades")[grade])}</span>`, DF.grades[grade], L("grades")[grade])}</div>
     <div class="txt">${esc(T(m))}</div>${m.status ? `<div class="st">${esc(L("status"))}${CO()}${esc(T(m.status))}</div>` : ""}
     ${m.url ? `<div class="src">${esc(L("source"))}${CO()}${srcLink(m.url)}</div>` : ""}</div></li>`;
 }
@@ -1298,10 +1315,11 @@ function renderChain() {
   const sizes = ap.params.filter((p) => p.pk && p.sig).map((p) => esc(L("size_row")(p.name, p.pk, p.sig)) + (p.ref ? `<br><span class="note-small">${esc(L("size_ref")(p.ref))}</span>` : "")).join("<br>");
   const algo = `<div class="card dcard kvgrid">
     ${kv(L("d_algo"), `${esc(T(c.algo))}${chips(c.chips)}`, DF.th_algo)}
-    ${kv(L("k_status"), ssChips(c, true), [...new Set(c.schemes.map(([, st]) => st))].map((st) => `${L("ss")[st]}${CO()}${DF.ss[st]}`).join("\n"))}
-    ${ap.level != null ? kv(L("k_level"), esc(L("level")(ap.level, ap.open)), DF.level) : ""}
+    ${kv(L("k_status"), ssChips(c, true) + (c.stage < 3 && c.schemes.some(([k]) => k !== "none") ? term(`<span class="chip">${esc(L("proposed"))}</span>`, DF.proposed, L("proposed"), "plain") : ""), [...new Set(c.schemes.map(([, st]) => st))].map((st) => `${L("ss")[st]}${CO()}${DF.ss[st]}`).join("\n"))}
+    ${c.stage < 3 ? kv(L("k_level"), esc(L("na_deploy")), DF.proposed) : ap.level != null ? kv(L("k_level"), esc(L("level")(ap.level, ap.open)), DF.level) : ""}
     ${kv(L("k_hybrid"), esc(c.stage >= 3 ? L(c.hybrid ? "yes" : "no") : L("na_deploy")), DF.hybrid)}
     ${kv(L("k_sizes"), sizes)}
+    ${c.algo_note ? kv(L("k_algo_note"), esc(T(c.algo_note))) : ""}
     ${c.stage >= 3 ? kv(L("k_audit"), c.audit ? rfield(c.audit, L("audit")) : esc(L("audit").unknown), DF.audit[c.audit ? c.audit.value : "unknown"]) : ""}</div>`;
   const expo = c.expo ? `<b>${esc(c.expo.figure || "")}</b>${T(c.expo) ? `<br>${esc(T(c.expo))}` : ""}<br><span class="note-small">${esc(c.expo.publisher || "")}${c.expo.date ? " · " + esc(fmtDate(c.expo.date)) : ""} · ${srcLink(c.expo.source_url)}</span>` : `<span class="note-small">${esc(L("expo_none"))}</span>`;
   const cov = `<div class="card dcard kvgrid">
@@ -1309,7 +1327,7 @@ function renderChain() {
     ${c.stage >= 2 ? kv(L("k_mig"), c.mig ? rfield(c.mig, L("mig")) : esc(L("mig").unknown), DF.mig[c.mig ? c.mig.value : "unknown"]) : ""}
     ${kv(L("k_expo"), expo)}
 </div>`;
-  const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${esc(T(four[k]))}</dd></div>` : "";
+  const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(L("today_lead")(c.stage))}</b> ` : ""}${esc(T(four[k]))}</dd></div>` : "";
   const holder = `<div class="holder"><h2>${esc(L("holder_h"))}</h2><dl>${hrow("today", "holder_today")}${hrow("next", "holder_next")}${hrow("can", "d_can")}</dl><p class="note-small">${esc(L("holder_note"))}</p></div>`;
   const p = c.prog;
   const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("watch", "d_watch")}</div>${timeline}`;
@@ -1320,18 +1338,19 @@ function renderChain() {
     ${b.code ? kv(L("e_code"), codeHTML(b.code)) : ""}
     ${kv(L("k_mcap"), c.rank ? esc(L("rank")(c.rank)) + `<br><span class="note-small">${esc(L("mcap_src")(fmtDate(D.mcap_date)))}</span>` : "—", DF.bg_rank)}
     ${c.consensus ? kv(L("e_consensus"), esc(T(c.consensus))) : ""}
+    ${c.supply ? kv(L("k_supply"), `${esc(T(c.supply))}<br><span class="note-small">${esc(L("source"))}${CO()}${srcLink(c.supply.source_url)}${dagger(c.supply.grade)}</span>`, DF.supply) : ""}
     ${kv(L("d_checked"), `<span class="mono">${esc(fmtDate(c.checked) || "—")}</span>`, DF.th_checked)}</div>`;
   const meta = [`<span class="mono">${esc(c.ticker)}</span>`, c.rank ? `<span>${termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap"))}</span>` : "", `<span>${termRef(esc(L("design")[c.design]), "design." + c.design, L("design_label"))}</span>`,
     `<span>${term(esc(L("e_reviewed")), DF.reviewed)} <span class="mono">${esc(c.reviewed)}</span></span>`].filter(Boolean).join('<span aria-hidden="true">·</span>');
   const toc = [["d-algo", "d_algo_h"], ["d-cov", "d_cov_h"], ["d-prog", "d_prog_h"], ["d-ev", "d_ev_h"], ["d-bg", "d_bg_h"]];
-  put("app", `<div class="page">
+  put("app", () => `<div class="page">
     <div class="crumb"><a href="${href("")}">← ${esc(L("d_back"))}</a></div>
     <header class="dhead"><h1>${esc(name(c))}${lang === "zh" && c.zh_name ? ` <span class="alt">${esc(c.name)}</span>` : ""}</h1><div class="meta">${meta}</div></header>
     <section class="card answer s${c.stage}" aria-label="${esc(L("q")(name(c)))}"><span class="eyebrow">${esc(L("q")(name(c)))}</span>
       <p class="claim">${esc(L("answer")(c.reviewed, name(c), c.stage, stageName(c.stage)))}</p>
       <p class="basis">${esc(T(c.basis))}</p>
       ${c.basis_src ? `<span class="cite-src">${esc(L("answer_src")(c.stage))}${CO()}${srcLink(c.basis_src)}${dagger(c.basis_grade)}</span>` : ""}
-      <div class="scalebox6"><div class="cap">${badgeTerm(c.stage)}<span>${esc(L("d_scale"))}</span></div>${scale6(c.stage)}${sinceLine(c)}</div>
+      <div class="scalebox6"><div class="cap">${badgeTerm(c.stage)}<span>${esc(L("d_scale"))}</span>${flagsHTML(c)}</div>${scale6(c.stage)}${sinceLine(c)}</div>
       ${holder}
       <div class="appeal"><a class="btn" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("appeal"))} ↗</a><span class="note-small">${esc(L("appeal_def"))}</span></div></section>
     ${c.stale_days > 90 ? `<p class="stale" role="note">${esc(L("stale")(c.reviewed, c.stale_days))}</p>` : ""}
@@ -1360,7 +1379,7 @@ function renderChanges() {
   }).join("");
   const changed = C.items.filter((i) => i.stage && i.stage[0] !== i.stage[1]).length;
   const range = `${fmtDate(C.range.from)} – ${fmtDate(C.range.to)}`;
-  put("app", `<div class="page">
+  put("app", () => `<div class="page">
     <section class="issue"><span class="eyebrow">${esc(L("c_eyebrow"))} · ${esc(range)}</span><h1>${esc(L("c_title")(C.items.length, changed))}</h1><p>${esc(L("c_sub"))}</p></section>
     <div class="stat"><div class="card"><b>${changed}</b><span>${esc(L("c_s1"))}</span></div><div class="card"><b>${C.items.length}</b><span>${esc(L("c_s2"))}</span></div><div class="card"><b>${D.chain_count}</b><span>${esc(L("c_s3"))}</span></div></div>
     <ol class="clist">${items}</ol>
@@ -1554,7 +1573,7 @@ function howHTML() {
 }
 function renderMethod() {
   chrome("method");
-  put("app", `<div class="page">${howHTML()}
+  put("app", () => `<div class="page">${howHTML()}
     <section class="card fix" style="max-width:820px"><p>${esc(L("foot_fix"))}</p><a class="btn primary" href="${URL_FIX}" target="_blank" rel="noopener">${esc(L("foot_btn_fix"))} ↗</a></section></div>`);
 }
 

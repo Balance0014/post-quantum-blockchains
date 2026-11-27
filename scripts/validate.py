@@ -121,6 +121,7 @@ def validate_chains():
             if m.get('status'):
                 bilingual(m['status'],f'{w}.status')
             https(m.get('source_url'),w)
+            require(isinstance(m.get('progress',True),bool),f'progress is true or false: {w}')
         # The day post-quantum signatures became usable on the current mainnet: genesis for native chains, the
         # upgrade's activation (or first deployment) for the rest. Only stage 4 and 5 chains have one.
         since=c.get('pq_mainnet_since')
@@ -186,6 +187,14 @@ def validate_chains():
                     https(x.get('source_url'),f'{cid}.{key}.source_url')
                 if x.get('date'):
                     date.fromisoformat(x['date'])
+        # a neutral note on premines, treasuries or developer shares, shown as background on the chain page
+        sp=c.get('supply')
+        if sp:
+            bilingual(sp,f'{cid}.supply')
+            https(sp.get('source_url'),f'{cid}.supply')
+            require(sp.get('grade') in ('primary','official'),f'supply.grade is primary or official: {cid}')
+        if c.get('algo_note'):
+            bilingual(c['algo_note'],f'{cid}.algo_note')
         e=c.get('exposure')
         if e:
             bilingual(e,f'{cid}.exposure')

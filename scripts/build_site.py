@@ -128,7 +128,8 @@ def standard_status(c):
 # specification) and the reference size id in data/signature-sizes.json.
 PARAMS = ((r'ML-DSA-44', 'ML-DSA-44', 2, 'mldsa44'), (r'ML-DSA-65|Dilithium3', 'ML-DSA-65', 3, 'mldsa65'),
           (r'ML-DSA-87|Dilithium-5', 'ML-DSA-87', 5, 'mldsa87'), (r'Falcon-512', 'Falcon-512', 1, 'falcon512'),
-          (r'Falcon-1024', 'Falcon-1024', 5, 'falcon1024'), (r'SLH-DSA-SHA2-128s', 'SLH-DSA-SHA2-128s', 1, 'slh128s'))
+          (r'Falcon-1024', 'Falcon-1024', 5, 'falcon1024'), (r'SLH-DSA-SHA2-128s', 'SLH-DSA-SHA2-128s', 1, 'slh128s'),
+          (r'SLH-DSA-SHAKE-128s', 'SLH-DSA-SHAKE-128s', 1, 'slh128s'))
 
 
 def algo_params(c, sizes):
@@ -140,6 +141,10 @@ def algo_params(c, sizes):
     if st == 'none':
         return {'level': None, 'params': []}
     text = c['algo']['en'].replace('Falcon-512/1024', 'Falcon-512, Falcon-1024')
+    # validator-only signatures (e.g. block seals) are not holders' signatures and carry no level here
+    text = '; '.join(part for part in text.split('; ') if 'validator' not in part.lower())
+    # "ML-DSA-44/65/87" names three parameter sets
+    text = re.sub(r'ML-DSA-(\d+)((?:/\d+)+)', lambda m: ', '.join('ML-DSA-' + n for n in [m.group(1)] + m.group(2).strip('/').split('/')), text)
     found = []
     for pat, label, cat, sid in PARAMS:
         m = re.search(pat, text)
@@ -154,6 +159,9 @@ def algo_params(c, sizes):
     chips, named = set(c['algo_chips']), {p['name'].split('-')[0] for p in params}
     fams = [('ML-DSA', 'fips204' in chips), ('Falcon', 'falcon' in chips), ('SLH-DSA', bool(chips & {'fips205', 'sphincs'}))]
     open_ = [f for f, used in fams if used and f.split('-')[0] not in named]
+    # a script that accepts every FIPS 205 parameter set covers categories 1, 3 and 5
+    if not levels and re.search(r'all 12 parameter sets', text) and 'fips205' in c['algo_chips']:
+        return {'level': [1, 3, 5], 'params': [], 'open': []}
     if not levels:
         return {'level': 'not_stated', 'params': params, 'open': []}
     return {'level': levels, 'params': params, 'open': open_}
@@ -166,10 +174,11 @@ MONTH = re.compile(r'^\d{4}-\d{2}(-\d{2})?$')
 
 
 def progress(c, checked):
-    """Post-quantum progress recorded on this site: dated milestones that are project events (not our own checks).
+    """Post-quantum progress recorded on this site: dated milestones that are post-quantum events under docs/stages.md
+    (not our own checks, and not entries marked progress: false, such as ordinary releases, comments or target dates).
     n90 counts those with a primary source in the 90 days to the check date; latest is the newest of any grade."""
     today = date.fromisoformat(checked)
-    ev = [m for m in c.get('milestones', []) if m.get('verified', True) and not m.get('checked') and MONTH.match(m.get('date') or '')]
+    ev = [m for m in c.get('milestones', []) if m.get('verified', True) and not m.get('checked') and m.get('progress', True) and MONTH.match(m.get('date') or '')]
     age = lambda m: (today - date.fromisoformat(m['date'] if DAY.match(m['date']) else m['date'] + '-15')).days
     n90 = sum(1 for m in ev if m.get('grade', 'primary') == 'primary' and 0 <= age(m) <= 90)
     y1 = any(0 <= age(m) <= 365 for m in ev)
@@ -434,29 +443,73 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
         'status': standard_status(c), 'schemes': schemes(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
         'cov': COVERAGE.get(c['stage'], 'none'), 'mig': field(c, 'migration'), 'audit': field(c, 'audit'), 'expo': field(c, 'exposure'),
         'prog': progress(c, checked), 'scope': 'top' if rank is not None else 'other',
-        'design': 'native' if c['kind'] == 'native' else 'upgraded', 'netw': 'mainnet' if c['network_status'] == 'mainnet' else 'testnet',
+        'design': 'native' if c['kind'] == 'native' else ('upgraded' if c['stage'] >= 3 else 'notyet'), 'netw': 'mainnet' if c['network_status'] == 'mainnet' else 'testnet',
         'claim': bgrade == 'official' or bool(since and since.get('grade') == 'official'),
         'net': {'status': n.get('status', 'unknown'), 'threshold': n.get('threshold_min'), 'block': block, 'code': code,
                 'reason': c['network'].get('no_probe_reason'), 'own': c['network'].get('source_kind'), 'check': xchk},
         'timeline': [{'date': m.get('date'), 'type': m['type'], 'grade': m.get('grade', 'primary'), 'en': m['name'], 'zh': m.get('zh'),
-                      'status': m.get('status'), 'url': m.get('source_url'), 'checked': bool(m.get('checked'))}
+                      'status': m.get('status'), 'url': m.get('source_url'), 'checked': bool(m.get('checked')), 'np': m.get('progress') is False}
                      for m in c.get('milestones', []) if m.get('verified', True)],
         'unverified': c.get('unverified', []),
         'sources': srcs,
+        'flags': evidence_flags(c, schemes(c), block, xchk, rank),
+        'supply': c.get('supply'),
+        'algo_note': c.get('algo_note'),
     }
 
 
-def home_view(v):
-    """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page."""
+def evidence_flags(c, sch, block, xchk, rank):
+    """Where the evidence behind a stage 4 or 5 rating stops, shown beside the stage (the stage itself is not changed):
+    the project's own construction, a variant no outside body has reviewed, no audit found, or network data that
+    has no independent source (outside the top 100)."""
+    if c['stage'] < 4:
+        return []
+    sts = {st for _, st in sch}
+    f = [k for k in ('custom', 'var') if k in sts]
+    if (c.get('audit') or {}).get('value') == 'none_found':
+        f.append('noaudit')
+    # only outside the top 100: the largest chains have many independent explorers even where we read the foundation's endpoint
+    independent = (block.get('ok') and c['network'].get('source_kind') == 'community') or bool(xchk and xchk.get('ok'))
+    if rank is None and not independent:
+        f.append('projdata')
+    return f
+
+
+def min_css(css):
+    """A small, safe CSS minifier: drops comments and the whitespace around punctuation (the stylesheet blocks the first paint)."""
+    css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
+    css = re.sub(r'\s+', ' ', css)
+    css = re.sub(r'\s*([{};,>])\s*', r'\1', css)
+    css = re.sub(r':\s+', ':', css)
+    return css.replace(';}', '}').strip() + '\n'
+
+
+def one_lang(x, lang):
+    """Keep only the page's language in an {en, zh} text (English stays as the fallback when Chinese is missing)."""
+    if isinstance(x, dict) and 'en' in x and 'zh' in x:
+        y = dict(x)
+        if lang == 'en':
+            y.pop('zh')
+        elif y.get('zh'):
+            y.pop('en')
+        return y
+    return x
+
+
+def home_view(v, lang):
+    """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page.
+    Long texts carry only the page's language, to keep the page small."""
     n, b, code = v['net'], v['net']['block'], v['net']['code']
     keep = ('id', 'name', 'zh_name', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'hybrid',
-            'cov', 'prog', 'scope', 'design', 'netw', 'claim', 'basis_grade')
+            'cov', 'prog', 'scope', 'design', 'netw', 'claim', 'basis_grade', 'flags')
     h = {k: v[k] for k in keep}
     h['level'] = v['ap']['level']
     h['level_open'] = v['ap'].get('open') or []
-    h['mig'] = {k: v['mig'][k] for k in ('value', 'en', 'zh') if k in v['mig']} if v['mig'] else None
+    h['mig'] = {'value': v['mig']['value']} if v['mig'] else None
     h['audit'] = v['audit']['value'] if v['audit'] else None
-    h['next'] = (v['four'] or {}).get('next')
+    h['next'] = one_lang((v['four'] or {}).get('next'), lang) if v['stage'] == 3 else None
+    if h['prog'].get('latest'):
+        h['prog'] = dict(h['prog'], latest=one_lang(h['prog']['latest'], lang))
     h['since'] = {k: v['since'][k] for k in ('date', 'basis', 'grade')} if v['since'] else None
     h['net'] = {'status': n['status'], 'block': {'ok': bool(b.get('ok')), 'age': b.get('age'), 'url': bool(b.get('url'))},
                 'code': {'repo': bool(code.get('repo')), 'c90': code.get('c90')} if code else None}
@@ -482,7 +535,7 @@ def milestone_months(views, checked):
     for v in views:
         for t in v['timeline']:
             d = t.get('date') or ''
-            if t['type'] in CHART_TYPES and re.match(r'^\d{4}-\d{2}(-\d{2})?$', d) and not t['checked'] and d[:7] in counts:
+            if t['type'] in CHART_TYPES and re.match(r'^\d{4}-\d{2}(-\d{2})?$', d) and not t['checked'] and not t['np'] and d[:7] in counts:
                 counts[d[:7]][CHART_TYPES.index(t['type'])] += 1
     return {'types': list(CHART_TYPES), 'months': [[k] + counts[k] for k in months]}
 
@@ -494,7 +547,7 @@ def milestone_events(views):
     for v in views:
         for t in v['timeline']:
             d = t.get('date') or ''
-            if t['type'] in CHART_TYPES and MONTH.match(d) and not t['checked']:
+            if t['type'] in CHART_TYPES and MONTH.match(d) and not t['checked'] and not t['np']:
                 ev.append([d, CHART_TYPES.index(t['type']), v['id']])
     return sorted(ev)
 
@@ -535,7 +588,7 @@ def write_data_files(out, views, checked, release, base, has_changes):
         s = v['since'] or {}
         mig, aud, prog = v['mig'] or {}, v['audit'] or {}, v['prog']
         w.writerow([v['id'], v['name'], v['ticker'], v['group'], v['kind'], v['rank'] or '', v['stage'], STAGE_NAMES['en'][v['stage']],
-                    v['algo']['en'], 'post-quantum' if v['stage'] == 5 else 'classical', status_csv(v), level_csv(v['ap']),
+                    v['algo']['en'], 'post-quantum' if v['stage'] == 5 else 'classical', status_csv(v), level_csv(v['ap']) if v['stage'] >= 3 else 'not_applicable',
                     'yes' if 'broken' in v['chips'] else '', v['cov'], mig.get('value', ''), mig.get('source_url', ''),
                     aud.get('value', ''), aud.get('source_url', ''), prog['n90'], (prog['latest'] or {}).get('date', ''),
                     v['net']['status'], s.get('date', ''), s.get('basis', ''), s.get('source_url', ''),
@@ -646,6 +699,7 @@ def main():
                        for x in data.get('not_listed', []) if mrank.get(x['coingecko_id'])), key=lambda x: x['rank'])
 
     asset_src = {name: (SITE_SRC / name).read_bytes() for name in ('app.js', 'style.css')}
+    asset_src['style.css'] = min_css(asset_src['style.css'].decode('utf-8')).encode('utf-8')
     version = hashlib.sha256(b''.join(asset_src.values())).hexdigest()[:10]
     page_tpl = (SITE_SRC / 'page.html').read_text(encoding='utf-8')
 
@@ -658,7 +712,7 @@ def main():
         common = {'lang': lang, 'base': base, 'repo': REPO, 'chips': CHIPS, 'checked': checked, 'mcap_date': mcap_date,
                   'has_changes': bool(changes), 'data_url': REPO + '/tree/main/data', 'chain_count': len(views),
                   'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, '')}
-        home = dict(common, page='home', chains=[home_view(v) for v in views], left_out=left_out, months=months, events=events)
+        home = dict(common, page='home', chains=[home_view(v, lang) for v in views], months=months, events=events)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),
               'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'dateModified': checked,

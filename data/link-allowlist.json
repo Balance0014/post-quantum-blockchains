@@ -40,6 +40,10 @@
   {
    "host": "hacken.io",
    "reason": "Answers 403 to automated requests (bot protection); the Minima audit page and its report opened in a browser when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "blockonomi.com",
+   "reason": "Blockonomi intermittently answers 403 to CI runners (bot protection); the article returned 200 three times from a normal connection, checked by hand on 2026-11-27 (UTC). Cited only as an unverified lead."
   }
  ]
 }

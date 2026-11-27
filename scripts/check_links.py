@@ -32,7 +32,7 @@ DATA = ROOT / 'data'
 FILES = ['chains.json', 'projects.json', 'sources.json', 'source-revision-checks.json']
 SKIP_KEYS = {'probe', 'check'}
 UA = 'post-quantum-blockchains-link-check/1.0 (+https://github.com/Balance0014/post-quantum-blockchains)'
-PER_HOST = 3
+PER_HOST = 1  # requests to one host go one at a time (some hosts rate-limit parallel requests)
 CTX = ssl.create_default_context()
 if os.path.exists('/etc/ssl/cert.pem'):  # macOS Python ships without a CA bundle
     CTX.load_verify_locations('/etc/ssl/cert.pem')
@@ -130,9 +130,10 @@ def fetch(url):
                     last = (0, type(e).__name__ + ': ' + str(e)[:120])
                 time.sleep(2 + 4 * attempt)
             return last
-    """Return (status, note). Status 0 means the request did not complete."""
+    """Return (status, note). Status 0 means the request did not complete. A 429 (rate limited) is retried after the
+    server's Retry-After (capped), and if it is still 429 the link is reported as not judged, not as broken."""
     last = (0, '')
-    for attempt in range(2):
+    for attempt in range(3):
         for method in ('HEAD', 'GET'):
             req = urllib.request.Request(url, method=method, headers={'User-Agent': UA, 'Accept': '*/*'})
             try:
@@ -143,6 +144,15 @@ def fetch(url):
                 last = (e.code, e.reason if isinstance(e.reason, str) else '')
                 if e.code in (404, 410) and method == 'GET':
                     return last
+                if e.code == 429:
+                    if attempt == 2:
+                        return last
+                    try:
+                        wait = int(e.headers.get('Retry-After', ''))
+                    except ValueError:
+                        wait = 10
+                    time.sleep(min(max(wait, 2), 60))
+                    break
             except Exception as e:  # timeouts, TLS and DNS errors
                 last = (0, type(e).__name__ + ': ' + str(e)[:120])
         time.sleep(2 + 4 * attempt)
@@ -157,22 +167,29 @@ def main():
     allowed = allowlist()
     with ThreadPoolExecutor(max_workers=16) as pool:
         results = dict(zip(links, pool.map(fetch, links)))
-    broken, excused = [], []
+    broken, excused, limited = [], [], []
     for url, (status, note) in sorted(results.items()):
         if 200 <= status < 400 or status == 405:
+            continue
+        if status == 429:  # rate limited after retries: not judged, listed, never silently passed
+            limited.append((url, links[url]))
             continue
         host = urlparse(url).netloc
         row = (url, status, note, links[url])
         (excused if host in allowed else broken).append(row)
     print(f'{len(links)} links checked: {len(links) - len(broken) - len(excused)} open, '
-          f'{len(excused)} on allowlisted hosts did not answer, {len(broken)} broken')
+          f'{len(excused)} on allowlisted hosts did not answer, {len(limited)} rate limited (not judged), {len(broken)} broken')
+    for url, where in limited:
+        print(f'  RATE LIMITED 429, not judged: {url} (in {where})')
     for url, status, note, where in excused:
         print(f'  allowlisted {status or note}: {url} ({allowed[urlparse(url).netloc]})')
     for url, status, note, where in broken:
         print(f'  BROKEN {status or note}: {url} (in {where})')
     if args.report:
         lines = [f'{len(links)} source links checked on {time.strftime("%Y-%m-%d", time.gmtime())}; '
-                 f'{len(broken)} broken.', '']
+                 f'{len(broken)} broken, {len(limited)} rate limited (not judged).', '']
+        if limited:
+            lines += ['Rate limited (429 after retries), not judged:', ''] + [f'- {u} (`{w}`)' for u, w in limited] + ['']
         if broken:
             lines += ['| Link | Answer | Where |', '|---|---|---|']
             lines += [f'| {u} | {s or n} | `{w}` |' for u, s, n, w in broken]
