@@ -198,6 +198,40 @@ def group_of(c, rank):
     return 'optin'
 
 
+# Which milestone types support each stage, for the source linked from a chain page's opening answer.
+BASIS_TYPES = {5: ('mainnet',), 4: ('mainnet', 'wallet', 'thirdparty'), 3: ('testnet',), 2: ('proposal', 'code'),
+               1: ('research', 'proposal', 'code'), 0: ('research', 'code', 'proposal')}
+# Node endpoints answer only programs (POST queries, websockets), so a reader cannot open them as a citation.
+NODE_ENDPOINT = re.compile(r'graphql|entrypoint|rpc', re.I)
+SOURCE_ORDER = ('pinned source code', 'pinned source repository', 'project release record', 'project block explorer',
+                'ecosystem block explorer', 'pinned source documentation', 'algorithm specification or reference implementation')
+
+
+def words(text):
+    """Words of four letters or more, and anything with a digit (BIP-360, #1104), for matching a source to the basis."""
+    return {w for w in re.findall(r"[#\w][\w'-]*", (text or '').lower()) if len(w) >= 4 or any(ch.isdigit() for ch in w)}
+
+
+def basis_source(c, projects, sources):
+    """The one source the opening answer cites. A listed project cites its strongest pinned primary source (code before
+    docs). Other chains cite the primary (else official) milestone of a type that supports the stage whose name shares the
+    most words with the stage basis, newest first on ties; else the closest graded milestone, else the first source.
+    Node endpoints are skipped: the chain page shows those readings in its network panel."""
+    p = projects.get(c.get('projects_id')) if c.get('projects_id') else None
+    ranked = [sources[sid] for sid in (p or {}).get('sources', []) if sources[sid]['source_type'] in SOURCE_ORDER]
+    if ranked:
+        return min(ranked, key=lambda s: SOURCE_ORDER.index(s['source_type']))['url']
+    basis = words(c['stage_basis']['en'])
+    ms = [m for m in c.get('milestones', []) if m.get('verified', True) and m.get('source_url')
+          and m.get('grade', 'primary') in ('primary', 'official') and not NODE_ENDPOINT.search(m['source_url'])]
+    best = lambda xs: max(xs, key=lambda m: (len(words(m['name']) & basis), m.get('grade', 'primary') == 'primary', m.get('date') or ''))
+    hits = [m for m in ms if m['type'] in BASIS_TYPES.get(c['stage'], ())]
+    if hits or ms:
+        return best(hits or ms)['source_url']
+    first = (c.get('sources') or [None])[0]
+    return first if isinstance(first, str) or first is None else first['url']
+
+
 def chain_view(c, net, ranks, projects, sources):
     n = net.get('chains', {}).get(c['id'], {})
     b = n.get('block', {})
@@ -236,6 +270,7 @@ def chain_view(c, net, ranks, projects, sources):
         'latest': {'date': ls.get('date'), 'en': ls.get('text'), 'zh': ls.get('zh'), 'checked': bool(ls.get('is_check_date'))},
         'checked': (n.get('block', {}).get('queried_at_utc') or net.get('checked_at_utc') or '')[:10] or None,
         'reviewed': c['last_reviewed'], 'basis': c['stage_basis'],
+        'basis_src': basis_source(c, projects, sources),
         'net': {'status': n.get('status', 'unknown'), 'threshold': n.get('threshold_min'), 'block': block, 'code': code,
                 'reason': c['network'].get('no_probe_reason')},
         'timeline': [{'date': m.get('date'), 'type': m['type'], 'grade': m.get('grade', 'primary'), 'en': m['name'], 'zh': m.get('zh'),
@@ -247,7 +282,7 @@ def chain_view(c, net, ranks, projects, sources):
 
 def home_view(v):
     """The home page only needs what the table and its expandable rows show."""
-    return {k: v[k] for k in v if k not in ('timeline', 'four', 'sources')}
+    return {k: v[k] for k in v if k not in ('timeline', 'four', 'sources', 'basis_src')}
 
 
 def script_json(obj):
@@ -285,6 +320,8 @@ def main():
         examples.append({k: at[0][k] for k in ('id', 'name', 'zh_name')} if at else None)
     answer = {'en': lambda v, nm: f"As of {v['reviewed']}, {nm} is at stage {v['stage']} of 5: {STAGE_NAMES['en'][v['stage']]}. {v['basis']['en']}",
               'zh': lambda v, nm: f"截至 {v['reviewed']}，{nm} 处于第 {v['stage']} 档（满档 5 档）：{STAGE_NAMES['zh'][v['stage']]}。{v['basis']['zh']}"}
+    cited = {'en': lambda v: f" {'Where we looked' if v['stage'] == 0 else 'Source'}: {v['basis_src']}" if v['basis_src'] else '',
+             'zh': lambda v: f"{'查过的地方' if v['stage'] == 0 else '出处'}：{v['basis_src']}" if v['basis_src'] else ''}
     names = {v['id']: {'en': v['name'], 'zh': v['zh_name']} for v in views}
     mrank = {x['id']: x['rank'] for x in mc['coins']} if mc else {}
     left_out = sorted(({'rank': mrank.get(x['coingecko_id']), 'name': x['name'], 'symbol': x['symbol'],
@@ -319,7 +356,7 @@ def main():
             ld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'inLanguage': 'zh-Hans' if lang == 'zh' else 'en',
                   'dateModified': v['reviewed'], 'url': ORIGIN + path_for(lang, f"chains/{v['id']}/"),
                   'mainEntity': [{'@type': 'Question', 'name': t['chain_q'].format(name=nm, sp=sp),
-                                  'acceptedAnswer': {'@type': 'Answer', 'text': desc}}]}
+                                  'acceptedAnswer': {'@type': 'Answer', 'text': desc + cited[lang](v)}}]}
             pages.append((lang, f"chains/{v['id']}/", dict(common, page='chain', chains=[v]),
                           t['chain_title'].format(name=nm, sp=sp), desc, ld))
         pages.append((lang, 'method/', dict(common, page='method', chains=[], left_out=left_out), t['method_title'], t['method_desc'], None))

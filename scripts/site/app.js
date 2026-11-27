@@ -54,6 +54,7 @@ const UI = {
     d_fix: "See something wrong or out of date on this page? Report it with a primary source. We reply within 7 days, and every change is recorded in the public changelog.",
     d_fix_btn: "Report an error",
     answer: (date, nm, n, label) => `As of ${date}, ${nm} is at stage ${n} of 5: ${label}.`,
+    answer_src: (stage) => (stage === 0 ? "Where we looked" : "Source"),
     why: (n) => `Why stage ${n}`,
     stale: (date, d) => `These claims were last checked on ${date}, ${d} days ago. They may be out of date until the next review.`,
     types: { research: "Research", proposal: "Proposal", code: "Code", testnet: "Testnet", mainnet: "Mainnet", wallet: "Wallet", thirdparty: "Third party", tracker: "Tracker", network: "Network" },
@@ -105,6 +106,7 @@ const UI = {
     d_fix: "发现本页有误或已过时？请附上原始出处报错。我们 7 天内回复，每次修改都记录在公开的更新记录里。",
     d_fix_btn: "报错",
     answer: (date, nm, n, label) => `截至 ${date}，${nm} 处于第 ${n} 档（满档 5 档）：${label}。`,
+    answer_src: (stage) => (stage === 0 ? "查过的地方" : "出处"),
     why: (n) => `为什么是 ${n} 档`,
     stale: (date, d) => `这些说法最近一次核对是 ${date}，已经过去 ${d} 天，在下次复核前可能已过时。`,
     types: { research: "研究", proposal: "提案", code: "代码", testnet: "测试网", mainnet: "主网", wallet: "钱包", thirdparty: "第三方", tracker: "本站", network: "网络" },
@@ -443,7 +445,7 @@ function renderChain() {
     <header class="dhead"><div><h1>${esc(name(c))}${lang === "zh" && c.zh_name ? ` <span style="font-size:.5em;color:var(--ink-3);font-weight:500">${esc(c.name)}</span>` : ""}</h1>
       <div class="meta"><span class="mono">${esc(c.ticker)}</span>${sub ? `<span>· ${esc(sub)}</span>` : ""}<span>· ${kindTerm(c)}</span><span>· ${term(esc(L("d_checked")), DF.th_checked)} <span class="mono">${esc(c.checked || "—")}</span></span></div></div>
       <div class="bigstage">${meter(c.stage, true)}<div class="num">${c.stage}<small> / 5</small></div><div class="lab">${stageTerm(c.stage)}</div></div></header>
-    <p class="answer"><b>${esc(L("answer")(c.reviewed, name(c), c.stage, L("stage_names")[c.stage]))}</b> ${esc(T(c.basis))}</p>
+    <p class="answer"><b>${esc(L("answer")(c.reviewed, name(c), c.stage, L("stage_names")[c.stage]))}</b> ${esc(T(c.basis))}${c.basis_src ? ` <span class="cite-src">${esc(L("answer_src")(c.stage))}${CO()}<a href="${esc(c.basis_src)}" target="_blank" rel="noopener">${esc(host(c.basis_src))} ↗</a></span>` : ""}</p>
     ${c.stale_days > 90 ? `<p class="stale" role="note">${esc(L("stale")(c.reviewed, c.stale_days))}</p>` : ""}
     <div class="dgrid"><div style="display:grid;gap:28px;min-width:0">
       <section class="four">${boxes}</section>
@@ -502,6 +504,7 @@ const METHOD = {
     net_rule: "Where blocks come from: each chain's row names the explorer or public RPC we read, and every chain page shows the exact endpoint, the block height and time, and when we read it. The limit is 10 minutes, or six target block times when a chain's target is longer than 100 seconds (for example 60 minutes for Bitcoin's 10-minute blocks). At six target block times, a healthy chain misses the limit by chance about once in 400 checks. Public RPCs can answer from a lagging node, so before marking a chain stopped we read it twice more and keep the newest block. Commits are counted on the default branch of the main node repository over the 90 days before the check.",
     algo_h: "Algorithm labels", algo_cols: ["Label", "What it means"],
     grades_h: "Where evidence comes from",
+    cite_rule: "The opening sentence on each chain page links one source. A chain with an entry in the project list (projects.json) links its pinned code or another pinned primary source. Other chains link the primary source (or, if there is none, the official claim) that supports the stage and best matches the stated reason. Node endpoints are not linked there because the network panel shows them. Every source is listed further down the page.",
     grades: [["Primary source · can set the stage", "primary"], ["Official claim · recorded as a plan", "official"], ["Lead · marked unverified", "unverified"]],
     dims_h: "What we collect", dims_cols: ["Field", "Where it comes from", "How often", "Script"],
     dims: [
@@ -551,6 +554,7 @@ const METHOD = {
     net_rule: "出块数据从哪来：每条链都写明读取的区块浏览器或公开 RPC，详情页列出具体接口、区块高度和时间，以及读取时间。时限是 10 分钟；目标出块间隔超过 100 秒的链，按 6 倍目标出块间隔算（比如比特币 10 分钟一个块，时限就是 60 分钟）。取 6 倍时，一条正常出块的链大约每 400 次核查才会偶然超时一次。公开 RPC 可能由落后的节点应答，所以判定「出块停了」之前会再读两次，取最新的区块。提交次数按主节点代码库的默认分支、核查日之前 90 天统计。",
     algo_h: "算法标签", algo_cols: ["标签", "含义"],
     grades_h: "证据来源",
+    cite_rule: "每条链详情页开头那句结论带一个出处。在项目清单（projects.json）里有条目的链，链到钉住版本的代码或其他钉住的原始出处。其他链链到能支持该档位、并且和写明的依据最贴合的原始出处，没有原始出处时才用官方说法。节点接口不在这里链出，因为网络状态栏已经列出。全部来源列在页面下方。",
     grades: [["原始出处 · 可作定档依据", "primary"], ["官方说法 · 记为计划", "official"], ["线索 · 标为未核实", "unverified"]],
     dims_h: "我们抓哪些维度", dims_cols: ["字段", "从哪抓", "多久抓一次", "脚本"],
     dims: [
@@ -610,7 +614,7 @@ function howHTML(onHome) {
     <${H}>${esc(M.groups_h)}</${H}>${table(M.groups_cols, groups)}
     <${H}>${esc(M.net_h)}</${H}>${table(M.net_cols, net)}<p>${esc(M.net_rule)}</p>
     <${H}>${esc(M.algo_h)}</${H}>${table(M.algo_cols, algo)}
-    <${H}>${esc(M.grades_h)}</${H}>${grades}
+    <${H}>${esc(M.grades_h)}</${H}>${grades}<p>${esc(M.cite_rule)}</p>
     <${H}>${esc(M.dims_h)}</${H}><div class="scalebox"><table class="scale dims"><thead><tr>${M.dims_cols.map((c) => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${dims}</tbody></table></div>
     <${H}>${esc(M.who_h)}</${H}>${ul(M.who)}
     ${D.left_out && D.left_out.length ? `<details class="left"><summary>${esc(M.left_h(D.left_out.length))}</summary>${table(M.left_cols, D.left_out.map((x) => `<tr><td class="mono">#${x.rank}</td><td>${esc(x.name)} <span class="mono" style="color:var(--ink-3)">${esc(x.symbol)}</span></td><td>${esc(T(x.reason))}${x.note ? PAR(esc(T(x.note))) : ""}</td></tr>`).join(""))}</details>` : ""}

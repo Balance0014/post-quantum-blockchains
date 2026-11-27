@@ -218,6 +218,7 @@ tr.exp td{background:var(--sunk);padding:16px 18px 20px}
 .kv .v{font-size:14px}
 .answer{margin:0;max-width:78ch;font-size:16px;line-height:1.6;color:var(--ink-2)}
 .answer b{color:var(--ink);font-weight:600}
+.answer .cite-src{font-size:14px;color:var(--ink-3);overflow-wrap:anywhere}
 .stale{margin:0;padding:10px 14px;border-radius:8px;background:var(--warn-bg);color:var(--warn);font-size:14px;max-width:78ch}
 code.cite{display:block;padding:12px 14px;border-radius:8px;background:var(--sunk);font:13px/1.55 var(--f-mono);white-space:normal;overflow-wrap:anywhere}
 .unv{border:1px dashed var(--line-2);border-radius:10px;padding:14px 16px;display:grid;gap:10px;background:var(--surface)}
