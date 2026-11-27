@@ -24,6 +24,22 @@
   {
    "host": "www.coingecko.com",
    "reason": "CoinGecko coin pages answer 403 to automated requests (bot challenge); they open in a browser. Market-cap ranks come from the CoinGecko API in scripts/rank.py."
+  },
+  {
+   "host": "neptune.cash",
+   "reason": "Answers 403 to requests from GitHub Actions runners (bot protection); every cited article opened with plain curl and in a browser when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "docs.neptune.cash",
+   "reason": "Same protection as neptune.cash: 403 from GitHub Actions runners; both cited pages opened with plain curl when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "explorer.theqrl.org",
+   "reason": "Answers 403 to requests from GitHub Actions runners; the cited block page opened with plain curl when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "hacken.io",
+   "reason": "Answers 403 to automated requests (bot protection); the Minima audit page and its report opened in a browser when checked by hand on 2026-11-27 (UTC)."
   }
  ]
 }

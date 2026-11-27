@@ -9427,11 +9427,12 @@
    },
    "audit": {
     "value": "partial",
-    "en": "Hacken's 2023 audit of the protocol lists signatures in scope, but at a 2022 commit; the key-tree code changed again in 2025.",
-    "zh": "Hacken 2023 年对协议的审计把签名列入范围，但审的是 2022 年的提交；密钥树代码 2025 年又改过。",
-    "source_url": "https://hacken.io/audits/minima",
+    "en": "Hacken's January 2023 audit listed signing and verification in scope, but the key-tree signing code has changed since, most recently in September 2025.",
+    "zh": "Hacken 2023 年 1 月的审计把签名与验签列入范围，但密钥树签名代码之后又改过，最近一次在 2025 年 9 月。",
+    "source_url": "https://hacken.io/audits/minima/pt-minima-minima-network-jan2023/",
     "grade": "primary",
-    "auditor": "Hacken"
+    "auditor": "Hacken",
+    "date": "2023-01-13"
    }
   }
  ],
