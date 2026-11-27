@@ -16,7 +16,6 @@ const href = (p) => D.base + (lang === "zh" ? "zh/" : "") + p;
 const chainURL = (id) => href(`chains/${id}/`);
 const blob = (path) => `${REPO}/blob/main/${path}`;
 const URL_TALK = REPO + "/discussions", URL_X = "https://x.com/balance0014";
-const state = { group: "all", stage: null, net: "all", fam: "all", q: "", sort: "default" };
 /* page hooks: where the language switch should land, and copy-with-confirmation (set up in the browser) */
 const TIP = { pos: () => location.hash, copy: () => {} };
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
@@ -44,7 +43,7 @@ const UI = {
     mo_tip: (m, a) => `${m}: ${plural(a[0], "proposal", "proposals")}, ${a[1]} testnet, ${a[2]} mainnet`,
     list_h: (n) => `All ${n} chains`,
     none: "None", and: " and ",
-    search: "Search chains, schemes or tickers", f_all: "All", f_top: "Top 100", f_optin: "Mainnet opt-in", f_native: "Post-quantum native", f_early: "Early",
+    search: "Search chains, schemes or tickers", f_all: "All", f_top: "Top 100", f_optin: "Mainnet opt-in", f_native: "Post-quantum native", f_early: "Not on mainnet yet",
     f_label: "Filter by group", sort_label: "Sort",
     stage_chip: (s, nm) => `Stage ${s} · ${nm}`, stage_clear: "Clear the stage filter",
     sort_default: "Biggest chains first", sort_stage_d: "Stage: high to low", sort_stage_a: "Stage: low to high", sort_latest: "Latest change", sort_name: "Name",
@@ -53,7 +52,7 @@ const UI = {
     g_top: "The largest blockchains", g_top_s: "CoinGecko top 100 by market cap; only coins with their own network. Most have no post-quantum option yet, and that is worth knowing too.",
     g_optin: "Chains with a mainnet opt-in", g_optin_s: "Launched with classical keys; post-quantum accounts or locking scripts are live on mainnet for holders who choose them.",
     g_native: "Post-quantum native", g_native_s: "Every transfer on mainnet is signed with a post-quantum scheme by default. Check the algorithm and network columns too.",
-    g_early: "Early projects", g_early_s: "No mainnet running yet.",
+    g_early: "Not on mainnet yet", g_early_s: "Public code or a public testnet, but no mainnet.",
     k_upgrading: "Upgrading", k_native: "Native", k_early: "Native · testnet",
     rank: (r) => `#${r} by market cap`,
     more: "More", less: "Less",
@@ -127,6 +126,48 @@ const UI = {
     cum_total: "chains",
     tap_open: "Tap again to open", copy_link: "Copy a link to this section", link_copied: "Link copied",
     grp_more: (n) => `+${n} more`, show_all: (n) => `Show all ${n} chains`,
+    th_cov: "Coverage", th_prog: "Latest post-quantum progress",
+    prog_n90: (n) => `${n} in the last 90 days`, prog_none: "None recorded here",
+    ss: { std: "NIST standard", sel: "NIST-selected, not final", hash: "Stateful hash-based", custom: "Own construction or variant", broken: "Publicly broken", none: "No post-quantum scheme" },
+    level: (a, open) => a === "unassessed" ? "Security level not assessed" : a === "not_stated" ? "Parameter set not stated" : `NIST level ${a.join(" / ")}` + (open && open.length ? ` · ${open.join(", ")} set not stated` : ""),
+    hybrid: "Hybrid",
+    cov: { default: "Default for new accounts", optin: "Opt-in on mainnet", testnet: "Testnet only", none: "Not on mainnet" },
+    mig: { native: "No old keys to move", available: "Existing coins can move", testnet: "Moving coins: testnet only", planned: "Moving coins: planned", none: "No way to move coins yet", unknown: "Moving coins: unknown" },
+    mig_s: { native: "Native", available: "Available", testnet: "Testnet only", planned: "Planned", none: "None", unknown: "Unknown" },
+    audit: { audited: "Audited", partial: "Partly audited", none_found: "No audit found", unknown: "Audit unknown" },
+    scope: { top: "Top 100", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Upgraded later" }, netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
+    scope_label: "Scope", design_label: "Design", ss_label: "Standard", cov_label: "Coverage", mig_label: "Migration", audit_label: "Audit", netw_label: "Network", net_label2: "Block status", view_label: "Showing",
+    more_filters: "More filters", more_bg: "includes background",
+    view: { use: "Usable today", close: "Closest", move: "Moving now", quiet: "No progress in a year", broken: "Publicly broken parameters", custom: "Own construction", claim: "Project's own statement" },
+    sort_prog: "Latest progress", sort_n90: "Most progress, 90 days", sort_by: "Sort",
+    q5_h: "Five questions for holders", q5_note: "Each card states its rule; its count matches the table it opens.",
+    q_use_h: "Post-quantum signatures usable today", q_use_r: "Stage 4 or 5: on mainnet, holders already sign with a post-quantum scheme by default, or can choose one.",
+    t_default: "Used by default", t_optin: "Can be chosen",
+    q_close_h: "Closest to mainnet", q_close_r: "Stage 3: works on an official public testnet, not yet on mainnet. The next step is shown.",
+    q_move_h: "Moving now", q_move_r: (d) => `At least one post-quantum milestone with a primary source in the 90 days to ${d}. Newest first.`,
+    q_quiet_h: "No post-quantum progress in the past year", q_quiet_r: (d) => `Top-100 chains at stage 0 or 1 with no post-quantum milestone recorded here in the 12 months to ${d}.`,
+    q_risk_h: "Worth a closer look", q_risk_r: "Select a line to list those chains.",
+    risk: { broken: "use a scheme or parameters that were publicly broken", custom: "use their own construction, not assessed by an outside body", claim: "rest a key date or their stage on the project's own statement" },
+    q_show: (n) => `Show ${plural(n, "chain", "chains")} in the table`, q_more: (n) => `+${n} more`, q_none: "None at the moment.",
+    dagger_key: "† The project's own statement (official claim): shown, never used to raise a stage.",
+    rng: { all: "All · by year", y2: "2 years · by month", m3: "3 months · by week" }, rng_label: "Range",
+    mo_title2: "Post-quantum milestones over time", mo_note2: (n) => `Dated proposals, testnet steps and mainnet steps across all ${n} chains. Empty periods keep their place.`,
+    mo_sparse: (y, n) => `Before ${y}, at most ${plural(n, "milestone", "milestones")} a year. Choose “All” to see them.`,
+    wk: (d) => `week of ${d}`,
+    run_title: "How long post-quantum signatures have run on mainnet", run_note: (d) => `One bar per chain, from the day post-quantum signatures became usable on its current mainnet to ${d}. Earliest first.`,
+    run_len: (days) => days >= 365 ? `${(days / 365.25).toFixed(1)} years` : days >= 60 ? `${Math.round(days / 30.44)} months` : plural(days, "day", "days"),
+    am_title: "Algorithm map", am_note: (n) => `The ${n} chains at stage 2 or higher, by the signature family they use or propose, coloured by standard status.`,
+    d_algo_h: "Algorithm", d_cov_h: "Coverage", d_prog_h: "Progress", d_ev_h: "Evidence", d_bg_h: "Background",
+    d_bg_note: "Not post-quantum measures. They help judge the rest: a chain that stops producing blocks protects nothing, and market cap shows how much value is at stake.",
+    k_status: "Standard status", k_level: "Security level", k_sizes: "Reference sizes", k_hybrid: "Hybrid signature", k_audit: "Audit of the post-quantum code",
+    k_new: "New accounts", k_mig: "Coins that already exist", k_expo: "Coins with exposed public keys", k_n90: "Progress in the last 90 days", k_latest: "Latest progress", k_mcap: "Market-cap rank",
+    yes: "Yes", no: "No", size_row: (n, pk, sig) => `${n}: public key ${pk.toLocaleString("en-US")} B · signature ${sig.toLocaleString("en-US")} B`,
+    size_ref: (r) => `Reference encoding of ${r}; a chain's own encoding can differ.`,
+    expo_none: "No reliable data. We cite published research only and do not estimate this ourselves.",
+    commits2: (n) => `Main repository: ${n.toLocaleString("en-US")} commit${n === 1 ? "" : "s"} in 90 days (all changes, bots left out)`,
+    commits_tip: (repo, br, q) => `Repository: github.com/${repo}${br ? `, branch ${br}` : ""}. Every commit on that branch in the 90 days before the check, whatever it changed; commits by bot accounts (logins ending in [bot]) are left out. Queried ${q}.`,
+    bg_tag: "background",
+    since_dagger: "Date from the project's own statement",
   },
   zh: {
     nav_chains: "链列表", nav_changes: "本周变化", nav_method: "评档方法", gh: "数据在 GitHub",
@@ -150,7 +191,7 @@ const UI = {
     mo_tip: (m, a) => `${m}：提案 ${a[0]} · 测试网 ${a[1]} · 主网 ${a[2]}`,
     list_h: (n) => `全部 ${n} 条链`,
     none: "暂无", and: "、",
-    search: "搜索链名、算法或币种代码", f_all: "全部", f_top: "市值前 100", f_optin: "主网可选用", f_native: "原生抗量子", f_early: "早期项目",
+    search: "搜索链名、算法或币种代码", f_all: "全部", f_top: "市值前 100", f_optin: "主网可选用", f_native: "原生抗量子", f_early: "还没上主网",
     f_label: "按分组筛选", sort_label: "排序",
     stage_chip: (s, nm) => `第 ${s} 档 · ${nm}`, stage_clear: "清除档位筛选",
     sort_default: "大链在前", sort_stage_d: "档位从高到低", sort_stage_a: "档位从低到高", sort_latest: "最近变化", sort_name: "名称",
@@ -159,7 +200,7 @@ const UI = {
     g_top: "市值前 100 的区块链", g_top_s: "按 CoinGecko 市值排名前 100，只取有自己网络的币。大多还没有抗量子选项，这本身也值得知道。",
     g_optin: "主网可选抗量子的链", g_optin_s: "上线时使用传统密钥；抗量子账户或锁定脚本已上主网，持币人可自行选用。",
     g_native: "原生抗量子链", g_native_s: "主网上的每笔转账默认使用抗量子签名。请同时留意算法和网络两列。",
-    g_early: "早期项目", g_early_s: "主网尚未运行。",
+    g_early: "还没上主网", g_early_s: "有公开代码或公开测试网，但还没有主网。",
     k_upgrading: "升级中", k_native: "原生", k_early: "原生 · 测试网",
     rank: (r) => `市值第 ${r}`,
     more: "展开", less: "收起",
@@ -233,6 +274,48 @@ const UI = {
     cum_total: "条",
     tap_open: "再点一次打开", copy_link: "复制本节链接", link_copied: "链接已复制",
     grp_more: (n) => `另有 ${n} 条`, show_all: (n) => `显示全部 ${n} 条`,
+    th_cov: "覆盖", th_prog: "最近一次抗量子进展",
+    prog_n90: (n) => `近 90 天 ${n} 条`, prog_none: "本站未收录",
+    ss: { std: "NIST 标准", sel: "NIST 选定、未定稿", hash: "有状态哈希签名", custom: "项目自研或改动版", broken: "已被公开破解", none: "尚无抗量子方案" },
+    level: (a, open) => a === "unassessed" ? "强度等级未评估" : a === "not_stated" ? "未写明参数集" : `NIST 强度等级 ${a.join(" / ")}` + (open && open.length ? ` · ${open.join("、")} 未写明参数集` : ""),
+    hybrid: "混合签名",
+    cov: { default: "新账户默认", optin: "主网可选用", testnet: "仅限测试网", none: "主网暂无" },
+    mig: { native: "原生链，没有旧密钥要迁移", available: "已有的币可以迁移", testnet: "迁移：仅限测试网", planned: "迁移：计划中", none: "还没有迁移办法", unknown: "迁移：情况不明" },
+    mig_s: { native: "原生", available: "可迁移", testnet: "仅测试网", planned: "计划中", none: "没有", unknown: "不明" },
+    audit: { audited: "已审计", partial: "部分审计", none_found: "未找到审计", unknown: "审计情况不明" },
+    scope: { top: "市值前 100", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来升级的" }, netw: { mainnet: "主网", testnet: "还没上主网" },
+    scope_label: "范围", design_label: "设计", ss_label: "标准状态", cov_label: "覆盖", mig_label: "迁移路径", audit_label: "审计", netw_label: "网络", net_label2: "出块状态", view_label: "正在看",
+    more_filters: "更多筛选", more_bg: "含背景信息",
+    view: { use: "今天已能用", close: "最接近的", move: "正在推进", quiet: "近一年没有进展", broken: "参数已被公开破解", custom: "项目自研", claim: "只有项目方说法" },
+    sort_prog: "最近进展", sort_n90: "近 90 天进展最多", sort_by: "排序",
+    q5_h: "持币人关心的五个问题", q5_note: "每张卡片都写明规则，数字和点开后的表格一致。",
+    q_use_h: "今天已经能用上抗量子签名", q_use_r: "第 4、5 档：主网上已默认使用抗量子签名，或持币人可以选用。",
+    t_default: "已默认使用", t_optin: "可选使用",
+    q_close_h: "最接近的", q_close_r: "第 3 档：官方公开测试网上已能用，主网还没有。下面写了下一步。",
+    q_move_h: "正在推进", q_move_r: (d) => `截至 ${d} 的 90 天内，至少有一条带原始出处的抗量子进展。最近的在前。`,
+    q_quiet_h: "近一年没有抗量子进展", q_quiet_r: (d) => `市值前 100、处于第 0 或第 1 档，截至 ${d} 的 12 个月内本站没有收录任何抗量子进展的链。`,
+    q_risk_h: "值得多看一眼", q_risk_r: "点选一行，在表格中列出这些链。",
+    risk: { broken: "用过或仍允许已被公开破解的方案或参数", custom: "使用项目自研或改动过的方案，没有外部机构评估", claim: "关键日期或档位只以项目方说法为依据" },
+    q_show: (n) => `在表格中查看这 ${n} 条`, q_more: (n) => `另有 ${n} 条`, q_none: "目前没有。",
+    dagger_key: "† 项目方自己的说法（官方说法）：会列出，但不据此升档。",
+    rng: { all: "全部 · 按年", y2: "近 2 年 · 按月", m3: "近 3 个月 · 按周" }, rng_label: "范围",
+    mo_title2: "抗量子里程碑数量", mo_note2: (n) => `全部 ${n} 条链带日期的提案、测试网和主网进展。没有进展的时段也留着位置。`,
+    mo_sparse: (y, n) => `${y} 年以前每年最多 ${n} 件，选「全部」可以看到。`,
+    wk: (d) => `${d} 当周`,
+    run_title: "抗量子签名在主网上运行了多久", run_note: (d) => `每条链一根条，从抗量子签名在现行主网可用的那天起，到 ${d} 为止。最早的在上。`,
+    run_len: (days) => days >= 365 ? `${(days / 365.25).toFixed(1)} 年` : days >= 60 ? `${Math.round(days / 30.44)} 个月` : `${days} 天`,
+    am_title: "算法版图", am_note: (n) => `第 2 档及以上的 ${n} 条链，按所用或提议的签名家族分行，颜色表示标准状态。`,
+    d_algo_h: "算法", d_cov_h: "覆盖", d_prog_h: "进展", d_ev_h: "证据", d_bg_h: "背景",
+    d_bg_note: "这些不是抗量子指标，只帮助判断其他信息：出块停了的链谈不上保护，市值说明有多少价值面临风险。",
+    k_status: "标准状态", k_level: "强度等级", k_sizes: "参考大小", k_hybrid: "混合签名", k_audit: "抗量子代码的审计",
+    k_new: "新账户", k_mig: "已有的币", k_expo: "公钥已暴露的币", k_n90: "近 90 天进展", k_latest: "最近一次进展", k_mcap: "市值排名",
+    yes: "是", no: "否", size_row: (n, pk, sig) => `${n}：公钥 ${pk.toLocaleString("en-US")} 字节 · 签名 ${sig.toLocaleString("en-US")} 字节`,
+    size_ref: (r) => `${r} 的参考编码大小；各链自己的编码可能不同。`,
+    expo_none: "暂无可靠数据。本站只引用已发表的研究，不自行估算。",
+    commits2: (n) => `主仓库 90 天提交 ${n.toLocaleString("en-US")} 次（全部改动，不含机器人）`,
+    commits_tip: (repo, br, q) => `代码库：github.com/${repo}${br ? `，${br} 分支` : ""}。核查日之前 90 天该分支上的每次提交，不论改了什么；机器人账户（用户名以 [bot] 结尾）的提交不计。查询时间 ${q}。`,
+    bg_tag: "背景",
+    since_dagger: "日期来自项目方说法",
   },
 };
 
@@ -291,8 +374,47 @@ const DEFS = {
     th_algo: "The post-quantum scheme in use or proposed, and where it stands as a standard.",
     th_net: "Is the chain still producing blocks, and is its code still being worked on? Read by the weekly patrol.",
     th_latest: "The most recent dated step on the chain's timeline.",
+    th_cov: "Who is covered: whether new accounts get post-quantum signatures by default, by choice or only on a testnet, and whether coins that already exist can move under post-quantum protection.",
+    th_prog: "The newest post-quantum milestone on the chain's timeline (its event date and one line), and how many with a primary source fell in the last 90 days. † marks the project's own statement.",
     th_since: "The day post-quantum signatures became usable on the chain's current mainnet: the genesis block for post-quantum native chains, the day the upgrade went live for the others. Only chains at stage 4 or 5 have one; the chain's page links the source.",
     th_checked: "When the weekly patrol last read this chain's network data.",
+    ss: {
+      std: "ML-DSA (NIST FIPS 204) or SLH-DSA (NIST FIPS 205): final NIST standards, published August 2024.",
+      sel: "Selected by NIST but not a final standard yet: Falcon (to become FN-DSA, FIPS 206), or a pre-standard version of a selected scheme such as SPHINCS+.",
+      hash: "Stateful hash-based signatures. XMSS is standardized in NIST SP 800-208 and IETF RFC 8391; one-time WOTS+ key trees use the same building blocks but are not standardized as built.",
+      custom: "A construction or variant designed by the project itself, without an outside standard. Its security level is not assessed here.",
+      broken: "A public attack breaks the scheme the chain relies on.",
+      none: "No post-quantum signature scheme is live or formally proposed.",
+    },
+    level: "NIST's security categories, from the parameter set: ML-DSA-44 is level 2, ML-DSA-65 level 3, ML-DSA-87 level 5, Falcon-512 level 1, Falcon-1024 level 5, SLH-DSA-128s level 1. A project's own construction is not assessed.",
+    hybrid: "A post-quantum signature used together with a classical one (such as Ed25519 or secp256k1); both must verify.",
+    cov: {
+      default: "On mainnet, new accounts sign with a post-quantum scheme by default, or every transfer must (stage 5).",
+      optin: "On mainnet, holders can choose post-quantum protection; the default is still classical (stage 4).",
+      testnet: "Only on the chain's official public testnet (stage 3).",
+      none: "No post-quantum signing for holders on mainnet or an official testnet (stage 0 to 2).",
+    },
+    mig: {
+      native: "The current mainnet has signed post-quantum since its genesis block, so there are no classical-key coins to move.",
+      available: "On mainnet today, a holder can move existing coins under post-quantum protection (a new key, account type or address).",
+      testnet: "A way to move existing coins works only on a public testnet.",
+      planned: "An official proposal or roadmap describes how existing coins would move; it is not live.",
+      none: "No published way to move existing coins under post-quantum protection.",
+      unknown: "Primary and official sources do not settle it.",
+    },
+    audit: {
+      audited: "An independent party audited the post-quantum signing code this chain uses, or the upgrade that added it.",
+      partial: "Only a library it depends on was audited or formally verified, or the audit covers an older version or part of the code.",
+      none_found: "No audit found in the repository, on the project site or in the main auditors' public report lists.",
+      unknown: "We could not tell.",
+    },
+    scope: { top: "In the CoinGecko top 100 by market cap, with a network of its own (layer 1 or layer 2).", other: "Outside the top 100: chains that already offer post-quantum signatures, or projects built post-quantum." },
+    design: { native: "The current mainnet's default signature has been post-quantum since its genesis block (or the chain has no mainnet yet and is built that way).", upgraded: "Launched with classical signatures; post-quantum signatures were added or switched on later, or are proposed." },
+    netw: { mainnet: "A mainnet is running.", testnet: "Public code or a public testnet, but no mainnet." },
+    prog: "Post-quantum milestones recorded on this site with a primary source: a merged proposal or pull request, a release, or a testnet or mainnet activation. One rule for every chain. Our own checks are not counted.",
+    bg_rank: "Background, not a post-quantum measure: CoinGecko market-cap rank, a rough guide to how much value is at stake.",
+    bg_dot: "Background: is the chain still producing blocks? Details on the chain's page.",
+    view: "A preset from the five questions above the table.",
     reviewed: "When the claims on this page were last checked against their sources.",
   },
   zh: {
@@ -348,8 +470,47 @@ const DEFS = {
     th_algo: "正在使用或已提出的抗量子方案，以及它的标准化程度。",
     th_net: "这条链是否还在出块、代码是否还有人在维护。由每周自动巡查读取。",
     th_latest: "这条链时间线上最近一个带日期的进展。",
+    th_cov: "覆盖了谁：新账户是默认、可选还是只在测试网用上抗量子签名，已有的币能不能转到抗量子保护之下。",
+    th_prog: "这条链时间线上最近一条抗量子进展（事件日期和一句话），以及近 90 天内带原始出处的条数。† 表示项目方自己的说法。",
     th_since: "抗量子签名在这条链现行主网上可用的日期：原生抗量子链取创世区块，其他链取升级生效当天。只有第 4、5 档的链有这个日期，出处见链的详情页。",
     th_checked: "每周自动巡查最近一次读取这条链网络数据的日期。",
+    ss: {
+      std: "ML-DSA（NIST FIPS 204）或 SLH-DSA（NIST FIPS 205）：NIST 于 2024 年 8 月发布的正式标准。",
+      sel: "已被 NIST 选定、但还不是正式标准：Falcon（将成为 FN-DSA，即 FIPS 206），或 SPHINCS+ 这类入选方案的标准发布前版本。",
+      hash: "有状态的哈希签名。XMSS 已由 NIST SP 800-208 和 IETF RFC 8391 标准化；WOTS+ 一次性密钥树用的是同样的构件，但按其做法并没有对应标准。",
+      custom: "项目自己设计的方案或改动版，没有外部标准。本站不评估它的强度等级。",
+      broken: "该链依赖的方案已有公开的破解方法。",
+      none: "没有上线或正式提出的抗量子签名方案。",
+    },
+    level: "NIST 的强度等级，按参数集确定：ML-DSA-44 为 2 级，ML-DSA-65 为 3 级，ML-DSA-87 为 5 级，Falcon-512 为 1 级，Falcon-1024 为 5 级，SLH-DSA-128s 为 1 级。项目自研方案不评估。",
+    hybrid: "抗量子签名和传统签名（如 Ed25519、secp256k1）一起使用，两者都要验证通过。",
+    cov: {
+      default: "主网上新账户默认使用抗量子签名，或每笔转账都必须使用（第 5 档）。",
+      optin: "主网上持币人可以自行选用抗量子保护，默认仍是传统签名（第 4 档）。",
+      testnet: "只在该链官方的公开测试网上可用（第 3 档）。",
+      none: "主网和官方测试网上，持币人都还不能用抗量子签名（第 0 至 2 档）。",
+    },
+    mig: {
+      native: "现行主网从创世区块起就用抗量子签名，没有传统密钥下的币需要迁移。",
+      available: "今天在主网上，持币人可以把已有的币转到抗量子保护之下（新密钥、新账户类型或新地址）。",
+      testnet: "把已有的币迁过去的办法只在公开测试网上可用。",
+      planned: "官方提案或路线图写了已有的币怎么迁移，但还没上线。",
+      none: "没有公开的办法把已有的币转到抗量子保护之下。",
+      unknown: "原始出处和官方说法都不足以判断。",
+    },
+    audit: {
+      audited: "独立机构审计过该链使用的抗量子签名代码，或加入它的那次升级。",
+      partial: "只审计或形式化验证过它依赖的库，或审计只覆盖旧版本、部分代码。",
+      none_found: "代码库、项目官网和主要审计机构公开的报告列表里都没有找到审计。",
+      unknown: "无法判断。",
+    },
+    scope: { top: "CoinGecko 市值前 100 中，有自己网络（L1 或 L2）的币。", other: "市值前 100 以外：已经提供抗量子签名的链，或按抗量子设计的项目。" },
+    design: { native: "现行主网从创世区块起默认就用抗量子签名（还没有主网的，则是按这种方式设计的）。", upgraded: "上线时用传统签名，抗量子签名是后来加入、启用或提议的。" },
+    netw: { mainnet: "主网在运行。", testnet: "有公开代码或公开测试网，但还没有主网。" },
+    prog: "本站收录的、带原始出处的抗量子进展：提案或拉取请求合并、版本发布、测试网或主网启用。所有链用同一条规则；本站自己的核查记录不计。",
+    bg_rank: "背景信息，不是抗量子指标：CoinGecko 市值排名，大致说明有多少价值面临风险。",
+    bg_dot: "背景信息：这条链是否还在出块。详情见链的页面。",
+    view: "表格上方五个问题之一的预设筛选。",
     reviewed: "本页说法最近一次对照出处核对的日期。",
   },
 };
@@ -420,52 +581,72 @@ function chrome(view) {
 
 /* ---------- home ---------- */
 const GROUP_ORDER = { top: 0, optin: 1, native: 2, early: 3 };
-const GROUPS = ["all", "top", "optin", "native", "early"];
 const NETS = ["ok", "quiet", "stalled", "unknown"];
 const FAMS = ["mldsa", "falcon", "slhdsa", "hash", "other", "none"];
-const SORTS = ["default", "stage_d", "stage_a", "since", "latest", "name"];
-const DEFAULT = { group: "all", stage: null, net: "all", fam: "all", q: "", sort: "default" };
+const STATUSES = ["std", "sel", "hash", "custom", "broken", "none"];
+const COVS = ["default", "optin", "testnet", "none"];
+const MIGS = ["native", "available", "testnet", "planned", "none", "unknown"];
+const AUDITS = ["audited", "partial", "none_found", "unknown"];
+const VIEWS = ["use", "close", "move", "quiet", "broken", "custom", "claim"];
+const SORTS = ["default", "stage_d", "stage_a", "prog", "n90", "since", "name"];
+/* every filter: its values, the label of each value, and the test a chain must pass */
+const F = {
+  scope: { vals: ["top", "other"], lab: (v) => L("scope")[v], def: (v) => DF.scope[v], test: (c, v) => c.scope === v },
+  stage: { vals: [0, 1, 2, 3, 4, 5], lab: (v) => stageTitle(v), def: (v) => DF.stage[v], test: (c, v) => c.stage === v },
+  design: { vals: ["native", "upgraded"], lab: (v) => L("design")[v], def: (v) => DF.design[v], test: (c, v) => c.design === v },
+  ss: { vals: STATUSES, lab: (v) => L("ss")[v], def: (v) => DF.ss[v], test: (c, v) => c.status === v },
+  cov: { vals: COVS, lab: (v) => L("cov")[v], def: (v) => DF.cov[v], test: (c, v) => c.cov === v },
+  fam: { vals: FAMS, lab: (v) => L("fam")[v], def: () => DF.f_fam, test: (c, v) => c.fam.includes(v) },
+  mig: { vals: MIGS, lab: (v) => L("mig_s")[v], def: (v) => DF.mig[v], test: (c, v) => !!c.mig && c.mig.value === v },
+  audit: { vals: AUDITS, lab: (v) => L("audit")[v], def: (v) => DF.audit[v], test: (c, v) => c.audit === v },
+  netw: { vals: ["mainnet", "testnet"], lab: (v) => L("netw")[v], def: (v) => DF.netw[v], test: (c, v) => c.netw === v },
+  net: { vals: NETS, lab: (v) => L("st_" + v), def: (v) => DF["st_" + v], test: (c, v) => c.net.status === v },
+  view: { vals: VIEWS, lab: (v) => L("view")[v], def: () => DF.view, test: (c, v) => VIEW[v](c) },
+};
+const VIEW = {
+  use: (c) => c.stage >= 4, close: (c) => c.stage === 3, move: (c) => c.prog.n90 > 0,
+  quiet: (c) => c.rank != null && c.stage <= 1 && !c.prog.y1,
+  broken: (c) => c.chips.includes("broken"), custom: (c) => c.status === "custom", claim: (c) => c.claim,
+};
+const MAIN_F = ["scope", "stage", "design", "ss", "cov"], MORE_F = ["fam", "mig", "audit", "netw", "net"];
+const KEYS = [...MAIN_F, ...MORE_F, "view"];
+const DEFAULT = Object.assign(Object.fromEntries(KEYS.map((k) => [k, null])), { q: "", sort: "default" });
+const state = Object.assign({}, DEFAULT);
 const defaultOrder = (a, b) => GROUP_ORDER[a.group] - GROUP_ORDER[b.group] || (a.rank || 999) - (b.rank || 999) || b.stage - a.stage || a.name.localeCompare(b.name);
-const inGroup = (c, g) => g === "all" || (g === "top" ? c.rank != null : g === "optin" ? c.kind === "upgrading" && c.stage === 4 : c.group === g);
 /* search text: names, ticker, algorithm and labels, plus the older names of each family (Dilithium, SPHINCS+, FN-DSA) */
 const FAM_WORDS = { mldsa: "ml-dsa dilithium", falcon: "falcon fn-dsa", slhdsa: "slh-dsa sphincs", hash: "hash xmss wots winternitz", other: "", none: "" };
 const hay = (c) => c._hay || (c._hay = [c.name, c.zh_name, c.ticker, c.algo.en, c.algo.zh, ...c.chips.map((k) => `${D.chips[k].en} ${D.chips[k].zh}`), ...c.fam.map((f) => FAM_WORDS[f])].join(" ").toLowerCase());
-/* every filter is one test; a chain is listed when it passes all of them */
-const TEST = {
-  group: (c, v) => inGroup(c, v),
-  stage: (c, v) => v == null || c.stage === v,
-  net: (c, v) => v === "all" || c.net.status === v,
-  fam: (c, v) => v === "all" || c.fam.includes(v),
-  q: (c, v) => !v.trim() || hay(c).includes(v.trim().toLowerCase()),
-};
-const matches = (c, over) => Object.keys(TEST).every((k) => TEST[k](c, over && k in over ? over[k] : state[k]));
+const passes = (c, k, v) => k === "q" ? (!v.trim() || hay(c).includes(v.trim().toLowerCase())) : (v == null || F[k].test(c, v));
+const matches = (c, over) => [...KEYS, "q"].every((k) => passes(c, k, over && k in over ? over[k] : state[k]));
 const countWith = (k, v) => D.chains.filter((c) => matches(c, { [k]: v })).length;
-const isDefault = () => Object.keys(TEST).every((k) => (k === "q" ? !state.q.trim() : state[k] === DEFAULT[k]));
+const isDefault = () => KEYS.every((k) => state[k] == null) && !state.q.trim();
+const progKey = (c) => (c.prog.latest ? sortKey(c.prog.latest.date) : "0000");
 function filtered() {
   const rows = D.chains.filter((c) => matches(c));
   const s = state.sort;
-  if (s === "default") rows.sort(defaultOrder);
+  if (s === "default") rows.sort(state.view === "move" ? (a, b) => progKey(b).localeCompare(progKey(a)) || defaultOrder(a, b) : defaultOrder);
   else if (s === "stage_d") rows.sort((a, b) => b.stage - a.stage || defaultOrder(a, b));
   else if (s === "stage_a") rows.sort((a, b) => a.stage - b.stage || defaultOrder(a, b));
-  else if (s === "latest") rows.sort((a, b) => sortKey(b.latest.date).localeCompare(sortKey(a.latest.date)) || defaultOrder(a, b));
+  else if (s === "prog") rows.sort((a, b) => progKey(b).localeCompare(progKey(a)) || defaultOrder(a, b));
+  else if (s === "n90") rows.sort((a, b) => b.prog.n90 - a.prog.n90 || progKey(b).localeCompare(progKey(a)) || defaultOrder(a, b));
   else if (s === "name") rows.sort((a, b) => name(a).localeCompare(name(b)));
   else if (s === "since") rows.sort((a, b) => (a.since ? 0 : a.stage >= 4 ? 1 : 2) - (b.since ? 0 : b.stage >= 4 ? 1 : 2) || (a.since && b.since ? a.since.date.localeCompare(b.since.date) : 0) || defaultOrder(a, b));
   return rows;
 }
-/* the view in the address bar: #chains?group=top&stage=4 opens the table with those filters */
+/* the view in the address bar: #chains?scope=top&stage=4 opens the table with those filters */
 function stateQS() {
   const p = new URLSearchParams();
-  for (const k of Object.keys(DEFAULT)) { const v = k === "q" ? state.q.trim() : state[k]; if (v !== DEFAULT[k] && v !== "") p.set(k, String(v)); }
+  for (const k of KEYS) if (state[k] != null) p.set(k, String(state[k]));
+  if (state.q.trim()) p.set("q", state.q.trim());
+  if (state.sort !== "default") p.set("sort", state.sort);
   return p.toString();
 }
 function readHash() {
   Object.assign(state, DEFAULT);
   if (!location.hash.startsWith("#chains?")) return false;
   const p = new URLSearchParams(location.hash.slice(8));
-  if (GROUPS.includes(p.get("group"))) state.group = p.get("group");
-  if (/^[0-5]$/.test(p.get("stage") || "")) state.stage = +p.get("stage");
-  if (NETS.includes(p.get("net"))) state.net = p.get("net");
-  if (FAMS.includes(p.get("fam"))) state.fam = p.get("fam");
+  if (p.get("group") === "top") state.scope = "top"; /* links made before the scope filter */
+  for (const k of KEYS) { const raw = p.get(k); if (raw == null) continue; const v = k === "stage" ? +raw : raw; if (F[k].vals.includes(v)) state[k] = v; }
   if (p.get("q")) state.q = p.get("q").slice(0, 80);
   if (SORTS.includes(p.get("sort"))) state.sort = p.get("sort");
   return true;
@@ -475,32 +656,45 @@ function writeHash() {
   if (qs) history.replaceState(null, "", "#chains?" + qs);
   else if (location.hash.startsWith("#chains?")) history.replaceState(null, "", "#chains");
 }
-function netCell(c) {
+const dagger = (g) => g === "official" ? `<span class="dg" aria-label="${esc(L("grades").official)}">†</span>` : "";
+/* background: a small status dot beside the name; its tooltip says what it counts */
+function dotHTML(c) {
   const n = c.net, b = n.block, code = n.code;
-  const parts = [b.ok ? L("blocks_short")(b.age) : (b.url ? L("no_block") : L("no_probe"))];
-  if (code) parts.push(code.c90 == null ? (code.repo ? "" : L("no_repo")) : L("commits")(code.c90));
-  return `<div class="net"><span class="l1"><span class="dot ${n.status}" aria-hidden="true"></span>${statusTerm(n.status)}</span><span class="l2">${parts.filter(Boolean).map(esc).join(" · ")}</span></div>`;
+  const parts = [L("st_" + n.status), b.ok ? L("blocks_short")(b.age) : (b.url ? L("no_block") : L("no_probe"))];
+  if (code && code.c90 != null) parts.push(L("commits2")(code.c90));
+  return `<span class="sdot ${n.status}" tabindex="0" role="img" aria-label="${esc(parts.join(" · "))}" data-tip="${esc(parts.join(" · ") + " — " + DF.bg_dot)}"></span>`;
 }
+const ssChip = (st) => termRef(`<span class="chip ss ${st}">${esc(L("ss")[st])}</span>`, "ss." + st, L("ss")[st], "plain");
+const levelText = (lv, open) => lv == null ? "" : termRef(esc(L("level")(lv, open)), "level", L("k_level"));
 function sinceCell(c) {
   if (c.stage < 4) return `<span class="na">—</span>`;
   const ml = `<span class="ml">${esc(L("th_since"))}</span>`;
   if (!c.since) return `${ml}<span class="na">${esc(L("since_na"))}</span>`;
-  return `${ml}<span class="sd mono">${esc(fmtDate(c.since.date))}</span><span class="sb">${esc(L("since_basis")[c.since.basis])}</span>`;
+  return `${ml}<span class="sd mono">${esc(fmtDate(c.since.date))}${dagger(c.since.grade)}</span><span class="sb">${esc(L("since_basis")[c.since.basis])}</span>`;
+}
+function covCell(c) {
+  const m = c.mig ? `<span class="mg">${termRef(esc(L("mig")[c.mig.value]), "mig." + c.mig.value, L("mig_label"))}</span>` : "";
+  return `<div class="cov"><span class="cv ${c.cov}">${termRef(esc(L("cov")[c.cov]), "cov." + c.cov, L("cov_label"))}</span>${m}</div>`;
+}
+function progCell(c) {
+  const p = c.prog, l = p.latest;
+  const n = `<span class="n9${p.n90 ? " on" : ""}">${esc(L("prog_n90")(p.n90))}</span>`;
+  if (!l) return `<div class="latest"><span class="x na">${esc(L("prog_none"))}</span>${n}</div>`;
+  const x = T(l);
+  return `<div class="latest"><span class="d">${esc(fmtDate(l.date))}${dagger(l.grade)}</span><span class="x">${esc(x)}</span><button type="button" class="more" hidden aria-expanded="false">${esc(L("more"))}</button>${n}</div>`;
 }
 /* on a phone the list shows the first rows as cards, then a "show all" button (desktop and no-JS pages list everything) */
 const FIRST = 12;
 let expanded = PRE;
 function rowHTML(c, later) {
-  const sub = [esc(c.ticker), c.rank ? esc(L("rank")(c.rank)) : "", kindTerm(c)].filter(Boolean).join(" · ");
-  const latestD = c.latest.date ? (c.latest.checked ? `${L("checked_tag")} ${fmtDate(c.latest.date)}` : fmtDate(c.latest.date)) : "—";
-  const x = T(c.latest);
+  const sub = [esc(c.ticker), c.rank ? termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap")) : ""].filter(Boolean).join(" · ");
   return `<tr class="row${later ? " later" : ""}" data-id="${c.id}">
-    <td class="c-chain"><div class="chain"><a class="nm" href="${chainURL(c.id)}">${esc(name(c))}</a><span class="sub">${sub}</span></div></td>
+    <td class="c-chain"><div class="chain"><span class="nmr"><a class="nm" href="${chainURL(c.id)}">${esc(name(c))}</a>${dotHTML(c)}</span><span class="sub">${sub}</span></div></td>
     <td class="c-stage">${stageCell(c.stage)}</td>
-    <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span>${chips(c.chips)}</div></td>
-    <td class="c-net">${netCell(c)}</td>
+    <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span><span class="chips">${ssChip(c.status)}${c.hybrid ? termRef(`<span class="chip">${esc(L("hybrid"))}</span>`, "hybrid", L("hybrid"), "plain") : ""}${c.chips.includes("broken") ? termRef(`<span class="chip bad">${esc(T(D.chips.broken))}</span>`, "chips.broken", T(D.chips.broken), "plain") : ""}</span>${c.level != null ? `<span class="lvl">${levelText(c.level, c.level_open)}</span>` : ""}</div></td>
+    <td class="c-cov">${covCell(c)}</td>
     <td class="c-since${c.stage >= 4 ? "" : " none"}">${sinceCell(c)}</td>
-    <td class="c-latest"><div class="latest"><span class="d">${esc(latestD)}</span><span class="x">${esc(x || "—")}</span>${x ? `<button type="button" class="more" hidden aria-expanded="false">${esc(L("more"))}</button>` : ""}</div></td>
+    <td class="c-latest">${progCell(c)}</td>
     <td class="c-go">${ICON_GO}</td></tr>`;
 }
 function tableBody() {
@@ -514,45 +708,55 @@ function tableBody() {
   if (!rows.length) html = `<tr class="none"><td colspan="7" class="empty"><div class="ei"><b>${esc(L("empty_h"))}</b><span>${esc(L("empty_p"))}</span><button type="button" class="btn" data-clear>${esc(L("clear_filters"))}</button></div></td></tr>`;
   return { html, count: L("shown")(rows.length, D.chains.length), hidden: expanded ? 0 : Math.max(0, rows.length - FIRST) };
 }
-/* filter rows: group, stage, network status, algorithm family; each button shows how many chains it would list */
-const LAB = { group: "group_label", stage: "stage_label", net: "net_label", fam: "fam_label", q: "search_label" };
-const fLabel = (k, v) => k === "group" ? L("f_" + v) : k === "stage" ? stageTitle(v) : k === "net" ? L("st_" + v) : k === "fam" ? L("fam")[v] : `“${v}”`;
+/* filter rows; each button shows how many chains it would list, and its definition on hover */
+const LAB = { scope: "scope_label", stage: "stage_label", design: "design_label", ss: "ss_label", cov: "cov_label", fam: "fam_label", mig: "mig_label", audit: "audit_label", netw: "netw_label", net: "net_label2", view: "view_label", q: "search_label" };
+const fLabel = (k, v) => k === "q" ? `“${v}”` : F[k].lab(v);
 function fbtn(k, v, inner, tip) {
   const n = countWith(k, v), on = state[k] === v;
   return `<button type="button" class="fbtn" data-k="${k}" data-v="${v == null ? "" : v}" aria-pressed="${on}"${!on && !n ? " disabled" : ""}${tip ? ` data-tip="${esc(tip)}"` : ""}>${inner}<span class="n">${n}</span></button>`;
 }
+function frow(k) {
+  const f = F[k];
+  const inner = (v) => k === "stage" ? `<i class="sw s${v}" aria-hidden="true"></i>${v}<span class="sr"> · ${esc(stageName(v))}</span>`
+    : k === "net" ? `<span class="dot ${v}" aria-hidden="true"></span>${esc(f.lab(v))}` : k === "ss" ? `<i class="ssw ${v}" aria-hidden="true"></i>${esc(f.lab(v))}` : esc(f.lab(v));
+  /* the row's "?" lists every option with its definition (the same text as the method page) */
+  const all = k === "fam" ? DF.f_fam : f.vals.map((v) => `${f.lab(v)}${CO()}${f.def(v)}`).join("\n");
+  return `<div class="frow" role="group" aria-label="${esc(L(LAB[k]))}"><span class="lab">${esc(L(LAB[k]))}${info(all, L(LAB[k]))}</span><div class="fopts">${fbtn(k, null, esc(L("any")))}${f.vals.map((v) => fbtn(k, v, inner(v), k === "fam" ? "" : `${f.lab(v)}${CO()}${f.def(v)}`)).join("")}</div></div>`;
+}
 function filtersHTML() {
-  const rows = [
-    ["group", GROUPS.slice(1), L("f_all"), DF.f_group, (v) => esc(L("f_" + v))],
-    ["stage", [0, 1, 2, 3, 4, 5], L("any"), DF.th_stage, (v) => `<i class="sw s${v}" aria-hidden="true"></i>${v}<span class="sr"> · ${esc(stageName(v))}</span>`],
-    ["net", NETS, L("any"), DF.th_net, (v) => `<span class="dot ${v}" aria-hidden="true"></span>${esc(L("st_" + v))}`],
-    ["fam", FAMS, L("any"), DF.f_fam, (v) => esc(L("fam")[v])],
-  ];
-  return `<div class="filters">${rows.map(([k, vals, any, def, inner]) =>
-    `<div class="frow" role="group" aria-label="${esc(L(LAB[k]))}"><span class="lab">${esc(L(LAB[k]))}${info(def, L(LAB[k]))}</span><div class="fopts">${fbtn(k, DEFAULT[k], esc(any))}${vals.map((v) => fbtn(k, v, inner(v), k === "stage" ? stageTitle(v) : "")).join("")}</div></div>`).join("")}</div>`;
+  const nMore = MORE_F.filter((k) => state[k] != null).length;
+  return `<div class="filters">${MAIN_F.map(frow).join("")}
+    <details class="moref"${nMore ? " open" : ""}><summary><span>${esc(L("more_filters"))}</span><span class="mb">${esc(L("more_bg"))}</span>${ICON_CHEV}</summary><div class="filters">${MORE_F.map(frow).join("")}</div></details></div>`;
 }
 function activeHTML() {
   const chips = [];
-  for (const k of ["group", "stage", "net", "fam", "q"]) {
+  for (const k of [...KEYS, "q"]) {
     const v = k === "q" ? state.q.trim() : state[k];
-    if (v === DEFAULT[k]) continue;
+    if (v == null || v === "") continue;
     const text = `${L(LAB[k])}${CO()}${fLabel(k, v)}`;
     chips.push(`<button type="button" class="fchip" data-unset="${k}" aria-label="${esc(L("remove")(text))}">${esc(text)}<span class="x" aria-hidden="true">×</span></button>`);
   }
   return chips.length ? chips.join("") + `<button type="button" class="link-btn" data-clear>${esc(L("clear_all"))}</button>` : "";
 }
-/* the legend for both colour scales, next to the table */
+/* the legend beside the table: stage colours, standard-status colours and the dagger */
 function keybarHTML() {
   const st = [0, 1, 2, 3, 4, 5].map((s) => `<span class="ks s${s}"><i aria-hidden="true"></i><b>${s}</b>${stageTerm(s)}</span>`).join("");
-  const nt = NETS.map((s) => `<span class="ks"><span class="dot ${s}" aria-hidden="true"></span>${statusTerm(s)}</span>`).join("");
-  return `<div class="keybar" role="note" aria-label="${esc(L("keys_h"))}"><div class="kg"><span class="kt">${esc(L("stage_label"))}</span>${st}</div><div class="kg"><span class="kt">${esc(L("net_label"))}</span>${nt}</div></div>`;
+  const ss = STATUSES.filter((v) => D.chains.some((c) => c.status === v)).map((v) => `<span class="ks"><i class="ssw ${v}" aria-hidden="true"></i>${termRef(esc(L("ss")[v]), "ss." + v, L("ss")[v])}</span>`).join("");
+  return `<div class="keybar" role="note" aria-label="${esc(L("keys_h"))}"><div class="kg"><span class="kt">${esc(L("stage_label"))}</span>${st}</div><div class="kg"><span class="kt">${esc(L("ss_label"))}</span>${ss}</div><div class="kg"><span class="kd">${esc(L("dagger_key"))}</span></div></div>`;
+}
+/* the sort control: a design-system dropdown (listbox), operable by mouse, touch and keyboard */
+const ICON_CHEV = `<svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+function sortHTML() {
+  return `<div class="dd" id="sortdd"><span class="sr" id="sort-l">${esc(L("sort_by"))}</span>
+    <button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="sort-l sort-v"><span class="dd-k" aria-hidden="true">${esc(L("sort_by"))}</span><span class="dd-v" id="sort-v">${esc(L("sort_" + state.sort))}</span>${ICON_CHEV}</button>
+    <ul class="dd-list" role="listbox" tabindex="-1" aria-labelledby="sort-l" hidden>${SORTS.map((k) => `<li role="option" id="so-${k}" data-v="${k}" aria-selected="${state.sort === k}">${esc(L("sort_" + k))}</li>`).join("")}</ul></div>`;
 }
 /* charts: every one has a title, a one-line subtitle, the source and date, and its numbers as a CSV */
 const ICON_DL = `<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const ICON_LINK = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 9.5l3-3M7 4.5l1-1a2.8 2.8 0 014 4l-1 1M9 11.5l-1 1a2.8 2.8 0 01-4-4l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 function fig(o) {
-  return `<figure class="fig" id="${o.id}" aria-labelledby="${o.id}-h"><div class="fig-h"><${o.h} id="${o.id}-h">${esc(o.title)}</${o.h}><p>${o.sub}</p></div><div class="fig-b">${o.body}</div>
-    <figcaption class="fig-f"><span>${esc(L("fig_src"))}${CO()}${o.src} · ${esc(L("fig_checked")(fmtDate(D.checked)))}</span><span class="acts"><a href="${D.base}data/${o.csv}" download>${ICON_DL}${esc(L("fig_dl"))}</a></span></figcaption></figure>`;
+  return `<figure class="fig" id="${o.id}" aria-labelledby="${o.id}-h"><div class="fig-h"><div class="fig-t"><${o.h} id="${o.id}-h">${esc(o.title)}</${o.h}>${o.tools || ""}</div><p>${o.sub}</p></div><div class="fig-b">${o.body}</div>
+    <figcaption class="fig-f"><span>${esc(L("fig_src"))}${CO()}${o.src} · ${esc(L("fig_checked")(fmtDate(D.checked)))}</span>${o.csv ? `<span class="acts"><a href="${D.base}data/${o.csv}" download>${ICON_DL}${esc(L("fig_dl"))}</a></span>` : ""}</figcaption></figure>`;
 }
 const SRC_CHAINS = `<a href="${D.base}data/chains.json">chains.json</a>`;
 const anchorBtn = (id, title) => `<button type="button" class="anchor" data-anchor="${id}" aria-label="${esc(L("copy_link"))}${CO()}${esc(title)}">${ICON_LINK}</button>`;
@@ -560,61 +764,92 @@ const secH = (id, eyebrow, title, lede) => `<div class="sec-h">${eyebrow ? `<spa
 /* chart 1: the largest chains as one bar stacked by stage */
 function stackHTML(top) {
   const by = [0, 1, 2, 3, 4, 5].map((s) => top.filter((c) => c.stage === s).length);
-  const segs = by.map((n, s) => n ? `<button type="button" class="s${s}" style="--n:${n}" data-stage="${s}" aria-pressed="${state.stage === s}" aria-label="${esc(L("ov_seg")(s, stageName(s), n))}" data-tip="${esc(L("ov_seg")(s, stageName(s), n))}"><i aria-hidden="true">${s}</i><span>${n}</span></button>` : "").join("");
+  const segs = by.map((n, s) => n ? `<button type="button" class="s${s}" style="--n:${n}" data-stage="${s}" aria-pressed="${state.stage === s && state.scope === "top"}" aria-label="${esc(L("ov_seg")(s, stageName(s), n))}" data-tip="${esc(L("ov_seg")(s, stageName(s), n))}"><i aria-hidden="true">${s}</i><span>${n}</span></button>` : "").join("");
   const legend = by.map((n, s) => `<button type="button" class="s${s}" data-stage="${s}"${n ? "" : " disabled"} aria-label="${esc(L("ov_seg")(s, stageName(s), n))}"><span class="k"><i></i>${s} · ${esc(stageName(s))}</span><span class="c">${n}</span></button>`).join("");
-  /* which of them sit at stage 2 or higher, named; the rest are counted */
   const who = `<div class="who">${[5, 4, 3, 2].filter((s) => by[s]).map((s) => `<div class="who-r">${badge(s)}<span>${top.filter((c) => c.stage === s).sort((a, b) => a.rank - b.rank).map((c) => `<a href="${chainURL(c.id)}">${esc(name(c))}</a>`).join(lang === "zh" ? "、" : ", ")}</span></div>`).join("")}
     <p class="note-small">${esc(L("ov_rest")(by[0] + by[1]))}</p></div>`;
   return fig({ id: "fig-stages", h: "h2", title: L("ov_title")(top.length), sub: esc(L("ov_note")(top.length, fmtDate(D.mcap_date))), csv: "chart-top-stages.csv",
     src: `${SRC_CHAINS} · ${esc(L("mcap_src")(fmtDate(D.mcap_date)))}`,
-    body: `<div class="stack" role="group" aria-label="${esc(L("ov_title")(top.length))}">${segs}</div><div class="legend6">${legend}</div>${who}` });
+    body: `<div class="stack grow-x" role="group" aria-label="${esc(L("ov_title")(top.length))}">${segs}</div><div class="legend6">${legend}</div>${who}` });
 }
-/* chart 2: running total of chains with post-quantum signatures live on mainnet, one dot per chain on its date */
+const msUTC = (d) => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +(d.slice(8, 10) || 15));
+/* chart 2: a step line of chains with post-quantum signatures live on mainnet, one step per chain, from the earliest */
 function cumHTML() {
   const live = D.chains.filter((c) => c.stage >= 4);
   const pts = live.filter((c) => c.since).sort((a, b) => a.since.date.localeCompare(b.since.date) || a.name.localeCompare(b.name));
   const N = pts.length;
   if (!N) return "";
-  const ms = (d) => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10));
   const y0 = +pts[0].since.date.slice(0, 4), yc = +D.checked.slice(0, 4);
-  const T0 = Date.UTC(y0, 0, 1), T1 = ms(D.checked);
-  const X = (d) => (((ms(d) - T0) / (T1 - T0)) * 100).toFixed(2);
+  const T0 = Date.UTC(y0, 0, 1), T1 = msUTC(D.checked);
+  const X = (d) => (((msUTC(d) - T0) / (T1 - T0)) * 100).toFixed(2);
   const top = Math.ceil((N + 1) / 4) * 4;
   const Y = (i) => ((i / top) * 100).toFixed(2);
   let line = "M0,100";
   pts.forEach((c, i) => { line += `H${X(c.since.date)}V${(100 - Y(i + 1)).toFixed(2)}`; });
   line += "H100";
   const dots = pts.map((c, i) => {
-    const tip = `${L("since_tip")(name(c), fmtDate(c.since.date), L("since_basis")[c.since.basis])} · ${stageTitle(c.stage)}`;
+    const tip = `${L("since_tip")(name(c), fmtDate(c.since.date), L("since_basis")[c.since.basis])} · ${stageTitle(c.stage)}${c.since.grade === "official" ? " · " + L("since_dagger") : ""}`;
     return `<a class="pt s${c.stage}" href="${chainURL(c.id)}" style="left:${X(c.since.date)}%;bottom:${Y(i + 1)}%" aria-label="${esc(tip)}" data-tip="${esc(tip)}"></a>`;
   }).join("");
+  /* steps before the current year are named on the chart; neighbours less than 6% apart share one label */
+  const early = pts.map((c, i) => ({ c, i })).filter(({ c }) => +c.since.date.slice(0, 4) < yc);
+  const labels = [];
+  for (const p of early) { const last = labels[labels.length - 1]; if (last && X(p.c.since.date) - X(last.at.c.since.date) < 6) { last.names.push(name(p.c)); last.at = p; } else labels.push({ names: [name(p.c)], at: p }); }
+  const lab = labels.map(({ names, at }) => `<span class="sl" style="left:${X(at.c.since.date)}%;bottom:${Y(at.i + 1)}%" aria-hidden="true">${esc(names.join(lang === "zh" ? "、" : ", "))}</span>`).join("");
   const xl = []; for (let y = y0; y <= yc; y++) xl.push(`<span${(yc - y) % 2 ? ' class="d2"' : ""} style="left:${X(`${y}-01-01`)}%">${y}</span>`);
   const yl = [0, top / 2, top].map((v) => `<span style="bottom:${Y(v)}%">${v}</span>`).join("");
   const k = pts.filter((c) => +c.since.date.slice(0, 4) === yc).length;
   const keys = [5, 4].map((s) => `<span class="s${s}"><i class="round"></i>${esc(stageTitle(s))}</span>`).join("");
   return fig({ id: "fig-since", h: "h2", title: L("cum_title"), sub: esc(L("cum_note")(N, k, yc, live.length - N)), csv: "chart-mainnet-since.csv", src: SRC_CHAINS,
-    body: `<div class="cum"><div class="yax" aria-hidden="true">${yl}</div><div class="cw"><div class="plot">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="${line}V100H0Z"/><path d="${line}"/></svg>${dots}
+    body: `<div class="cum"><div class="yax" aria-hidden="true">${yl}</div><div class="cw"><div class="plot grow-y">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="${line}V100H0Z"/><path d="${line}"/></svg>${lab}${dots}
       <span class="ann" style="right:0;bottom:calc(${Y(N)}% + 12px)"><b>${N}</b> ${esc(L("cum_total"))}</span></div>
       <div class="xax" aria-hidden="true">${xl.join("")}</div></div></div><div class="keys">${keys}</div>` });
 }
-/* milestones per month, stacked by type (columns are plain HTML so the labels stay readable at any width) */
-function monthsHTML() {
-  const rows = D.months.months;
-  const max = Math.max(1, ...rows.map((r) => r[1] + r[2] + r[3]));
+/* milestones over time: range and granularity change together (all by year, 2 years by month, 3 months by week) */
+let mrange = "y2";
+const isoDay = (t) => new Date(t).toISOString().slice(0, 10);
+function bins(range) {
+  const ev = D.events, c = D.checked;
+  const cy = +c.slice(0, 4), cm = +c.slice(5, 7);
+  const out = [];
+  if (range === "all") {
+    const y0 = ev.length ? +ev[0][0].slice(0, 4) : cy;
+    for (let y = y0; y <= cy; y++) out.push({ k: String(y), lab: String(y), test: (d) => +d.slice(0, 4) === y });
+  } else if (range === "y2") {
+    for (let i = 23; i >= 0; i--) { const t = new Date(Date.UTC(cy, cm - 1 - i, 1)); const ym = isoDay(t).slice(0, 7); out.push({ k: ym, lab: lang === "zh" ? ym.replace("-", ".") : `${MON[t.getUTCMonth()]} ${t.getUTCFullYear()}`, test: (d) => d.slice(0, 7) === ym }); }
+  } else {
+    const now = msUTC(c), dow = (new Date(now).getUTCDay() + 6) % 7, mon = now - dow * 864e5;
+    for (let i = 12; i >= 0; i--) { const a = mon - i * 7 * 864e5, b = a + 7 * 864e5; const lab = fmtDate(isoDay(a)); out.push({ k: isoDay(a), lab: lang === "zh" ? isoDay(a).slice(5) : lab.replace(/ \d{4}$/, ""), full: L("wk")(lab), test: (d) => d.length === 10 && msUTC(d) >= a && msUTC(d) < b }); }
+  }
+  return out.map((bn) => { const a = [0, 0, 0]; for (const [d, t] of ev) if (bn.test(d)) a[t]++; return Object.assign(bn, { a }); });
+}
+function monthsBody(range) {
+  const rows = bins(range);
+  const max = Math.max(1, ...rows.map((r) => r.a[0] + r.a[1] + r.a[2]));
   const top = max <= 4 ? 4 : Math.ceil(max / 2) * 2;
-  const lab = (ym) => { const [y, m] = ym.split("-"); return lang === "zh" ? `${y}.${m}` : `${MON[+m - 1]} ${y}`; };
   const cols = rows.map((r) => {
-    const a = [r[1], r[2], r[3]];
-    const segs = a.map((n, j) => n ? `<i class="s${j + 2}" style="height:${(n / top) * 100}%"></i>` : "").join("");
-    const tip = L("mo_tip")(lab(r[0]), a);
+    const segs = r.a.map((n, j) => n ? `<i class="s${j + 2}" style="height:${(n / top) * 100}%"></i>` : "").join("");
+    const tip = L("mo_tip")(r.full || r.lab, r.a);
     return `<div class="mc" tabindex="0" data-tip="${esc(tip)}" aria-label="${esc(tip)}" role="img">${segs}</div>`;
   }).join("");
-  const xl = rows.map((r, i) => { const k = rows.length - 1 - i; return k % 3 ? "<span></span>" : `<span${k % 6 ? ' class="d3"' : ""}>${esc(lab(r[0]))}</span>`; }).join("");
+  const every = rows.length > 16 ? 3 : rows.length > 8 ? 2 : 1;
+  const xl = rows.map((r, i) => { const k = rows.length - 1 - i; return k % every ? "<span></span>" : `<span${every > 1 && k % (every * 2) ? ' class="d3"' : ""}>${esc(r.lab)}</span>`; }).join("");
+  /* the years before the 2-year window are sparse: say how sparse, so the window does not hide them silently */
+  let note = "";
+  if (range !== "all") {
+    const y = +rows[0].k.slice(0, 4) + (range === "y2" && rows[0].k.slice(5) !== "01" ? 1 : 0);
+    const before = {}; for (const [d] of D.events) { const yy = +d.slice(0, 4); if (yy < y) before[yy] = (before[yy] || 0) + 1; }
+    const m = Math.max(0, ...Object.values(before));
+    if (m) note = `<p class="fine-note mo-note">${esc(L("mo_sparse")(y, m))}</p>`;
+  }
+  return `<div class="mchart"><div class="yax" aria-hidden="true"><span>${top}</span><span>${top / 2}</span><span>0</span></div><div class="mplot"><div class="mbars grow-y" style="--cols:${rows.length}">${cols}</div><div class="mx" aria-hidden="true" style="--cols:${rows.length}">${xl}</div></div></div>${note}`;
+}
+function monthsHTML() {
+  const seg = `<div class="seg" role="group" aria-label="${esc(L("rng_label"))}">${["all", "y2", "m3"].map((r) => `<button type="button" data-rng="${r}" aria-pressed="${mrange === r}">${esc(L("rng")[r])}</button>`).join("")}</div>`;
   const keys = L("mo_types").map((t, j) => `<span class="s${j + 2}"><i></i>${esc(t)}</span>`).join("");
-  return fig({ id: "fig-months", h: "h3", title: L("mo_title"), sub: esc(L("mo_note")(D.chain_count, lab(rows[0][0]), lab(rows[rows.length - 1][0]))), csv: "chart-milestones-month.csv", src: SRC_CHAINS,
-    body: `<div class="mchart"><div class="yax" aria-hidden="true"><span>${top}</span><span>${top / 2}</span><span>0</span></div><div class="mplot"><div class="mbars">${cols}</div><div class="mx" aria-hidden="true">${xl}</div></div></div>
-    <div class="keys">${keys}</div><p class="fine-note" style="margin-top:var(--sp-3)">${esc(L("mo_fine"))}</p>` });
+  return fig({ id: "fig-months", h: "h3", title: L("mo_title2"), sub: esc(L("mo_note2")(D.chain_count)), csv: "chart-milestones-month.csv", src: SRC_CHAINS, tools: seg,
+    body: `<div id="mbody">${monthsBody(mrange)}</div><div class="keys">${keys}</div><p class="fine-note" style="margin-top:var(--sp-3)">${esc(L("mo_fine"))}</p>` });
 }
 /* the same dates by year, with every chain named; empty years collapse into one span */
 function sinceHTML() {
@@ -644,19 +879,57 @@ function sinceHTML() {
   return fig({ id: "fig-years", h: "h3", title: L("since_title"), sub: esc(L("since_note")(live.length, undated.length)), csv: "chart-mainnet-since.csv", src: SRC_CHAINS,
     body: `<div class="rail">${cols}</div>${und}` });
 }
-/* layer 2: one card per group, with its largest chains; "show all" filters the table */
-function groupsHTML() {
-  const cards = GROUPS.slice(1).map((g) => {
-    const cs = D.chains.filter((c) => inGroup(c, g)).sort(defaultOrder);
-    const by = [0, 1, 2, 3, 4, 5].map((s) => [s, cs.filter((c) => c.stage === s).length]).filter(([, n]) => n);
-    const shown = cs.slice(0, 4);
-    return `<div class="card gcard${state.group === g ? " on" : ""}" data-g="${g}">
-      <h3 class="gname">${term(esc(L("g_" + g)), DF["g_" + g], L("g_" + g))}</h3><span class="gnum">${cs.length}</span>
-      <span class="mini" aria-hidden="true">${by.map(([s, n]) => `<i class="s${s}" style="--n:${n}"></i>`).join("")}</span><span class="gmix">${esc(L("grp_mix")(by))}</span>
-      <div class="gtop">${shown.map((c) => `<a href="${chainURL(c.id)}"><b class="gs s${c.stage}" aria-label="${esc(stageTitle(c.stage))}">${c.stage}</b>${esc(name(c))}</a>`).join("")}${cs.length > shown.length ? `<span class="more-n">${esc(L("grp_more")(cs.length - shown.length))}</span>` : ""}</div>
-      <button type="button" class="btn gcta" data-g="${g}">${esc(L("grp_cta")(cs.length))} <span aria-hidden="true">→</span></button></div>`;
+/* how long post-quantum signatures have run on each mainnet: one bar per chain, from its start date to the check date */
+function runHTML() {
+  const dated = D.chains.filter((c) => c.stage >= 4 && c.since).sort((a, b) => a.since.date.localeCompare(b.since.date) || a.name.localeCompare(b.name));
+  if (!dated.length) return "";
+  const y0 = +dated[0].since.date.slice(0, 4), yc = +D.checked.slice(0, 4);
+  const T0 = Date.UTC(y0, 0, 1), T1 = msUTC(D.checked);
+  const X = (d) => (((msUTC(d) - T0) / (T1 - T0)) * 100).toFixed(2);
+  /* a bar that starts within 14% of the left edge carries its length inside, so it never runs into the name */
+  const rows = dated.map((c) => {
+    const days = Math.round((T1 - msUTC(c.since.date)) / 864e5);
+    const tip = `${L("since_tip")(name(c), fmtDate(c.since.date), L("since_basis")[c.since.basis])} · ${L("run_len")(days)}${c.since.grade === "official" ? " · " + L("since_dagger") : ""}`;
+    return `<a class="rr" href="${chainURL(c.id)}" data-tip="${esc(tip)}" aria-label="${esc(tip)}"><span class="rn">${esc(name(c))}${dagger(c.since.grade)}</span><span class="rt"><i class="rb s${c.stage}" style="left:${X(c.since.date)}%"></i><span class="rl${+X(c.since.date) < 14 ? " in" : ""}" style="left:${X(c.since.date)}%">${esc(L("run_len")(days))}</span></span></a>`;
   }).join("");
-  return `<section id="groups" class="layer" aria-labelledby="groups-h">${secH("groups", "", L("grp_h"), esc(L("grp_note")))}<div class="groups">${cards}</div></section>`;
+  const xl = []; for (let y = y0; y <= yc; y++) xl.push(`<span${(yc - y) % 2 ? ' class="d2"' : ""} style="left:${X(`${y}-01-01`)}%">${y}</span>`);
+  return fig({ id: "fig-run", h: "h3", title: L("run_title"), sub: esc(L("run_note")(fmtDate(D.checked))), csv: "chart-mainnet-since.csv", src: SRC_CHAINS,
+    body: `<div class="run grow-x">${rows}<div class="rr ax" aria-hidden="true"><span></span><span class="rt xax">${xl.join("")}</span></div></div>` });
+}
+/* algorithm map: chains at stage 2 or higher by signature family, coloured by standard status */
+function algoMapHTML() {
+  const cs = D.chains.filter((c) => c.stage >= 2);
+  const rows = FAMS.map((f) => {
+    const inF = cs.filter((c) => c.fam.includes(f)).sort((a, b) => b.stage - a.stage || (a.rank || 999) - (b.rank || 999) || a.name.localeCompare(b.name));
+    if (!inF.length) return "";
+    return `<div class="am-r"><span class="am-f">${esc(L("fam")[f])}<b>${inF.length}</b></span><span class="am-c">${inF.map((c) => { const tip = `${name(c)} · ${stageTitle(c.stage)} · ${L("ss")[c.status]}`; return `<a class="am ${c.status}" href="${chainURL(c.id)}" data-tip="${esc(tip)}" aria-label="${esc(tip)}"><b>${c.stage}</b>${esc(name(c))}</a>`; }).join("")}</span></div>`;
+  }).join("");
+  const keys = STATUSES.filter((v) => cs.some((c) => c.status === v)).map((v) => `<span><i class="ssw ${v}"></i>${termRef(esc(L("ss")[v]), "ss." + v, L("ss")[v])}</span>`).join("");
+  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(L("am_note")(cs.length)), src: SRC_CHAINS,
+    body: `<div class="amap">${rows}</div><div class="keys">${keys}</div>` });
+}
+/* layer 2: the five questions a holder asks; each card states its rule and opens the matching table */
+function q5HTML() {
+  const by = (v) => D.chains.filter(VIEW[v]);
+  const show = (v, n) => `<button type="button" class="btn qcta" data-view="${v}"${n ? "" : " disabled"}>${esc(L("q_show")(n))} <span aria-hidden="true">→</span></button>`;
+  const link = (c, extra) => `<li><a href="${chainURL(c.id)}"><b class="gs s${c.stage}" aria-label="${esc(stageTitle(c.stage))}">${c.stage}</b>${esc(name(c))}</a>${extra || ""}</li>`;
+  const more = (n, max) => n > max ? `<li class="more-n">${esc(L("q_more")(n - max))}</li>` : "";
+  const card = (cls, h, rule, n, body, v) => `<div class="card qcard ${cls}"><div class="qh"><h3>${esc(h)}</h3><span class="qn">${n}</span></div><p class="qr">${esc(rule)}</p>${body}${v ? show(v, n) : ""}</div>`;
+  const use = by("use").sort((a, b) => b.stage - a.stage || (a.since ? a.since.date : "9").localeCompare(b.since ? b.since.date : "9"));
+  const tag = (c) => `<span class="qt ${c.stage === 5 ? "def" : "opt"}">${esc(L(c.stage === 5 ? "t_default" : "t_optin"))}</span><span class="qt ss ${c.status}">${esc(L("ss")[c.status])}</span>${c.audit ? `<span class="qt au ${c.audit}">${esc(L("audit")[c.audit])}</span>` : ""}`;
+  const close = by("close").sort((a, b) => (a.rank || 999) - (b.rank || 999));
+  const move = by("move").sort((a, b) => progKey(b).localeCompare(progKey(a)) || defaultOrder(a, b));
+  const quiet = by("quiet").sort((a, b) => a.rank - b.rank);
+  const risk = ["broken", "custom", "claim"].map((v) => { const n = by(v).length; return `<li><button type="button" class="qrisk" data-view="${v}"${n ? "" : " disabled"}><b>${n}</b><span>${esc(L("risk")[v])}</span><span class="go-a" aria-hidden="true">→</span></button></li>`; }).join("");
+  const M = 8;
+  const cards = [
+    card("q-use", L("q_use_h"), L("q_use_r"), use.length, `<ul class="ql tags">${use.slice(0, M).map((c) => link(c, tag(c))).join("")}${more(use.length, M)}</ul>`, "use"),
+    card("q-close", L("q_close_h"), L("q_close_r"), close.length, close.length ? `<ul class="ql">${close.map((c) => link(c, c.next ? `<span class="qx">${esc(T(c.next))}</span>` : "")).join("")}</ul>` : `<p class="qr">${esc(L("q_none"))}</p>`, "close"),
+    card("q-move", L("q_move_h"), L("q_move_r")(fmtDate(D.checked)), move.length, `<ul class="ql">${move.slice(0, M).map((c) => link(c, `<span class="qd mono">${esc(fmtDate(c.prog.latest.date))}</span>`)).join("")}${more(move.length, M)}</ul>`, "move"),
+    card("q-quiet", L("q_quiet_h"), L("q_quiet_r")(fmtDate(D.checked)), quiet.length, `<p class="qnames">${quiet.slice(0, 12).map((c) => `<a href="${chainURL(c.id)}">${esc(name(c))}</a>`).join(lang === "zh" ? "、" : ", ")}${quiet.length > 12 ? (lang === "zh" ? "等" : " …") : ""}</p>`, "quiet"),
+    card("q-risk", L("q_risk_h"), L("q_risk_r"), "", `<ul class="qrl">${risk}</ul>`, ""),
+  ].join("");
+  return `<section id="questions" class="layer" aria-labelledby="questions-h">${secH("questions", "", L("q5_h"), esc(L("q5_note")))}<div class="q5">${cards}</div></section>`;
 }
 /* a short version of the method for the home page; the full text has its own page */
 function howShort() {
@@ -681,21 +954,23 @@ function contactHTML() {
   return `<section id="contact" class="layer" aria-labelledby="contact-h">${secH("contact", L("nav_contact"), L("ct_h"), `${esc(L("ct_lede"))} <b>${esc(L("ct_reply"))}</b>`)}
     <div class="contacts">${L("ct").map(([h, sub], i) => `<a class="card ct" href="${urls[i]}" target="_blank" rel="noopener"><b>${esc(h)} <span aria-hidden="true">↗</span></b><span>${esc(sub)}</span></a>`).join("")}</div></section>`;
 }
+const reduced = () => !PRE && matchMedia("(prefers-reduced-motion: reduce)").matches;
 function renderTable(write) {
   const t = tableBody();
-  document.getElementById("tbody").innerHTML = t.html;
+  const tb = document.getElementById("tbody");
+  tb.innerHTML = t.html;
+  if (!reduced()) { tb.classList.remove("enter"); void tb.offsetWidth; tb.classList.add("enter"); }
   document.getElementById("count").textContent = t.count;
   const more = document.getElementById("showall"); more.hidden = !t.hidden; more.firstElementChild.textContent = L("show_all")(t.hidden + FIRST);
   document.getElementById("active").innerHTML = activeHTML();
   document.querySelectorAll(".fbtn[data-k]").forEach((b) => {
-    const k = b.dataset.k, v = k === "stage" ? (b.dataset.v === "" ? null : +b.dataset.v) : b.dataset.v;
+    const k = b.dataset.k, v = b.dataset.v === "" ? null : (k === "stage" ? +b.dataset.v : b.dataset.v);
     const n = countWith(k, v), on = state[k] === v;
     b.querySelector(".n").textContent = n;
     b.setAttribute("aria-pressed", String(on));
     b.disabled = !on && n === 0;
   });
-  document.querySelectorAll(".stack button").forEach((b) => b.setAttribute("aria-pressed", String(state.stage === +b.dataset.stage && state.group === "top")));
-  document.querySelectorAll(".gcard").forEach((c) => c.classList.toggle("on", state.group === c.dataset.g));
+  document.querySelectorAll(".stack button").forEach((b) => b.setAttribute("aria-pressed", String(state.stage === +b.dataset.stage && state.scope === "top")));
   syncSort(); clampCheck();
   if (write) writeHash();
 }
@@ -706,10 +981,45 @@ function syncSort() {
     if (on) b.setAttribute("aria-sort", asc ? "ascending" : "descending"); else b.removeAttribute("aria-sort");
     b.querySelector(".ar").textContent = on && asc ? "↑" : "↓";
   });
+  const v = document.getElementById("sort-v"); if (v) v.textContent = L("sort_" + state.sort);
+  document.querySelectorAll("#sortdd [role=option]").forEach((o) => o.setAttribute("aria-selected", String(o.dataset.v === state.sort)));
 }
 /* show "More" only where the two-line clamp actually hides text */
 function clampCheck() {
   document.querySelectorAll(".latest").forEach((l) => { const x = l.querySelector(".x"), b = l.querySelector(".more"); if (b) b.hidden = !(x.scrollHeight > x.clientHeight + 2 || l.classList.contains("open")); });
+}
+/* the sort dropdown's behaviour: click or Enter opens; arrows, Home and End move; Enter or click picks; Escape closes */
+function initSort(onPick) {
+  const dd = document.getElementById("sortdd"), btn = dd.querySelector(".dd-btn"), list = dd.querySelector(".dd-list");
+  const opts = () => [...list.querySelectorAll("[role=option]")];
+  let act = 0;
+  const mark = (i) => { act = (i + opts().length) % opts().length; opts().forEach((o, j) => o.classList.toggle("act", j === act)); list.setAttribute("aria-activedescendant", opts()[act].id); opts()[act].scrollIntoView({ block: "nearest" }); };
+  const open = () => { list.hidden = false; btn.setAttribute("aria-expanded", "true"); dd.classList.add("open"); mark(SORTS.indexOf(state.sort)); list.focus(); };
+  const close = (refocus) => { list.hidden = true; btn.setAttribute("aria-expanded", "false"); dd.classList.remove("open"); if (refocus) btn.focus(); };
+  const pick = (i) => { onPick(opts()[i].dataset.v); close(true); };
+  btn.addEventListener("click", () => (list.hidden ? open() : close(false)));
+  btn.addEventListener("keydown", (e) => { if (["ArrowDown", "ArrowUp"].includes(e.key)) { e.preventDefault(); open(); } });
+  list.addEventListener("keydown", (e) => {
+    const k = e.key;
+    if (k === "ArrowDown") mark(act + 1); else if (k === "ArrowUp") mark(act - 1); else if (k === "Home") mark(0); else if (k === "End") mark(opts().length - 1);
+    else if (k === "Enter" || k === " ") pick(act); else if (k === "Escape" || k === "Tab") { close(k === "Escape"); if (k === "Tab") return; } else return;
+    e.preventDefault();
+  });
+  list.addEventListener("click", (e) => { const o = e.target.closest("[role=option]"); if (o) pick(opts().indexOf(o)); });
+  list.addEventListener("mousemove", (e) => { const o = e.target.closest("[role=option]"); if (o) mark(opts().indexOf(o)); });
+  document.addEventListener("click", (e) => { if (!list.hidden && !dd.contains(e.target)) close(false); });
+}
+/* motion: KPI numbers count up once, charts grow the first time they scroll into view (transform and opacity only) */
+function initMotion() {
+  if (reduced() || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("anim");
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0, rootMargin: "0px 0px -15% 0px" });
+  document.querySelectorAll(".fig, .qcard").forEach((f) => io.observe(f));
+  document.querySelectorAll(".kpi .v [data-n]").forEach((el) => {
+    const n = +el.dataset.n, t0 = performance.now();
+    const step = (t) => { const k = Math.min(1, (t - t0) / 600); el.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+    el.textContent = "0"; requestAnimationFrame(step);
+  });
 }
 function renderHome() {
   chrome("home");
@@ -718,40 +1028,42 @@ function renderHome() {
   const usable = top.filter((c) => c.stage >= 4).sort((a, b) => a.rank - b.rank);
   const t3 = top.filter((c) => c.stage === 3).sort((a, b) => a.rank - b.rank).map(name);
   const native = D.chains.filter((c) => c.group === "native").length;
-  const opts = SORTS.map((k) => `<option value="${k}" ${state.sort === k ? "selected" : ""}>${esc(L("sort_" + k))}</option>`).join("");
   const th = (k, sortKeyName, cls) => sortKeyName
     ? `<th scope="col" class="${cls}"><button type="button" data-sort="${sortKeyName}">${esc(L(k))}<span class="ar" aria-hidden="true">↓</span></button>${info(DF[k], L(k))}</th>`
     : `<th scope="col" class="${cls}">${term(esc(L(k)), DF[k], L(k))}</th>`;
   const tb = tableBody();
+  const num = (n) => `<span data-n="${n}">${n}</span>`;
   const kpi = (v, l, cls) => `<div class="card kpi${cls ? " " + cls : ""}"><span class="v">${v}</span><span class="l">${esc(l)}</span></div>`;
   const verdict = L("verdict")(usable.length, top.length).replace(/<em>(.*?)<\/em>/, (m, t) => `<em>${term(t, DF.pqsig, t)}</em>`);
   put("app", `<div class="page">
     <section id="overview" class="layer" aria-label="${esc(L("nav_overview"))}">
       <div class="hero"><span class="eyebrow">${esc(L("eyebrow")(fmtDate(D.checked)))}</span><h1>${verdict}</h1><p>${esc(L("verdict_sub")(list(usable.map(name)), list(t3)))}</p></div>
       <div class="kpis">
-        ${kpi(`${usable.length}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(String(native), L("kpi_native"))}${kpi(String(D.chains.length), L("kpi_all"))}${kpi(`<span class="date">${esc(fmtDate(D.checked))}</span>`, L("kpi_date"))}
+        ${kpi(`${num(usable.length)}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(num(native), L("kpi_native"))}${kpi(num(D.chains.length), L("kpi_all"))}${kpi(`<span class="date">${esc(fmtDate(D.checked))}</span>`, L("kpi_date"))}
       </div>
       <div class="duo">${stackHTML(top)}${cumHTML()}</div>
+      ${algoMapHTML()}
     </section>
-    ${groupsHTML()}
+    ${q5HTML()}
     <section id="chains" class="layer" aria-labelledby="chains-h">
       ${secH("chains", L("nav_chains"), L("list_h")(D.chains.length), "")}
       <div class="toolbar">
         <label class="search">${ICON_SEARCH}<span class="sr">${esc(L("search"))}</span><input id="q" type="search" autocomplete="off" placeholder="${esc(L("search"))}" value="${esc(state.q)}"><kbd aria-hidden="true">/</kbd></label>
-        <label class="sortl"><span class="sr">${esc(L("sort_label"))}</span><select id="sort">${opts}</select></label>
+        ${sortHTML()}
       </div>
       ${filtersHTML()}
       <div class="list-h"><div class="active-f" id="active">${activeHTML()}</div><span class="count" id="count" role="status">${esc(tb.count)}</span></div>
       ${keybarHTML()}
       <div class="tablebox"><table class="ledger">
-        <thead><tr>${th("th_chain", "name", "c-chain")}${th("th_stage", "stage", "c-stage")}${th("th_algo", null, "c-algo")}${th("th_net", null, "c-net")}${th("th_since", "since", "c-since")}${th("th_latest", "latest", "c-latest")}<th scope="col" class="c-go"><span class="sr">${esc(L("th_open"))}</span></th></tr></thead>
+        <thead><tr>${th("th_chain", "name", "c-chain")}${th("th_stage", "stage", "c-stage")}${th("th_algo", null, "c-algo")}${th("th_cov", null, "c-cov")}${th("th_since", "since", "c-since")}${th("th_prog", "prog", "c-latest")}<th scope="col" class="c-go"><span class="sr">${esc(L("th_open"))}</span></th></tr></thead>
         <tbody id="tbody">${tb.html}</tbody></table></div>
       <div class="showall" id="showall"${tb.hidden ? "" : " hidden"}><button type="button" class="btn">${esc(L("show_all")(tb.hidden + FIRST))}</button></div>
     </section>
     <section id="timeline" class="layer" aria-labelledby="timeline-h">
       ${secH("timeline", L("nav_timeline"), L("tl_h"), "")}
-      ${sinceHTML()}
+      ${runHTML()}
       ${monthsHTML()}
+      ${sinceHTML()}
       ${D.has_changes ? `<a class="btn more-link" href="${href("changes/")}">${esc(L("tl_changes"))} <span aria-hidden="true">→</span></a>` : ""}
     </section>
     ${howShort()}
@@ -760,32 +1072,33 @@ function renderHome() {
   if (PRE) return;
   syncSort(); clampCheck();
   const app = document.getElementById("app");
-  const q = document.getElementById("q"), sort = document.getElementById("sort");
-  const smooth = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
-  const toTable = () => document.getElementById("chains").scrollIntoView({ behavior: smooth(), block: "start" });
+  const q = document.getElementById("q");
+  const toTable = () => document.getElementById("chains").scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
   const reset = (keep) => { Object.assign(state, DEFAULT, { sort: state.sort }, keep || {}); q.value = state.q; };
+  initSort((v) => { state.sort = v; renderTable(true); });
   q.addEventListener("input", () => { state.q = q.value; renderTable(true); });
-  sort.addEventListener("change", () => { state.sort = sort.value; renderTable(true); });
   app.addEventListener("click", (e) => {
     const f = e.target.closest(".fbtn[data-k]");
-    if (f) { const k = f.dataset.k, v = k === "stage" ? (f.dataset.v === "" ? null : +f.dataset.v) : f.dataset.v; state[k] = state[k] === v ? DEFAULT[k] : v; renderTable(true); return; }
+    if (f) { const k = f.dataset.k, v = f.dataset.v === "" ? null : (k === "stage" ? +f.dataset.v : f.dataset.v); state[k] = state[k] === v ? null : v; renderTable(true); return; }
     const u = e.target.closest("[data-unset]");
-    if (u) { state[u.dataset.unset] = DEFAULT[u.dataset.unset]; if (u.dataset.unset === "q") q.value = ""; renderTable(true); q.focus(); return; }
+    if (u) { const k = u.dataset.unset; if (k === "q") { state.q = ""; q.value = ""; } else state[k] = null; renderTable(true); q.focus(); return; }
     if (e.target.closest("[data-clear]")) { reset(); renderTable(true); q.focus(); return; }
-    const g = e.target.closest(".gcta");
-    if (g) { reset({ group: g.dataset.g }); renderTable(true); toTable(); return; }
+    const vw = e.target.closest("[data-view]");
+    if (vw) { reset({ view: vw.dataset.view }); renderTable(true); toTable(); return; }
+    const rg = e.target.closest("[data-rng]");
+    if (rg) { mrange = rg.dataset.rng; document.getElementById("mbody").innerHTML = monthsBody(mrange); document.querySelectorAll("[data-rng]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.rng === mrange))); return; }
     const s = e.target.closest(".stack button, .legend6 button");
-    if (s) { const v = +s.dataset.stage; const on = state.stage === v && state.group === "top"; reset(on ? {} : { group: "top", stage: v }); renderTable(true); if (!on) toTable(); return; }
+    if (s) { const v = +s.dataset.stage; const on = state.stage === v && state.scope === "top"; reset(on ? {} : { scope: "top", stage: v }); renderTable(true); if (!on) toTable(); return; }
     const a = e.target.closest(".anchor");
     if (a) { const id = a.dataset.anchor, qs = id === "chains" ? stateQS() : ""; const hash = "#" + id + (qs ? "?" + qs : ""); history.replaceState(null, "", hash); TIP.copy(a, location.origin + location.pathname + hash, L("link_copied")); return; }
     if (e.target.closest("#showall button")) { expanded = true; const n = document.querySelectorAll(".ledger tr.row").length; renderTable(false); const r = document.querySelectorAll(".ledger tr.row")[Math.min(FIRST, n - 1)]; if (r) r.querySelector("a").focus(); return; }
     const sb = e.target.closest(".ledger th button");
-    if (sb) { const k = sb.dataset.sort; state.sort = k === "stage" ? (state.sort === "stage_d" ? "stage_a" : "stage_d") : (state.sort === k ? "default" : k); sort.value = state.sort; renderTable(true); }
+    if (sb) { const k = sb.dataset.sort; state.sort = k === "stage" ? (state.sort === "stage_d" ? "stage_a" : "stage_d") : (state.sort === k ? "default" : k); renderTable(true); }
   });
   document.getElementById("tbody").addEventListener("click", (e) => {
     const more = e.target.closest(".more");
     if (more) { const l = more.closest(".latest"); const open = l.classList.toggle("open"); more.textContent = L(open ? "less" : "more"); more.setAttribute("aria-expanded", String(open)); return; }
-    if (e.target.closest("a, button, .term")) return;
+    if (e.target.closest("a, button, .term, .sdot")) return;
     const tr = e.target.closest("tr.row");
     if (tr && !window.getSelection().toString()) location.href = chainURL(tr.dataset.id);
   });
@@ -793,13 +1106,18 @@ function renderHome() {
   copy.addEventListener("click", () => TIP.copy(copy, document.getElementById("cite-text").textContent, L("copied"), document.getElementById("cite-text")));
   /* "/" jumps to the search box */
   document.addEventListener("keydown", (e) => {
-    if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey || (e.target.closest && e.target.closest("input, textarea, select, [contenteditable]"))) return;
+    if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey || (e.target.closest && e.target.closest("input, textarea, select, [contenteditable], [role=listbox]"))) return;
     e.preventDefault(); q.focus(); q.select();
   });
-  window.addEventListener("hashchange", () => { if (readHash()) { q.value = state.q; sort.value = state.sort; renderTable(false); toTable(); } });
+  /* a link with filters ("#chains?…") applies them; any other in-page link, "#chains" included, keeps the
+     reader's filters, and the address is put back so it still describes the table */
+  window.addEventListener("hashchange", () => {
+    if (location.hash.startsWith("#chains?")) { readHash(); q.value = state.q; renderTable(false); toTable(); }
+    else if (location.hash === "#chains" && stateQS()) writeHash();
+  });
   /* the header link for the section in view is marked; the language switch keeps the section and the filters */
   const links = document.querySelectorAll("a[data-sec]");
-  const secs = ["overview", "groups", "chains", "timeline", "how", "data", "contact"].map((id) => document.getElementById(id));
+  const secs = ["overview", "questions", "chains", "timeline", "how", "data", "contact"].map((id) => document.getElementById(id));
   let spy = 0, cur = "overview";
   const mark = () => {
     spy = 0;
@@ -807,13 +1125,14 @@ function renderHome() {
     let el = atEnd ? secs[secs.length - 1] : secs[0];
     if (!atEnd) for (const s of secs) if (s.getBoundingClientRect().top < window.innerHeight * 0.35) el = s;
     cur = el.id;
-    const id = cur === "groups" ? "overview" : cur;
+    const id = cur === "questions" ? "overview" : cur;
     links.forEach((a) => { if (a.dataset.sec === id) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current"); });
   };
   window.addEventListener("scroll", () => { if (!spy) spy = requestAnimationFrame(mark); }, { passive: true });
   mark();
   TIP.pos = () => { const qs = stateQS(); return qs ? "#chains?" + qs : (cur !== "overview" && window.scrollY > 40 ? "#" + cur : location.hash); };
   if (fromHash) { renderTable(false); document.getElementById("chains").scrollIntoView(); mark(); }
+  initMotion();
   let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(clampCheck, 150); });
   if (document.fonts) document.fonts.ready.then(clampCheck);
 }
@@ -833,15 +1152,18 @@ function blockHTML(c) {
 }
 function codeHTML(code) {
   const rel = code.rel ? `${esc(code.rel)}${code.rel_pre ? esc(L("pre")) : ""}${code.rel_tag ? esc(L("tag_only")) : ""} · ${esc(fmtDate(code.rel_date))}` : esc(T(code.note) || "—");
+  const tip = code.repo ? L("commits_tip")(code.repo, code.branch, (code.q || "").slice(0, 16).replace("T", " ") + " UTC") : "";
+  const c90 = code.c90 == null ? "" : term(esc(L("commits2")(code.c90)), tip, L("e_code")) + (code.rel && T(code.note) ? PAR(esc(T(code.note))) : "") + "<br>";
   const also = (code.also || []).filter((a) => a.c90 != null).map((a) => `${esc(L("also"))}${CO()}github.com/${esc(a.repo)} · ${esc(L("commits")(a.c90))}`).join("<br>");
-  return `${esc(L("e_release"))}${CO()}${rel}<br>${code.c90 == null ? "" : esc(L("commits")(code.c90)) + (code.rel && T(code.note) ? PAR(esc(T(code.note))) : "") + "<br>"}${also ? also + "<br>" : ""}${code.repo ? `<a href="https://github.com/${esc(code.repo)}" target="_blank" rel="noopener">github.com/${esc(code.repo)} ↗</a>` : ""}`;
+  return `${esc(L("e_release"))}${CO()}${rel}<br>${c90}${also ? also + "<br>" : ""}${code.repo ? `<a href="https://github.com/${esc(code.repo)}" target="_blank" rel="noopener">github.com/${esc(code.repo)} ↗</a>` : ""}`;
 }
+const srcLink = (u, label) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(label || host(u))} ↗</a>` : "";
 function tlItem(m) {
   const grade = m.grade || "primary", ts = TYPE_STAGE[m.type] ?? 0;
-  return `<li class="tl s${ts}"><span class="when">${m.checked ? `<small>${esc(L("checked_tag"))}</small>` : ""}${esc(fmtDate(m.date))}</span><span class="pin" aria-hidden="true"></span>
-    <div class="body"><div class="tags">${term(`<span class="ttag s${ts}">${esc(L("types")[m.type])}</span>`, DF.types[m.type], L("types")[m.type], "plain")}${term(`<span class="grade ${grade}">${esc(L("grades")[grade])}</span>`, DF.grades[grade], L("grades")[grade])}</div>
+  return `<li class="tl s${ts}${grade === "official" ? " off" : ""}"><span class="when">${m.checked ? `<small>${esc(L("checked_tag"))}</small>` : ""}${esc(fmtDate(m.date))}</span><span class="pin" aria-hidden="true"></span>
+    <div class="body"><div class="tags">${term(`<span class="ttag s${ts}">${esc(L("types")[m.type])}</span>`, DF.types[m.type], L("types")[m.type], "plain")}${term(`<span class="grade ${grade}">${grade === "official" ? "† " : ""}${esc(L("grades")[grade])}</span>`, DF.grades[grade], L("grades")[grade])}</div>
     <div class="txt">${esc(T(m))}</div>${m.status ? `<div class="st">${esc(L("status"))}${CO()}${esc(T(m.status))}</div>` : ""}
-    ${m.url ? `<div class="src">${esc(L("source"))}${CO()}<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(host(m.url))} ↗</a></div>` : ""}</div></li>`;
+    ${m.url ? `<div class="src">${esc(L("source"))}${CO()}${srcLink(m.url)}</div>` : ""}</div></li>`;
 }
 function scale6(s) {
   return `<div class="scale6" role="img" aria-label="${esc(stageTitle(s))}">${[0, 1, 2, 3, 4, 5].map((i) =>
@@ -851,50 +1173,70 @@ function sinceLine(c) {
   if (c.stage < 4) return "";
   if (!c.since) return `<p class="since-line na">${esc(L("since_missing"))}</p>`;
   const sv = c.since;
-  return `<p class="since-line"><span class="k">${term(esc(L("d_since")), DF.th_since)}</span><b class="mono">${esc(fmtDate(sv.date))}</b><span class="ev">${esc(T(sv.event))}</span>
-    <span class="src">${esc(sv.grade === "official" ? L("since_own") : L("source"))}${CO()}<a href="${esc(sv.source_url)}" target="_blank" rel="noopener">${esc(host(sv.source_url))} ↗</a></span></p>`;
+  return `<p class="since-line"><span class="k">${term(esc(L("d_since")), DF.th_since)}</span><b class="mono">${esc(fmtDate(sv.date))}${dagger(sv.grade)}</b><span class="ev">${esc(T(sv.event))}</span>
+    <span class="src">${esc(sv.grade === "official" ? L("since_own") : L("source"))}${CO()}${srcLink(sv.source_url)}</span></p>`;
 }
+const kv = (k, v, def) => v ? `<div class="kv"><span class="k">${def ? term(esc(k), def, k) : esc(k)}</span><span class="v">${v}</span></div>` : "";
+const rfield = (x, labels, defs) => x ? `<b>${esc(labels[x.value] || x.value)}</b>${T(x) ? `<br>${esc(T(x))}` : ""}${x.auditor ? `<br><span class="note-small">${esc(x.auditor)}${x.date ? " · " + esc(fmtDate(x.date)) : ""}</span>` : ""}${x.source_url ? `<br><span class="note-small">${esc(L("source"))}${CO()}${srcLink(x.source_url)}${dagger(x.grade)}</span>` : ""}` : "";
+function dsec(id, h, body, note) { return `<section class="dsec" id="${id}" aria-labelledby="${id}-h"><div class="section-h"><h2 id="${id}-h">${esc(h)}</h2>${note ? `<p class="note-small">${esc(note)}</p>` : ""}</div>${body}</section>`; }
 function renderChain() {
   const c = D.chains[0];
   chrome("home");
   const tl = [...c.timeline].sort((a, b) => sortKey(a.date).localeCompare(sortKey(b.date)));
   const four = c.four || { today: c.holder, watch: c.note };
-  const boxes = [["today", "d_today"], ["watch", "d_watch"], ["can", "d_can"], ["next", "d_next"]].filter(([k]) => T(four[k])).map(([k, l]) => `<div class="card"><h3>${esc(L(l))}</h3><p>${esc(T(four[k]))}</p></div>`).join("");
+  const box = (k, l) => T(four[k]) ? `<div class="card"><h3>${esc(L(l))}</h3><p>${esc(T(four[k]))}</p></div>` : "";
   const unv = c.unverified && c.unverified.length ? `<section class="unv"><h3>${esc(L("d_unv"))}</h3><span class="note-small">${esc(L("d_unv_note"))}</span>${c.unverified.map((u) => `<div class="it"><span>${esc(T(u.claim))}</span><span class="why">${esc(T(u.reason))}</span><a href="${esc(u.url)}" target="_blank" rel="noopener" style="font-size:13px">${esc(L("lead"))}${CO()}${esc(host(u.url))} ↗</a></div>`).join("")}</section>` : "";
   const used = [...new Set(tl.map((m) => m.type))];
-  const legend = used.map((t) => `<span class="s${TYPE_STAGE[t] ?? 0}"><i></i>${esc(L("types")[t])}</span>`).join("");
-  const timeline = tl.length ? `<section><div class="section-h"><h2>${esc(L("d_timeline"))}</h2><div class="legend">${legend}</div></div><ol class="timeline">${tl.map(tlItem).join("")}</ol></section>`
-    : `<section><div class="section-h"><h2>${esc(L("d_timeline"))}</h2></div><p style="color:var(--ink-2);margin:0">${esc(L("d_no_tl"))}</p></section>`;
+  const legend = used.map((t) => `<span class="s${TYPE_STAGE[t] ?? 0}"><i></i>${esc(L("types")[t])}</span>`).join("") + (tl.some((m) => m.grade === "official") ? `<span class="off"><i></i>† ${esc(L("grades").official)}</span>` : "");
+  const timeline = tl.length ? `<div class="tlbox"><div class="legend">${legend}</div><ol class="timeline">${tl.map(tlItem).join("")}</ol></div>` : `<p style="color:var(--ink-2);margin:0">${esc(L("d_no_tl"))}</p>`;
   const srcs = c.sources || [];
-  const srcList = srcs.length ? `<section><h2 style="font-size:19px;margin-bottom:10px">${esc(L("e_src"))}</h2><ul class="src">${srcs.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label || host(s.url))}</a>${s.kind ? ` <span style="color:var(--ink-3)">· ${esc(T(s.kind))}</span>` : ""}</li>`).join("")}</ul></section>` : "";
-  const meta = [`<span class="mono">${esc(c.ticker)}</span>`, c.rank ? `<span>${esc(L("rank")(c.rank))}</span>` : "", `<span>${kindTerm(c)}</span>`,
-    `<span>${term(esc(L("d_checked")), DF.th_checked)} <span class="mono">${esc(fmtDate(c.checked) || "—")}</span></span>`].filter(Boolean).join('<span aria-hidden="true">·</span>');
+  const srcList = srcs.length ? `<ul class="src">${srcs.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label || host(s.url))}</a>${s.kind ? ` <span style="color:var(--ink-3)">· ${esc(T(s.kind))}</span>` : ""}</li>`).join("")}</ul>` : "";
+  const ap = c.ap || { params: [] };
+  const sizes = ap.params.filter((p) => p.pk && p.sig).map((p) => esc(L("size_row")(p.name, p.pk, p.sig)) + (p.ref ? `<br><span class="note-small">${esc(L("size_ref")(p.ref))}</span>` : "")).join("<br>");
+  const algo = `<div class="card dcard kvgrid">
+    ${kv(L("d_algo"), `${esc(T(c.algo))}${chips(c.chips)}`, DF.th_algo)}
+    ${kv(L("k_status"), ssChip(c.status), DF.ss[c.status])}
+    ${ap.level != null ? kv(L("k_level"), esc(L("level")(ap.level, ap.open)), DF.level) : ""}
+    ${c.status !== "none" ? kv(L("k_hybrid"), esc(L(c.hybrid ? "yes" : "no")), DF.hybrid) : ""}
+    ${kv(L("k_sizes"), sizes)}
+    ${c.stage >= 3 ? kv(L("k_audit"), c.audit ? rfield(c.audit, L("audit")) : esc(L("audit").unknown), DF.audit[c.audit ? c.audit.value : "unknown"]) : ""}</div>`;
+  const expo = c.expo ? `<b>${esc(c.expo.figure || "")}</b>${T(c.expo) ? `<br>${esc(T(c.expo))}` : ""}<br><span class="note-small">${esc(c.expo.publisher || "")}${c.expo.date ? " · " + esc(fmtDate(c.expo.date)) : ""} · ${srcLink(c.expo.source_url)}</span>` : `<span class="note-small">${esc(L("expo_none"))}</span>`;
+  const cov = `<div class="card dcard kvgrid">
+    ${kv(L("k_new"), `<b>${esc(L("cov")[c.cov])}</b>${T(four.today) ? `<br>${esc(T(four.today))}` : ""}`, DF.cov[c.cov])}
+    ${c.stage >= 2 ? kv(L("k_mig"), c.mig ? rfield(c.mig, L("mig")) : esc(L("mig").unknown), DF.mig[c.mig ? c.mig.value : "unknown"]) : ""}
+    ${kv(L("k_expo"), expo)}
+    ${T(four.can) ? kv(L("d_can"), esc(T(four.can))) : ""}</div>`;
+  const p = c.prog;
+  const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("next", "d_next")}${box("watch", "d_watch")}</div>${timeline}`;
+  const evidence = `${srcList}${unv}<p class="note-small">${esc(L("dagger_key"))}</p>`;
+  const b = c.net;
+  const bg = `<div class="card dcard kvgrid">
+    ${kv(L("d_net"), `<span class="dot ${b.status}" style="margin-right:7px"></span>${statusTerm(b.status)}<br>${blockHTML(c)}`, DF.th_net)}
+    ${b.code ? kv(L("e_code"), codeHTML(b.code)) : ""}
+    ${kv(L("k_mcap"), c.rank ? esc(L("rank")(c.rank)) + `<br><span class="note-small">${esc(L("mcap_src")(fmtDate(D.mcap_date)))}</span>` : "—", DF.bg_rank)}
+    ${c.consensus ? kv(L("e_consensus"), esc(T(c.consensus))) : ""}
+    ${kv(L("d_checked"), `<span class="mono">${esc(fmtDate(c.checked) || "—")}</span>`, DF.th_checked)}</div>`;
+  const meta = [`<span class="mono">${esc(c.ticker)}</span>`, c.rank ? `<span>${termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap"))}</span>` : "", `<span>${termRef(esc(L("design")[c.design]), "design." + c.design, L("design_label"))}</span>`,
+    `<span>${term(esc(L("e_reviewed")), DF.reviewed)} <span class="mono">${esc(c.reviewed)}</span></span>`].filter(Boolean).join('<span aria-hidden="true">·</span>');
+  const toc = [["d-algo", "d_algo_h"], ["d-cov", "d_cov_h"], ["d-prog", "d_prog_h"], ["d-ev", "d_ev_h"], ["d-bg", "d_bg_h"]];
   put("app", `<div class="page">
     <div class="crumb"><a href="${href("")}">← ${esc(L("d_back"))}</a></div>
     <header class="dhead"><h1>${esc(name(c))}${lang === "zh" && c.zh_name ? ` <span class="alt">${esc(c.name)}</span>` : ""}</h1><div class="meta">${meta}</div></header>
-    <section class="card scalebox6" aria-label="${esc(L("d_scale"))}"><div class="cap">${badgeTerm(c.stage)}<span>${esc(L("d_scale"))}</span></div>${scale6(c.stage)}${sinceLine(c)}</section>
-    <section class="card answer s${c.stage}"><span class="eyebrow">${esc(L("q")(name(c)))}</span>
+    <section class="card answer s${c.stage}" aria-label="${esc(L("q")(name(c)))}"><span class="eyebrow">${esc(L("q")(name(c)))}</span>
       <p class="claim">${esc(L("answer")(c.reviewed, name(c), c.stage, stageName(c.stage)))}</p>
       <p class="basis">${esc(T(c.basis))}</p>
-      ${c.basis_src ? `<span class="cite-src">${esc(L("answer_src")(c.stage))}${CO()}<a href="${esc(c.basis_src)}" target="_blank" rel="noopener">${esc(host(c.basis_src))} ↗</a></span>` : ""}</section>
+      ${c.basis_src ? `<span class="cite-src">${esc(L("answer_src")(c.stage))}${CO()}${srcLink(c.basis_src)}${dagger(c.basis_grade)}</span>` : ""}
+      <div class="scalebox6"><div class="cap">${badgeTerm(c.stage)}<span>${esc(L("d_scale"))}</span></div>${scale6(c.stage)}${sinceLine(c)}</div></section>
     ${c.stale_days > 90 ? `<p class="stale" role="note">${esc(L("stale")(c.reviewed, c.stale_days))}</p>` : ""}
-    <div class="dgrid"><div style="display:grid;gap:32px;min-width:0">
-      <section class="four">${boxes}</section>
-      ${timeline}
-      ${unv}
-      ${srcList}
-      <section class="card fix"><p>${esc(L("d_fix"))}</p><a class="btn primary" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("d_fix_btn"))} ↗</a></section>
-    </div>
-    <aside class="side"><section class="card panel"><h3>${esc(L("d_facts"))}</h3>
-      <div class="kv"><span class="k">${term(esc(L("d_stage")), DF.th_stage)}</span><span class="v">${stageCell(c.stage, true)}</span></div>
-      <div class="kv"><span class="k">${term(esc(L("d_algo")), DF.th_algo)}</span><span class="v">${esc(T(c.algo))}</span>${chips(c.chips)}</div>
-      <div class="kv"><span class="k">${term(esc(L("d_net")), DF.th_net)}</span><span class="v"><span class="dot ${c.net.status}" style="margin-right:7px"></span>${statusTerm(c.net.status)}<br>${blockHTML(c)}</span></div>
-      ${c.net.code ? `<div class="kv"><span class="k">${esc(L("e_code"))}</span><span class="v">${codeHTML(c.net.code)}</span></div>` : ""}
-      ${c.stage >= 4 ? `<div class="kv"><span class="k">${term(esc(L("th_since")), DF.th_since)}</span><span class="v">${c.since ? `<span class="mono">${esc(fmtDate(c.since.date))}</span> · ${esc(L("since_basis")[c.since.basis])}` : esc(L("since_na"))}</span></div>` : ""}
-      ${c.consensus ? `<div class="kv"><span class="k">${esc(L("e_consensus"))}</span><span class="v">${esc(T(c.consensus))}</span></div>` : ""}
-      <div class="kv"><span class="k">${term(esc(L("e_reviewed")), DF.reviewed)}</span><span class="v mono">${esc(c.reviewed)}</span></div>
-      <a class="btn" href="${D.data_url}" target="_blank" rel="noopener">${esc(L("gh"))} ↗</a>
-    </section></aside></div></div>`);
+    <nav class="toc dtoc" aria-label="${esc(L("toc"))}">${toc.map(([id, k]) => `<a href="#${id}">${esc(L(k))}</a>`).join("")}</nav>
+    <div class="dmain">
+      ${dsec("d-algo", L("d_algo_h"), algo)}
+      ${dsec("d-cov", L("d_cov_h"), cov)}
+      ${dsec("d-prog", L("d_prog_h"), prog)}
+      ${dsec("d-ev", L("d_ev_h"), evidence)}
+      ${dsec("d-bg", L("d_bg_h"), bg, L("d_bg_note"))}
+      <section class="card fix"><p>${esc(L("d_fix"))}</p><a class="btn primary" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("d_fix_btn"))} ↗</a><a class="btn" href="${D.data_url}" target="_blank" rel="noopener">${esc(L("gh"))} ↗</a></section>
+    </div></div>`);
 }
 
 /* ---------- this week ---------- */
@@ -932,9 +1274,9 @@ const METHOD = {
       "Third-party wallets, vaults and contracts are listed but do not change a chain's stage. One exception: on a chain where every account is a contract and the protocol has no built-in account signature (Starknet), a post-quantum account class declared on mainnet counts, whoever wrote it. The chain's page names the author and whether it is audited.",
       "Plans and target dates are shown and never rated. When only a project's own documents describe a feature, and no code, release or chain data confirms it, the stage is capped at 2.",
     ],
-    groups_h: "The groups", groups_cols: ["Group", "Who is in it"],
+    groups_h: "Filters and what each option means", groups_cols: ["Filter", "Option", "What it means"],
     net_h: "Network status", net_cols: ["Status", "When we show it"],
-    net_rule: "Where blocks come from: each chain's row names the explorer or public RPC we read, and every chain page shows the exact endpoint, the block height and time, and when we read it. The limit is 10 minutes, or six target block times when a chain's target is longer than 100 seconds (for example 60 minutes for Bitcoin's 10-minute blocks). At six target block times, a healthy chain misses the limit by chance about once in 400 checks. Public RPCs can answer from a lagging node, so we read every endpoint two or three times and keep the highest block. A chain is marked stopped only when an independent explorer also shows an old block; with one source, it is marked could not check. Commits are counted on the default branch of the main node repository over the 90 days before the check.",
+    net_rule: "Where blocks come from: each chain's row names the explorer or public RPC we read, and every chain page shows the exact endpoint, the block height and time, and when we read it. The limit is 10 minutes, or six target block times when a chain's target is longer than 100 seconds (for example 60 minutes for Bitcoin's 10-minute blocks). At six target block times, a healthy chain misses the limit by chance about once in 400 checks. Public RPCs can answer from a lagging node, so we read every endpoint two or three times and keep the highest block. A chain is marked stopped only when an independent explorer also shows an old block; with one source, it is marked could not check. Commits are counted on the default branch of the main node repository over the 90 days before the check, whatever they change, leaving out commits by bot accounts (logins ending in [bot]). Blocks and commits are background: they show whether a chain is alive and maintained, not how far its post-quantum work has come.",
     algo_h: "Algorithm labels", algo_cols: ["Label", "What it means"],
     grades_h: "Where evidence comes from",
     cite_rule: "The opening sentence on each chain page links one source. A chain with an entry in the project list (projects.json) links its pinned code or another pinned primary source. Other chains link the primary source (or, if there is none, the official claim) that supports the stage and best matches the stated reason. Node endpoints are not linked there because the network panel shows them. Every source is listed further down the page.",
@@ -943,20 +1285,28 @@ const METHOD = {
     charts: [
       "Every chart on the home page is drawn from the same data as the table, when the site is built. Nothing in them is typed by hand.",
       "Stages by the largest blockchains: the coins in the CoinGecko top 100 that have their own network, counted by stage.",
-      "Post-quantum mainnet launches over time: a running total of the chains at stage 4 or 5 that have a sourced date (see the next item), one dot per chain on that day, coloured by stage. The vertical axis counts chains; the horizontal axis runs from the start of the first year with a dated chain to the check date.",
-      "Milestones per month: dated proposal, testnet and mainnet milestones from primary sources and official claims, over the last 24 months. Entries that record our own checks (marked \"checked\" on the chain pages) are left out, as are entries dated only to a quarter.",
-      "Post-quantum signatures on mainnet, by year: every chain at stage 4 or 5, placed by the day post-quantum signatures became usable on its current mainnet. For a post-quantum native chain that is the genesis block of the current mainnet; for the others, the day the upgrade or account type went live. Each date carries its own source, shown on the chain's page; chains without a sourced date are listed apart, not guessed.",
+      "Post-quantum mainnet launches over time: a step line of the chains at stage 4 or 5 with a sourced start date, one step per chain on that day, from the start of the first year with a dated chain to the check date; the axis is not broken. Steps before the current year are named; the rest show their name on hover.",
+      "Algorithm map: every chain at stage 2 or higher, in the row of each signature family it uses or proposes, coloured by its standard status.",
+      "How long post-quantum signatures have run on mainnet: one bar per dated chain, from its start date to the check date, on the same time axis.",
+      "Milestones over time: dated proposal, testnet and mainnet milestones (primary sources and official claims), counted by year for all years, by month for the last two years, or by week for the last three months. Empty periods keep their place. Entries that record our own checks, and entries dated only to a quarter, are left out.",
+      "Post-quantum signatures on mainnet, by year: every chain at stage 4 or 5, placed by the day post-quantum signatures became usable on its current mainnet: the genesis block for a post-quantum native chain, the day the upgrade or account type went live for the others. Chains without a sourced date are listed apart, not guessed.",
     ],
-    dims_h: "What we collect", dims_cols: ["Field", "Where it comes from", "How often", "Script"],
+    dims_h: "Every metric: what it counts, where it comes from, how often, and its limits", dims_cols: ["Metric", "What it counts", "Where it comes from", "How often", "Limits", "Script or file"],
     dims: [
-      ["Stage, milestones, summary", "Official proposal repositories, client releases, chain parameters from official endpoints; websites count only as plans", "Watched proposals weekly; every row re-checked monthly; a person changes the stage", ["scripts/patrol.py", "data/chains.json"]],
-      ["Algorithm and standard label", "NIST FIPS 204 and 205, NIST's FN-DSA selection, IETF RFC 8391, and the chain's own specification", "Monthly", ["data/chains.json"]],
-      ["Latest block: height, time, age", "The explorer or public RPC listed for each chain", "Weekly", ["scripts/patrol.py"]],
-      ["Latest release", "GitHub releases of the main node repository (its newest tag if there are no releases)", "Weekly", ["scripts/patrol.py"]],
-      ["Commits in 90 days, last commit", "GitHub commits on the default branch of the main node repository", "Weekly", ["scripts/patrol.py"]],
-      ["Post-quantum on mainnet since", "Genesis block or activation record: block explorer, pinned code or release notes; the project's own announcement only when nothing more direct exists, and marked as such", "Set once; re-checked with the row monthly", ["data/chains.json"]],
-      ["Market-cap rank", "CoinGecko, top 100 by market cap", "Monthly", ["scripts/rank.py"]],
-      ["This week's changes", "What differs from the previous patrol, reviewed by a person", "Weekly", ["scripts/patrol.py"]],
+      ["Stage (0 to 5)", "How far a holder can use post-quantum signatures today", "Official proposal repositories, client releases, chain parameters; websites count only as plans", "Watched proposals weekly; every row monthly; a person changes the stage", "Protocol level only; wallets, exchanges and bridges are not rated", ["scripts/patrol.py", "data/chains.json"]],
+      ["Standard status and security level", "Where the scheme stands as a standard; the NIST category of each named parameter set", "NIST FIPS 204 and 205, the FN-DSA selection, NIST SP 800-208, IETF RFC 8391, the chain's own specification", "Monthly", "A project's own construction is not assessed; a standard scheme can still be implemented badly", ["scripts/build_site.py"]],
+      ["Reference sizes", "Public key and signature bytes of each named parameter set", "The algorithm specifications", "When a parameter set is added", "Reference encodings, not whole transactions; a chain's own encoding can differ", ["data/signature-sizes.json"]],
+      ["Coverage", "Default for new accounts, opt-in, testnet only, or none", "Follows from the stage", "With the stage", "Says nothing about wallet support", ["scripts/build_site.py"]],
+      ["Migration", "Whether coins that already exist can move under post-quantum protection, and how (stage 2 and up)", "Specifications, code and release notes; official posts only when nothing more direct exists, and marked †", "Monthly", "Read from specifications and code; we do not run a migration on mainnet ourselves", ["data/chains.json"]],
+      ["Coins with exposed public keys", "Published estimates only", "Research named on the chain page", "When new research appears", "We do not compute it ourselves; most chains show “no reliable data”", ["data/chains.json"]],
+      ["Audit", "An independent audit of the post-quantum signing code in use (stage 3 and up)", "Audit reports linked from the repository or project site, and the auditors' public report lists", "Monthly", "An audit covers one version; no public report is recorded as “no audit found”, not as a flaw", ["data/chains.json"]],
+      ["Post-quantum progress", "Milestones with a primary source in the 90 days to the check date, and the newest milestone of any grade", "Milestones recorded on this site", "Weekly patrol, monthly review", "Only what we have recorded; not a keyword count of commits", ["scripts/build_site.py", "data/chains.json"]],
+      ["Post-quantum on mainnet since", "The day post-quantum signatures became usable on the current mainnet", "Genesis block or activation record: block explorer, pinned code or release notes; the project's own statement only when nothing more direct exists, marked †", "Set once; re-checked with the row monthly", "Chains without a sourced date are listed apart, not guessed", ["data/chains.json"]],
+      ["Latest block (background)", "Height, time and age of the newest block, the highest of two or three reads; running while younger than max(10 min, 6 target block times)", "The explorer or public RPC named for each chain", "Weekly", "A public endpoint can lag; one source alone never marks a chain as stopped", ["scripts/patrol.py"]],
+      ["Main repository commits (background)", "Commits on the default branch of the main node repository in the 90 days before the check, whatever they change; bot accounts left out", "GitHub API", "Weekly", "Measures maintenance, not post-quantum work; large chains spread work over many repositories", ["scripts/patrol.py"]],
+      ["Latest release (background)", "Newest release of the main node repository (its newest tag if there are no releases)", "GitHub releases", "Weekly", "Release names differ by project", ["scripts/patrol.py"]],
+      ["Market-cap rank (background)", "CoinGecko rank on the snapshot date, top 100 only", "CoinGecko", "Monthly", "A rough guide to value at stake, not a quality signal", ["scripts/rank.py"]],
+      ["This week's changes", "What differs from the previous patrol, reviewed by a person", "The patrol's output", "Weekly", "A change appears only after review", ["scripts/patrol.py"]],
     ],
     who_h: "Which chains are listed",
     who: [
@@ -973,6 +1323,9 @@ const METHOD = {
     open: ["Listing and stages are free. No project can pay to be listed or to change its stage, and we accept no payment for either.",
       "This is not a security audit. A stage says what a chain offers at the protocol level; it does not say that the chain's code or any wallet is free of flaws.",
       "Protocol level only: wallets, exchanges, custodians and bridges are not assessed.",
+      "We do not compute how many coins sit behind exposed public keys on each chain: that needs a full analysis of the chain. We cite published research where it exists and show “no reliable data” elsewhere.",
+      "We do not count “post-quantum commits” by keyword: keywords miss real work and catch unrelated changes, the count means nothing for chains built post-quantum, and large chains spread the work over many repositories. Progress is counted from dated milestones with primary sources instead.",
+      "The security level of a project's own construction is shown as “not assessed”. We do not rate schemes that no outside body has reviewed.",
       "Not investment advice. We do not comment on prices or predict when quantum computers might break today's cryptography.",
       "A snapshot, not a live feed: every entry shows the date its claims were last checked, and an entry not reviewed for 90 days is flagged on its page.",
       "All data and every script are public on GitHub, so anyone can re-run the checks."],
@@ -991,9 +1344,9 @@ const METHOD = {
       "第三方钱包、保险库和合约只做记录，不影响链的档位。唯一例外：如果一条链的每个账户都是合约、协议本身没有内置账户签名（如 Starknet），那么主网上已声明的抗量子账户类计入档位，不论作者是谁；该链页面会写明作者和是否经过审计。",
       "计划和目标日期会列出，但不参与评档。如果只有项目自己的文档或公告描述某项功能，没有代码、版本发布或链上数据证实，最高记 2 档。",
     ],
-    groups_h: "分组", groups_cols: ["分组", "收录哪些链"],
+    groups_h: "筛选项和每个选项的含义", groups_cols: ["筛选项", "选项", "含义"],
     net_h: "网络状态", net_cols: ["状态", "什么情况下显示"],
-    net_rule: "出块数据从哪来：每条链都写明读取的区块浏览器或公开 RPC，详情页列出具体接口、区块高度和时间，以及读取时间。时限是 10 分钟；目标出块间隔超过 100 秒的链，按 6 倍目标出块间隔算（比如比特币 10 分钟一个块，时限就是 60 分钟）。取 6 倍时，一条正常出块的链大约每 400 次核查才会偶然超时一次。公开 RPC 可能由落后的节点应答，所以每个接口都读两到三次，取最高的区块。只有独立的区块浏览器也显示区块过旧，才判定「出块停了」；只有一个来源时，记为「无法核实」。提交次数按主节点代码库的默认分支、核查日之前 90 天统计。",
+    net_rule: "出块数据从哪来：每条链都写明读取的区块浏览器或公开 RPC，详情页列出具体接口、区块高度和时间，以及读取时间。时限是 10 分钟；目标出块间隔超过 100 秒的链，按 6 倍目标出块间隔算（比如比特币 10 分钟一个块，时限就是 60 分钟）。取 6 倍时，一条正常出块的链大约每 400 次核查才会偶然超时一次。公开 RPC 可能由落后的节点应答，所以每个接口都读两到三次，取最高的区块。只有独立的区块浏览器也显示区块过旧，才判定「出块停了」；只有一个来源时，记为「无法核实」。提交次数按主节点代码库的默认分支、核查日之前 90 天统计，不论改了什么，不计机器人账户（用户名以 [bot] 结尾）的提交。出块和提交是背景信息：说明链还在不在运行、有没有人维护，不说明抗量子工作进展到哪一步。",
     algo_h: "算法标签", algo_cols: ["标签", "含义"],
     grades_h: "证据来源",
     cite_rule: "每条链详情页开头那句结论附一个出处。在项目清单（projects.json）里有条目的链，附固定版本的代码或其他固定版本的原始出处。其他链附能支持该档位、且与所写依据最贴合的原始出处，没有原始出处时才用官方说法。节点接口不放在这里，因为网络状态栏已经列出。全部来源列在页面下方。",
@@ -1002,20 +1355,28 @@ const METHOD = {
     charts: [
       "首页的每张图和表格用同一份数据，在构建网站时生成，没有手写的数字。",
       "市值最大的区块链档位分布：CoinGecko 市值前 100 中有自己网络的币，按档位计数。",
-      "抗量子主网上线时间线：第 4、5 档中有带出处日期的链（见下一条）按日期累计，每条链一个点，颜色表示档位。纵轴是链的条数，横轴从第一条链所在年份的年初到核对日。",
-      "每月里程碑：最近 24 个月里，原始出处和官方说法中带日期的提案、测试网和主网进展。标为「核对于」的条目是本站自己的核查记录，不计入；只精确到季度的条目也不计入。",
-      "抗量子签名上主网的年份：第 4、5 档的每条链，按抗量子签名在其现行主网上可用的日期排列。原生抗量子链取现行主网的创世区块，其他链取升级或新账户类型上线当天。每个日期都有自己的出处，见链的详情页；找不到出处的链单独列出，不做推测。",
+      "抗量子主网上线时间线：第 4、5 档中有带出处起始日期的链画成阶梯线，每条链在那一天上一级；横轴从第一条链所在年份的年初到核对日，不截断。今年以前的台阶标出链名，其余悬停可见。",
+      "算法版图：第 2 档及以上的每条链，放进它所用或提议的每个签名家族那一行，颜色表示标准状态。",
+      "抗量子签名在主网上运行了多久：每条有日期的链一根条，从起始日期到核对日，和上一张图用同一条时间轴。",
+      "里程碑数量：带日期的提案、测试网和主网进展（原始出处和官方说法），可按年看全部年份、按月看近两年，或按周看近三个月。没有进展的时段也留着位置。本站自己的核查记录和只精确到季度的条目不计入。",
+      "抗量子签名上主网的年份：第 4、5 档的每条链，按抗量子签名在其现行主网上可用的日期排列：原生抗量子链取创世区块，其他链取升级或新账户类型上线当天。找不到出处的链单独列出，不做推测。",
     ],
-    dims_h: "我们收集哪些数据", dims_cols: ["字段", "来源", "更新频率", "脚本"],
+    dims_h: "每个指标：统计什么、从哪来、多久更新、有什么局限", dims_cols: ["指标", "统计什么", "来源", "更新频率", "局限", "脚本或文件"],
     dims: [
-      ["档位、里程碑、摘要", "官方提案库、客户端发布版本、从官方接口读取的链上参数；官网只记为计划", "跟踪的提案每周查；每行每月重核；档位由人修改", ["scripts/patrol.py", "data/chains.json"]],
-      ["算法与标准标签", "NIST FIPS 204 和 205、NIST 对 FN-DSA 的选定、IETF RFC 8391，以及链自己的规范", "每月", ["data/chains.json"]],
-      ["最新区块：高度、时间、距今多久", "每条链写明的区块浏览器或公开 RPC", "每周", ["scripts/patrol.py"]],
-      ["最新发布版本", "主节点代码库的 GitHub 发布记录（没有发布记录时取最新标签）", "每周", ["scripts/patrol.py"]],
-      ["90 天内提交次数、最后一次提交", "主节点代码库默认分支在 GitHub 上的提交记录", "每周", ["scripts/patrol.py"]],
-      ["抗量子主网起始日期", "创世区块或升级生效记录：区块浏览器、固定版本的代码或发布说明；找不到更直接的记录时才用项目方公告，并注明是项目方说法", "录入一次；每月随整行重核", ["data/chains.json"]],
-      ["市值排名", "CoinGecko 市值前 100", "每月", ["scripts/rank.py"]],
-      ["本周变化", "与上一次巡查相比的差异，经人工核对", "每周", ["scripts/patrol.py"]],
+      ["档位（0 到 5）", "持币人今天能在多大程度上用上抗量子签名", "官方提案库、客户端发布版本、链上参数；官网只记为计划", "跟踪的提案每周查；每行每月重核；档位由人修改", "只看协议层；钱包、交易所和跨链桥不评", ["scripts/patrol.py", "data/chains.json"]],
+      ["标准状态和强度等级", "方案的标准化程度；每个写明的参数集对应的 NIST 强度等级", "NIST FIPS 204 和 205、FN-DSA 选定结果、NIST SP 800-208、IETF RFC 8391、链自己的规范", "每月", "项目自研方案不评估；标准方案也可能实现得不好", ["scripts/build_site.py"]],
+      ["参考大小", "每个写明的参数集的公钥和签名字节数", "算法规范", "新增参数集时", "是参考编码，不是整笔交易；各链自己的编码可能不同", ["data/signature-sizes.json"]],
+      ["覆盖", "新账户默认、可选、仅限测试网或没有", "由档位推出", "随档位", "不反映钱包是否支持", ["scripts/build_site.py"]],
+      ["迁移路径", "已有的币能否、以及怎样转到抗量子保护之下（第 2 档及以上）", "规范、代码和发布说明；找不到更直接的记录时才用官方文章，并标 †", "每月", "依据规范和代码判断；本站不在主网上亲自做迁移", ["data/chains.json"]],
+      ["公钥已暴露的币", "只引用已发表的估算", "链页面写明的研究", "有新研究时", "本站不自行计算；大多数链显示「暂无可靠数据」", ["data/chains.json"]],
+      ["审计", "正在使用的抗量子签名代码是否经过独立审计（第 3 档及以上）", "代码库或项目官网链接的审计报告，以及审计机构公开的报告列表", "每月", "审计只覆盖某个版本；找不到公开报告记为「未找到审计」，不等于有缺陷", ["data/chains.json"]],
+      ["抗量子进展", "截至核对日的 90 天内带原始出处的进展条数，以及最近一条进展（不限等级）", "本站收录的里程碑", "每周巡查，每月复核", "只算本站收录的；不按关键词数提交", ["scripts/build_site.py", "data/chains.json"]],
+      ["抗量子主网起始日期", "抗量子签名在现行主网上可用的日期", "创世区块或升级生效记录：区块浏览器、固定版本的代码或发布说明；找不到更直接的记录时才用项目方说法，并标 †", "录入一次；每月随整行重核", "找不到出处的链单独列出，不做推测", ["data/chains.json"]],
+      ["最新区块（背景）", "最新区块的高度、时间和距今多久，读两到三次取最高；不超过 10 分钟与 6 倍目标出块间隔中较大的那个，算正常出块", "每条链写明的区块浏览器或公开 RPC", "每周", "公开接口可能落后；只有一个来源时不会判定「出块停了」", ["scripts/patrol.py"]],
+      ["主仓库提交（背景）", "核查日之前 90 天主节点代码库默认分支上的提交，不论改了什么；不含机器人账户", "GitHub API", "每周", "反映有没有人维护，不反映抗量子工作；大链的工作分散在很多仓库", ["scripts/patrol.py"]],
+      ["最新发布版本（背景）", "主节点代码库的最新发布（没有发布记录时取最新标签）", "GitHub 发布记录", "每周", "各项目的版本命名不同", ["scripts/patrol.py"]],
+      ["市值排名（背景）", "取数当日的 CoinGecko 排名，只看前 100", "CoinGecko", "每月", "大致说明有多少价值面临风险，不代表质量", ["scripts/rank.py"]],
+      ["本周变化", "与上一次巡查相比的差异，经人工核对", "巡查输出", "每周", "核对后才会出现", ["scripts/patrol.py"]],
     ],
     who_h: "收录范围",
     who: [
@@ -1032,6 +1393,9 @@ const METHOD = {
     open: ["收录和档位都免费。任何项目都不能付费上榜或改档，我们也不收这两类费用。",
       "这不是安全审计。档位只说明一条链在协议层提供了什么，不代表这条链的代码或任何钱包没有缺陷。",
       "只看协议层：钱包、交易所、托管方和跨链桥不在评估范围内。",
+      "本站不逐条链计算有多少币的公钥已经暴露：这需要对整条链做分析。有已发表研究的就引用，其余写「暂无可靠数据」。",
+      "本站不按关键词统计「抗量子提交」：关键词会漏掉真正的工作、又会把无关改动算进来；对原生抗量子链这个数没有意义；大链的工作分散在很多仓库。进展改用带原始出处、带日期的里程碑来数。",
+      "项目自研方案的强度等级显示为「未评估」。没有外部机构评审过的方案，本站不替项目下结论。",
       "不构成投资建议。我们不评论币价，也不预测量子计算机何时能破解现有密码。",
       "这是某一时点的快照，不是实时数据：每条都标明说法最近核对的日期，超过 90 天没有复核的会在页面上提示。",
       "所有数据和脚本都公开在 GitHub 上，谁都可以重新跑一遍核查。"],
@@ -1055,11 +1419,11 @@ function howHTML() {
   const cite = `${H("cite", "cite_h")}<p><code class="cite">${esc(M.cite(D.release.version, D.release.date, D.site_url))}</code></p><p>${esc(M.cite_p)}</p>
     <p>${esc(M.cite_files)} ${["chains.json", "network.json", "projects.json", "sources.json"].map((f) => `<a href="${raw(f)}" target="_blank" rel="noopener" class="mono">${f}</a>`).join(" · ")}</p>
     <p>${esc(M.cite_meta)} <a href="${blob("CITATION.cff")}" target="_blank" rel="noopener" class="mono">CITATION.cff</a> · <a href="${blob("CHANGELOG.md")}" target="_blank" rel="noopener" class="mono">CHANGELOG.md</a></p>`;
-  const groups = ["top", "optin", "native", "early"].map((g) => `<tr><td>${esc(L("g_" + g))}</td><td>${esc(DF["g_" + g])}</td></tr>`).join("");
+  const groups = ["scope", "design", "netw", "ss", "cov", "mig", "audit"].map((k) => F[k].vals.map((v, i) => `<tr><td>${i ? "" : esc(L(LAB[k]))}</td><td>${esc(F[k].lab(v))}</td><td>${esc(F[k].def(v))}</td></tr>`).join("")).join("");
   const net = ["ok", "quiet", "stalled", "unknown"].map((s) => `<tr><td><span class="dot ${s}" style="margin-right:7px"></span>${esc(L("st_" + s))}</td><td>${esc(DF["st_" + s])}</td></tr>`).join("");
   const algo = Object.keys(D.chips).map((k) => `<tr><td><span class="chip ${D.chips[k].tone}">${esc(T(D.chips[k]))}</span></td><td>${esc(DF.chips[k])}</td></tr>`).join("");
   const grades = `<div class="grades">${M.grades.map(([h, g], i) => `<div class="card"><span class="grade ${g} grade-ic" aria-hidden="true">${["●", "◐", "○"][i]}</span><b>${esc(h)}</b><p>${esc(DF.grades[g])}</p></div>`).join("")}</div>`;
-  const dims = M.dims.map(([f, src, how, scripts]) => `<tr><td>${esc(f)}</td><td>${esc(src)}</td><td>${esc(how)}</td><td>${scripts.map((p) => `<a href="${blob(p)}" target="_blank" rel="noopener" class="mono">${esc(p)}</a>`).join("<br>")}</td></tr>`).join("");
+  const dims = M.dims.map(([f, what, src, how, lim, scripts]) => `<tr><td>${esc(f)}</td><td>${esc(what)}</td><td>${esc(src)}</td><td>${esc(how)}</td><td>${esc(lim)}</td><td>${scripts.map((p) => `<a href="${blob(p)}" target="_blank" rel="noopener" class="mono">${esc(p)}</a>`).join("<br>")}</td></tr>`).join("");
   return `<section class="how" id="how"><article class="prose">
     <span class="eyebrow">${esc(L("nav_method"))}</span><h1>${esc(M.title)}</h1>
     <p class="lede">${esc(M.lede)}</p>

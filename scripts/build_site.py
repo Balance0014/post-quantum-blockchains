@@ -73,6 +73,90 @@ def families(c):
     return [k for k in FAMILIES if k in f] or ['other']
 
 
+# One standard-status label per chain, from its algorithm labels: where its scheme stands as a standard.
+STATUSES = ('std', 'sel', 'hash', 'custom', 'broken', 'none')
+
+
+def standard_status(c):
+    chips = set(c['algo_chips'])
+    if chips & {'fips204', 'fips205'}:
+        return 'std'
+    if chips & {'falcon', 'sphincs'}:
+        return 'sel'
+    if chips & {'xmss', 'wots'}:
+        return 'hash'
+    if chips & {'custom', 'nonstd', 'family'}:
+        return 'custom'
+    if 'broken' in chips:
+        return 'broken'
+    return 'none'
+
+
+# Parameter sets named in the algorithm text, with their NIST security category (FIPS 204 and 205, the Falcon
+# specification) and the reference size id in data/signature-sizes.json.
+PARAMS = ((r'ML-DSA-44', 'ML-DSA-44', 2, 'mldsa44'), (r'ML-DSA-65|Dilithium3', 'ML-DSA-65', 3, 'mldsa65'),
+          (r'ML-DSA-87|Dilithium-5', 'ML-DSA-87', 5, 'mldsa87'), (r'Falcon-512', 'Falcon-512', 1, 'falcon512'),
+          (r'Falcon-1024', 'Falcon-1024', 5, 'falcon1024'), (r'SLH-DSA-SHA2-128s', 'SLH-DSA-SHA2-128s', 1, 'slh128s'))
+
+
+def algo_params(c, sizes):
+    """Security level and reference sizes of the parameter sets the chain's algorithm text names.
+    A project's own construction or variant is 'unassessed': we do not rate a scheme no outside body has reviewed."""
+    st = standard_status(c)
+    if st in ('custom', 'broken'):
+        return {'level': 'unassessed', 'params': []}
+    if st == 'none':
+        return {'level': None, 'params': []}
+    text = c['algo']['en'].replace('Falcon-512/1024', 'Falcon-512, Falcon-1024')
+    found = []
+    for pat, label, cat, sid in PARAMS:
+        m = re.search(pat, text)
+        if m:
+            s = sizes.get(sid) or {}
+            found.append((m.start(), {'name': label, 'level': cat, 'pk': s.get('public_key_bytes'), 'sig': s.get('signature_bytes')}))
+    if 'xmss' in c['algo_chips']:
+        s = sizes.get('xmss') or {}
+        found.append((0, {'name': 'XMSS', 'level': None, 'pk': s.get('public_key_bytes'), 'sig': s.get('signature_bytes'), 'ref': s.get('name')}))
+    params = [p for _, p in sorted(found, key=lambda x: x[0])]
+    levels = sorted({p['level'] for p in params if p['level']})
+    # A family the chain names without a parameter set (e.g. "ML-DSA" beside "Falcon-512") is listed as open,
+    # so a level found for one family is never read as covering the other.
+    chips, named = set(c['algo_chips']), {p['name'].split('-')[0] for p in params}
+    fams = [('ML-DSA', 'fips204' in chips), ('Falcon', 'falcon' in chips), ('SLH-DSA', bool(chips & {'fips205', 'sphincs'}))]
+    open_ = [f for f, used in fams if used and f.split('-')[0] not in named]
+    if not levels:
+        return {'level': 'not_stated', 'params': params, 'open': []}
+    return {'level': levels, 'params': params, 'open': open_}
+
+
+HYBRID = re.compile(r'\bhybrid\b|paired with', re.I)
+COVERAGE = {5: 'default', 4: 'optin', 3: 'testnet'}
+DAY = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+MONTH = re.compile(r'^\d{4}-\d{2}(-\d{2})?$')
+
+
+def progress(c, checked):
+    """Post-quantum progress recorded on this site: dated milestones that are project events (not our own checks).
+    n90 counts those with a primary source in the 90 days to the check date; latest is the newest of any grade."""
+    today = date.fromisoformat(checked)
+    ev = [m for m in c.get('milestones', []) if m.get('verified', True) and not m.get('checked') and MONTH.match(m.get('date') or '')]
+    age = lambda m: (today - date.fromisoformat(m['date'] if DAY.match(m['date']) else m['date'] + '-15')).days
+    n90 = sum(1 for m in ev if m.get('grade', 'primary') == 'primary' and 0 <= age(m) <= 90)
+    y1 = any(0 <= age(m) <= 365 for m in ev)
+    last = max(ev, key=lambda m: m['date'], default=None)
+    latest = {'date': last['date'], 'en': last['name'], 'zh': last.get('zh'), 'grade': last.get('grade', 'primary'),
+              'url': last.get('source_url'), 'type': last['type']} if last else None
+    return {'n90': n90, 'y1': y1, 'latest': latest}
+
+
+def field(c, key):
+    """A researched field (migration, audit, exposure) as the page shows it, or None when not recorded."""
+    x = c.get(key)
+    if not x:
+        return None
+    return {k: x.get(k) for k in ('value', 'en', 'zh', 'source_url', 'grade', 'date', 'auditor', 'figure', 'publisher') if x.get(k) is not None}
+
+
 # The site mark: a staircase of six steps, one per stage, on a dark tile. Inline in the header; also the favicon.
 LOGO_BARS = ''.join(f'<rect x="{6 + i * 3.4:.1f}" y="{25 - (i + 1) * 3}" width="3.5" height="{(i + 1) * 3}" fill="{col}"/>'
                     for i, col in enumerate(('#5a4d9c', '#6f5dc2', '#8873e0', '#a596f4', '#c5bcfd', '#ece8ff')))
@@ -103,7 +187,8 @@ TEXT = {
            'method_desc': 'The six stages, the rating rules, the network checks with their thresholds, the algorithm labels, the evidence grades and every data field with its source and script.',
            'changes_title': 'This week in post-quantum blockchains · Post-Quantum Blockchains',
            'changes_desc': 'What the weekly patrol found: new releases, proposal status changes, network status changes and stage changes, each with its source.',
-           'nf_title': 'Page not found · Post-Quantum Blockchains', 'nf_h': 'This page does not exist.', 'nf_p': 'Go to the list of chains:'},
+           'nf_title': 'Page not found · Post-Quantum Blockchains', 'nf_h': 'This page does not exist.', 'nf_p': 'The link may be old, or the chain may be listed under another name. Search the table or start from the overview.',
+           'nf_search': 'Search chains, schemes or tickers', 'nf_go': 'Search', 'nf_all': 'All chains', 'nf_method': 'How we rate'},
     'zh': {'brand': '抗量子区块链进度表', 'other_lang': 'English', 'other_lang_label': 'Switch to English', 'gh': '数据在 GitHub', 'menu': '菜单', 'theme': '深色模式', 'og_locale': 'zh_CN',
            'home_title': '抗量子区块链进度表：哪些链已经能用抗量子签名',
            'home_desc': '比特币能抗量子吗？逐条核对出处的抗量子进度表，覆盖市值最大的区块链和原生抗量子链，共 {n} 条，每条评 0 到 5 档；网络数据每周巡查，出处每月重核。',
@@ -113,7 +198,8 @@ TEXT = {
            'method_desc': '六个档位、评档规则、网络核查及其时限、算法标签、证据分级，以及每个数据字段的来源和脚本。',
            'changes_title': '本周抗量子进展 · 抗量子区块链进度表',
            'changes_desc': '每周巡查发现的变化：新发布版本、提案状态、网络状态和档位调整，每条都附出处。',
-           'nf_title': '页面不存在 · 抗量子区块链进度表', 'nf_h': '这个页面不存在。', 'nf_p': '返回链列表：'},
+           'nf_title': '页面不存在 · 抗量子区块链进度表', 'nf_h': '这个页面不存在。', 'nf_p': '链接可能已经过时，或者这条链用的是另一个名字。可以在表格里搜索，或者从总览开始。',
+           'nf_search': '搜索链、签名方案或代码', 'nf_go': '搜索', 'nf_all': '全部链', 'nf_method': '评级方法'},
 }
 
 
@@ -269,7 +355,7 @@ def basis_source(c, projects, sources):
     return first if isinstance(first, str) or first is None else first['url']
 
 
-def chain_view(c, net, ranks, projects, sources):
+def chain_view(c, net, ranks, projects, sources, sizes, checked):
     n = net.get('chains', {}).get(c['id'], {})
     b = n.get('block', {})
     block = {'ok': bool(b.get('ok')), 'url': b.get('source'), 'q': b.get('queried_at_utc')}
@@ -284,7 +370,8 @@ def chain_view(c, net, ranks, projects, sources):
         got = n.get('code') or {}
         if got and 'error' not in got:
             code.update(rel=got.get('release'), rel_date=got.get('release_date'), rel_pre=bool(got.get('prerelease')),
-                        rel_tag=bool(got.get('tag_only')), c90=got.get('commits_90d'), last=got.get('last_commit'))
+                        rel_tag=bool(got.get('tag_only')), c90=got.get('commits_90d'), last=got.get('last_commit'),
+                        branch=got.get('branch'), bots=got.get('bot_commits_90d'), q=(got.get('queried_at_utc') or n.get('block', {}).get('queried_at_utc') or net.get('checked_at_utc')))
         code['also'] = [{'repo': a['repo'], 'c90': a.get('commits_90d')} for a in n.get('code_also', []) if 'error' not in a]
     rank = ranks.get(c.get('coingecko_id')) if ranks else c.get('mcap_rank')
     if rank is not None and rank > 100:
@@ -302,6 +389,9 @@ def chain_view(c, net, ranks, projects, sources):
     for s in c.get('extra_sources') or []:
         srcs.append({'url': s['url'], 'label': short_url(s['url'])})
     ls = c['latest_step']
+    bsrc = basis_source(c, projects, sources)
+    bgrade = next((m.get('grade', 'primary') for m in c.get('milestones', []) if m.get('source_url') == bsrc), 'primary')
+    since = c.get('pq_mainnet_since')
     return {
         'id': c['id'], 'name': c['name'], 'zh_name': c.get('zh_name'), 'ticker': c['ticker'], 'kind': c['kind'],
         'group': group_of(c, rank), 'rank': rank, 'stage': c['stage'], 'algo': c['algo'], 'chips': c['algo_chips'], 'fam': families(c),
@@ -309,8 +399,13 @@ def chain_view(c, net, ranks, projects, sources):
         'latest': {'date': ls.get('date'), 'en': ls.get('text'), 'zh': ls.get('zh'), 'checked': bool(ls.get('is_check_date'))},
         'checked': (n.get('block', {}).get('queried_at_utc') or net.get('checked_at_utc') or '')[:10] or None,
         'reviewed': c['last_reviewed'], 'basis': c['stage_basis'],
-        'basis_src': basis_source(c, projects, sources),
-        'since': c.get('pq_mainnet_since'),
+        'basis_src': bsrc, 'basis_grade': bgrade,
+        'since': since,
+        'status': standard_status(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
+        'cov': COVERAGE.get(c['stage'], 'none'), 'mig': field(c, 'migration'), 'audit': field(c, 'audit'), 'expo': field(c, 'exposure'),
+        'prog': progress(c, checked), 'scope': 'top' if rank is not None else 'other',
+        'design': 'native' if c['kind'] == 'native' else 'upgraded', 'netw': 'mainnet' if c['network_status'] == 'mainnet' else 'testnet',
+        'claim': bgrade == 'official' or bool(since and since.get('grade') == 'official'),
         'net': {'status': n.get('status', 'unknown'), 'threshold': n.get('threshold_min'), 'block': block, 'code': code,
                 'reason': c['network'].get('no_probe_reason'), 'own': c['network'].get('source_kind'), 'check': xchk},
         'timeline': [{'date': m.get('date'), 'type': m['type'], 'grade': m.get('grade', 'primary'), 'en': m['name'], 'zh': m.get('zh'),
@@ -322,13 +417,20 @@ def chain_view(c, net, ranks, projects, sources):
 
 
 def home_view(v):
-    """The home page only needs what its table and charts show; everything else is on the chain's own page."""
+    """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page."""
     n, b, code = v['net'], v['net']['block'], v['net']['code']
-    return {'id': v['id'], 'name': v['name'], 'zh_name': v['zh_name'], 'ticker': v['ticker'], 'kind': v['kind'],
-            'group': v['group'], 'rank': v['rank'], 'stage': v['stage'], 'algo': v['algo'], 'chips': v['chips'], 'fam': v['fam'],
-            'latest': v['latest'], 'since': {k: v['since'][k] for k in ('date', 'basis')} if v['since'] else None,
-            'net': {'status': n['status'], 'block': {'ok': bool(b.get('ok')), 'age': b.get('age'), 'url': bool(b.get('url'))},
-                    'code': {'repo': bool(code.get('repo')), 'c90': code.get('c90')} if code else None}}
+    keep = ('id', 'name', 'zh_name', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'hybrid',
+            'cov', 'prog', 'scope', 'design', 'netw', 'claim')
+    h = {k: v[k] for k in keep}
+    h['level'] = v['ap']['level']
+    h['level_open'] = v['ap'].get('open') or []
+    h['mig'] = {k: v['mig'][k] for k in ('value', 'en', 'zh') if k in v['mig']} if v['mig'] else None
+    h['audit'] = v['audit']['value'] if v['audit'] else None
+    h['next'] = (v['four'] or {}).get('next')
+    h['since'] = {k: v['since'][k] for k in ('date', 'basis', 'grade')} if v['since'] else None
+    h['net'] = {'status': n['status'], 'block': {'ok': bool(b.get('ok')), 'age': b.get('age'), 'url': bool(b.get('url'))},
+                'code': {'repo': bool(code.get('repo')), 'c90': code.get('c90')} if code else None}
+    return h
 
 
 # The monthly milestone chart covers this many months, ending with the month of the latest check.
@@ -355,9 +457,32 @@ def milestone_months(views, checked):
     return {'types': list(CHART_TYPES), 'months': [[k] + counts[k] for k in months]}
 
 
+def milestone_events(views):
+    """Every dated proposal, testnet and mainnet milestone that is a project event, as [date, type index, chain id], for
+    the home chart that bins them by year, month or week in the browser."""
+    ev = []
+    for v in views:
+        for t in v['timeline']:
+            d = t.get('date') or ''
+            if t['type'] in CHART_TYPES and MONTH.match(d) and not t['checked']:
+                ev.append([d, CHART_TYPES.index(t['type']), v['id']])
+    return sorted(ev)
+
+
 CSV_COLUMNS = ('id', 'name', 'ticker', 'group', 'kind', 'market_cap_rank', 'stage', 'stage_name', 'algorithm',
-               'network_status', 'pq_mainnet_since', 'pq_mainnet_since_basis', 'pq_mainnet_since_source', 'stage_basis',
-               'stage_source', 'last_reviewed', 'page')
+               'standard_status', 'security_level', 'coverage', 'migration', 'migration_source', 'audit', 'audit_source',
+               'pq_progress_90d', 'latest_pq_progress', 'network_status', 'pq_mainnet_since', 'pq_mainnet_since_basis',
+               'pq_mainnet_since_source', 'stage_basis', 'stage_source', 'last_reviewed', 'page')
+
+CSV_STATUS = {'std': 'nist_standard', 'sel': 'nist_selected', 'hash': 'stateful_hash_based', 'custom': 'own_construction',
+              'broken': 'publicly_broken', 'none': 'none'}
+
+
+def level_csv(ap):
+    lv = ap['level']
+    if lv is None or isinstance(lv, str):
+        return lv or ''
+    return ' / '.join(str(x) for x in lv) + ''.join(f'; {f} set not stated' for f in ap.get('open') or [])
 
 
 def write_data_files(out, views, checked, release, base, has_changes):
@@ -373,8 +498,11 @@ def write_data_files(out, views, checked, release, base, has_changes):
     w.writerow(CSV_COLUMNS)
     for v in sorted(views, key=lambda v: (v['rank'] or 999, -v['stage'], v['name'])):
         s = v['since'] or {}
+        mig, aud, prog = v['mig'] or {}, v['audit'] or {}, v['prog']
         w.writerow([v['id'], v['name'], v['ticker'], v['group'], v['kind'], v['rank'] or '', v['stage'], STAGE_NAMES['en'][v['stage']],
-                    v['algo']['en'], v['net']['status'], s.get('date', ''), s.get('basis', ''), s.get('source_url', ''),
+                    v['algo']['en'], CSV_STATUS[v['status']], level_csv(v['ap']), v['cov'], mig.get('value', ''), mig.get('source_url', ''),
+                    aud.get('value', ''), aud.get('source_url', ''), prog['n90'], (prog['latest'] or {}).get('date', ''),
+                    v['net']['status'], s.get('date', ''), s.get('basis', ''), s.get('source_url', ''),
                     v['basis']['en'], v['basis_src'] or '', v['reviewed'], page(v)])
     (d / 'chains.csv').write_text(buf.getvalue(), encoding='utf-8')
     top = [v for v in views if v['rank'] is not None]
@@ -392,7 +520,10 @@ def write_data_files(out, views, checked, release, base, has_changes):
         lines.append(f'- [This week]({ORIGIN + base}changes/): changes found by the weekly patrol')
     lines += ['',
              '## Data (CC BY 4.0)',
-             f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, network status, '
+             f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, standard status '
+             f'(nist_standard, nist_selected, stateful_hash_based, own_construction, publicly_broken, none), NIST security level, coverage '
+             f'(default, opt-in, testnet, none), how existing coins move (migration), audit of the post-quantum code, '
+             f'post-quantum milestones with a primary source in the last 90 days and the latest one, network status, '
              f'post-quantum mainnet start date, the sentence the stage rests on and its source',
              f'- [chains.json]({ORIGIN + base}data/chains.json): every chain with its stage, evidence, milestones and sources',
              f'- [network.json]({ORIGIN + base}data/network.json): the latest weekly network check (newest block, code activity)',
@@ -405,7 +536,8 @@ def write_data_files(out, views, checked, release, base, has_changes):
              '## Chains']
     for v in sorted(views, key=lambda v: (-v['stage'], v['rank'] or 999, v['name'])):
         since = f"; post-quantum on mainnet since {v['since']['date']}" if v['since'] else ''
-        lines.append(f"- [{v['name']} ({v['ticker']})]({page(v)}): stage {v['stage']}, {STAGE_NAMES['en'][v['stage']]}{since}")
+        extra = ''.join(f'; {k} {x["value"].replace("_", " ")}' for k, x in (('migration', v['mig']), ('audit', v['audit'])) if x)
+        lines.append(f"- [{v['name']} ({v['ticker']})]({page(v)}): stage {v['stage']}, {STAGE_NAMES['en'][v['stage']]}{since}{extra}")
     (out / 'llms.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
@@ -452,12 +584,14 @@ def main():
     sources = {s['id']: s for s in load('data/sources.json')['sources']}
     changes = sorted((json.loads(p.read_text(encoding='utf-8')) for p in (ROOT / 'data/changes').glob('*.json')),
                      key=lambda x: x['date'], reverse=True) if (ROOT / 'data/changes').exists() else []
-    views = [chain_view(c, net, ranks, projects, sources) for c in data['chains']]
-    checked = (net.get('checked_at_utc') or '')[:10] or max(v['reviewed'] for v in views)
+    sizes = {p['id']: p for p in load('data/signature-sizes.json')['parameters']}
+    checked = (net.get('checked_at_utc') or '')[:10] or max(c['last_reviewed'] for c in data['chains'])
+    views = [chain_view(c, net, ranks, projects, sources, sizes, checked) for c in data['chains']]
     today = date.fromisoformat(checked)
     for v in views:
         v['stale_days'] = (today - date.fromisoformat(v['reviewed'])).days
     months = milestone_months(views, checked)
+    events = milestone_events(views)
     release = load('data/release.json')
     release = {'version': release['version'], 'date': release['published_on']}
     # One example chain per stage for the stage table: the highest-ranked coin at that stage, else the first listed.
@@ -488,7 +622,7 @@ def main():
         common = {'lang': lang, 'base': base, 'repo': REPO, 'chips': CHIPS, 'checked': checked, 'mcap_date': mcap_date,
                   'has_changes': bool(changes), 'data_url': REPO + '/tree/main/data', 'chain_count': len(views),
                   'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, '')}
-        home = dict(common, page='home', chains=[home_view(v) for v in views], left_out=left_out, months=months)
+        home = dict(common, page='home', chains=[home_view(v) for v in views], left_out=left_out, months=months, events=events)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),
               'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'dateModified': checked,
@@ -564,14 +698,34 @@ def main():
         tp.feed(page)
         zh_errors += [f'{lang}/{rel}: banned word "{w}"' for w in banned_words(' '.join(tp.out))]
 
-    # 404 page (GitHub Pages serves /404.html for any missing path), both languages on one page
-    nf = '\n'.join(f'<p lang="{l}"><b>{TEXT[l]["nf_h"]}</b> {TEXT[l]["nf_p"]} <a href="{path_for(l, "")}">{esc(TEXT[l]["brand"])}</a></p>'
-                   for l in ('en', 'zh'))
+    # 404 page (GitHub Pages serves /404.html for any missing path): the site header, both languages, a search that
+    # opens the table filtered by the missing path's last word, and links back. Absolute links: it is served at any depth.
+    def nf_block(l):
+        t, home = TEXT[l], path_for(l, '')
+        return (f'<section class="nf-l" lang="{l}"><h1>{esc(t["nf_h"])}</h1><p>{esc(t["nf_p"])}</p>'
+                f'<form class="nf-q" action="{home}" role="search" data-home="{home}"><label class="sr" for="nfq-{l}">{esc(t["nf_search"])}</label>'
+                f'<input id="nfq-{l}" name="q" type="search" placeholder="{esc(t["nf_search"])}" autocomplete="off">'
+                f'<button class="btn primary" type="submit">{esc(t["nf_go"])}</button></form>'
+                f'<div class="row"><a class="btn" href="{home}#chains">{esc(t["nf_all"])}</a>'
+                f'<a class="btn quiet" href="{path_for(l, "method/")}">{esc(t["nf_method"])}</a></div></section>')
+    t = TEXT['en']
     (out / '404.html').write_text(
-        f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-        f'<meta name="robots" content="noindex"><title>{esc(TEXT["en"]["nf_title"])}</title>'
-        f'<link rel="stylesheet" href="{base}assets/style.css?v={version}"></head>'
-        f'<body><main><div class="wrap" style="padding-block:64px;display:grid;gap:12px">{nf}</div></main></body></html>\n', encoding='utf-8')
+        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
+        '<meta name="color-scheme" content="light dark"><meta name="robots" content="noindex">'
+        '<script>try{var t=localStorage.getItem("pq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>'
+        f'<title>{esc(t["nf_title"])}</title><link rel="icon" href="{base}assets/logo.svg" type="image/svg+xml">'
+        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600&display=swap">'
+        f'<link rel="stylesheet" href="{base}assets/style.css?v={version}"></head><body>'
+        f'<header class="top"><div class="wrap"><a class="brand" href="{base}">{LOGO_SVG}<span class="bn">{esc(t["brand"])}</span></a>'
+        f'<div class="tools"><a class="btn primary" href="{REPO}" target="_blank" rel="noopener">{esc(t["gh"])} ↗</a></div></div></header>'
+        f'<main><div class="wrap nf"><div class="code" aria-hidden="true">404</div>{nf_block("en")}{nf_block("zh")}</div></main>'
+        # The table reads its filters from the address hash; prefill the search with the missing path's last word.
+        '<script>(function(){var w=decodeURIComponent(location.pathname).split("/").filter(Boolean).pop()||"";'
+        'w=w.replace(/\\.html?$/,"").replace(/[-_]+/g," ").slice(0,40);'
+        'document.querySelectorAll(".nf-q").forEach(function(f){var i=f.querySelector("input");if(w&&!/^(chains|zh|method|\\d+)$/.test(w))i.value=w;'
+        'f.addEventListener("submit",function(e){e.preventDefault();var q=i.value.trim();'
+        'location.href=f.dataset.home+(q?"#chains?q="+encodeURIComponent(q):"#chains")})})})()</script>'
+        '</body></html>\n', encoding='utf-8')
 
     # sitemap with language alternates
     urls = []

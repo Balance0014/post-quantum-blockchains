@@ -33,6 +33,24 @@ Rules:
 
 Every date is the day the event happened, in UTC, not the day we read about it. When an entry records our own check (for example, "no post-quantum proposal in the repository" or a block height read from an explorer), it is dated on the check day and marked **checked**, and it is left out of the monthly milestone chart. A data source run by the project itself, or by its community, is labelled as such on the chain page.
 
+## Dimensions beside the stage
+
+The stage answers one question. The table and chain pages add the dimensions below, each with a fixed definition, a source and a date. None of them changes a stage.
+
+| Dimension | What it counts | Where it comes from | How often | Limits |
+| --- | --- | --- | --- | --- |
+| Standard status | Whether the scheme the chain uses or proposes is a NIST standard (ML-DSA, SLH-DSA), NIST-selected but not final (Falcon / FN-DSA), stateful hash-based (XMSS, WOTS+), the project's own construction or variant, publicly broken, or none | The algorithm labels in `chains.json` | Each review | Says what the scheme is, not how well the chain implemented it |
+| Security level | The NIST category of each parameter set the entry names (ML-DSA-44 is 2, ML-DSA-65 is 3, ML-DSA-87 is 5, Falcon-512 is 1, Falcon-1024 is 5, SLH-DSA-SHA2-128s is 1) | The parameter set named in the algorithm text | Each review | A family named without a parameter set is shown as not stated; an own construction is not assessed |
+| Coverage | Whether new accounts get post-quantum signatures by default, can opt in on mainnet, only on a testnet, or not at all | Follows the stage (5, 4, 3, below 3) | Each review | Says nothing about coins already held under old keys; see migration |
+| Migration | How coins under classical keys reach post-quantum protection: native (none exist), available, testnet, planned, none or unknown | `migration` in `chains.json`, with a primary source or official claim | Each review, stage 2 and up | A plan is recorded as planned even when its date is set |
+| Audit | Whether an outside firm published a report whose scope covers the post-quantum signature code now live: audited, partial (scope or version does not match), none found, unknown | `audit` in `chains.json`, with the report or the place we looked | Each review, stage 3 and up | Self-reviews, bug bounties and proofs of an upstream library are not audits; "none found" means we did not find one |
+| Exposure | Coins behind public keys already visible on chain | `exposure` in `chains.json`, only where published research gives a figure | When new research appears | Estimates differ by method; we show one published figure with its date and name the others |
+| Post-quantum progress | Milestones with a primary source dated in the 90 days before the check date, and the newest milestone of any grade | Milestones in `chains.json` | Each review | Counts what we recorded, not all work in progress; our own checks are left out |
+| On mainnet since | The day post-quantum signatures became usable on the current mainnet | `pq_mainnet_since` in `chains.json` | Each review, stage 4 and up | Left blank rather than guessed when no source gives the date |
+| Code activity | Commits to the main repository's default branch in 90 days, leaving out `[bot]` authors | GitHub API, weekly patrol | Weekly | Background only: counts every kind of change, not post-quantum work |
+
+We do not count commits by keyword. Words like "quantum" or "dilithium" match renames, dependency bumps and comments as easily as real work, miss work described in other words, and reward projects that write more commit messages. Post-quantum progress is counted from sourced milestones instead.
+
 ## Which chains are listed
 
 - **The largest blockchains.** Every coin in the CoinGecko top 100 by market cap that pays fees or secures consensus on a network of its own, layer 1 or layer 2. Stablecoins, tokenized funds and commodities, wrapped and staked tokens, and exchange, app, governance or meme tokens without their own network are left out. Each coin left out is in `not_listed` in `data/chains.json` with its reason, and [`scripts/rank.py`](../scripts/rank.py) fails CI when a top-100 coin is in neither list.
