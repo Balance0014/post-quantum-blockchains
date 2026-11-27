@@ -2977,8 +2977,8 @@
    },
    "audit": {
     "value": "partial",
-    "en": "Neodyme audited the ML-DSA-87 library and HD wallet in late 2025; mainnet runs a later version that added ML-DSA-65 and rewrote large parts.",
-    "zh": "Neodyme 在 2025 年底审计了 ML-DSA-87 库和分层钱包；主网运行的是之后的版本，加入了 ML-DSA-65，并大幅改写。",
+    "en": "Neodyme audited the ML-DSA-87 library and HD wallet from November to December 2025; mainnet runs a later version, which also accepts ML-DSA-65.",
+    "zh": "Neodyme 在 2025 年 11 月至 12 月审计了 ML-DSA-87 库和分层钱包；主网运行的是之后的版本，还接受 ML-DSA-65。",
     "source_url": "https://neodyme.io/reports/Quantus_Dilithium_HDWallet.pdf",
     "grade": "primary",
     "auditor": "Neodyme",
