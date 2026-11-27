@@ -34,6 +34,9 @@ UA = 'post-quantum-blockchains-patrol/1.0 (+https://github.com/Balance0014/post-
 STALL_MIN_MINUTES = 10
 STALL_MULTIPLE = 6
 WINDOW_DAYS = 90
+# Public endpoints often sit behind load balancers, and a lagging backend can answer with an old block. Each probe is
+# read at least twice, a few seconds apart, and a third time when the two reads disagree; the highest block wins.
+READS_MIN, READS_MAX, READ_GAP_S = 2, 3, 3
 
 CTX = ssl.create_default_context()
 if os.path.exists('/etc/ssl/cert.pem'):  # macOS Python ships without a CA bundle
@@ -160,6 +163,28 @@ def latest_block(probe):
     return height, parse_time(values['time'], spec.get('time_fmt', 's'))
 
 
+def read_probe(probe):
+    """Read the newest block READS_MIN to READS_MAX times and keep the highest. Returns the block, the time of the read
+    that returned it, and every height seen, so a lagging backend shows up in network.json."""
+    reads, err = [], None
+    for i in range(READS_MAX):
+        if i:
+            time.sleep(READ_GAP_S)
+        try:
+            h, t = latest_block(probe)
+            reads.append((h, t, now_utc()))
+        except Exception as e:  # one failed read is not a failed probe while another read answers
+            err = e
+        if len(reads) >= READS_MIN and reads[-1][0] == reads[-2][0]:
+            break
+    if not reads:
+        raise err
+    h, t, q = max(reads, key=lambda r: (r[0], r[1]))
+    return {'ok': True, 'height': h, 'time_utc': iso(t), 'queried_at_utc': iso(q),
+            'age_minutes': round(max(0.0, (q - t).total_seconds() / 60), 1), 'source': probe['url'],
+            'reads': len(reads), 'heights_seen': sorted({r[0] for r in reads})}
+
+
 def threshold_minutes(chain):
     interval = chain['network'].get('block_interval_s') or 0
     return max(STALL_MIN_MINUTES, round(STALL_MULTIPLE * interval / 60))
@@ -232,11 +257,13 @@ def watch_state(w):
 # ---------- status and changes ----------
 
 def status(entry):
-    b = entry.get('block') or {}
-    if not b.get('ok'):
+    """Running when any source shows a recent block. Stopped only when the chain's endpoint and an independent explorer
+    (network.check) both show an old block; one source alone is never enough to call a chain stopped."""
+    reads = [r for r in (entry.get('block') or {}, entry.get('check') or {}) if r.get('ok')]
+    if not reads:
         return 'unknown'
-    if b['age_minutes'] > entry['threshold_min']:
-        return 'stalled'
+    if all(r['age_minutes'] > entry['threshold_min'] for r in reads):
+        return 'stalled' if len(reads) == 2 else 'unknown'
     code = entry.get('code') or {}
     if code.get('commits_90d') == 0:
         return 'quiet'
@@ -321,26 +348,20 @@ def main():
         if probe:
             q = now_utc()
             try:
-                h, t = latest_block(probe)
-                q = now_utc()
-                # Public RPCs sit behind load balancers and a lagging backend can answer with an old block.
-                # Before calling a chain stalled, read twice more a few seconds apart and keep the newest block.
-                for _ in range(2):
-                    if (q - t).total_seconds() / 60 <= entry['threshold_min']:
-                        break
-                    time.sleep(5)
-                    try:
-                        h2, t2 = latest_block(probe)
-                        if t2 > t:
-                            h, t = h2, t2
-                    except Exception:
-                        pass
-                    q = now_utc()
-                entry['block'] = {'ok': True, 'height': h, 'time_utc': iso(t), 'queried_at_utc': iso(q),
-                                  'age_minutes': round(max(0.0, (q - t).total_seconds() / 60), 1), 'source': probe['url']}
+                entry['block'] = read_probe(probe)
             except Exception as e:  # report and keep going: one dead endpoint must not stop the patrol
                 failures += 1
                 entry['block'] = {'ok': False, 'queried_at_utc': iso(q), 'source': probe['url'], 'error': str(e)[:200]}
+            # An independent explorer, read when the chain's own endpoint shows no recent block (or none at all).
+            check = c['network'].get('check')
+            b = entry['block']
+            if check and not (b.get('ok') and b['age_minutes'] <= entry['threshold_min']):
+                q = now_utc()
+                try:
+                    entry['check'] = read_probe(check)
+                except Exception as e:
+                    failures += 1
+                    entry['check'] = {'ok': False, 'queried_at_utc': iso(q), 'source': check['url'], 'error': str(e)[:200]}
         else:
             entry['block'] = {'ok': False, 'source': None, 'error': c['network'].get('no_probe_reason', 'no public endpoint')}
         repo = (c.get('code') or {}).get('repo')
@@ -394,6 +415,11 @@ def report(chains, result, items, failures):
     for cid, e in sorted(odd, key=lambda x: x[1]['status']):
         b = e.get('block', {})
         detail = f"newest block {b['age_minutes']} min old, limit {e['threshold_min']} min" if b.get('ok') else f"block lookup: {b['error']['en'] if isinstance(b.get('error'), dict) else b.get('error')}"
+        x = e.get('check') or {}
+        if x:
+            detail += f"; independent explorer: {'newest block ' + str(x['age_minutes']) + ' min old' if x.get('ok') else 'no answer'}"
+        elif e['status'] == 'unknown' and b.get('ok'):
+            detail += '; no independent explorer to confirm, so not called stopped'
         if e['status'] == 'quiet':
             detail += f", 0 commits since {result['window_start']} in {e.get('code', {}).get('repo')}"
         lines.append(f"- **{names.get(cid, cid)}**: {STATUS_TEXT[e['status']][0]} ({detail})")

@@ -29,7 +29,7 @@ from urllib.parse import parse_qs, quote, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data'
 FILES = ['chains.json', 'projects.json', 'sources.json', 'source-revision-checks.json']
-SKIP_KEYS = {'probe'}
+SKIP_KEYS = {'probe', 'check'}
 UA = 'post-quantum-blockchains-link-check/1.0 (+https://github.com/Balance0014/post-quantum-blockchains)'
 PER_HOST = 3
 _host_locks = {}

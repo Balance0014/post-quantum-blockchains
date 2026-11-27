@@ -1,5 +1,5 @@
 {
- "checked_at_utc": "2026-11-27T15:12:06Z",
+ "checked_at_utc": "2026-11-27T17:02:08Z",
  "window_start": "2026-08-29",
  "rule": {
   "stall_min_minutes": 10,
@@ -642,11 +642,17 @@
    "threshold_min": 10,
    "block": {
     "ok": true,
-    "height": 4148075,
-    "time_utc": "2026-11-27T14:16:08Z",
-    "queried_at_utc": "2026-11-27T14:16:11Z",
+    "height": 4149736,
+    "time_utc": "2026-11-27T17:02:14Z",
+    "queried_at_utc": "2026-11-27T17:02:18Z",
     "age_minutes": 0.1,
-    "source": "https://rpc-testnet.qanplatform.com"
+    "source": "https://rpc-testnet.qanplatform.com",
+    "reads": 3,
+    "heights_seen": [
+     3188216,
+     4149735,
+     4149736
+    ]
    },
    "status": "ok"
   },
@@ -1518,9 +1524,13 @@
     "ok": true,
     "height": 7082778,
     "time_utc": "2026-08-16T09:39:21Z",
-    "queried_at_utc": "2026-11-27T15:03:24Z",
-    "age_minutes": 148644.0,
-    "source": "https://bitway.rpc.kjnodes.com"
+    "queried_at_utc": "2026-11-27T17:02:20Z",
+    "age_minutes": 148763.0,
+    "source": "https://bitway.rpc.kjnodes.com",
+    "reads": 2,
+    "heights_seen": [
+     7082778
+    ]
    },
    "code": {
     "repo": "bitwaylabs/bitway",
@@ -1530,14 +1540,7 @@
     "commits_90d": 0,
     "last_commit": "2026-03-11"
    },
-   "code_also": [
-    {
-     "repo": "bitwaylabs/networks",
-     "commits_90d": 0,
-     "last_commit": "2025-11-20"
-    }
-   ],
-   "status": "stalled"
+   "status": "unknown"
   },
   "pearl": {
    "threshold_min": 19,
