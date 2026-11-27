@@ -5,8 +5,8 @@ type: dataset
 authors:
   - family-names: Zhao
     given-names: Balance
-version: 0.4.0
+version: 0.5.0
 date-released: 2026-11-27
 url: "https://github.com/Balance0014/post-quantum-blockchains"
 license: CC-BY-4.0
-abstract: "A continuously maintained, source-checked map of post-quantum cryptography in blockchains: project deployments, signing parameters and charts generated from the data, plus a Bitcoin migration research note. Open to submissions; each project entry carries its own review date, and the original 17 were reviewed October 23, 2026; BRUTER source edition: October 31, 2026."
+abstract: "A continuously maintained, source-checked map of post-quantum cryptography in blockchains: a stage tracker website that rates each chain from stage 0 to 5 against primary sources (the CoinGecko top 100 with their own networks, plus post-quantum native and early projects), a weekly network patrol, project deployments, signing parameters and charts generated from the data, and a Bitcoin migration research note. Each entry carries its own review date. Website: https://balance0014.github.io/post-quantum-blockchains/"

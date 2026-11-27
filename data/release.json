@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "published_on": "2026-11-27",
   "first_review_date": "2026-10-23",
   "maintainer": "Balance Zhao",
@@ -16,9 +16,9 @@
       "generated_by": "scripts/charts.py"
     }
   ],
-  "scope": "Continuously maintained, source-checked map of post-quantum cryptography in blockchains, plus separately dated Bitcoin migration research; each project entry carries its own review date; not a security ranking",
+  "scope": "Continuously maintained, source-checked map of post-quantum cryptography in blockchains, with a stage tracker website (stage 0 to 5 per chain, from data/chains.json), a weekly network patrol, and separately dated Bitcoin migration research; each entry carries its own review date; not a security ranking",
   "submission_review_days": 7,
-  "scheduled_network_recheck": false,
+  "scheduled_network_recheck": true,
   "research_notes": [
     {
       "id": "bitcoin-migration-r8-bruter",

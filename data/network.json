@@ -1,0 +1,1763 @@
+{
+ "checked_at_utc": "2026-11-27T15:12:06Z",
+ "window_start": "2026-08-29",
+ "rule": {
+  "stall_min_minutes": 10,
+  "stall_multiple": 6,
+  "window_days": 90
+ },
+ "chains": {
+  "bitcoin": {
+   "threshold_min": 60,
+   "block": {
+    "ok": true,
+    "height": 977813,
+    "time_utc": "2026-11-27T13:52:12Z",
+    "queried_at_utc": "2026-11-27T14:05:56Z",
+    "age_minutes": 13.7,
+    "source": "https://blockstream.info/api"
+   },
+   "code": {
+    "repo": "bitcoin/bitcoin",
+    "release": "v30.5",
+    "release_date": "2026-11-20",
+    "prerelease": false,
+    "commits_90d": 1270,
+    "last_commit": "2026-11-27"
+   },
+   "watch": {
+    "BIP-360": {
+     "label": "BIP-360",
+     "state": "Draft",
+     "comments": null,
+     "url": "https://github.com/bitcoin/bips/blob/HEAD/bip-0360.mediawiki"
+    },
+    "BIP-361": {
+     "label": "BIP-361",
+     "state": "Draft",
+     "comments": null,
+     "url": "https://github.com/bitcoin/bips/blob/HEAD/bip-0361.mediawiki"
+    },
+    "BIP-362 PR": {
+     "label": "BIP-362 PR",
+     "state": "open",
+     "comments": 101,
+     "url": "https://github.com/bitcoin/bips/pull/2294"
+    }
+   },
+   "status": "ok"
+  },
+  "ethereum": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 26507031,
+    "time_utc": "2026-11-27T14:06:11Z",
+    "queried_at_utc": "2026-11-27T14:06:13Z",
+    "age_minutes": 0.0,
+    "source": "https://ethereum-rpc.publicnode.com"
+   },
+   "code": {
+    "repo": "ethereum/go-ethereum",
+    "release": "v1.17.10",
+    "release_date": "2026-10-23",
+    "prerelease": false,
+    "commits_90d": 240,
+    "last_commit": "2026-11-27"
+   },
+   "watch": {
+    "EIP-8051": {
+     "label": "EIP-8051",
+     "state": "Draft",
+     "comments": null,
+     "url": "https://github.com/ethereum/EIPs/blob/HEAD/EIPS/eip-8051.md"
+    },
+    "EIP-8052": {
+     "label": "EIP-8052",
+     "state": "Draft",
+     "comments": null,
+     "url": "https://github.com/ethereum/EIPs/blob/HEAD/EIPS/eip-8052.md"
+    },
+    "EIP-8141": {
+     "label": "EIP-8141",
+     "state": "Draft",
+     "comments": null,
+     "url": "https://github.com/ethereum/EIPs/blob/HEAD/EIPS/eip-8141.md"
+    }
+   },
+   "status": "ok"
+  },
+  "bnb-chain": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 136051691,
+    "time_utc": "2026-11-27T14:06:32Z",
+    "queried_at_utc": "2026-11-27T14:06:33Z",
+    "age_minutes": 0.0,
+    "source": "https://bsc-dataseed.bnbchain.org"
+   },
+   "code": {
+    "repo": "bnb-chain/bsc",
+    "release": "tmp-master-4bd1c730-20261117",
+    "release_date": "2026-11-17",
+    "prerelease": false,
+    "commits_90d": 29,
+    "last_commit": "2026-11-17"
+   },
+   "watch": {
+    "BEP-713 PR": {
+     "label": "BEP-713 PR",
+     "state": "open",
+     "comments": 5,
+     "url": "https://github.com/bnb-chain/BEPs/pull/713"
+    },
+    "BEP-736 PR": {
+     "label": "BEP-736 PR",
+     "state": "open",
+     "comments": 0,
+     "url": "https://github.com/bnb-chain/BEPs/pull/736"
+    }
+   },
+   "status": "ok"
+  },
+  "xrp-ledger": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 108607251,
+    "time_utc": "2026-11-27T14:06:40Z",
+    "queried_at_utc": "2026-11-27T14:06:46Z",
+    "age_minutes": 0.1,
+    "source": "https://xrplcluster.com"
+   },
+   "code": {
+    "repo": "XRPLF/rippled",
+    "release": "3.4.1",
+    "release_date": "2026-10-10",
+    "prerelease": false,
+    "commits_90d": 281,
+    "last_commit": "2026-11-25"
+   },
+   "status": "ok"
+  },
+  "solana": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 474577727,
+    "time_utc": "2026-11-27T14:06:52Z",
+    "queried_at_utc": "2026-11-27T14:06:53Z",
+    "age_minutes": 0.0,
+    "source": "https://api.mainnet-beta.solana.com"
+   },
+   "code": {
+    "repo": "anza-xyz/agave",
+    "release": "v4.5.0-rc.0",
+    "release_date": "2026-11-25",
+    "prerelease": true,
+    "commits_90d": 1211,
+    "last_commit": "2026-11-27"
+   },
+   "watch": {
+    "solana-sdk PR #537": {
+     "label": "solana-sdk PR #537",
+     "state": "open",
+     "comments": 0,
+     "url": "https://github.com/anza-xyz/solana-sdk/pull/537"
+    }
+   },
+   "status": "ok"
+  },
+  "tron": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 88371377,
+    "time_utc": "2026-11-27T14:06:57Z",
+    "queried_at_utc": "2026-11-27T14:07:01Z",
+    "age_minutes": 0.1,
+    "source": "https://api.trongrid.io"
+   },
+   "code": {
+    "repo": "tronprotocol/java-tron",
+    "release": "GreatVoyage-v4.8.2.4",
+    "release_date": "2026-10-22",
+    "prerelease": false,
+    "commits_90d": 8,
+    "last_commit": "2026-09-11"
+   },
+   "watch": {
+    "TIP-899": {
+     "label": "TIP-899",
+     "state": "open",
+     "comments": 56,
+     "url": "https://github.com/tronprotocol/tips/issues/899"
+    }
+   },
+   "status": "ok"
+  },
+  "hyperliquid": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 52390271,
+    "time_utc": "2026-11-27T14:07:09Z",
+    "queried_at_utc": "2026-11-27T14:07:09Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc.hyperliquid.xyz/evm"
+   },
+   "status": "ok"
+  },
+  "zcash": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 3617442,
+    "time_utc": "2026-11-27T14:06:33Z",
+    "queried_at_utc": "2026-11-27T14:07:12Z",
+    "age_minutes": 0.7,
+    "source": "https://api.blockchair.com/zcash/stats"
+   },
+   "code": {
+    "repo": "ZcashFoundation/zebra",
+    "release": "v7.2.0-beta.3",
+    "release_date": "2026-11-20",
+    "prerelease": true,
+    "commits_90d": 1113,
+    "last_commit": "2026-11-26"
+   },
+   "status": "ok"
+  },
+  "dogecoin": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 6475076,
+    "time_utc": "2026-11-27T14:05:50Z",
+    "queried_at_utc": "2026-11-27T14:07:23Z",
+    "age_minutes": 1.6,
+    "source": "https://api.blockchair.com/dogecoin/stats"
+   },
+   "code": {
+    "repo": "dogecoin/dogecoin",
+    "release": "v1.14.9",
+    "release_date": "2024-12-01",
+    "prerelease": false,
+    "commits_90d": 29,
+    "last_commit": "2026-11-19"
+   },
+   "status": "ok"
+  },
+  "monero": {
+   "threshold_min": 12,
+   "block": {
+    "ok": true,
+    "height": 3815596,
+    "time_utc": "2026-11-27T14:02:44Z",
+    "queried_at_utc": "2026-11-27T14:07:34Z",
+    "age_minutes": 4.8,
+    "source": "https://xmrchain.net/api/transactions?page=0&limit=1"
+   },
+   "code": {
+    "repo": "monero-project/monero",
+    "release": "v0.18.5.4",
+    "release_date": "2026-10-17",
+    "prerelease": false,
+    "commits_90d": 680,
+    "last_commit": "2026-11-25"
+   },
+   "watch": {
+    "MRL #159": {
+     "label": "MRL #159",
+     "state": "open",
+     "comments": 14,
+     "url": "https://github.com/monero-project/research-lab/issues/159"
+    },
+    "MRL #151": {
+     "label": "MRL #151",
+     "state": "open",
+     "comments": 30,
+     "url": "https://github.com/monero-project/research-lab/issues/151"
+    }
+   },
+   "status": "ok"
+  },
+  "nexus": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 6954652,
+    "time_utc": "2026-11-27T14:07:20Z",
+    "queried_at_utc": "2026-11-27T14:07:47Z",
+    "age_minutes": 0.5,
+    "source": "https://explorer.nexus.io/api/v1/mainnet/ledger/list/blocks?limit=1&verbose=summary"
+   },
+   "code": {
+    "repo": "Nexusoft/LLL-TAO",
+    "release": "5.1.6",
+    "release_date": "2026-04-10",
+    "prerelease": false,
+    "commits_90d": 1,
+    "last_commit": "2026-09-03"
+   },
+   "status": "ok"
+  },
+  "starknet": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 18624393,
+    "time_utc": "2026-11-27T14:07:54Z",
+    "queried_at_utc": "2026-11-27T14:07:59Z",
+    "age_minutes": 0.1,
+    "source": "https://starknet-rpc.publicnode.com"
+   },
+   "code": {
+    "repo": "NethermindEth/juno",
+    "release": "v0.17.1",
+    "release_date": "2026-11-25",
+    "prerelease": false,
+    "commits_90d": 262,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "eqlabs/pathfinder",
+     "release": "v0.24.3",
+     "release_date": "2026-11-25",
+     "prerelease": false,
+     "commits_90d": 44,
+     "last_commit": "2026-11-24"
+    }
+   ],
+   "status": "ok"
+  },
+  "algorand": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 67353445,
+    "time_utc": "2026-11-27T14:08:28Z",
+    "queried_at_utc": "2026-11-27T14:08:34Z",
+    "age_minutes": 0.1,
+    "source": "https://mainnet-api.algonode.cloud"
+   },
+   "code": {
+    "repo": "algorand/go-algorand",
+    "release": "v5.1.1-stable",
+    "release_date": "2026-11-19",
+    "prerelease": false,
+    "commits_90d": 105,
+    "last_commit": "2026-11-25"
+   },
+   "status": "ok"
+  },
+  "nervos-ckb": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 21124426,
+    "time_utc": "2026-11-27T14:08:42Z",
+    "queried_at_utc": "2026-11-27T14:08:51Z",
+    "age_minutes": 0.1,
+    "source": "https://mainnet.ckb.dev/rpc"
+   },
+   "code": {
+    "repo": "nervosnetwork/ckb",
+    "release": "v0.210.0",
+    "release_date": "2026-09-17",
+    "prerelease": false,
+    "commits_90d": 45,
+    "last_commit": "2026-11-24"
+   },
+   "status": "ok"
+  },
+  "raqcoin": {
+   "threshold_min": 60,
+   "block": {
+    "ok": true,
+    "height": 508586,
+    "time_utc": "2026-11-27T14:07:29Z",
+    "queried_at_utc": "2026-11-27T14:09:04Z",
+    "age_minutes": 1.6,
+    "source": "https://api.abcscan.io/api/abc/v1/latestblocknum"
+   },
+   "code": {
+    "repo": "RAQ-coin/Raqcoin",
+    "release": "v0.1.0",
+    "release_date": "2026-01-07",
+    "prerelease": false,
+    "commits_90d": 0,
+    "last_commit": "2026-01-22"
+   },
+   "code_also": [
+    {
+     "repo": "abcmint/abcmint",
+     "commits_90d": 0,
+     "last_commit": "2025-10-13"
+    }
+   ],
+   "status": "quiet"
+  },
+  "mochimo": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 1173589,
+    "time_utc": "2026-11-27T14:09:03Z",
+    "queried_at_utc": "2026-11-27T14:09:13Z",
+    "age_minutes": 0.2,
+    "source": "https://api.mochimo.org/network/status"
+   },
+   "code": {
+    "repo": "mochimodev/mochimo",
+    "release": "v3.1.0-beta",
+    "release_date": "2026-04-18",
+    "prerelease": true,
+    "commits_90d": 0,
+    "last_commit": "2026-04-18"
+   },
+   "status": "quiet"
+  },
+  "qrl": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 4442409,
+    "time_utc": "2026-11-27T14:05:56Z",
+    "queried_at_utc": "2026-11-27T14:09:20Z",
+    "age_minutes": 3.4,
+    "source": "https://explorer.theqrl.org/api/status"
+   },
+   "code": {
+    "repo": "theQRL/QRL",
+    "release": "v4.0.13",
+    "release_date": "2026-11-19",
+    "prerelease": false,
+    "commits_90d": 32,
+    "last_commit": "2026-11-18"
+   },
+   "code_also": [
+    {
+     "repo": "theQRL/qrysm",
+     "release": "v0.2.2",
+     "release_date": "2025-08-08",
+     "prerelease": false,
+     "commits_90d": 253,
+     "last_commit": "2026-11-18"
+    },
+    {
+     "repo": "theQRL/go-qrl",
+     "release": "v0.3.3",
+     "release_date": "2026-04-08",
+     "prerelease": false,
+     "commits_90d": 70,
+     "last_commit": "2026-10-20"
+    }
+   ],
+   "status": "ok"
+  },
+  "tidecoin": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 2827768,
+    "time_utc": "2026-11-27T14:08:49Z",
+    "queried_at_utc": "2026-11-27T14:09:35Z",
+    "age_minutes": 0.8,
+    "source": "https://explorer.tidecoin.org/api/getblockcount"
+   },
+   "code": {
+    "repo": "tidecoin/tidecoin",
+    "release": "v1.0.0rc4",
+    "release_date": "2026-11-23",
+    "prerelease": true,
+    "commits_90d": 63,
+    "last_commit": "2026-11-23"
+   },
+   "status": "ok"
+  },
+  "abelian": {
+   "threshold_min": 25,
+   "block": {
+    "ok": true,
+    "height": 578206,
+    "time_utc": "2026-11-27T14:06:42Z",
+    "queried_at_utc": "2026-11-27T14:09:40Z",
+    "age_minutes": 3.0,
+    "source": "https://api.pqabelian.io/v2/summary"
+   },
+   "code": {
+    "repo": "pqabelian/abec",
+    "release": "v2.0.1",
+    "release_date": "2025-03-29",
+    "tag_only": true,
+    "commits_90d": 63,
+    "last_commit": "2026-10-12"
+   },
+   "status": "ok"
+  },
+  "cellframe": {
+   "threshold_min": 10,
+   "block": {
+    "ok": false,
+    "source": null,
+    "error": {
+     "en": "No public block API found; scan.cellframe.net timed out on 2026-11-27.",
+     "zh": "没有找到公开的出块接口；2026-11-27 访问 scan.cellframe.net 超时。"
+    }
+   },
+   "code": {
+    "repo": "demlabs-cellframe/cellframe-node",
+    "release": "qa-system-v1.0",
+    "release_date": "2025-10-10",
+    "tag_only": true,
+    "commits_90d": 8,
+    "last_commit": "2026-10-05"
+   },
+   "status": "unknown"
+  },
+  "quantumcoin": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 5128616,
+    "time_utc": "2026-11-27T14:09:18Z",
+    "queried_at_utc": "2026-11-27T14:09:53Z",
+    "age_minutes": 0.6,
+    "source": "https://public.rpc.quantumcoinapi.com"
+   },
+   "code": {
+    "repo": "quantumcoinproject/quantum-coin-go",
+    "release": "test-v2.0.85",
+    "release_date": "2026-08-29",
+    "prerelease": false,
+    "commits_90d": 2,
+    "last_commit": "2026-08-29"
+   },
+   "status": "ok"
+  },
+  "neptune-cash": {
+   "threshold_min": 59,
+   "block": {
+    "ok": false,
+    "source": null,
+    "error": {
+     "en": "No public block API found; explorer.neptune.cash returned HTTP 502 on 2026-11-27.",
+     "zh": "没有找到公开的出块接口；2026-11-27 访问 explorer.neptune.cash 返回 502 错误。"
+    }
+   },
+   "code": {
+    "repo": "Neptune-Crypto/neptune-core",
+    "release": "v0.20.1",
+    "release_date": "2026-11-06",
+    "prerelease": false,
+    "commits_90d": 438,
+    "last_commit": "2026-11-08"
+   },
+   "status": "unknown"
+  },
+  "quantus": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 484437,
+    "time_utc": "2026-11-27T14:09:41Z",
+    "queried_at_utc": "2026-11-27T14:10:06Z",
+    "age_minutes": 0.4,
+    "source": "https://sqm.quantus.com/v1/graphql"
+   },
+   "code": {
+    "repo": "Quantus-Network/chain",
+    "release": "v1.0.5",
+    "release_date": "2026-10-28",
+    "prerelease": false,
+    "commits_90d": 119,
+    "last_commit": "2026-11-16"
+   },
+   "status": "ok"
+  },
+  "xcoin": {
+   "threshold_min": 30,
+   "block": {
+    "ok": true,
+    "height": 18453,
+    "time_utc": "2026-11-27T14:02:56Z",
+    "queried_at_utc": "2026-11-27T14:10:12Z",
+    "age_minutes": 7.3,
+    "source": "https://superknet.com/api/blocktimes.csv"
+   },
+   "code": {
+    "repo": "SystemThreat/xCoin",
+    "release": "v31.99.1",
+    "release_date": "2026-09-28",
+    "prerelease": false,
+    "commits_90d": 30,
+    "last_commit": "2026-10-25"
+   },
+   "status": "ok"
+  },
+  "qtcchain": {
+   "threshold_min": 67,
+   "block": {
+    "ok": true,
+    "height": 8236,
+    "time_utc": "2026-11-27T14:08:53Z",
+    "queried_at_utc": "2026-11-27T14:10:17Z",
+    "age_minutes": 1.4,
+    "source": "https://qtc.events/blocks"
+   },
+   "code": {
+    "repo": "qtcchain/qtc",
+    "release": "v0.2.5",
+    "release_date": "2026-10-20",
+    "prerelease": false,
+    "commits_90d": 93,
+    "last_commit": "2026-10-20"
+   },
+   "status": "ok"
+  },
+  "soqucoin": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 66036,
+    "time_utc": "2026-11-27T14:09:29Z",
+    "queried_at_utc": "2026-11-27T14:10:24Z",
+    "age_minutes": 0.9,
+    "source": "https://explorer.soqu.org/api/blocks/tip"
+   },
+   "code": {
+    "repo": "soqucoin/soqucoin",
+    "release": "v2.6.1",
+    "release_date": "2026-10-29",
+    "prerelease": false,
+    "commits_90d": 472,
+    "last_commit": "2026-11-26"
+   },
+   "status": "ok"
+  },
+  "qanplatform": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 4148075,
+    "time_utc": "2026-11-27T14:16:08Z",
+    "queried_at_utc": "2026-11-27T14:16:11Z",
+    "age_minutes": 0.1,
+    "source": "https://rpc-testnet.qanplatform.com"
+   },
+   "status": "ok"
+  },
+  "bitcoin-cash": {
+   "threshold_min": 60,
+   "block": {
+    "ok": true,
+    "height": 979202,
+    "time_utc": "2026-11-27T14:25:53Z",
+    "queried_at_utc": "2026-11-27T14:33:19Z",
+    "age_minutes": 7.4,
+    "source": "https://api.blockchair.com/bitcoin-cash/stats"
+   },
+   "code": {
+    "repo": "bitcoin-cash-node/bitcoin-cash-node",
+    "release": "v29.2.0",
+    "release_date": "2026-10-02",
+    "prerelease": false,
+    "commits_90d": 76,
+    "last_commit": "2026-10-01"
+   },
+   "code_also": [
+    {
+     "repo": "bitjson/quantumroot",
+     "commits_90d": 0,
+     "last_commit": "2025-11-20"
+    }
+   ],
+   "status": "ok"
+  },
+  "litecoin": {
+   "threshold_min": 15,
+   "block": {
+    "ok": true,
+    "height": 3220334,
+    "time_utc": "2026-11-27T14:31:54Z",
+    "queried_at_utc": "2026-11-27T14:33:30Z",
+    "age_minutes": 1.6,
+    "source": "https://litecoinspace.org/api"
+   },
+   "code": {
+    "repo": "litecoin-project/litecoin",
+    "release": "v0.21.5.8",
+    "release_date": "2026-09-12",
+    "prerelease": false,
+    "commits_90d": 13,
+    "last_commit": "2026-11-13"
+   },
+   "status": "ok"
+  },
+  "ethereum-classic": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 25816223,
+    "time_utc": "2026-11-27T14:33:19Z",
+    "queried_at_utc": "2026-11-27T14:33:35Z",
+    "age_minutes": 0.3,
+    "source": "https://geth-at.etc-network.info"
+   },
+   "code": {
+    "repo": "etclabscore/core-geth",
+    "release": "v1.12.23",
+    "release_date": "2026-08-14",
+    "prerelease": false,
+    "commits_90d": 58,
+    "last_commit": "2026-11-08"
+   },
+   "code_also": [
+    {
+     "repo": "ethereumclassic/core-geth",
+     "release": "v1.13.0",
+     "release_date": "2026-09-14",
+     "prerelease": false,
+     "commits_90d": 289,
+     "last_commit": "2026-10-12"
+    }
+   ],
+   "status": "ok"
+  },
+  "dash": {
+   "threshold_min": 15,
+   "block": {
+    "ok": true,
+    "height": 2579318,
+    "time_utc": "2026-11-27T14:32:23Z",
+    "queried_at_utc": "2026-11-27T14:33:45Z",
+    "age_minutes": 1.4,
+    "source": "https://api.blockchair.com/dash/stats"
+   },
+   "code": {
+    "repo": "dashpay/dash",
+    "release": "v24.0.3",
+    "release_date": "2026-11-23",
+    "prerelease": false,
+    "commits_90d": 2376,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "dashpay/platform",
+     "release": "v5.1.0",
+     "release_date": "2026-11-26",
+     "prerelease": false,
+     "commits_90d": 1422,
+     "last_commit": "2026-11-27"
+    }
+   ],
+   "status": "ok"
+  },
+  "kaspa": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 603694947,
+    "time_utc": "2026-11-27T14:33:51Z",
+    "queried_at_utc": "2026-11-27T14:33:55Z",
+    "age_minutes": 0.1,
+    "source": "https://api.kaspa.org/info/blockdag"
+   },
+   "code": {
+    "repo": "kaspanet/rusty-kaspa",
+    "release": "v2.1.0",
+    "release_date": "2026-09-22",
+    "prerelease": false,
+    "commits_90d": 22,
+    "last_commit": "2026-11-23"
+   },
+   "status": "ok"
+  },
+  "beldex": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 5963017,
+    "time_utc": "2026-11-27T14:33:47Z",
+    "queried_at_utc": "2026-11-27T14:34:01Z",
+    "age_minutes": 0.2,
+    "source": "https://explorer.beldex.io/api/networkinfo"
+   },
+   "code": {
+    "repo": "Beldex-Coin/beldex",
+    "release": "v7.0.4",
+    "release_date": "2026-09-23",
+    "prerelease": false,
+    "commits_90d": 20,
+    "last_commit": "2026-11-16"
+   },
+   "status": "ok"
+  },
+  "cardano": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 14255480,
+    "time_utc": "2026-11-27T14:34:06Z",
+    "queried_at_utc": "2026-11-27T14:34:07Z",
+    "age_minutes": 0.0,
+    "source": "https://api.koios.rest/api/v1/tip"
+   },
+   "code": {
+    "repo": "IntersectMBO/cardano-node",
+    "release": "11.2.1",
+    "release_date": "2026-11-10",
+    "prerelease": true,
+    "commits_90d": 283,
+    "last_commit": "2026-11-23"
+   },
+   "code_also": [
+    {
+     "repo": "IntersectMBO/ouroboros-consensus",
+     "release": "strict-stop-core-0.1.0.0",
+     "release_date": "2023-09-07",
+     "tag_only": true,
+     "commits_90d": 678,
+     "last_commit": "2026-11-26"
+    },
+    {
+     "repo": "IntersectMBO/cardano-ledger",
+     "release": "cardano-ledger-spec-2023-04-03",
+     "release_date": "2023-04-03",
+     "prerelease": false,
+     "commits_90d": 604,
+     "last_commit": "2026-11-26"
+    }
+   ],
+   "status": "ok"
+  },
+  "near": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 226468180,
+    "time_utc": "2026-11-27T14:34:24Z",
+    "queried_at_utc": "2026-11-27T14:34:28Z",
+    "age_minutes": 0.1,
+    "source": "https://rpc.mainnet.near.org"
+   },
+   "code": {
+    "repo": "near/nearcore",
+    "release": "2.15.0-rc.1",
+    "release_date": "2026-11-24",
+    "prerelease": true,
+    "commits_90d": 383,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "near/near-cli-rs",
+     "release": "v0.31.1",
+     "release_date": "2026-11-05",
+     "prerelease": false,
+     "commits_90d": 34,
+     "last_commit": "2026-11-25"
+    }
+   ],
+   "status": "ok"
+  },
+  "avalanche": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 101548871,
+    "time_utc": "2026-11-27T14:34:37Z",
+    "queried_at_utc": "2026-11-27T14:34:39Z",
+    "age_minutes": 0.0,
+    "source": "https://api.avax.network/ext/bc/C/rpc"
+   },
+   "code": {
+    "repo": "ava-labs/avalanchego",
+    "release": "v1.15.3",
+    "release_date": "2026-11-05",
+    "prerelease": false,
+    "commits_90d": 370,
+    "last_commit": "2026-11-25"
+   },
+   "status": "ok"
+  },
+  "polkadot": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 34061564,
+    "time_utc": "2026-11-27T14:40:24Z",
+    "queried_at_utc": "2026-11-27T14:40:49Z",
+    "age_minutes": 0.4,
+    "source": "https://polkadot-public-sidecar.parity-chains.parity.io"
+   },
+   "code": {
+    "repo": "paritytech/polkadot-sdk",
+    "release": "polkadot-stable2611",
+    "release_date": "2026-11-26",
+    "prerelease": false,
+    "commits_90d": 361,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "polkadot-fellows/runtimes",
+     "release": "v2.6.0",
+     "release_date": "2026-11-19",
+     "prerelease": false,
+     "commits_90d": 43,
+     "last_commit": "2026-11-20"
+    },
+    {
+     "repo": "polkadot-fellows/RFCs",
+     "commits_90d": 3,
+     "last_commit": "2026-11-18"
+    }
+   ],
+   "status": "ok"
+  },
+  "cosmos": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 34074237,
+    "time_utc": "2026-11-27T14:41:01Z",
+    "queried_at_utc": "2026-11-27T14:41:13Z",
+    "age_minutes": 0.2,
+    "source": "https://cosmos-rest.publicnode.com"
+   },
+   "code": {
+    "repo": "cosmos/gaia",
+    "release": "v29.1.0",
+    "release_date": "2026-11-09",
+    "prerelease": false,
+    "commits_90d": 72,
+    "last_commit": "2026-11-25"
+   },
+   "code_also": [
+    {
+     "repo": "cosmos/cosmos-sdk",
+     "release": "v0.55.1",
+     "release_date": "2026-11-14",
+     "prerelease": false,
+     "commits_90d": 67,
+     "last_commit": "2026-11-23"
+    },
+    {
+     "repo": "cometbft/cometbft",
+     "release": "v0.38.26",
+     "release_date": "2026-08-13",
+     "prerelease": false,
+     "commits_90d": 37,
+     "last_commit": "2026-11-25"
+    }
+   ],
+   "status": "ok"
+  },
+  "internet-computer": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 40745044,
+    "time_utc": "2026-11-27T14:41:19Z",
+    "queried_at_utc": "2026-11-27T14:41:27Z",
+    "age_minutes": 0.1,
+    "source": "https://ledger-api.internetcomputer.org/v2/transactions?limit=1&sort_by=-block_height"
+   },
+   "code": {
+    "repo": "dfinity/ic",
+    "release": "release-2026-11-27_03-20-base",
+    "release_date": "2026-11-27",
+    "prerelease": false,
+    "commits_90d": 793,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "dfinity/internet-identity",
+     "release": "release-2026-11-19",
+     "release_date": "2026-11-19",
+     "prerelease": false,
+     "commits_90d": 127,
+     "last_commit": "2026-11-25"
+    }
+   ],
+   "status": "ok"
+  },
+  "stellar": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 65700883,
+    "time_utc": "2026-11-27T14:41:30Z",
+    "queried_at_utc": "2026-11-27T14:41:37Z",
+    "age_minutes": 0.1,
+    "source": "https://horizon.stellar.org"
+   },
+   "code": {
+    "repo": "stellar/stellar-core",
+    "release": "v30.0.0",
+    "release_date": "2026-10-16",
+    "prerelease": false,
+    "commits_90d": 131,
+    "last_commit": "2026-11-24"
+   },
+   "code_also": [
+    {
+     "repo": "stellar/rs-soroban-env",
+     "release": "v30.0.1",
+     "release_date": "2026-11-18",
+     "prerelease": false,
+     "commits_90d": 18,
+     "last_commit": "2026-11-19"
+    },
+    {
+     "repo": "stellar/stellar-protocol",
+     "commits_90d": 31,
+     "last_commit": "2026-11-26"
+    }
+   ],
+   "status": "ok"
+  },
+  "ton": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 108154343,
+    "time_utc": "2026-11-27T14:41:50Z",
+    "queried_at_utc": "2026-11-27T14:41:50Z",
+    "age_minutes": 0.0,
+    "source": "https://toncenter.com/api/v3/masterchainInfo"
+   },
+   "code": {
+    "repo": "ton-blockchain/ton",
+    "release": "v2026.11",
+    "release_date": "2026-11-23",
+    "prerelease": false,
+    "commits_90d": 217,
+    "last_commit": "2026-11-23"
+   },
+   "code_also": [
+    {
+     "repo": "ton-blockchain/TEPs",
+     "commits_90d": 5,
+     "last_commit": "2026-10-26"
+    }
+   ],
+   "status": "ok"
+  },
+  "sui": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 349802120,
+    "time_utc": "2026-11-27T14:42:02Z",
+    "queried_at_utc": "2026-11-27T14:42:04Z",
+    "age_minutes": 0.0,
+    "source": "https://graphql.mainnet.sui.io/graphql"
+   },
+   "code": {
+    "repo": "MystenLabs/sui",
+    "release": "testnet-v1.85.1",
+    "release_date": "2026-11-24",
+    "prerelease": false,
+    "commits_90d": 488,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "MystenLabs/fastcrypto",
+     "release": "fastcrypto-vdf-v0.1.1",
+     "release_date": "2026-11-09",
+     "prerelease": false,
+     "commits_90d": 120,
+     "last_commit": "2026-11-25"
+    },
+    {
+     "repo": "sui-foundation/sips",
+     "commits_90d": 1,
+     "last_commit": "2026-10-28"
+    }
+   ],
+   "status": "ok"
+  },
+  "hedera": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 102844269,
+    "time_utc": "2026-11-27T14:42:01Z",
+    "queried_at_utc": "2026-11-27T14:42:21Z",
+    "age_minutes": 0.3,
+    "source": "https://mainnet-public.mirrornode.hedera.com/api/v1/blocks?limit=1&order=desc"
+   },
+   "code": {
+    "repo": "hiero-ledger/hiero-consensus-node",
+    "release": "v0.79.4",
+    "release_date": "2026-11-24",
+    "prerelease": false,
+    "commits_90d": 613,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "hiero-ledger/hiero-improvement-proposals",
+     "commits_90d": 36,
+     "last_commit": "2026-11-24"
+    }
+   ],
+   "status": "ok"
+  },
+  "xdc-network": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 109795304,
+    "time_utc": "2026-11-27T14:42:32Z",
+    "queried_at_utc": "2026-11-27T14:42:33Z",
+    "age_minutes": 0.0,
+    "source": "https://erpc.xinfin.network"
+   },
+   "code": {
+    "repo": "XinFinOrg/XDPoSChain",
+    "release": "v3.0.0-testnet-2",
+    "release_date": "2026-10-27",
+    "prerelease": true,
+    "commits_90d": 215,
+    "last_commit": "2026-10-27"
+   },
+   "status": "ok"
+  },
+  "canton-network": {
+   "threshold_min": 10,
+   "block": {
+    "ok": false,
+    "source": null,
+    "error": {
+     "en": "No free public endpoint returns the latest block: the Global Synchronizer's Scan APIs answered 403 without credentials on 2026-11-27, and the explorer APIs need paid keys. Canton orders transactions on a sequencer rather than in a public chain of blocks.",
+     "zh": "没有免费的公开接口能读到最新区块：2026-11-27 未登录访问 Global Synchronizer 的 Scan 接口返回 403，区块浏览器的接口需要付费密钥。Canton 由排序器给交易排序，没有公开的区块链。"
+    }
+   },
+   "code": {
+    "repo": "digital-asset/canton",
+    "release": "v3.7.5",
+    "release_date": "2026-11-26",
+    "prerelease": false,
+    "commits_90d": 25,
+    "last_commit": "2026-11-23"
+   },
+   "code_also": [
+    {
+     "repo": "canton-network/splice",
+     "release": "next-cilr",
+     "release_date": "2026-05-06",
+     "tag_only": true,
+     "commits_90d": 842,
+     "last_commit": "2026-11-27"
+    },
+    {
+     "repo": "canton-foundation/cips",
+     "commits_90d": 36,
+     "last_commit": "2026-11-24"
+    }
+   ],
+   "status": "unknown"
+  },
+  "bittensor": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 9598888,
+    "time_utc": "2026-11-27T14:45:24Z",
+    "queried_at_utc": "2026-11-27T14:45:30Z",
+    "age_minutes": 0.1,
+    "source": "https://lite.chain.opentensor.ai"
+   },
+   "code": {
+    "repo": "RaoFoundation/subtensor",
+    "release": "v497",
+    "release_date": "2026-11-25",
+    "prerelease": false,
+    "commits_90d": 776,
+    "last_commit": "2026-11-25"
+   },
+   "code_also": [
+    {
+     "repo": "opentensor/btcli",
+     "release": "v9.23.1",
+     "release_date": "2026-06-25",
+     "prerelease": false,
+     "commits_90d": 0,
+     "last_commit": "2026-07-12"
+    },
+    {
+     "repo": "opentensor/bittensor",
+     "release": "v10.5.0",
+     "release_date": "2026-06-25",
+     "prerelease": false,
+     "commits_90d": 0,
+     "last_commit": "2026-07-10"
+    }
+   ],
+   "status": "ok"
+  },
+  "cronos": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 108410322,
+    "time_utc": "2026-11-27T14:45:48Z",
+    "queried_at_utc": "2026-11-27T14:45:49Z",
+    "age_minutes": 0.0,
+    "source": "https://evm.cronos.org"
+   },
+   "code": {
+    "repo": "crypto-org-chain/cronos",
+    "release": "v1.8.2",
+    "release_date": "2026-11-09",
+    "prerelease": false,
+    "commits_90d": 50,
+    "last_commit": "2026-11-17"
+   },
+   "code_also": [
+    {
+     "repo": "crypto-org-chain/chain-main",
+     "release": "v8.0.1",
+     "release_date": "2026-10-08",
+     "prerelease": false,
+     "commits_90d": 3,
+     "last_commit": "2026-11-23"
+    }
+   ],
+   "status": "ok"
+  },
+  "mantle": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 103830222,
+    "time_utc": "2026-11-27T14:45:56Z",
+    "queried_at_utc": "2026-11-27T14:45:58Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc.mantle.xyz"
+   },
+   "code": {
+    "repo": "mantle-xyz/mantle-v2",
+    "release": "v1.6.3",
+    "release_date": "2026-09-21",
+    "prerelease": false,
+    "commits_90d": 49,
+    "last_commit": "2026-11-06"
+   },
+   "code_also": [
+    {
+     "repo": "mantle-xyz/op-geth",
+     "release": "v1.6.3",
+     "release_date": "2026-09-21",
+     "prerelease": false,
+     "commits_90d": 17,
+     "last_commit": "2026-11-06"
+    }
+   ],
+   "status": "ok"
+  },
+  "kcc": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 57748364,
+    "time_utc": "2026-11-27T14:46:07Z",
+    "queried_at_utc": "2026-11-27T14:46:07Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc-mainnet.kcc.network"
+   },
+   "code": {
+    "repo": "kcc-community/kcc",
+    "release": "v1.4.8-stable",
+    "release_date": "2025-07-02",
+    "prerelease": false,
+    "commits_90d": 0,
+    "last_commit": "2025-07-02"
+   },
+   "code_also": [
+    {
+     "repo": "kcc-community/KIPs",
+     "commits_90d": 0,
+     "last_commit": "2022-05-13"
+    }
+   ],
+   "status": "quiet"
+  },
+  "polygon": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 98056866,
+    "time_utc": "2026-11-27T14:46:17Z",
+    "queried_at_utc": "2026-11-27T14:46:17Z",
+    "age_minutes": 0.0,
+    "source": "https://polygon-bor-rpc.publicnode.com"
+   },
+   "code": {
+    "repo": "0xPolygon/bor",
+    "release": "v2.12.0-beta",
+    "release_date": "2026-11-23",
+    "prerelease": true,
+    "commits_90d": 273,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "0xPolygon/heimdall-v2",
+     "release": "v0.14.2",
+     "release_date": "2026-11-27",
+     "prerelease": false,
+     "commits_90d": 60,
+     "last_commit": "2026-11-27"
+    },
+    {
+     "repo": "0xPolygon/Polygon-Improvement-Proposals",
+     "commits_90d": 35,
+     "last_commit": "2026-11-26"
+    }
+   ],
+   "status": "ok"
+  },
+  "gate-layer": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 37707602,
+    "time_utc": "2026-11-27T14:46:39Z",
+    "queried_at_utc": "2026-11-27T14:46:39Z",
+    "age_minutes": 0.0,
+    "source": "https://gatelayer-mainnet.gatenode.cc"
+   },
+   "code": {
+    "repo": "gatechain/node-binary",
+    "commits_90d": 1,
+    "last_commit": "2026-11-05"
+   },
+   "code_also": [
+    {
+     "repo": "gatechain/gatechain-docs",
+     "commits_90d": 0,
+     "last_commit": "2025-03-26"
+    }
+   ],
+   "status": "ok"
+  },
+  "injective": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 193574825,
+    "time_utc": "2026-11-27T14:46:52Z",
+    "queried_at_utc": "2026-11-27T14:46:53Z",
+    "age_minutes": 0.0,
+    "source": "https://sentry.tm.injective.network"
+   },
+   "code": {
+    "repo": "InjectiveLabs/injective-chain-releases",
+    "release": "v1.17.2-1765930431",
+    "release_date": "2025-12-17",
+    "prerelease": false,
+    "commits_90d": 1,
+    "last_commit": "2026-09-21"
+   },
+   "status": "ok"
+  },
+  "pi-network": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 29971501,
+    "time_utc": "2026-11-27T14:46:59Z",
+    "queried_at_utc": "2026-11-27T14:46:59Z",
+    "age_minutes": 0.0,
+    "source": "https://api.mainnet.minepi.com"
+   },
+   "code": {
+    "repo": "PiNetwork/PiRC",
+    "commits_90d": 0,
+    "last_commit": "2026-04-17"
+   },
+   "code_also": [
+    {
+     "repo": "PiNetwork/SmartContracts",
+     "commits_90d": 0,
+     "last_commit": "2026-04-17"
+    }
+   ],
+   "status": "quiet"
+  },
+  "stacks": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 9593296,
+    "time_utc": "2026-11-27T14:46:58Z",
+    "queried_at_utc": "2026-11-27T14:47:11Z",
+    "age_minutes": 0.2,
+    "source": "https://api.hiro.so/extended/v2/blocks?limit=1"
+   },
+   "code": {
+    "repo": "stacks-network/stacks-core",
+    "release": "4.1.0",
+    "release_date": "2026-11-25",
+    "prerelease": false,
+    "commits_90d": 229,
+    "last_commit": "2026-11-27"
+   },
+   "code_also": [
+    {
+     "repo": "stacksgov/sips",
+     "commits_90d": 42,
+     "last_commit": "2026-11-19"
+    },
+    {
+     "repo": "stx-labs/stacks-quantum",
+     "release": "testnet-run-2026-10-09",
+     "release_date": "2026-10-09",
+     "tag_only": true,
+     "commits_90d": 19,
+     "last_commit": "2026-10-16"
+    }
+   ],
+   "status": "ok"
+  },
+  "whitechain": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 53769290,
+    "time_utc": "2026-11-27T15:02:43Z",
+    "queried_at_utc": "2026-11-27T15:02:43Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc.whitechain.io"
+   },
+   "code": {
+    "repo": "whitechain-labs/node",
+    "commits_90d": 14,
+    "last_commit": "2026-11-10"
+   },
+   "code_also": [
+    {
+     "repo": "WhiteBIT-Exchange/wbt",
+     "release": "v1.4.0",
+     "release_date": "2026-10-23",
+     "prerelease": false,
+     "commits_90d": 1,
+     "last_commit": "2026-10-23"
+    }
+   ],
+   "status": "ok"
+  },
+  "memecore": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 8474686,
+    "time_utc": "2026-11-27T15:02:51Z",
+    "queried_at_utc": "2026-11-27T15:02:53Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc.memecore.net"
+   },
+   "code": {
+    "repo": "MemeCore-Foundation/Go-MemeCore",
+    "release": "v1.15.4",
+    "release_date": "2026-11-06",
+    "prerelease": false,
+    "commits_90d": 0,
+    "last_commit": "2026-02-20"
+   },
+   "status": "quiet"
+  },
+  "x-layer": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 77022742,
+    "time_utc": "2026-11-27T15:02:58Z",
+    "queried_at_utc": "2026-11-27T15:02:58Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc.xlayer.tech"
+   },
+   "code": {
+    "repo": "okx/xlayer-reth",
+    "release": "v0.0.7.3-rc.1",
+    "release_date": "2026-11-05",
+    "prerelease": false,
+    "commits_90d": 26,
+    "last_commit": "2026-11-24"
+   },
+   "code_also": [
+    {
+     "repo": "okx/xlayer-toolkit",
+     "release": "opstack-v0.0.10",
+     "release_date": "2025-11-21",
+     "prerelease": true,
+     "commits_90d": 12,
+     "last_commit": "2026-10-30"
+    },
+    {
+     "repo": "okx/xlayer-docs",
+     "commits_90d": 3,
+     "last_commit": "2026-11-25"
+    }
+   ],
+   "status": "ok"
+  },
+  "bitway": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 7082778,
+    "time_utc": "2026-08-16T09:39:21Z",
+    "queried_at_utc": "2026-11-27T15:03:24Z",
+    "age_minutes": 148644.0,
+    "source": "https://bitway.rpc.kjnodes.com"
+   },
+   "code": {
+    "repo": "bitwaylabs/bitway",
+    "release": "v2.0.1",
+    "release_date": "2025-09-25",
+    "prerelease": false,
+    "commits_90d": 0,
+    "last_commit": "2026-03-11"
+   },
+   "code_also": [
+    {
+     "repo": "bitwaylabs/networks",
+     "commits_90d": 0,
+     "last_commit": "2025-11-20"
+    }
+   ],
+   "status": "stalled"
+  },
+  "pearl": {
+   "threshold_min": 19,
+   "block": {
+    "ok": true,
+    "height": 149258,
+    "time_utc": "2026-11-27T14:56:08Z",
+    "queried_at_utc": "2026-11-27T15:03:33Z",
+    "age_minutes": 7.4,
+    "source": "https://blockbook.pearlresearch.ai/api/v2"
+   },
+   "code": {
+    "repo": "pearl-research-labs/pearl",
+    "release": "v1.5.8",
+    "release_date": "2026-11-23",
+    "prerelease": false,
+    "commits_90d": 45,
+    "last_commit": "2026-11-26"
+   },
+   "code_also": [
+    {
+     "repo": "pearl-research-labs/pips",
+     "commits_90d": 0,
+     "last_commit": "2026-07-30"
+    }
+   ],
+   "status": "ok"
+  },
+  "splendor-quantum": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 4260305,
+    "time_utc": "2026-11-27T15:12:07Z",
+    "queried_at_utc": "2026-11-27T15:12:07Z",
+    "age_minutes": 0.0,
+    "source": "https://quantum-rpc.splendor.org/status"
+   },
+   "code": {
+    "repo": "Splendor-Protocol/splendor-quantum-blockchain",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+   },
+   "code_also": [],
+   "status": "ok"
+  },
+  "qbit": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 193971,
+    "time_utc": "2026-11-27T15:11:39Z",
+    "queried_at_utc": "2026-11-27T15:12:26Z",
+    "age_minutes": 0.8,
+    "source": "https://mempool.qbit.org/api"
+   },
+   "code": {
+    "repo": "Qbit-Org/qbit",
+    "release": "v1.0.1",
+    "release_date": "2026-11-13",
+    "prerelease": false,
+    "commits_90d": 4,
+    "last_commit": "2026-11-17"
+   },
+   "status": "ok"
+  },
+  "discrete": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 118332,
+    "time_utc": "2026-11-27T15:12:21Z",
+    "queried_at_utc": "2026-11-27T15:12:32Z",
+    "age_minutes": 0.2,
+    "source": "https://seed1.discrete.cash:9332/json_rpc"
+   },
+   "code": {
+    "repo": "discretecoin/discrete",
+    "release": "v.0.9.10",
+    "release_date": "2026-08-27",
+    "prerelease": false,
+    "commits_90d": 45,
+    "last_commit": "2026-11-21"
+   },
+   "code_also": [
+    {
+     "repo": "discretecoin/discrete-wallet",
+     "release": "v.0.9.8",
+     "release_date": "2026-08-27",
+     "prerelease": false,
+     "commits_90d": 13,
+     "last_commit": "2026-11-01"
+    },
+    {
+     "repo": "discretecoin/discrete-webwallet",
+     "commits_90d": 3,
+     "last_commit": "2026-11-02"
+    }
+   ],
+   "status": "ok"
+  },
+  "dilithion": {
+   "threshold_min": 24,
+   "block": {
+    "ok": true,
+    "height": 123209,
+    "time_utc": "2026-11-27T15:09:26Z",
+    "queried_at_utc": "2026-11-27T15:12:45Z",
+    "age_minutes": 3.3,
+    "source": "https://explorer.dilithion.org/"
+   },
+   "code": {
+    "repo": "dilithion/dilithion",
+    "release": "untagged-feb99cec1e211647e8e7",
+    "release_date": "2026-08-15",
+    "prerelease": false,
+    "commits_90d": 373,
+    "last_commit": "2026-10-22"
+   },
+   "code_also": [
+    {
+     "repo": "dilithion/chiavdf",
+     "release": "v0.11",
+     "release_date": "2019-12-04",
+     "tag_only": true,
+     "commits_90d": 0,
+     "last_commit": "2026-02-22"
+    }
+   ],
+   "status": "ok"
+  },
+  "parano1d": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 346867,
+    "time_utc": "2026-11-27T15:10:59Z",
+    "queried_at_utc": "2026-11-27T15:12:56Z",
+    "age_minutes": 1.9,
+    "source": "https://noidexplorer.org/"
+   },
+   "code": {
+    "repo": "ignotusnemo/parano1d",
+    "error": "URL can't contain control characters. '/repos/git.parano1d.org/ignotusnemo/parano1d (official mirror)/releases?per_page=10' (found at least ' ')"
+   },
+   "code_also": [],
+   "status": "ok"
+  },
+  "aere-network": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 29093106,
+    "time_utc": "2026-11-27T15:13:02Z",
+    "queried_at_utc": "2026-11-27T15:13:01Z",
+    "age_minutes": 0.0,
+    "source": "https://rpc.aere.network"
+   },
+   "code": {
+    "repo": "git.aere.network/aere-network/aere-node (Gitea, not GitHub)",
+    "error": "URL can't contain control characters. '/repos/git.aere.network/aere-network/aere-node (Gitea, not GitHub)/releases?per_page=10' (found at least ' ')"
+   },
+   "status": "ok"
+  },
+  "qorechain": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 4435185,
+    "time_utc": "2026-11-27T15:12:55Z",
+    "queried_at_utc": "2026-11-27T15:13:02Z",
+    "age_minutes": 0.1,
+    "source": "https://rpc.qore.host"
+   },
+   "code": {
+    "repo": "qorechain/qorechain-core",
+    "release": "v3.2.8",
+    "release_date": "2026-11-24",
+    "prerelease": false,
+    "commits_90d": 405,
+    "last_commit": "2026-11-24"
+   },
+   "code_also": [
+    {
+     "repo": "qorechain/qorechain-pqc",
+     "release": "v0.2.3",
+     "release_date": "2026-10-20",
+     "prerelease": false,
+     "commits_90d": 14,
+     "last_commit": "2026-11-24"
+    },
+    {
+     "repo": "qorechain/qorechain-sdk",
+     "release": "v0.15.1",
+     "release_date": "2026-11-24",
+     "prerelease": false,
+     "commits_90d": 138,
+     "last_commit": "2026-11-24"
+    }
+   ],
+   "status": "ok"
+  },
+  "minima": {
+   "threshold_min": 10,
+   "block": {
+    "ok": true,
+    "height": 2442059,
+    "time_utc": "2026-11-27T15:13:03Z",
+    "queried_at_utc": "2026-11-27T15:13:15Z",
+    "age_minutes": 0.2,
+    "source": "https://explorer.minima.global/"
+   },
+   "code": {
+    "repo": "minima-global/Minima",
+    "release": "1.0.49",
+    "release_date": "2026-08-17",
+    "prerelease": false,
+    "commits_90d": 0,
+    "last_commit": "2026-08-17"
+   },
+   "status": "quiet"
+  }
+ }
+}

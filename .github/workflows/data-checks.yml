@@ -16,10 +16,33 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python3 -B scripts/validate.py
-      - run: python3 -B -m py_compile scripts/triage.py
+      - run: python3 -B -m py_compile scripts/triage.py scripts/patrol.py scripts/rank.py scripts/check_links.py scripts/og_image.py scripts/indexnow.py
+      - name: Every top-100 coin is tracked or left out with a reason
+        run: python3 -B scripts/rank.py --check
+      - name: The website builds; Chinese pages use full-width punctuation; no banned words; every internal link resolves
+        run: python3 -B scripts/build_site.py --out _site
+      - name: The share image shows the current chain count and review date
+        run: python3 -B scripts/og_image.py --check
+      - name: Keep the built website for review (download "website-preview" from the run page)
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-preview
+          path: _site
+          retention-days: 14
       - name: Generated charts, tables and README summaries match the data
         run: |
           python3 -B scripts/export.py
           git status --short
           git diff --exit-code
           test -z "$(git status --porcelain)"
+  links:
+    # Every source link must open (200-399). Hosts that block automated requests are in data/link-allowlist.json
+    # with the reason. The weekly patrol runs the same check and opens an issue when a link breaks.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -B scripts/check_links.py

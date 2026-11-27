@@ -1,0 +1,17 @@
+{
+ "about": "Hosts that refuse automated requests. Their links are still checked and printed; a failure on these hosts does not fail the check. Every entry needs a reason.",
+ "hosts": [
+  {
+   "host": "medium.com",
+   "reason": "Medium answers 403 to automated requests (bot protection); the articles open in a browser."
+  },
+  {
+   "host": "cellframe.medium.com",
+   "reason": "Medium-hosted blog; same 403 bot protection as medium.com."
+  },
+  {
+   "host": "www.sec.gov",
+   "reason": "SEC.gov answers 403 to automated requests that do not declare a contact email in the User-Agent (sec.gov/os/accessing-edgar-data); the PDF opens in a browser."
+  }
+ ]
+}

@@ -12,6 +12,7 @@ from charts import charts, long_date, status
 ROOT = Path(__file__).resolve().parents[1]
 SUBMIT = 'https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml'
 SUMMARY = re.compile(r'(<!-- summary: [^\n]*-->\n).*?(\n<!-- /summary -->)', re.S)
+PINNED = re.compile(r'(<!-- pinned: [^\n]*-->).*?(<!-- /pinned -->)', re.S)
 ZH_NETWORK = {'testnet': '测试网', 'devnet': '开发网', 'demo': '演示', 'planned': '计划中'}
 
 def read(name):
@@ -81,8 +82,8 @@ def outputs():
         'docs/projects.md': '\n'.join(lines)+'\n',
         'docs/signature-sizes.md': '\n'.join(sizes),
         **charts(),
-        'README.md': with_summary('README.md', summary_en(projects)),
-        'README.zh-CN.md': with_summary('README.zh-CN.md', summary_zh(projects)),
+        'README.md': with_pinned(with_summary('README.md', summary_en(projects)), pinned_en(list(refs.values()))),
+        'README.zh-CN.md': with_pinned(with_summary('README.zh-CN.md', summary_zh(projects)), pinned_zh(list(refs.values()))),
     }
 
 def spell(n):
@@ -125,6 +126,23 @@ def summary_zh(projects):
         names = '、'.join(f"{p['name']}（{ZH_NETWORK.get(p['network_status'], p['network_status'])}）" for p in g['offmain'])
         out.append(f"- **{len(g['offmain'])} 个**还没上主网：{names}。")
     return '\n'.join(out)
+
+def pinned_count(sources):
+    return sum(1 for s in sources if s['source_type'].startswith('pinned')), len(sources)
+
+def pinned_en(sources):
+    k, n = pinned_count(sources)
+    return f'{k} of the {n} sources are pinned to a specific commit'
+
+def pinned_zh(sources):
+    k, n = pinned_count(sources)
+    return f'{n} 条出处里有 {k} 条固定到了具体代码版本'
+
+def with_pinned(text, sentence):
+    new, count = PINNED.subn(lambda m: m.group(1) + sentence + m.group(2), text)
+    if count != 1:
+        raise ValueError('README: expected one <!-- pinned: ... --> block')
+    return new
 
 def with_summary(relative, block):
     text = (ROOT / relative).read_text(encoding='utf-8')
