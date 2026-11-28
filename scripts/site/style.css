@@ -882,7 +882,7 @@ footer.site{contain-intrinsic-size:auto 400px}
 .keys i.ssw[class*="n-"]{background:var(--ssc)}
 .am.vr{border-style:dashed;border-width:1.5px}
 .keys i.ssw.vr{background:none;box-shadow:none;border:1.5px dashed var(--ink-3)}
-.nk{display:inline-flex;align-items:center;gap:6px}.nk .ssw{background:var(--ssc)}
+.nk{display:inline-flex;align-items:baseline;gap:6px;max-width:100%}.nk .ssw{flex:none}.nk .ssw{background:var(--ssc)}
 /* "Quantum discussion on X": claims, set apart like the unverified block */
 .xtalk{display:grid;gap:var(--sp-2);padding:var(--sp-4) var(--sp-5);margin:var(--sp-4) 0;border:1px dashed var(--line-2);border-radius:var(--r-lg);background:var(--sunk)}
 .xtalk h3{font-size:var(--t-base);margin:0}
@@ -895,3 +895,19 @@ footer.site{contain-intrinsic-size:auto 400px}
 .xr{color:var(--ink-3)}
 .xasks{margin:0;font-size:var(--t-sm);display:grid;gap:2px}
 @media (max-width:640px){.xl li{grid-template-columns:minmax(0,1fr);gap:2px}}
+/* data page and chain page: embed picker, previews and copyable code */
+.emb-ctl{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}
+.emb-ctl label{display:flex;gap:var(--sp-2);align-items:center;font-size:var(--t-sm);color:var(--ink-2)}
+.emb-ctl select{font:inherit;font-size:var(--t-sm);min-height:36px;max-width:100%;padding:6px 10px;border-radius:var(--r-md);border:1px solid var(--line-2);background:var(--surface);color:var(--ink)}
+.emb-ctl .seg{display:inline-flex}
+.emb-prev{display:flex;flex-wrap:wrap;gap:var(--sp-4);align-items:flex-start;padding:var(--sp-3);margin:var(--sp-3) 0;border:1px dashed var(--line-2);border-radius:var(--r-md)}
+.emb-prev figure{margin:0;display:grid;gap:6px;min-width:0}
+.emb-prev figcaption{font-size:var(--t-xs);color:var(--ink-3)}
+.emb-prev img{max-width:100%;height:auto}
+.snips{display:grid;gap:var(--sp-3);min-width:0}
+.snip{min-width:0;border:1px solid var(--line);border-radius:var(--r-md);background:var(--sunk);overflow:hidden}
+.snip-h{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);padding:6px 6px 6px var(--sp-3);border-bottom:1px solid var(--line);background:var(--surface);font-size:var(--t-sm);color:var(--ink-2)}
+.snip pre{margin:0;padding:10px var(--sp-3);font:var(--t-xs)/1.6 var(--f-mono);color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.btn.sm{min-height:32px;padding:4px 12px;font-size:var(--t-xs)}
+.row-btns{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.dpage .scale td code{white-space:normal;overflow-wrap:anywhere}

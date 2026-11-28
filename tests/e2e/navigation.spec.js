@@ -88,6 +88,17 @@ test.describe('Navigation', () => {
   }
 });
 
+test.describe('Fits the screen', () => {
+  for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'method/', 'data/']) {
+    test(`No sideways scrolling, everything opened: /${path}`, async ({ page, u }) => {
+      await page.goto(u(path));
+      await openEverything(page);
+      const [sw, cw] = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
+      expect(sw, 'page width').toBeLessThanOrEqual(cw);
+    });
+  }
+});
+
 test.describe('One language per page', () => {
   for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'method/', 'data/']) {
     test(`Everything opened, still one language: /${path}`, async ({ page, u, lang }) => {
