@@ -274,8 +274,10 @@ test.describe('Discussion on X', () => {
     await expect(page.locator('[data-x="accounts"]')).toHaveText(String(new Set(w.posts.map((t) => t.who)).size));
     const items = page.locator('#xlist > li');
     await expect(items).toHaveCount(w.posts.length);
-    const dates = await items.locator('.when').allTextContents();
-    expect(dates, 'newest first').toEqual([...dates].sort().reverse());
+    // shown as "25 Nov 2026" or "2026-11-25": compare as days, not as text
+    const days = (await items.locator('.when').allTextContents()).map((d) => Date.parse(d));
+    expect(days.every((d) => !Number.isNaN(d)), 'every date reads').toBe(true);
+    expect(days, 'newest first').toEqual([...days].sort((a, b) => b - a));
     const links = await page.locator('#xlist a[href*="/status/"]').evaluateAll((as) => as.map((x) => x.href));
     expect(links.length).toBe(w.posts.length);
     for (const h of links) expect(h).toMatch(/^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/);

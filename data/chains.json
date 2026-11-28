@@ -8621,8 +8621,8 @@
      "preset": "cometbft",
      "url": "https://sentry.tm.injective.network"
     },
-    "block_interval_s": 0.63,
-    "block_interval_source": "https://sentry.tm.injective.network/blockchain?minHeight=193574000&maxHeight=193574100"
+    "block_interval_s": 0.61,
+    "block_interval_source": "No protocol target published; average of blocks 193674042 to 193675042 (614 s / 1000 blocks) read on 2026-11-28 from the Injective CometBFT RPC, which keeps only recent blocks: https://sentry.tm.injective.network/status"
    },
    "code": {
     "repo": "InjectiveLabs/injective-chain-releases"

@@ -923,3 +923,5 @@ footer.site{contain-intrinsic-size:auto 400px}
 .xall{max-width:860px;margin:0}
 .xrule{max-width:860px}
 @media (max-width:640px){.stat.xs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* long labels (such as the NIST family label) wrap on a phone instead of widening the page */
+@media (max-width:640px){.chip{white-space:normal;overflow-wrap:anywhere;border-radius:var(--r-sm)}}
