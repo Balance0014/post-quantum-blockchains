@@ -2108,6 +2108,29 @@
     "last_commit": "2026-08-17"
    },
    "status": "quiet"
+  },
+  "quantaureum": {
+   "threshold_min": 10,
+   "block": {
+    "ok": false,
+    "source": null,
+    "error": {
+     "en": "The project has not announced a network, and the testnet endpoint in its network guide did not answer on 2026-11-28.",
+     "zh": "项目还没有宣布任何网络，网络指南里的测试网端点 2026-11-28 没有响应。"
+    }
+   },
+   "code": {
+    "repo": "Quantaureum/qau",
+    "release": "v0.1.0",
+    "release_date": "2026-11-23",
+    "prerelease": false,
+    "branch": "main",
+    "commits_90d": 176,
+    "bot_commits_90d": 0,
+    "queried_at_utc": "2026-11-28T06:53:45Z",
+    "last_commit": "2026-11-25"
+   },
+   "status": "unknown"
   }
  }
 }
