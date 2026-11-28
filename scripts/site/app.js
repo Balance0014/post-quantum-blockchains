@@ -377,16 +377,12 @@ const UI = {
 /* what people with a public identity say on X about a chain's quantum plans */
 Object.assign(UI.en, {
   xt_h: "Quantum discussion on X", xt_note: "These are claims. They do not count toward the stage.", xt_post: "Post", xt_checked: (d) => `checked ${d}`,
-  xt_rel: { founder: "founder", foundation: "foundation", core_dev: "core developer", proposal_author: "proposal author", maintainer: "maintainer", mining_pool: "mining pool", wallet: "wallet", exchange: "exchange", community_account: "official community account" },
-  xt_type: { plan: "Plan or timeline", proposal: "Proposal", research: "Research", reply: "Reply to holders", other: "Other" },
-  xt_asks: (n, d) => `In the last ${d} days, about ${n} different people on X asked about this chain's quantum plans.`, xt_ex: "For example",
+  xt_type: { plan: "Plan or timeline", proposal: "Proposal", release: "Release", research: "Research", statement: "Statement" },
   xt_new_h: "New on X", xt_new_p: "Posts by people with a public identity about a chain's quantum plans, checked against the original post. Claims only: they never change a stage.",
 });
 Object.assign(UI.zh, {
   xt_h: "X 上的抗量子讨论", xt_note: "这些是说法，不计入档位。", xt_post: "原帖", xt_checked: (d) => `核对于 ${d}`,
-  xt_rel: { founder: "创始人", foundation: "基金会", core_dev: "核心开发者", proposal_author: "提案作者", maintainer: "维护者", mining_pool: "矿池", wallet: "钱包", exchange: "交易所", community_account: "社区官方号" },
-  xt_type: { plan: "计划或时间表", proposal: "提案讨论", research: "研究", reply: "回应持币人", other: "其他" },
-  xt_asks: (n, d) => `近 ${d} 天，X 上约有 ${n} 个不同的人在问这条链的量子计划。`, xt_ex: "代表帖",
+  xt_type: { plan: "计划或时间表", proposal: "提案讨论", release: "上线", research: "研究", statement: "表态" },
   xt_new_h: "X 上的新动态", xt_new_p: "有公开身份的人谈某条链量子计划的帖子，都已打开原帖核对。只算说法，不改变档位。",
 });
 /* the algorithm map: NIST families and statuses */
@@ -1345,7 +1341,7 @@ function renderHome() {
       return;
     }
     const fd = e.target.closest("[data-fold]");
-    if (fd) { const open = fd.getAttribute("aria-expanded") !== "true", y = fd.getBoundingClientRect().top; fd.closest("ul").querySelectorAll("li[data-x]").forEach((li) => { li.hidden = !open; }); fd.setAttribute("aria-expanded", String(open)); fd.textContent = open ? L("list_less") : L("list_more")(+fd.dataset.n); if (!open) window.scrollBy(0, fd.getBoundingClientRect().top - y); return; }
+    if (fd) { foldList(fd); return; }
     const sg = e.target.closest("[data-suggest]");
     if (sg) { state.q = sg.dataset.suggest; q.value = state.q; renderTable(true); q.focus(); return; }
     const sb = e.target.closest(".ledger th button");
@@ -1534,16 +1530,25 @@ function renderChain() {
       ${dsec("d-embed", L("emb_page_h"), `<p class="note-small">${esc(L("emb_page_p"))} <a href="${href("data/")}#embed">${esc(L("emb_more"))} →</a></p>${embedBody(c, D.embed, lang, true)}`)}
       <section class="card fix"><p>${esc(L("d_fix"))}</p><a class="btn primary" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("d_fix_btn"))} ↗</a><a class="btn" href="${D.data_url}" target="_blank" rel="noopener">${esc(L("gh"))} ↗</a></section>
     </div></div>`);
-  if (!PRE) initCopy();
+  if (!PRE) { initCopy(); document.getElementById("app").addEventListener("click", (e) => { const fd = e.target.closest("[data-fold]"); if (fd) foldList(fd); }); }
 }
 
 /* the X block on a chain page: shown only when there is something; no data means no block, never "nobody said anything" */
-const xItem = (t, who) => `<li><span class="when mono">${esc(fmtDate(t.date))}</span><div class="xb"><div class="xh">${who || ""}<b>${esc(t.who)}</b><span class="xr">${esc(PAR(L("xt_rel")[t.relation]).trim())}</span><span class="ttag">${esc(L("xt_type")[t.type])}</span></div><p>${esc(T(t.summary))}</p><span class="note-small"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(L("xt_post"))} ↗</a> · ${esc(L("xt_checked")(fmtDate(t.checked)))}</span></div></li>`;
+/* a list that shows its first few items: the button opens the rest and folds them again, keeping the button in place */
+function foldList(fd) {
+  const open = fd.getAttribute("aria-expanded") !== "true", y = fd.getBoundingClientRect().top;
+  fd.closest("ul, ol").querySelectorAll("li[data-x]").forEach((li) => { li.hidden = !open; });
+  fd.setAttribute("aria-expanded", String(open));
+  fd.textContent = open ? L("list_less") : L("list_more")(+fd.dataset.n);
+  if (!open) window.scrollBy(0, fd.getBoundingClientRect().top - y);
+}
+const XMAX = 3; // posts on X shown per chain before "Show N more"
+const xItem = (t, who) => `<li><span class="when mono">${esc(fmtDate(t.date))}</span><div class="xb"><div class="xh">${who || ""}<b>${esc(t.who)}</b><span class="xr">${esc(PAR(T(t.relation)).trim())}</span><span class="ttag">${esc(L("xt_type")[t.type])}</span></div><p>${esc(T(t.summary))}</p><span class="note-small"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(L("xt_post"))} ↗</a> · ${esc(L("xt_checked")(fmtDate(t.checked)))}</span></div></li>`;
 function xtalkHTML(c) {
-  const talk = c.x_talk || [], asks = c.x_asks;
-  if (!talk.length && !asks) return "";
-  const ask = asks ? `<p class="xasks">${esc(L("xt_asks")(asks.people, asks.window_days))} <span class="note-small">${esc(L("xt_ex"))}${CO()}${asks.examples.map((e) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(fmtDate(e.date))} · ${esc(T(e.summary))} ↗</a>`).join(lang === "zh" ? "；" : "; ")}</span></p>` : "";
-  return `<section class="xtalk" aria-labelledby="xt-h"><h3 id="xt-h">${esc(L("xt_h"))}</h3><span class="note-small">${esc(L("xt_note"))}</span>${talk.length ? `<ol class="xl">${talk.map((t) => xItem(t)).join("")}</ol>` : ""}${ask}</section>`;
+  const talk = c.x_talk || [];
+  if (!talk.length) return "";
+  const more = talk.length > XMAX ? `<li class="more-n"><button type="button" class="link-btn" data-fold aria-expanded="false" data-n="${talk.length - XMAX}">${esc(L("list_more")(talk.length - XMAX))}</button></li>` : "";
+  return `<section class="xtalk" aria-labelledby="xt-h"><h3 id="xt-h">${esc(L("xt_h"))}</h3><span class="note-small">${esc(L("xt_note"))}</span><ol class="xl">${talk.map((t, i) => (i < XMAX ? xItem(t) : xItem(t).replace(/^<li/, "<li hidden data-x"))).join("")}${more}</ol></section>`;
 }
 
 /* ---------- this week ---------- */
@@ -1779,11 +1784,11 @@ const METHOD = {
 };
 Object.assign(METHOD.en, {
   x_h: "Discussion on X",
-  x_list: ["Chain pages can show what people say on X about a chain's quantum plans. We include only people and accounts with a public identity and a stated relation to the chain: founders, foundations, core developers, proposal authors, maintainers, mining pools, wallets, exchanges and official community accounts.", "We open every original post and record the date we checked it. Each line is our one-sentence summary, with a link to the post.", "These are claims. They never set or change a stage, and a chain with no posts listed is not marked down: a decentralized chain may have no single voice.", "We may also say roughly how many different people asked about a chain's quantum plans in the last 90 days, with two or three example posts. We do not name ordinary users."],
+  x_list: ["Chain pages can show what people say on X about a chain's post-quantum work. We include only people and accounts with a public identity and a stated role around the chain, such as founders, foundations, core developers, proposal authors, researchers, wallets, exchanges and official accounts.", "We open every original post and record the date we checked it. Each line gives the date, who posted and their role, the kind of post (a plan or timeline, a proposal, a release, research or a statement), our one-sentence summary and a link to the post. A chain page shows the three newest; the rest open with \"Show more\".", "These are claims. They never set or change a stage, and a chain with no posts listed is not marked down: a decentralized chain may have no single voice. Ordinary users are not named."],
 });
 Object.assign(METHOD.zh, {
   x_h: "X 上的讨论",
-  x_list: ["链的详情页可以列出 X 上关于这条链量子计划的说法。只收有公开身份、且和这条链关系明确的人和账号：创始人、基金会、核心开发者、提案作者、维护者、矿池、钱包、交易所和社区官方号。", "每一条我们都打开原帖核对，并记下核对日期。每行是我们的一句话转述，附原帖链接。", "这些都只是说法，不决定也不改变档位。没有列出帖子的链不会因此扣分：去中心化的链可能本来就没有统一的发言人。", "我们也可能写出近 90 天大约有多少个不同的人在问这条链的量子计划，并附两三条代表帖。普通用户不写名字。"],
+  x_list: ["链的详情页可以列出 X 上关于这条链抗量子进展的说法。只收有公开身份、和这条链关系明确的人和账号，例如创始人、基金会、核心开发者、提案作者、研究者、钱包、交易所和官方号。", "每一条我们都打开原帖核对，并记下核对日期。每行写明日期、谁发的及其身份、帖子类型（计划或时间表、提案讨论、上线、研究、表态）、我们的一句话转述和原帖链接。详情页显示最新的 3 条，其余点「展开」查看。", "这些都只是说法，不决定也不改变档位。没有列出帖子的链不会因此扣分：去中心化的链可能本来就没有统一的发言人。普通用户不写名字。"],
 });
 function howHTML() {
   const M = METHOD[lang];

@@ -71,9 +71,31 @@ test.describe('Chain pages', () => {
 
   test('"X discussion" is left out when there is nothing to show', async ({ page, u, request }) => {
     const all = await (await request.get('data/chains.json')).json();
-    const quiet = all.chains.find((c) => !(c.x_talk || []).length && !c.x_asks);
+    const quiet = all.chains.find((c) => !(c.x_talk || []).length);
     await page.goto(u(`chains/${quiet.id}/`));
     await expect(page.locator('.xtalk')).toHaveCount(0);
+  });
+
+  test('"X discussion" shows the three newest posts, and "Show more" opens and closes the rest', async ({ page, u, request }) => {
+    const all = await (await request.get('data/chains.json')).json();
+    const busy = all.chains.find((c) => (c.x_talk || []).length > 3);
+    test.skip(!busy, 'no chain has more than three posts yet');
+    const n = busy.x_talk.length;
+    await page.goto(u(`chains/${busy.id}/`));
+    const items = page.locator('.xtalk ol.xl > li:not(.more-n)');
+    await expect(items).toHaveCount(n);
+    await expect(page.locator('.xtalk ol.xl > li:not(.more-n):visible')).toHaveCount(3);
+    const more = page.locator('.xtalk [data-fold]');
+    await more.scrollIntoViewIfNeeded();
+    await more.click();
+    await expect(more).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('.xtalk ol.xl > li:not(.more-n):visible')).toHaveCount(n);
+    await more.click();
+    await expect(more).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('.xtalk ol.xl > li:not(.more-n):visible')).toHaveCount(3);
+    const links = await page.locator('.xtalk a[href*="/status/"]').evaluateAll((as) => as.map((x) => x.href));
+    expect(links.length).toBe(n);
+    for (const h of links) expect(h).toMatch(/^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/);
   });
 
   test('"All chains" goes back to the home page', async ({ page, u }) => {

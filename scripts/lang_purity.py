@@ -113,8 +113,8 @@ def data_names():
         elif isinstance(o, list):
             for v in o:
                 walk(v, key)
-        elif isinstance(o, str) and key in ('publisher', 'auditor'):
-            names.update(LATIN.findall(o))  # who published or audited something: a name in any language
+        elif isinstance(o, str) and key in ('publisher', 'auditor', 'who'):
+            names.update(LATIN.findall(o))  # who published, audited or posted something: a name in any language
         elif isinstance(o, str):
             if key == 'zh' or key.endswith('_zh') or CJK.search(o):
                 zh_words.update(words(o))

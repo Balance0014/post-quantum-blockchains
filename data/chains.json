@@ -165,6 +165,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-23",
+     "who": "Adam Back",
+     "relation": {
+      "zh": "Blockstream 联合创始人兼 CEO",
+      "en": "Co-founder and CEO of Blockstream"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "量子方面的理论成果不改变节奏：比特币会继续按评审和共识推进抗量子签名，路径是 SHRINCS 或其他方案。",
+      "en": "Says theoretical quantum results change nothing: Bitcoin will keep moving through review and consensus toward post-quantum signatures, via SHRINCS or another scheme."
+     },
+     "url": "https://x.com/adam3us/status/2124817010034884701",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-11-04",
+     "who": "Adam Back",
+     "relation": {
+      "zh": "Blockstream 联合创始人兼 CEO",
+      "en": "Co-founder and CEO of Blockstream"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "回应「比特币找不到量子方案就会被超越」：已经有基于哈希的签名方案 SHRINCS，也有一份 BIP 草案。",
+      "en": "Replying to an alarmist claim, points to hash-based signatures, SHRINCS and an existing draft BIP."
+     },
+     "url": "https://x.com/adam3us/status/2117891287139447263",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-16",
+     "who": "Jameson Lopp",
+     "relation": {
+      "zh": "Casa 联合创始人兼首席安全官",
+      "en": "Co-founder and Chief Security Officer of Casa"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "发文认为量子迁移之争不只是「冻不冻结有风险的币」，而是 ECDSA 失效时怎样把产权损失降到最小。",
+      "en": "Argues the migration debate is about minimizing property-rights violations if ECDSA stops proving ownership, not only whether to freeze vulnerable coins."
+     },
+     "url": "https://x.com/lopp/status/2100267873822249329",
+     "checked": "2026-11-28"
+    }
+   ],
    "sources": [
     "https://github.com/bitcoin/bips/blob/master/bip-0360.mediawiki",
     "https://github.com/bitcoin/bips/blob/master/bip-0361.mediawiki",
@@ -387,6 +434,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-31",
+     "who": "Ethereum",
+     "relation": {
+      "zh": "以太坊官方号（以太坊基金会维护）",
+      "en": "Official Ethereum account, run by the Ethereum Foundation"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "专家在剑桥聚会，协调把以太坊的密码学升级为抗量子的研究。",
+      "en": "Experts met in Cambridge to coordinate research on upgrading Ethereum's cryptography to be quantum-resistant."
+     },
+     "url": "https://x.com/ethereum/status/2116576765506437319",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-09",
+     "who": "Vitalik Buterin",
+     "relation": {
+      "zh": "以太坊联合创始人",
+      "en": "Ethereum co-founder"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "介绍 EIP-8288（递归 STARK 交易池），希望进入 Hegotá 之后的分叉；好处之一是极便宜的抗量子签名。",
+      "en": "Introduces EIP-8288 (recursive STARK mempools), hoped for the fork after Hegotá; one benefit is very cheap post-quantum signatures."
+     },
+     "url": "https://x.com/VitalikButerin/status/2097711433073172837",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-07",
+     "who": "Ethereum Foundation",
+     "relation": {
+      "zh": "以太坊基金会官方号",
+      "en": "Official Ethereum Foundation account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "基金会协议组发布优先事项，以「2029 年 12 月前让以太坊 L1 抗量子」为锚。",
+      "en": "The Protocol Cluster published its priorities, anchored on a quantum-resistant Ethereum L1 by December 2029."
+     },
+     "url": "https://x.com/ethereumfndn/status/2096976125511541198",
+     "checked": "2026-11-28"
+    }
+   ],
    "sources": [
     "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-8081.md",
     "https://eips.ethereum.org/EIPS/eip-8051",
@@ -685,6 +779,23 @@
      "url": "https://cryptoslate.com/xrpl-flips-to-quantum-safe-signatures-2420-byte-proofs-replace-elliptic-curves/"
     }
    ],
+   "x_talk": [
+    {
+     "date": "2026-10-29",
+     "who": "XRP Ledger Foundation",
+     "relation": {
+      "zh": "XRP Ledger 基金会官方号",
+      "en": "Official XRP Ledger Foundation account"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "基金会 CTO 在 CoinDesk 直播中说，XRP Ledger 在量子准备上「领先且准备充分」。",
+      "en": "The foundation's CTO said on CoinDesk that the XRP Ledger is \"ahead of the game and well prepared\" for quantum readiness."
+     },
+     "url": "https://x.com/XRPLF/status/2115849216643781059",
+     "checked": "2026-11-28"
+    }
+   ],
    "sources": [
     "https://ripple.com/insights/post-quantum-readiness-on-the-xrp-ledger/",
     "https://github.com/XRPLF/rippled/commit/97d1770e895f616bde3470318c41d0c01d0f5688"
@@ -826,6 +937,23 @@
       "zh": "Project Eleven 和 Solana 基金会的页面拦截了自动访问，媒体报道称签名方案未公开。无法确认这就是 Solana 的公开测试网。"
      },
      "url": "https://cointelegraph.com/news/solana-bids-for-quantum-resistance-testnet-goes-post-quantum"
+    }
+   ],
+   "x_talk": [
+    {
+     "date": "2026-10-22",
+     "who": "Solana",
+     "relation": {
+      "zh": "Solana 官方号",
+      "en": "Official Solana account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "官方号转介绍 Anza 研究员 7 月提出的 Quantumglow：Alpenglow 共识的抗量子改造方案（基于哈希签名），想在保护共识的同时保持快速终局；目前没有正式提案编号。",
+      "en": "Shares Quantumglow, proposed by Anza researchers in July: a post-quantum (hash-based) adaptation of the Alpenglow consensus that aims to keep fast finality. No SIMD number yet."
+     },
+     "url": "https://x.com/solana/status/2113312835350516163",
+     "checked": "2026-11-28"
     }
    ],
    "sources": [
@@ -992,6 +1120,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-17",
+     "who": "TRON DAO",
+     "relation": {
+      "zh": "TRON DAO 官方号",
+      "en": "Official TRON DAO account"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "孙宇晨在新加坡区块链周表示，预计波场会是最早抗量子的网络之一；端到端抗量子签名已在 Nile 测试网上线。",
+      "en": "At Singapore Blockchain Week, Justin Sun said TRON expects to be among the first quantum-resistant networks; end-to-end post-quantum signatures are live on the Nile testnet."
+     },
+     "url": "https://x.com/trondao/status/2122583011153604877",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-10",
+     "who": "Justin Sun",
+     "relation": {
+      "zh": "TRON DAO 创始人",
+      "en": "Founder of TRON DAO"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "波场的抗量子密码已在测试网上线，随时可以上主网。",
+      "en": "TRON's post-quantum cryptography is live on testnet and ready for mainnet at any time."
+     },
+     "url": "https://x.com/justinsuntron/status/2108795299783168505",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-05",
+     "who": "Justin Sun",
+     "relation": {
+      "zh": "TRON DAO 创始人",
+      "en": "Founder of TRON DAO"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "宣布波场抗量子路线图公布。",
+      "en": "Announced that TRON's post-quantum roadmap has been published."
+     },
+     "url": "https://x.com/justinsuntron/status/2096499977208098997",
+     "checked": "2026-11-28"
+    }
+   ],
    "sources": [
     "https://github.com/tronprotocol/tips/issues/899",
     "https://github.com/tron-nile-testnet/nile-testnet/blob/bc7752b638d9aa4da413c78645dcff1a1aa8e40a/actuator/src/main/java/org/tron/core/utils/ProposalUtil.java#L1095-L1096",
@@ -1241,6 +1416,23 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-24",
+     "who": "Zcash",
+     "relation": {
+      "zh": "Zcash 官方号",
+      "en": "Official Zcash account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "Ironwood 升级为 Zcash 引入了「量子可恢复」的隐私票据；ZIP 2005 为此预留了一个域分隔符。",
+      "en": "The Ironwood upgrade introduced quantum-recoverable shielded notes; ZIP 2005 reserves a domain separator for it."
+     },
+     "url": "https://x.com/Zcash/status/2114081549704626363",
+     "checked": "2026-11-28"
+    }
+   ],
    "sources": [
     "https://github.com/zcash/zips/blob/main/zips/zip-2005.md",
     "https://github.com/zcash/zips/blob/main/zips/zip-0258.md",
@@ -1724,6 +1916,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-29",
+     "who": "Starknet",
+     "relation": {
+      "zh": "Starknet 官方号",
+      "en": "Official Starknet account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "公开挑战赛把 Falcon-512 验签成本压到每笔约 0.023 美元。",
+      "en": "In an open challenge, Falcon-512 verification reached about $0.023 per transaction."
+     },
+     "url": "https://x.com/Starknet/status/2115766138605113613",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-23",
+     "who": "Starknet",
+     "relation": {
+      "zh": "Starknet 官方号",
+      "en": "Official Starknet account"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "93.5% 的投票同意研究让 Starknet 成为独立的抗量子 L1。",
+      "en": "93.5% voted to research Starknet becoming an independent post-quantum L1."
+     },
+     "url": "https://x.com/Starknet/status/2113545376997515564",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-08",
+     "who": "Starknet",
+     "relation": {
+      "zh": "Starknet 官方号",
+      "en": "Official Starknet account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "正在考虑转为 L1，目标是 2027 年成为第一个完全抗量子的网络。",
+      "en": "Actively considering becoming an L1, with 2027 as the target to become the first fully quantum-resistant network."
+     },
+     "url": "https://x.com/Starknet/status/2108113391525204034",
+     "checked": "2026-11-28"
+    }
+   ],
    "extra_sources": [
     {
      "label": "starknet.js: post-quantum accounts",
@@ -1838,6 +2077,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-25",
+     "who": "Algorand",
+     "relation": {
+      "zh": "Algorand 官方号",
+      "en": "Official Algorand account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "Algorand 主网上用抗量子签名签署的交易已达 400 万笔。",
+      "en": "4 million transactions on Algorand mainnet have now been signed with post-quantum signatures."
+     },
+     "url": "https://x.com/Algorand/status/2125658031161737341",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-11-23",
+     "who": "Algorand",
+     "relation": {
+      "zh": "Algorand 官方号",
+      "en": "Official Algorand account"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "Algorand 从 2022 年起在生产环境用抗量子密码，原生抗量子账户已在主网上线。",
+      "en": "Algorand has run post-quantum cryptography in production since 2022, with native post-quantum accounts live on mainnet."
+     },
+     "url": "https://x.com/Algorand/status/2125296895728001173",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-11-21",
+     "who": "Algorand",
+     "relation": {
+      "zh": "Algorand 官方号",
+      "en": "Official Algorand account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "提醒节点升级到 algod v5.1.1，这一版为抗量子账户打下更多基础。",
+      "en": "Asked node runners to upgrade to algod v5.1.1, which expands the foundation for post-quantum accounts."
+     },
+     "url": "https://x.com/Algorand/status/2124503420052856872",
+     "checked": "2026-11-28"
+    }
+   ],
    "extra_sources": [
     {
      "label": "go-algorand v5.1.1-stable release",
@@ -1949,6 +2235,23 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-15",
+     "who": "Nervos India",
+     "relation": {
+      "zh": "Nervos 印度社区官方号",
+      "en": "Official Nervos India community account"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "CKB 不用分叉就已经上线了 SPHINCS+。",
+      "en": "CKB already has SPHINCS+ live without a protocol fork."
+     },
+     "url": "https://x.com/Nervos_India/status/2121972423641969087",
+     "checked": "2026-11-28"
+    }
+   ],
    "network": {
     "probe": {
      "preset": "ckb",
@@ -2419,6 +2722,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-07",
+     "who": "QRL",
+     "relation": {
+      "zh": "QRL 官方号",
+      "en": "Official QRL account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "QRL 2.0 让 Solidity 开发者能在抗量子的链上开发。",
+      "en": "QRL 2.0 lets Solidity developers build on a post-quantum chain."
+     },
+     "url": "https://x.com/QRLedger/status/2119106839757365662",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-14",
+     "who": "QRL",
+     "relation": {
+      "zh": "QRL 官方号",
+      "en": "Official QRL account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "发文分析：AI 会不会在量子计算机之前破解 ECDSA，ML-DSA 会不会是下一个。",
+      "en": "Shares an analysis of whether AI could break ECDSA before Q-Day, and whether ML-DSA could be next."
+     },
+     "url": "https://x.com/QRLedger/status/2110460501113323832",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-02",
+     "who": "QRL",
+     "relation": {
+      "zh": "QRL 官方号",
+      "en": "Official QRL account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "核心团队今夏在新加坡集中开发 QRL 2.0。",
+      "en": "The core team met in Singapore this summer to build QRL 2.0."
+     },
+     "url": "https://x.com/QRLedger/status/2095134180237545635",
+     "checked": "2026-11-28"
+    }
+   ],
    "network": {
     "probe": {
      "url": "https://explorer.theqrl.org/api/status",
@@ -2525,6 +2875,53 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-23",
+     "who": "Tidecoin",
+     "relation": {
+      "zh": "Tidecoin 官方号",
+      "en": "Official Tidecoin account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "v1.0.0rc4 开放测试；主网合并挖矿仍未开启。",
+      "en": "v1.0.0rc4 is available for testing; merged mining on mainnet remains disabled."
+     },
+     "url": "https://x.com/tidecoin/status/2124848260036595853",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-14",
+     "who": "Tidecoin",
+     "relation": {
+      "zh": "Tidecoin 官方号",
+      "en": "Official Tidecoin account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "v1.0.0rc1 开放测试：新的抗量子分层钱包、加密节点连接、合并挖矿支持（主网未开启）。",
+      "en": "v1.0.0rc1 is ready for testing: new post-quantum HD wallets, encrypted peer connections and merged-mining support (still disabled on mainnet)."
+     },
+     "url": "https://x.com/tidecoin/status/2110329693320647072",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-02",
+     "who": "Tidecoin",
+     "relation": {
+      "zh": "Tidecoin 官方号",
+      "en": "Official Tidecoin account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "比较两条路线：把签名做小（Falcon-512，每笔约 1,563 字节），或用证明压缩大签名。",
+      "en": "Compares two routes: keep signatures small (Falcon-512, about 1,563 bytes per spend) or compress large ones with proofs."
+     },
+     "url": "https://x.com/tidecoin/status/2106029891997012423",
+     "checked": "2026-11-28"
+    }
+   ],
    "network": {
     "probe": {
      "url": "https://explorer.tidecoin.org/api/getblockcount",
@@ -2640,6 +3037,23 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-23",
+     "who": "Abelian",
+     "relation": {
+      "zh": "Abelian 官方号",
+      "en": "Official Abelian account"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "主网从 2022 年第一天起，几乎所有交易都用格密码签名。",
+      "en": "Since day one in 2022, almost every mainnet transaction has been signed with lattice-based cryptography."
+     },
+     "url": "https://x.com/PQabelian/status/2113601623704662083",
+     "checked": "2026-11-28"
+    }
+   ],
    "network": {
     "probe": {
      "url": "https://api.pqabelian.io/v2/summary",
@@ -3031,6 +3445,53 @@
       "zh": "没有可用的公开出块接口（2026-11-27 访问 explorer.neptune.cash 返回 HTTP 502），所以无法核对区块高度和出块时间。"
      },
      "url": "https://neptune.cash/"
+    }
+   ],
+   "x_talk": [
+    {
+     "date": "2026-11-12",
+     "who": "Neptune Cash",
+     "relation": {
+      "zh": "Neptune Cash 官方号",
+      "en": "Official Neptune Cash account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "软分叉 epsilon 并入主代码：从 62,500 号区块起，每个新区块都证明前一个区块有效。",
+      "en": "Softfork epsilon is merged: from block 62,500, every new block proves the one before it is valid."
+     },
+     "url": "https://x.com/NeptuneCash/status/2120937299693228153",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-14",
+     "who": "Neptune Cash",
+     "relation": {
+      "zh": "Neptune Cash 官方号",
+      "en": "Official Neptune Cash account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "发布 Neptune Core v0.19.1，改进并加固点对点网络。",
+      "en": "Released Neptune Core v0.19.1 with improvements to peer-to-peer networking and its hardening."
+     },
+     "url": "https://x.com/NeptuneCash/status/2110425346633843020",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-22",
+     "who": "Neptune Cash",
+     "relation": {
+      "zh": "Neptune Cash 官方号",
+      "en": "Official Neptune Cash account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "硬分叉 Delta 在 55,000 号区块生效：Triton VM 8 和交易串联上线。",
+      "en": "Hard Fork Delta activates at block 55,000: Triton VM 8 and transaction chaining go live."
+     },
+     "url": "https://x.com/NeptuneCash/status/2102473403399545304",
+     "checked": "2026-11-28"
     }
    ],
    "network": {
@@ -4103,6 +4564,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-25",
+     "who": "Classix",
+     "relation": {
+      "zh": "为以太经典维护关键基础设施的开源开发团队",
+      "en": "Open-source team that builds and maintains core Ethereum Classic infrastructure"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "发文介绍以太经典上第一笔用抗量子签名的付款：他们写的合约 skinnyCAT 用 leanSPHINCS 签名。",
+      "en": "Wrote up the first payment on Ethereum Classic using a post-quantum signature, made through their skinnyCAT contract with leanSPHINCS."
+     },
+     "url": "https://x.com/classix_dev/status/2125445041321885889",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-11-25",
+     "who": "Classix",
+     "relation": {
+      "zh": "为以太经典维护关键基础设施的开源开发团队",
+      "en": "Open-source team that builds and maintains core Ethereum Classic infrastructure"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "以太经典的工作量证明和数据结构都基于哈希，预计扛得住量子计算机；薄弱处是交易签名。",
+      "en": "Ethereum Classic's proof of work and data structures rely on hashes, expected to hold up against quantum computers; the weak spot is the transaction signature."
+     },
+     "url": "https://x.com/classix_dev/status/2125612978288689233",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "ethereumclassic/ECIPs (cloned, 97 spec files): grepped quantum, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, Lamport — no merged ECIP",
     "ethereumclassic/ECIPs issues/PRs 'quantum': PR #557 (open), PR #576 = ECIP-1130 (merged 2026-07-05; spec has no quantum content), plus 2019/2020 Keccak-mining issues (unrelated)",
@@ -4365,6 +4858,23 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-19",
+     "who": "Ori Newman",
+     "relation": {
+      "zh": "Kaspa 核心开发者",
+      "en": "Kaspa core developer"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "发布 KIP 22：花费之前不暴露公钥，帮 Kaspa 用户防范未来的量子攻击。",
+      "en": "Published KIP 22, which keeps public keys hidden until spending to help protect Kaspa users from future quantum attackers."
+     },
+     "url": "https://x.com/OriNewman/status/2112159453373980836",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "kaspanet/kips (cloned, KIP-1 to KIP-21): grepped quantum, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, Lamport — only KIP-16 (STARK note)",
     "kaspanet/kips and kaspanet/rusty-kaspa issues/PRs 'quantum': KIP-22 PR #37 (open), rusty-kaspa #767 (closed 2026-01-17), KIP-16 PRs",
@@ -4725,6 +5235,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-01",
+     "who": "Cardano",
+     "relation": {
+      "zh": "Cardano 官方号",
+      "en": "Official Cardano account"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "本周 CIP 汇总：抗量子签名是新提案之一。",
+      "en": "This week's CIP roundup: post-quantum signatures lead the new proposals."
+     },
+     "url": "https://x.com/Cardano/status/2116727931313459513",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-06",
+     "who": "Cardano",
+     "relation": {
+      "zh": "Cardano 官方号",
+      "en": "Official Cardano account"
+     },
+     "type": "proposal",
+     "summary": {
+      "zh": "问题陈述 CPS-0030「抗量子结算层」已定稿，可以被采纳。",
+      "en": "The problem statement CPS-0030 (Quantum-secure settlement layer) has been finalized and is ready to be adopted."
+     },
+     "url": "https://x.com/Cardano/status/2096639360959402152",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "cardano-foundation/CIPs (cloned 2026-11-27): grepped quantum, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, Lamport — CPS-0027 and CPS-0030 (Open); CIP-0190 (a metadata standard with a hybrid post-quantum KEM for sealed records, not holder signatures); other hits incidental",
     "cardano-foundation/CIPs issues/PRs 'quantum': #413 (closed issue), #441 (closed PR), #1144 and #1175 (merged CPS), #1242, #1300, #1320 (open), #1299 (metadata label for a third-party post-quantum evidence service)",
@@ -4767,6 +5309,20 @@
      "IntersectMBO/cardano-ledger"
     ]
    },
+   "watch": [
+    {
+     "repo": "cardano-foundation/CIPs",
+     "number": 1300,
+     "type": "pr",
+     "label": "CIP-0206 PR"
+    },
+    {
+     "repo": "cardano-foundation/CIPs",
+     "number": 1242,
+     "type": "pr",
+     "label": "CIP-0197 PR"
+    }
+   ],
    "last_reviewed": "2026-11-27"
   },
   {
@@ -4948,6 +5504,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-07",
+     "who": "NEAR Protocol",
+     "relation": {
+      "zh": "NEAR 官方号",
+      "en": "Official NEAR account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "任何 NEAR 账户今天都能在主网上用一笔交易加一把 ML-DSA（FIPS 204）密钥，账户和资产不变；Meteor 等钱包已支持。",
+      "en": "Any NEAR account can add an ML-DSA (FIPS 204) key on mainnet in one transaction, keeping its account and assets; wallets such as Meteor support it."
+     },
+     "url": "https://x.com/NEARProtocol/status/2107889716607516916",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-07",
+     "who": "NEAR Protocol",
+     "relation": {
+      "zh": "NEAR 官方号",
+      "en": "Official NEAR account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "由 RFI 和 Safeheron 牵头的银行和监管机构联合体，在 NEAR 测试网上试点抗量子金融基础设施。",
+      "en": "A consortium of banks and regulators led by RFI and Safeheron is piloting post-quantum financial infrastructure on a NEAR testnet."
+     },
+     "url": "https://x.com/NEARProtocol/status/2097057775427744130",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "near/NEPs (cloned): grepped quantum, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, Lamport — NEP-645 (ML-DSA-65, Draft), NEP-646 (SHA-3 host functions, Draft), NEP-655 (Universal Accounts, Draft), NEP-641 (lists ML-DSA schemas as future work)",
     "near/nearcore: PRs #15731 and #15878; releases 2.13.0 to 2.14.1; core/primitives-core/src/version.rs (MIN_SUPPORTED_PROTOCOL_VERSION = 85, UniversalAccounts => 88, FixMlDsaCostCharging still at nightly 157)",
@@ -5433,6 +6021,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-29",
+     "who": "Cosmos Hub",
+     "relation": {
+      "zh": "Cosmos Hub 官方号",
+      "en": "Official Cosmos Hub account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "抗量子共识密钥和零停机换钥已在 7 月 28 日随 Cosmos SDK v0.55.0、CometBFT v0.40 发布。",
+      "en": "Post-quantum consensus keys and zero-downtime key rotation shipped on July 28 in Cosmos SDK v0.55.0 and CometBFT v0.40."
+     },
+     "url": "https://x.com/cosmoshub/status/2115861820476911774",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-08",
+     "who": "Cosmos Labs",
+     "relation": {
+      "zh": "Cosmos 技术栈的开发团队",
+      "en": "Team that builds the Cosmos stack"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "发布「抗量子账本安全 2026.1」：Cosmos 技术栈第一个原生抗量子密钥选项。",
+      "en": "Released Post-Quantum Ledger Security 2026.1, the first native post-quantum key option for the Cosmos stack."
+     },
+     "url": "https://x.com/cosmoslabs_io/status/2108182302257983712",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "cosmos/cosmos-sdk ADRs: all 65 files under docs/architecture grepped for quantum, ML-DSA, Dilithium, Falcon, SPHINCS, lattice — only a meeting note in ADR-028 on PQ signature sizes; no PQ ADR",
     "cosmos/cosmos-sdk issues/PRs: 'quantum' — PRs #26472, #26436, #26614 merged; #26865, #26872 open; issues #26871, #26954 open",
@@ -5573,6 +6193,38 @@
       "zh": "只在论坛回复里看到，没有打开那条 X 帖本身，它也不是 DFINITY 的正式发布。"
      },
      "url": "https://forum.dfinity.org/t/what-is-icps-post-quantum-migration-plan-for-threshold-bls-and-bls-based-randomness/75099"
+    }
+   ],
+   "x_talk": [
+    {
+     "date": "2026-10-31",
+     "who": "Dominic Williams",
+     "relation": {
+      "zh": "DFINITY 创始人",
+      "en": "Founder of DFINITY"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "认为能破解密码的量子计算机 2030 年前不会出现；眼下更大的风险是 AI 可能攻破还不成熟的「抗量子」方案，比如 HAWK。",
+      "en": "Says cryptographically relevant quantum computers will not appear before 2030; the nearer risk is AI breaking immature \"quantum-safe\" schemes such as HAWK."
+     },
+     "url": "https://x.com/dominic_w/status/2116502313900613677",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-07",
+     "who": "Dominic Williams",
+     "relation": {
+      "zh": "DFINITY 创始人",
+      "en": "Founder of DFINITY"
+     },
+     "type": "statement",
+     "summary": {
+      "zh": "认为加密行业更急需的是「抗 AI」的密码学，而不是「抗量子」的密码学。",
+      "en": "Argues crypto urgently needs \"AI-safe\" cryptography rather than \"quantum-safe\" cryptography."
+     },
+     "url": "https://x.com/dominic_w/status/2108578477674827873",
+     "checked": "2026-11-28"
     }
    ],
    "searched": [
@@ -5752,6 +6404,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-23",
+     "who": "Stellar",
+     "relation": {
+      "zh": "Stellar 官方号",
+      "en": "Official Stellar account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "Protocol 30（Bell）已在主网上线；这次升级「开始做抗量子签名」。",
+      "en": "Protocol 30 (Bell) is live on mainnet; the upgrade begins work on post-quantum signatures."
+     },
+     "url": "https://x.com/StellarOrg/status/2124961617360343193",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-20",
+     "who": "Stellar",
+     "relation": {
+      "zh": "Stellar 官方号",
+      "en": "Official Stellar account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "发布 Protocol 30（Bell）：目标之一是开始做抗量子签名；测试网 11 月 3 日、主网 11 月 23 日升级。",
+      "en": "Introduced Protocol 30 (Bell), which begins work on post-quantum signatures; testnet Nov 3, mainnet Nov 23."
+     },
+     "url": "https://x.com/StellarOrg/status/2112576464789094776",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "stellar/stellar-protocol (CAPs and SEPs, 188 text files) grepped for quantum, post-quantum, PQ, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, ML-KEM — only CAP-0087",
     "stellar/stellar-protocol issues/PRs: 'quantum', 'ML-DSA' — PRs #1946, #2022 (CAP-0087)",
@@ -6098,6 +6782,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-10-13",
+     "who": "Adeniyi Abiodun",
+     "relation": {
+      "zh": "Mysten Labs 联合创始人兼首席产品官",
+      "en": "Co-founder and Chief Product Officer of Mysten Labs"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "Sui 开发网完成第一笔抗量子交易。",
+      "en": "The Sui devnet recorded its first post-quantum transaction."
+     },
+     "url": "https://x.com/EmanAbio/status/2109977303115845988",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-09",
+     "who": "Adeniyi Abiodun",
+     "relation": {
+      "zh": "Mysten Labs 联合创始人兼首席产品官",
+      "en": "Co-founder and Chief Product Officer of Mysten Labs"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "下周一抗量子账户将在 Sui 开发网上线。",
+      "en": "Post-quantum accounts go live on the Sui devnet next Monday."
+     },
+     "url": "https://x.com/EmanAbio/status/2108622958348444001",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "sui-foundation/sips: all 29 merged texts grepped for quantum, post-quantum, PQ, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, ML-KEM — none; issues/PRs 'quantum' and 'ML-DSA OR mldsa OR post-quantum OR falcon' — none",
     "MystenLabs/sui issues/PRs: 'quantum', 'mldsa', 'post-quantum' — PRs #27810, #28257, #28270, #28530 (all merged)",
@@ -6266,6 +6982,23 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-19",
+     "who": "Hedera",
+     "relation": {
+      "zh": "Hedera 官方号",
+      "en": "Official Hedera account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "Hedera 联合创始人 Leemon Baird 谈 DeRec 标准：不用托付他人也能保护密钥等秘密；DeRec 联盟把它作为抗量子的开放标准推进。",
+      "en": "Co-founder Leemon Baird on the DeRec standard, which protects secrets such as keys without trusting others to hold them; the DeRec Alliance advances it as an open, quantum-resistant standard."
+     },
+     "url": "https://x.com/hedera/status/2123466679279567214",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "hiero-ledger/hiero-improvement-proposals (formerly hashgraph/hedera-improvement-proposal, 190 text files) grepped for quantum, post-quantum, PQ, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, ML-KEM — HIP-1424 (hash choice), HIP-1334 and HIP-1535 (passing mentions); no signature HIP",
     "hiero-improvement-proposals issues/PRs: 'quantum' — PRs #1103 and #1437 (community, closed as stagnant)",
@@ -6764,6 +7497,38 @@
      "url": "https://entrypoint-finney.opentensor.ai"
     }
    ],
+   "x_talk": [
+    {
+     "date": "2026-11-06",
+     "who": "Opentensor Foundation",
+     "relation": {
+      "zh": "Bittensor 背后的 Opentensor 基金会官方号",
+      "en": "Official account of the Opentensor Foundation, behind Bittensor"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "Bittensor 推出抗量子钱包：用户可以用抗量子签名，还能选择自动更换签名密钥。",
+      "en": "Bittensor unveiled quantum-resistant wallets: users get post-quantum signatures and the option to rotate signing keys automatically."
+     },
+     "url": "https://x.com/opentensor/status/2118654269947785444",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-11-06",
+     "who": "Opentensor Foundation",
+     "relation": {
+      "zh": "Bittensor 背后的 Opentensor 基金会官方号",
+      "en": "Official account of the Opentensor Foundation, behind Bittensor"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "旧钱包照常可用；想用抗量子签名的，要用兼容的钱包新建账户。",
+      "en": "Existing wallets keep working; users who want quantum-resistant signing create a new account with compatible wallet software."
+     },
+     "url": "https://x.com/opentensor/status/2118654365691179324",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "RaoFoundation/subtensor (opentensor/subtensor redirects here): issues/PRs 'quantum' -> #3220, #3291, #3294; docs/design/ml-dsa-accounts-spec.md and falcon-accounts.md read",
     "Mainnet RPC state_getRuntimeVersion (spec 497) and state_getStorage AdminUtils.HashedAccountsEnabled (0x01)",
@@ -6904,6 +7669,23 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-25",
+     "who": "Cronos",
+     "relation": {
+      "zh": "Cronos 官方号",
+      "en": "Official Cronos account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "官方长文介绍下一次升级 v1.9：共识层加抗量子签名，验证者用沿用自 Cosmos SDK 和 CometBFT 的 ML-DSA 密钥；现有账户和钱包不用动。",
+      "en": "An official article on the next upgrade, v1.9: post-quantum signatures at the consensus layer, with ML-DSA validator keys inherited from the Cosmos SDK and CometBFT; existing accounts and wallets need no action."
+     },
+     "url": "https://x.com/CronosNetwork/status/2125409165048950951",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "crypto-org-chain/cronos issues+PRs 'quantum' (6 hits, all dependency bumps)",
     "crypto-org-chain/chain-main 'quantum' (0)",
@@ -7540,6 +8322,23 @@
      "url": "https://github.com/cosmos/cosmos-sdk/pull/26872"
     }
    ],
+   "x_talk": [
+    {
+     "date": "2026-10-12",
+     "who": "Injective",
+     "relation": {
+      "zh": "Injective 官方号",
+      "en": "Official Injective account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "官方说开发团队已正式开始做抗量子基础设施。",
+      "en": "Says the dev team has officially started building quantum-resistant infrastructure for Injective."
+     },
+     "url": "https://x.com/injective/status/2109620612054253814",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "InjectiveLabs/injective-chain-releases 'quantum' / 'post-quantum' (0)",
     "InjectiveLabs org repo list (injective-core is not public; no proposal repo found)",
@@ -7789,6 +8588,38 @@
     }
    ],
    "unverified": [],
+   "x_talk": [
+    {
+     "date": "2026-11-12",
+     "who": "Stacks",
+     "relation": {
+      "zh": "Stacks 官方号",
+      "en": "Official Stacks account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "分层推进抗量子：先是个人账户，再是链上历史，最后对所有人默认生效。",
+      "en": "Rolling out post-quantum protection in layers: individual accounts first, then the chain's history, then on by default for everyone."
+     },
+     "url": "https://x.com/Stacks/status/2121015961117724813",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-10-08",
+     "who": "Stacks",
+     "relation": {
+      "zh": "Stacks 官方号",
+      "en": "Official Stacks account"
+     },
+     "type": "research",
+     "summary": {
+      "zh": "抗量子签名比现在的 Schnorr 签名大 10 到 123 倍，会挤占比特币主链的空间。",
+      "en": "Post-quantum signatures are 10x to 123x larger than today's Schnorr signatures, leaving far less space on Bitcoin's base layer."
+     },
+     "url": "https://x.com/Stacks/status/2108210244849705438",
+     "checked": "2026-11-28"
+    }
+   ],
    "searched": [
     "stacksgov/sips 'quantum', 'post-quantum' (0)",
     "stacks-network/stacks-core 'quantum' (1, unrelated), 'post-quantum', 'dilithium', 'lattice' (0)",

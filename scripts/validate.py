@@ -59,8 +59,15 @@ PRIMARY_TYPES={'pinned source code','pinned source repository','pinned source do
 def numbers(text,english):
     """Numbers of 10 or more in a text, with English month names turned into month numbers."""
     text=re.sub(r'(?<=\d),(?=\d{3})','',text)
+    # "4 million" and "400 万" are the same number
+    scale=lambda m,k:str(round(float(m.group(1))*k))
     if english:
         text=MONTH_RE.sub(lambda m:str([x[:3] for x in MONTHS].index(m.group(1)[:3].lower())+1),text)
+        text=re.sub(r'(\d+(?:\.\d+)?) ?million\b',lambda m:scale(m,10**6),text)
+        text=re.sub(r'(\d+(?:\.\d+)?) ?billion\b',lambda m:scale(m,10**9),text)
+    else:
+        text=re.sub(r'(\d+(?:\.\d+)?) ?万',lambda m:scale(m,10**4),text)
+        text=re.sub(r'(\d+(?:\.\d+)?) ?亿',lambda m:scale(m,10**8),text)
     return {int(n) for n in re.findall(r'\d+',text) if int(n)>=10}
 
 def text_pairs(x,path):
@@ -83,8 +90,7 @@ def https(url,where):
     u=urlsplit(url or '')
     require(u.scheme=='https' and u.hostname and not u.username and not u.password,f'Invalid URL: {where}')
 
-X_RELATIONS={'founder','foundation','core_dev','proposal_author','maintainer','mining_pool','wallet','exchange','community_account'}
-X_TYPES={'plan','proposal','research','reply','other'}
+X_TYPES={'plan','proposal','release','research','statement'}
 X_POST=re.compile(r'https://(x|twitter)\.com/[A-Za-z0-9_]+/status/\d+')
 
 def validate_chains():
@@ -220,20 +226,15 @@ def validate_chains():
             w=f'{cid}.x_talk[{i}]'
             require(DATE_RE.match(t.get('date') or '') and DATE_RE.match(t.get('checked') or '') and t['date']<=t['checked'],f'date and checked (YYYY-MM-DD, date not after checked): {w}')
             require(isinstance(t.get('who'),str) and t['who'].strip(),f'who names a public identity: {w}')
-            require(t.get('relation') in X_RELATIONS,f'relation is one of {sorted(X_RELATIONS)}: {w}')
+            bilingual(t.get('relation'),f'{w}.relation')
             require(t.get('type') in X_TYPES,f'type is one of {sorted(X_TYPES)}: {w}')
             bilingual(t.get('summary'),f'{w}.summary')
             require(X_POST.fullmatch(t.get('url') or ''),f'url is an x.com post: {w}')
-        xa=c.get('x_asks')
-        if xa is not None:
-            w=f'{cid}.x_asks'
-            require(type(xa.get('window_days')) is int and xa['window_days']>0 and type(xa.get('people')) is int and xa['people']>0,f'window_days and people are positive integers: {w}')
-            ex=xa.get('examples') or []
-            require(1<=len(ex)<=3,f'one to three examples: {w}')
-            for j,e in enumerate(ex):
-                require(DATE_RE.match(e.get('date') or ''),f'example date: {w}[{j}]')
-                bilingual(e.get('summary'),f'{w}.examples[{j}].summary')
-                require(X_POST.fullmatch(e.get('url') or ''),f'example url is an x.com post: {w}[{j}]')
+        talk=c.get('x_talk') or []
+        require(len({t['url'] for t in talk})==len(talk),f'each X post is listed once: {cid}')
+        require([t['date'] for t in talk]==sorted((t['date'] for t in talk),reverse=True),f'x_talk is newest first: {cid}')
+        # how many ordinary users asked is an estimate that cannot be checked, and its links would name them: kept off the data
+        require('x_asks' not in c,f'x_asks is not published: {cid}')
     # an alias or pinyin must not point at two chains
     owner={}
     for c in chains:

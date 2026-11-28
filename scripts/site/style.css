@@ -893,7 +893,6 @@ footer.site{contain-intrinsic-size:auto 400px}
 .xb p{margin:0;font-size:var(--t-sm)}
 .xh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:var(--t-sm)}
 .xr{color:var(--ink-3)}
-.xasks{margin:0;font-size:var(--t-sm);display:grid;gap:2px}
 @media (max-width:640px){.xl li{grid-template-columns:minmax(0,1fr);gap:2px}}
 /* data page and chain page: embed picker, previews and copyable code */
 .emb-ctl{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}

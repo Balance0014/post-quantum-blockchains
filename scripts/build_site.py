@@ -321,9 +321,10 @@ def zh_punctuation_errors(page_html):
 
 
 # Words a tracker must not use as a conclusion: it rates what is live, it doesn't call anything safe,
-# forecast prices or tell anyone to buy or sell. Quoted titles and claims ("...", 「...」) are exempt.
+# forecast prices or tell anyone to buy or sell. Quoted titles and claims ("...", 「...」) are exempt, and so are
+# names of things that are not verdicts: 安全审计 (security audit), 安全认证 (certification), 安全官 (a job title).
 BANNED_EN = re.compile(r'\b(safe|safely|safety|guarantee[sd]?|quantum[- ]proof|unhackable|unbreakable|buy|sell|price target)\b', re.I)
-BANNED_ZH = re.compile(r'安全(?!审计|认证)|防量子|买入|卖出|目标价|抄底|稳赚')
+BANNED_ZH = re.compile(r'安全(?!审计|认证|官)|防量子|买入|卖出|目标价|抄底|稳赚')
 QUOTED = re.compile(r'"[^"]*"|“[^”]*”|「[^」]*」|‘[^’]*’')
 
 
@@ -477,7 +478,7 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
         'latest': {'date': ls.get('date'), 'en': ls.get('text'), 'zh': ls.get('zh'), 'checked': bool(ls.get('is_check_date'))},
         'checked': (n.get('block', {}).get('queried_at_utc') or net.get('checked_at_utc') or '')[:10] or None,
         'reviewed': c['last_reviewed'], 'basis': c['stage_basis'],
-        'x_talk': sorted(c.get('x_talk') or [], key=lambda t: t['date'], reverse=True), 'x_asks': c.get('x_asks'),
+        'x_talk': sorted(c.get('x_talk') or [], key=lambda t: t['date'], reverse=True),
         'basis_src': bsrc, 'basis_grade': bgrade,
         'since': since,
         'status': standard_status(c), 'schemes': schemes(c), 'nist': nist_map(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
