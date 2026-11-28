@@ -11026,6 +11026,178 @@
     "auditor": "Hacken",
     "date": "2023-01-13"
    }
+  },
+  {
+   "id": "quantaureum",
+   "name": "Quantaureum",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
+   "ticker": "QAU",
+   "kind": "native",
+   "network_status": "testnet",
+   "layer": "L1",
+   "coingecko_id": null,
+   "mcap_rank": null,
+   "stage": 2,
+   "stage_label": "Formal proposal",
+   "algo": {
+    "en": "Dilithium3, the round-3 version (not the FIPS 204 ML-DSA-65 standard), for transactions and consensus; Kyber768 between nodes",
+    "zh": "Dilithium3（第三轮版本，不是 FIPS 204 定稿的 ML-DSA-65），用于交易和共识；节点之间用 Kyber768"
+   },
+   "algo_chips": [
+    "family"
+   ],
+   "consensus": {
+    "en": "PoS (QPOS) · Testnet",
+    "zh": "权益证明（QPOS）· 测试网"
+   },
+   "holder_can_use_today": {
+    "en": "No holder transfer could be confirmed. The project's own node (chain ID 1668) has produced blocks since its genesis on 2026-09-07, but the 20 blocks sampled on 2026-11-28 held no transactions. The public testnet endpoints are down, and the project contradicts itself on whether the mainnet is live.",
+    "zh": "无法确认持币人能转账。项目自己运行的节点（链 ID 1668）自 2026-09-07 创世起一直在出块，但 2026-11-28 抽样的 20 个区块都没有交易。公开测试网端点不通，主网是否上线，项目自己的说法互相矛盾。"
+   },
+   "note": {
+    "en": "The author calls it an independent developer's technical exploration project. The project's documents name ML-DSA-65 (FIPS 204), but on the transaction path the code uses round-3 Dilithium (circl sign/dilithium/mode3, which the code itself calls Dilithium3Legacy); ML-DSA-65 is used only for wallet threshold signing.",
+    "zh": "作者自称这是独立开发者的技术探索项目。项目文档写的是 ML-DSA-65（FIPS 204），但交易路径上的代码用的是第三轮 Dilithium（circl 的 sign/dilithium/mode3，代码里自己叫 Dilithium3Legacy）；ML-DSA-65 只用在钱包门限签名上。"
+   },
+   "four": {
+    "today": {
+     "en": "No holder transfer could be confirmed. The project's own node (chain ID 1668) has produced blocks since its genesis on 2026-09-07, but the 20 blocks sampled on 2026-11-28 held no transactions. The public testnet endpoints are down, and the project contradicts itself on whether the mainnet is live.",
+     "zh": "无法确认持币人能转账。项目自己运行的节点（链 ID 1668）自 2026-09-07 创世起一直在出块，但 2026-11-28 抽样的 20 个区块都没有交易。公开测试网端点不通，主网是否上线，项目自己的说法互相矛盾。"
+    },
+    "watch": {
+     "en": "The project contradicts itself on the mainnet: release v0.1.0 calls chain ID 1668 the mainnet, while the README and the network guide say its launch has not been announced. Network readings come only from the project's own node.",
+     "zh": "项目对主网的说法互相矛盾：v0.1.0 发布说明把链 ID 1668 称为主网，而 README 和网络指南写的是主网上线尚未宣布。网络数据只来自项目自己运行的节点。"
+    },
+    "can": {
+     "en": "Treat it as an experiment: the node can be built from source and run for testing.",
+     "zh": "当作实验项目看待：可以从源码编译节点、运行测试。"
+    },
+    "next": {
+     "en": "An official mainnet announcement or a public testnet that answers, and a switch of the signing code to FIPS 204 ML-DSA.",
+     "zh": "官方的主网公告或能访问的公开测试网，以及签名代码换成 FIPS 204 的 ML-DSA。"
+    }
+   },
+   "stage_basis": {
+    "en": "The core developer's whitepaper states that consensus uses Dilithium3 for block and attestation signatures, that all signatures are Dilithium3 and that there is no classical fallback, and the node code rejects any transaction without a Dilithium3 signature. With no public proposal process, that is a formal specification confirmed by code. Stage 3 is not reached: the public testnet endpoints are down, the blocks sampled on the project's own node on 2026-11-28 held no transactions, and the project contradicts itself on whether the mainnet is live, so no holder transfer could be confirmed.",
+    "zh": "核心开发者的白皮书写明共识用 Dilithium3 签区块和验证者投票、所有签名都是 Dilithium3、没有经典回退；节点代码拒绝任何不带 Dilithium3 签名的交易。这条链没有公开提案流程，所以算有代码印证的正式协议说明。够不上第 3 档：公开测试网端点不通，2026-11-28 在项目自己的节点上抽样的区块都没有交易，主网是否上线项目自己的说法互相矛盾，所以无法确认持币人能转账。"
+   },
+   "latest_step": {
+    "date": "2026-11-23",
+    "text": "Release v0.1.0 of the node, which its notes call the mainnet (chain ID 1668) release. The README still says the project is in a testnet phase.",
+    "zh": "节点发布 v0.1.0，发布说明称之为主网（链 ID 1668）版本。README 仍写项目处于测试网阶段。"
+   },
+   "milestones": [
+    {
+     "date": "2026-09-14",
+     "type": "code",
+     "grade": "primary",
+     "name": "Node repository Quantaureum/qau published (Apache-2.0); transactions are signed with Dilithium3.",
+     "zh": "节点代码仓 Quantaureum/qau 公开（Apache-2.0 许可）；交易用 Dilithium3 签名。",
+     "status": {
+      "en": "Public",
+      "zh": "已公开"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/types/quantum_transaction.go#L159-L183",
+     "verified": true
+    },
+    {
+     "date": "2026-10-01",
+     "type": "proposal",
+     "grade": "primary",
+     "name": "Whitepaper published in the node repository: consensus uses Dilithium3 for block and attestation signatures, all signatures are Dilithium3, and there is no classical fallback or hybrid mode.",
+     "zh": "节点代码仓发布白皮书：共识用 Dilithium3 签区块和验证者投票，所有签名都是 Dilithium3，没有经典回退，也没有混合模式。",
+     "status": {
+      "en": "Published",
+      "zh": "已发布"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/docs/WHITEPAPER.md#L28-L30",
+     "verified": true
+    },
+    {
+     "date": "2026-11-04",
+     "type": "testnet",
+     "grade": "official",
+     "name": "Network guide status note: the project is in a testnet phase (chain ID 1669); the mainnet preset (1668) is configured in code and its launch will be announced.",
+     "zh": "网络指南的状态说明：项目处于测试网阶段（链 ID 1669）；主网预设（1668）已写进代码，上线情况会另行宣布。",
+     "status": {
+      "en": "Project statement",
+      "zh": "项目自述"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/docs/NETWORK.md#L3",
+     "verified": true,
+     "progress": false
+    },
+    {
+     "date": "2026-11-23",
+     "type": "code",
+     "grade": "primary",
+     "name": "Release v0.1.0, the first tagged node release; its notes say mainnet chain ID 1668.",
+     "zh": "发布 v0.1.0，节点的第一个正式版本；发布说明写的是主网链 ID 1668。",
+     "status": {
+      "en": "Released",
+      "zh": "已发布"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/releases/tag/v0.1.0",
+     "verified": true
+    }
+   ],
+   "unverified": [
+    {
+     "claim": {
+      "en": "'ECDSA is disabled and there is no classical fallback.'",
+      "zh": "「ECDSA 已禁用，没有经典回退。」"
+     },
+     "reason": {
+      "en": "README statement; not checked on a running network.",
+      "zh": "README 中的说法；未在运行中的网络上核实。"
+     },
+     "url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/README.md#L7"
+    },
+    {
+     "claim": {
+      "en": "The whitepaper says ECDSA signatures 'may only be temporarily enabled for emergency migration scenarios'.",
+      "zh": "白皮书说紧急迁移时 ECDSA 签名「可以临时启用」。"
+     },
+     "reason": {
+      "en": "Whitepaper §10.2; no switch for it was found in the node code. It does not count toward the stage.",
+      "zh": "出自白皮书 10.2 节；节点代码里没有找到对应的开关。不计入档位。"
+     },
+     "url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/docs/WHITEPAPER.md#L233-L240"
+    }
+   ],
+   "searched": [
+    "Quantaureum/qau at b8734aa: README.md, README.en.md, docs/NETWORK.md, docs/WHITEPAPER.md, types/quantum_transaction.go, encoding/transaction_authorization.go, crypto/sign.go, verify.go, generate.go, signature_algorithm.go, node/tmldsa_reshare_runner_v1.go, go.mod (cloudflare/circl v1.6.3)",
+    "GitHub releases of Quantaureum/qau (v0.1.0, 2026-11-23)",
+    "Endpoints in docs/NETWORK.md on 2026-11-28: the project's own node rpc.quantaureum.com (chain ID 1668, genesis 2026-09-07, 20 sampled blocks with no transactions); the testnet endpoint and faucet (HTTP 502 and 404); quantaureum.com (HTTP 500)",
+    "CoinGecko search 'quantaureum': no listing"
+   ],
+   "network": {
+    "probe": {
+     "preset": "evm",
+     "url": "https://rpc.quantaureum.com"
+    },
+    "block_interval_s": null,
+    "block_interval_source": null,
+    "source_kind": "project"
+   },
+   "code": {
+    "repo": "Quantaureum/qau"
+   },
+   "last_reviewed": "2026-11-28",
+   "migration": {
+    "value": "native",
+    "en": "Native chain: in the node code every transaction carries a Dilithium3 signature from genesis, so there are no classical-key coins to move.",
+    "zh": "原生链：节点代码里每笔交易从创世起都带 Dilithium3 签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/encoding/transaction_authorization.go#L15-L30",
+    "grade": "primary"
+   },
+   "extra_sources": [
+    {
+     "label": "Whitepaper §10.1: all signatures Dilithium3",
+     "url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/docs/WHITEPAPER.md#L226-L228"
+    }
+   ]
   }
  ],
  "not_listed_reasons": {
