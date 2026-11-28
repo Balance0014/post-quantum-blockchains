@@ -10,6 +10,8 @@ Chinese pages: Latin-script words only where they are names. A word passes when 
     Chinese text (a product, a repository, a proposal), or
   - a version or standard number: a word with a digit in it (v29, testnet4, Q1).
 Everything else on a Chinese page is reported, so an English sentence or an untranslated label fails the build.
+Chinese pages also fail on a half-width space right after full-width punctuation (。，：；！？、), including across
+inline tags ("<b>不能。</b> 暂无"), since the punctuation already carries its own space.
 
 Not checked, because they are not running text: scripts, styles, code samples (pre, code, kbd), elements marked
 with another language (the language switch), link text that is a URL or a repository path, and metadata other than
@@ -45,6 +47,12 @@ SKIP_TAGS = {'script', 'style', 'pre', 'code', 'kbd', 'samp', 'svg', 'template',
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'}
 TEXT_ATTRS = ('data-def', 'data-title', 'data-tip', 'aria-label', 'placeholder', 'title', 'alt')
 META_TEXT = {'description', 'og:title', 'og:description', 'twitter:title', 'twitter:description'}
+# Chinese punctuation is full width and carries its own space: a half-width space after it shows as a gap.
+ZH_PUNCT = '。，：；！？、'
+ZH_GAP = re.compile(f'[{ZH_PUNCT}] ')
+BLOCK = {'address', 'article', 'aside', 'blockquote', 'br', 'dd', 'details', 'div', 'dl', 'dt', 'figcaption', 'figure', 'footer',
+         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hr', 'li', 'main', 'nav', 'ol', 'p', 'section', 'summary', 'table',
+         'tbody', 'td', 'th', 'thead', 'tr', 'ul'}
 
 
 class Reader(HTMLParser):
@@ -53,6 +61,7 @@ class Reader(HTMLParser):
     def __init__(self, page_lang):
         super().__init__(convert_charrefs=True)
         self.page_lang, self.stack, self.out = page_lang, [], []
+        self.prev, self.gaps = '', []  # the text just before, across inline tags; spaces after Chinese punctuation
 
     def skipping(self):
         return any(s[1] for s in self.stack)
@@ -71,16 +80,28 @@ class Reader(HTMLParser):
         skip = tag in SKIP_TAGS or other or a.get('translate') == 'no'
         if not skip and not self.skipping():
             self.out += [(tag + '@' + k, v) for k, v in attrs if k in TEXT_ATTRS and v]
+            self.gaps += [v for k, v in attrs if k in TEXT_ATTRS and v and ZH_GAP.search(v)]
+        if tag in BLOCK:
+            self.prev = ''
+        elif skip:
+            self.prev = 'x'  # a skipped name or code stands between the punctuation and what follows
         if tag not in VOID:
             self.stack.append((tag, skip, path_link))
 
     def handle_endtag(self, tag):
+        if tag in BLOCK:
+            self.prev = ''
         for i in range(len(self.stack) - 1, -1, -1):
             if self.stack[i][0] == tag:
                 del self.stack[i:]
                 return
 
     def handle_data(self, data):
+        if not self.skipping():
+            joined = self.prev[-1:] + data  # "<b>不能。</b> 暂无" is one run of text to the reader
+            if ZH_GAP.search(joined):
+                self.gaps.append((self.prev[-20:] + data).strip())
+            self.prev = data
         if data.strip() and not self.skipping():
             in_link = any(len(s) > 2 and s[2] for s in self.stack)
             self.out.append(('a' if in_link else (self.stack[-1][0] if self.stack else ''), data))
@@ -136,6 +157,8 @@ def check(site):
         r = Reader('zh' if zh else 'en')
         r.feed(p.read_text(encoding='utf-8'))
         seen = set()
+        if zh:
+            errors += [f'{rel}: half-width space after Chinese punctuation: {g[:80]}' for g in dict.fromkeys(r.gaps)]
         for where, text in r.out:
             if zh:
                 if where == 'a' and not CJK.search(text):
@@ -160,7 +183,7 @@ def main():
     pages = sum(1 for _ in site.rglob('*.html'))
     if errors:
         print('\n'.join(errors[:200]))
-        sys.exit(f'{len(errors)} words in the wrong language on {pages} pages (first 200 above)')
+        sys.exit(f'{len(errors)} problems with words in the wrong language or spacing on {pages} pages (first 200 above)')
     print(f'{pages} pages read in one language each')
 
 

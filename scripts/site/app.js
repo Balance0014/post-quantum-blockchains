@@ -11,6 +11,8 @@ const HYD = !PRE && !!document.querySelector("#app > *");
 const put = (id, html) => { if (HYD) return; const h = typeof html === "function" ? html() : html; if (PRE) OUT[id] = h; else document.getElementById(id).innerHTML = h; };
 const D = window.PQ;
 const lang = D.lang;
+/* the space before an inline link or a following sentence: none after Chinese full-width punctuation */
+const SEP = (s) => (/[。，：；！？、]$/.test(s) ? "" : " ");
 const REPO = D.repo;
 const URL_FIX = REPO + "/issues/new?template=correction.yml";
 const URL_SUBMIT = REPO + "/issues/new?template=new-project.yml";
@@ -724,7 +726,7 @@ function chrome(view) {
       <a class="btn" href="${URL_TALK}" target="_blank" rel="noopener">GitHub Discussions ↗</a>
       <a class="btn" href="${URL_X}" target="_blank" rel="noopener">X · @balance0014 ↗</a></div>
     <div class="fine">${esc(L("foot_fine"))}</div>
-    <div class="fine">${esc(L("foot_cite")(D.release.version, D.release.date))} <a href="${href("method/")}#cite">${esc(L("foot_cite_link"))}</a>${D.has_changes ? ` · <a href="${href("changes/")}">${esc(L("nav_changes"))}</a>` : ""} · <a href="${D.base}llms.txt">llms.txt</a> · <a href="${blob("CHANGELOG.md")}" target="_blank" rel="noopener">${esc(L("foot_log"))} ↗</a></div>`);
+    <div class="fine">${esc(L("foot_cite")(D.release.version, D.release.date))}${SEP(L("foot_cite")(D.release.version, D.release.date))}<a href="${href("method/")}#cite">${esc(L("foot_cite_link"))}</a>${D.has_changes ? ` · <a href="${href("changes/")}">${esc(L("nav_changes"))}</a>` : ""} · <a href="${D.base}llms.txt">llms.txt</a> · <a href="${blob("CHANGELOG.md")}" target="_blank" rel="noopener">${esc(L("foot_log"))} ↗</a></div>`);
 }
 
 /* ---------- home ---------- */
@@ -1127,7 +1129,7 @@ function algoMapHTML() {
   const used = NSTS.filter((v) => entries.some(({ n }) => n.st === v));
   const keys = used.map((v) => `<span><i class="ssw n-${v}"></i>${term(esc(L("nist")[v]), DF.nist[v], L("nist")[v])}</span>`).join("")
     + (entries.some(({ n }) => n.var) ? `<span><i class="ssw vr" aria-hidden="true"></i>${term(esc(L("nist_var_k")), DF.nist_var, L("nist_var_k"))}</span>` : "");
-  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(`${L("am_note")(cs.length)} ${L("map_multi")}`), src: `${SRC_CHAINS} · <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noopener">NIST ↗</a>`,
+  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(`${L("am_note")(cs.length)}${SEP(L("am_note")(cs.length))}${L("map_multi")}`), src: `${SRC_CHAINS} · <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noopener">NIST ↗</a>`,
     body: `<div class="amap">${rows}</div><div class="keys">${keys}<span><i class="amd" aria-hidden="true"></i>${esc(L("cov").default)}</span></div><p class="fine-note">${esc(L("nist_next"))}</p>` });
 }
 /* layer 2: the five questions a holder asks; each card states its rule and opens the matching table */
@@ -1175,9 +1177,9 @@ function dataHTML() {
 }
 function contactHTML() {
   const urls = [URL_TALK, URL_FIX, URL_SUBMIT, URL_X];
-  return `<section id="contact" class="layer" aria-labelledby="contact-h">${secH("contact", L("nav_contact"), L("ct_h"), `${esc(L("ct_lede"))} <b>${esc(L("ct_reply"))}</b>`)}
+  return `<section id="contact" class="layer" aria-labelledby="contact-h">${secH("contact", L("nav_contact"), L("ct_h"), `${esc(L("ct_lede"))}${SEP(L("ct_lede"))}<b>${esc(L("ct_reply"))}</b>`)}
     <div class="contacts">${L("ct").map(([h, sub], i) => `<a class="card ct" href="${urls[i]}" target="_blank" rel="noopener"><b>${esc(h)} <span aria-hidden="true">↗</span></b><span>${esc(sub)}</span></a>`).join("")}</div>
-    <p class="ct-list">${esc(L("ct_list"))} <a href="${URL_LOG}" target="_blank" rel="noopener">${esc(L("ct_log"))} ↗</a></p>
+    <p class="ct-list">${esc(L("ct_list"))}${SEP(L("ct_list"))}<a href="${URL_LOG}" target="_blank" rel="noopener">${esc(L("ct_log"))} ↗</a></p>
     <div class="card about" id="about"><h3>${esc(L("about_h"))}</h3><p>${esc(L("about_who"))}</p><p>${esc(L("about_money"))}</p><p>${esc(L("about_ind"))}</p>
       <p class="about-l"><span>${esc(L("about_links"))}${CO()}</span><a href="https://github.com/Balance0014" target="_blank" rel="noopener">GitHub · Balance0014 ↗</a><a href="${URL_X}" target="_blank" rel="noopener">X · @balance0014 ↗</a></p></div></section>`;
 }
@@ -1426,7 +1428,7 @@ function renderHome() {
 /* the independent explorer read when the chain's own endpoint shows an old block; one source alone never says "stopped" */
 function xchkHTML(c) {
   const x = c.net.check;
-  if (x) return `<br><span class="note-small">${esc(x.ok ? L("xchk_ok")(x.h.toLocaleString("en-US"), x.age) : L("xchk_no"))} <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(host(x.url))} ↗</a></span>`;
+  if (x) return `<br><span class="note-small">${((t) => esc(t) + SEP(t))(x.ok ? L("xchk_ok")(x.h.toLocaleString("en-US"), x.age) : L("xchk_no"))}<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(host(x.url))} ↗</a></span>`;
   return c.net.status === "unknown" && c.net.block.ok ? `<br><span class="note-small">${esc(L("xchk_none"))}</span>` : "";
 }
 function blockHTML(c) {
@@ -1493,7 +1495,7 @@ function renderChain() {
     ${c.stage >= 2 ? kv(L("k_mig"), c.mig ? rfield(c.mig, L("mig")) : esc(L("mig").unknown), DF.mig[c.mig ? c.mig.value : "unknown"]) : ""}
     ${kv(L("k_expo"), expo)}
 </div>`;
-  const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(L("today_lead")(c.stage))}</b> ` : ""}${esc(T(four[k]))}</dd></div>` : "";
+  const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(L("today_lead")(c.stage))}</b>${SEP(L("today_lead")(c.stage))}` : ""}${esc(T(four[k]))}</dd></div>` : "";
   const holder = `<div class="holder"><h2>${esc(L("holder_h"))}</h2><dl>${hrow("today", "holder_today")}${hrow("next", "holder_next")}${hrow("can", "d_can")}</dl><p class="note-small">${esc(L("holder_note"))}</p></div>`;
   const p = c.prog;
   const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("watch", "d_watch")}</div>${xtalkHTML(c)}${timeline}`;
@@ -1527,7 +1529,7 @@ function renderChain() {
       ${dsec("d-prog", L("d_prog_h"), prog)}
       ${dsec("d-ev", L("d_ev_h"), evidence)}
       ${dsec("d-bg", L("d_bg_h"), bg, L("d_bg_note"))}
-      ${dsec("d-embed", L("emb_page_h"), `<p class="note-small">${esc(L("emb_page_p"))} <a href="${href("data/")}#embed">${esc(L("emb_more"))} →</a></p>${embedBody(c, D.embed, lang, true)}`)}
+      ${dsec("d-embed", L("emb_page_h"), `<p class="note-small">${esc(L("emb_page_p"))}${SEP(L("emb_page_p"))}<a href="${href("data/")}#embed">${esc(L("emb_more"))} →</a></p>${embedBody(c, D.embed, lang, true)}`)}
       <section class="card fix"><p>${esc(L("d_fix"))}</p><a class="btn primary" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("d_fix_btn"))} ↗</a><a class="btn" href="${D.data_url}" target="_blank" rel="noopener">${esc(L("gh"))} ↗</a></section>
     </div></div>`);
   if (!PRE) { initCopy(); document.getElementById("app").addEventListener("click", (e) => { const fd = e.target.closest("[data-fold]"); if (fd) foldList(fd); }); }
@@ -1614,7 +1616,7 @@ function renderData() {
   put("app", () => `<div class="page"><article class="prose dpage">
     <span class="eyebrow">${esc(L("dp_eyebrow"))}</span><h1>${esc(L("dp_h"))}</h1><p class="lede">${esc(L("dp_lede"))}</p>
     <nav class="toc" aria-label="${esc(L("toc"))}">${L("dp_toc").map(([id, t]) => `<a href="#${id}">${esc(t)}</a>`).join("")}</nav>
-    ${H("files", L("data_dl_h"))}<div class="files">${Object.entries(L("data_files")).map(([n, sub]) => file(n, sub)).join("")}${file("llms.txt", L("data_llms"))}</div><p class="fine-note">${esc(L("data_lic"))} <a href="#license">${esc(L("lic_h"))}</a></p>
+    ${H("files", L("data_dl_h"))}<div class="files">${Object.entries(L("data_files")).map(([n, sub]) => file(n, sub)).join("")}${file("llms.txt", L("data_llms"))}</div><p class="fine-note">${esc(L("data_lic"))}${SEP(L("data_lic"))}<a href="#license">${esc(L("lic_h"))}</a></p>
     ${H("api", L("api_h"))}<p>${esc(L("api_p"))}</p>${rows(L("api_cols"), L("api_rows").map(([a, b]) => [`GET ${o}${a}`, b]))}
     <div class="snip"><div class="snip-h"><span>${esc(L("api_ex"))}</span><button type="button" class="btn sm" data-copy="sn-ex">${esc(L("copy"))}</button></div><pre class="mono" id="sn-ex">${esc(ex)}</pre></div>
     <p class="note-small">${esc(L("api_freq")(D.release.version))}</p>
@@ -1802,8 +1804,8 @@ function howHTML() {
   const H = (id, k) => `<h2 id="${id}">${esc(M[k])}</h2>`;
   const toc = [["stages", "scale_h"], ["rules", "rules_h"], ["groups", "groups_h"], ["network", "net_h"], ["algorithms", "algo_h"], ["evidence", "grades_h"], ["xtalk", "x_h"], ["charts", "charts_h"], ["data", "dims_h"], ["coverage", "who_h"], ["updates", "cad_h"], ["limits", "open_h"], ["cite", "cite_h"]];
   const cite = `${H("cite", "cite_h")}<p><code class="cite">${esc(M.cite(D.release.version, D.release.date, D.site_url))}</code></p><p>${esc(M.cite_p)}</p>
-    <p>${esc(M.cite_files)} ${["chains.json", "network.json", "projects.json", "sources.json"].map((f) => `<a href="${raw(f)}" target="_blank" rel="noopener" class="mono">${f}</a>`).join(" · ")}</p>
-    <p>${esc(M.cite_meta)} <a href="${blob("CITATION.cff")}" target="_blank" rel="noopener" class="mono">CITATION.cff</a> · <a href="${blob("CHANGELOG.md")}" target="_blank" rel="noopener" class="mono">CHANGELOG.md</a></p>`;
+    <p>${esc(M.cite_files)}${SEP(M.cite_files)}${["chains.json", "network.json", "projects.json", "sources.json"].map((f) => `<a href="${raw(f)}" target="_blank" rel="noopener" class="mono">${f}</a>`).join(" · ")}</p>
+    <p>${esc(M.cite_meta)}${SEP(M.cite_meta)}<a href="${blob("CITATION.cff")}" target="_blank" rel="noopener" class="mono">CITATION.cff</a> · <a href="${blob("CHANGELOG.md")}" target="_blank" rel="noopener" class="mono">CHANGELOG.md</a></p>`;
   const groups = ["scope", "design", "netw", "ss", "cov", "mig", "audit"].map((k) => F[k].vals.map((v, i) => `<tr><td>${i ? "" : esc(L(LAB[k]))}</td><td>${esc(F[k].lab(v))}</td><td>${esc(F[k].def(v))}</td></tr>`).join("")).join("");
   const net = ["ok", "quiet", "stalled", "unknown"].map((s) => `<tr><td><span class="dot ${s}" style="margin-right:7px"></span>${esc(L("st_" + s))}</td><td>${esc(DF["st_" + s])}</td></tr>`).join("");
   const algo = Object.keys(D.chips).map((k) => `<tr><td><span class="chip ${D.chips[k].tone}">${esc(T(D.chips[k]))}</span></td><td>${esc(DF.chips[k])}</td></tr>`).join("")
@@ -1829,7 +1831,7 @@ function howHTML() {
     ${H("updates", "cad_h")}${ul(M.cad)}
     ${H("limits", "open_h")}${ul(M.open)}
     ${cite}
-    <p>${esc(M.rules_link)} <a href="${blob("docs/stages.md")}" target="_blank" rel="noopener" class="mono">docs/stages.md</a></p>
+    <p>${esc(M.rules_link)}${SEP(M.rules_link)}<a href="${blob("docs/stages.md")}" target="_blank" rel="noopener" class="mono">docs/stages.md</a></p>
   </article></section>`;
 }
 function renderMethod() {

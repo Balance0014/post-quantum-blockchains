@@ -7842,8 +7842,8 @@
     "zh": "权益证明（PoS，CometBFT，Cosmos SDK 加 EVM）"
    },
    "holder_can_use_today": {
-    "en": "Nothing. Accounts use secp256k1 (EVM) signatures only, and v1.9 is not released.",
-    "zh": "暂无。账户只用 secp256k1（EVM）签名，v1.9 尚未发布。"
+    "en": "Nothing at the protocol level. Accounts use secp256k1 (EVM) signatures only, and v1.9 is not released.",
+    "zh": "协议层没有。账户只用 secp256k1（EVM）签名，v1.9 尚未发布。"
    },
    "note": {
     "en": "v1.9 targets validators' consensus signatures, not user accounts. Cronos' own migration notes say ML-DSA-65 needs a later governance vote and relayer support before it can be switched on.",
@@ -7851,8 +7851,8 @@
    },
    "four": {
     "today": {
-     "en": "Nothing. Accounts use secp256k1 (EVM) signatures only, and v1.9 is not released.",
-     "zh": "暂无。账户只用 secp256k1（EVM）签名，v1.9 尚未发布。"
+     "en": "Nothing at the protocol level. Accounts use secp256k1 (EVM) signatures only, and v1.9 is not released.",
+     "zh": "协议层没有。账户只用 secp256k1（EVM）签名，v1.9 尚未发布。"
     },
     "watch": {
      "en": "v1.9 targets validators' consensus signatures, not user accounts. Cronos' own migration notes say ML-DSA-65 needs a later governance vote and relayer support before it can be switched on.",
