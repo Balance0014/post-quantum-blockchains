@@ -94,7 +94,8 @@ const UI = {
     queried: "queried",
     st_ok: "Running", st_quiet: "Blocks flowing, code quiet", st_stalled: "Blocks stopped", st_unknown: "Could not check",
     checked_tag: "checked", np_tag: "Not counted", k_supply: "Supply", k_algo_note: "Signing details",
-    today_lead: (s) => s === 5 ? "Yes, by default." : s === 4 ? "Yes, if you opt in." : s === 3 ? "Only on a testnet." : "No.",
+    /* a chain flagged "still accepts publicly broken legacy parameters" never gets a bare "Yes" */
+    today_lead: (s, broken) => s >= 4 && broken ? `${s === 5 ? "Yes, by default" : "Yes, if you opt in"}; but it still accepts a publicly broken legacy parameter set, see below.` : s === 5 ? "Yes, by default." : s === 4 ? "Yes, if you opt in." : s === 3 ? "Only on a testnet." : "No.",
     xchk_ok: (h, a) => `Independent explorer: block #${h}, ${a} min old.`, xchk_no: "The independent explorer did not answer.", xchk_none: "Only this source shows an old block, and no independent explorer confirms it, so the network is marked “could not check”.",
     own_src: { project: "Read from the project's own node or explorer, not an independent one.", community: "Read from a community-run explorer." },
     e_src: "Sources", e_consensus: "Consensus", e_release: "Latest release", e_code: "Code activity", e_reviewed: "Page checked against sources",
@@ -265,7 +266,7 @@ const UI = {
     queried: "查询时间",
     st_ok: "运行中", st_quiet: "在出块，代码 90 天无提交", st_stalled: "出块停了", st_unknown: "无法核实",
     checked_tag: "核对于", np_tag: "不计入进展", k_supply: "供应说明", k_algo_note: "签名细节",
-    today_lead: (s) => s === 5 ? "能，默认就是。" : s === 4 ? "能，需要自己选用。" : s === 3 ? "只在测试网上。" : "不能。",
+    today_lead: (s, broken) => s >= 4 && broken ? `${s === 5 ? "能，默认就是" : "能，需要自己选用"}；但仍接受已被攻破的旧参数，详见下文。` : s === 5 ? "能，默认就是。" : s === 4 ? "能，需要自己选用。" : s === 3 ? "只在测试网上。" : "不能。",
     xchk_ok: (h, a) => `独立区块浏览器：第 ${h} 号区块，${a} 分钟前。`, xchk_no: "独立区块浏览器没有响应。", xchk_none: "只有这一个来源显示区块过旧，没有独立的区块浏览器可以印证，所以网络状态记为「无法核实」。",
     own_src: { project: "数据来自项目自己的节点或浏览器，不是独立来源。", community: "数据来自社区运营的区块浏览器。" },
     e_src: "出处", e_consensus: "共识机制", e_release: "最新版本", e_code: "代码活跃度", e_reviewed: "本页对照出处核对",
@@ -1552,7 +1553,8 @@ function renderChain() {
     ${c.stage >= 2 ? kv(L("k_mig"), c.mig ? rfield(c.mig, L("mig")) : esc(L("mig").unknown), DF.mig[c.mig ? c.mig.value : "unknown"]) : ""}
     ${kv(L("k_expo"), expo)}
 </div>`;
-  const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(L("today_lead")(c.stage))}</b>${SEP(L("today_lead")(c.stage))}` : ""}${esc(T(four[k]))}</dd></div>` : "";
+  const lead = L("today_lead")(c.stage, c.chips.includes("broken"));
+  const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(lead)}</b>${SEP(lead)}` : ""}${esc(T(four[k]))}</dd></div>` : "";
   const holder = `<div class="holder"><h2>${esc(L("holder_h"))}</h2><dl>${hrow("today", "holder_today")}${hrow("next", "holder_next")}${hrow("can", "d_can")}</dl><p class="note-small">${esc(L("holder_note"))}</p></div>`;
   const p = c.prog;
   const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("watch", "d_watch")}</div>${xtalkHTML(c)}${timeline}`;
