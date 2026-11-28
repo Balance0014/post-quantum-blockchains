@@ -976,6 +976,9 @@ def main():
     for name, b in asset_src.items():
         (out / 'assets' / name).write_bytes(b)
     shutil.copyfile(SITE_SRC / 'og.png', out / 'assets' / 'og.png')
+    # Google Search Console: its site verification file, copied as it is to the site root (a public token, not a secret; not in the sitemap)
+    for f in SITE_SRC.glob('google*.html'):
+        shutil.copyfile(f, out / f.name)
     # IndexNow: the key file sits next to the pages; .github/workflows/pages.yml pings IndexNow after each deploy.
     key = (SITE_SRC / 'indexnow-key.txt').read_text(encoding='utf-8').strip()
     (out / f'{key}.txt').write_text(key + '\n', encoding='utf-8')
