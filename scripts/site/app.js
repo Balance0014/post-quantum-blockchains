@@ -12,8 +12,6 @@ const put = (id, html) => { if (HYD) return; const h = typeof html === "function
 const D = window.PQ;
 const lang = D.lang;
 /* the space before an inline link or a following sentence: none after Chinese full-width punctuation */
-/* the first sentence of a text: up to the first Chinese full stop, or a full stop followed by a space and a capital */
-const firstSentence = (s) => { const m = String(s || "").match(/^.+?(?:[。！？]|[.!?](?=\s+["“(]?[A-Z0-9]))/); return m ? m[0].trim() : String(s || ""); };
 const SEP = (s) => (/[。，：；！？、]$/.test(s) ? "" : " ");
 const REPO = D.repo;
 const URL_FIX = REPO + "/issues/new?template=correction.yml";
@@ -59,13 +57,13 @@ const UI = {
     ct_log: "Public correction log",
     appeal: "Wrong? Report or appeal", appeal_def: "Opens a correction form prefilled with this chain. A stage changes only with a primary source: code, a release, chain data or the official proposal repository.",
     pop_more: "More on the method page",
-    holder_h: "For holders", holder_today: "Today", holder_why: "Why this stage", holder_next: "Next step", holder_note: "No one can say when a quantum computer could break today's signatures; this site does not predict it.",
+    holder_h: "For holders", holder_today: "Today", holder_next: "Next step", holder_note: "No one can say when a quantum computer could break today's signatures; this site does not predict it.",
     na_deploy: "Not applicable (not deployed yet)", map_multi: "A chain can appear in more than one row.",
     kpi_use: (d, o) => `of all tracked chains offer post-quantum signatures on mainnet: ${d} by default, ${o} opt-in`,
     kpi_all: "chains tracked, each rated 0 to 5 against primary sources",
     kpi_date: "last checked. Network data weekly, sources monthly",
     ov_title: (n) => `The ${n} largest blockchains by stage`,
-    ov_note: (n, d) => `The ${n} CoinGecko top-100 coins with their own network. Select a stage to filter the table.`,
+    ov_note: (n, d) => `${n} coins with their own network in the CoinGecko top 100, ${d}. Select a stage to filter the table.`,
     ov_seg: (s, nm, c) => `Stage ${s} · ${nm}: ${plural(c, "chain", "chains")}. Show them in the table`,
     ov_count: (c) => plural(c, "chain", "chains"),
     ov_rest: (n) => `The other ${n} are at stage 0 or 1: no formal proposal yet.`,
@@ -158,7 +156,7 @@ const UI = {
     keys_h: "What the colours mean",
     fig_src: "Source", fig_checked: (d) => `checked ${d}`, fig_dl: "Download data (CSV)", mcap_src: (d) => `CoinGecko market cap, ${d}`,
     cum_title: "Post-quantum mainnet launches over time",
-    cum_note: () => "Running total of chains with post-quantum signatures live on mainnet.",
+    cum_note: (n, k, y, u) => `Running total of chains where post-quantum signatures are live on mainnet, each placed on the day they arrived. ${k} of the ${n} arrived in ${y}.${u ? ` ${u} more have no sourced date yet.` : ""}`,
     cum_total: "chains",
     tap_open: "Tap again to open", copy_link: "Copy a link to this section", link_copied: "Link copied",
     grp_more: (n) => `+${n} more`, show_all: (n) => `Show all ${n} chains`, show_less: "Show fewer", sub_h: "Chain not listed?", sub_p: "Request a listing with one primary source: code, a release or chain data. We reply within 2 days.", src_site: "This site's data (each entry links its primary source)", howc: "How the numbers are counted", dym: "Did you mean: ", list_more: (n) => `Show ${n} more`, list_less: "Show fewer",
@@ -195,7 +193,7 @@ const UI = {
     wk: (d) => `week of ${d}`,
     run_title: "How long post-quantum signatures have run on mainnet", run_note: (d) => `One bar per chain, from the day post-quantum signatures became usable on its current mainnet to ${d}. Earliest first.`,
     run_len: (days) => days >= 365 ? `${(days / 365.25).toFixed(1)} years` : days >= 60 ? `${Math.round(days / 30.44)} months` : plural(days, "day", "days"),
-    am_title: "Algorithm map", am_note: (n) => `The ${n} chains at stage 2 or higher, by signature family, coloured by NIST status.`, am_def: (n) => `The ${n} chains at stage 2 or higher, by the mathematical family of the signature they use or propose (NIST\u2019s grouping), coloured by its NIST status.`,
+    am_title: "Algorithm map", am_note: (n) => `The ${n} chains at stage 2 or higher, by the mathematical family of the signature they use or propose (NIST\u2019s grouping), coloured by its NIST status.`,
     d_algo_h: "Algorithm", d_cov_h: "Coverage", d_prog_h: "Progress", d_ev_h: "Evidence", d_bg_h: "Background",
     d_bg_note: "Not post-quantum measures. They help judge the rest: a chain that stops producing blocks protects nothing, and market cap shows how much value is at stake.",
     k_status: "Standard status", k_level: "Security level", k_sizes: "Reference sizes", k_hybrid: "Hybrid signature", k_audit: "Audit of the post-quantum code",
@@ -231,13 +229,13 @@ const UI = {
     ct_log: "公开的纠错记录",
     appeal: "这条不对？报错或申诉", appeal_def: "打开已预填这条链的纠错表单。只有原始出处（代码、版本发布、链上数据或官方提案仓库）才能改变档位。",
     pop_more: "方法页详解",
-    holder_h: "对持币人意味着什么", holder_today: "今天", holder_why: "为什么是这一档", holder_next: "下一步", holder_note: "没有人能说清量子计算机何时能破解现有签名，本站不做预测。",
+    holder_h: "对持币人意味着什么", holder_today: "今天", holder_next: "下一步", holder_note: "没有人能说清量子计算机何时能破解现有签名，本站不做预测。",
     na_deploy: "不适用（尚未部署）", map_multi: "一条链可能出现在多行。",
     kpi_use: (d, o) => `全部收录的链中，主网已能用抗量子签名：默认 ${d} 条、可选 ${o} 条`,
     kpi_all: "条链已收录，每条按原始出处评 0 到 5 档",
     kpi_date: "最近核对。网络数据每周查，出处每月重核",
     ov_title: (n) => `市值最大的 ${n} 条区块链：档位分布`,
-    ov_note: (n, d) => `CoinGecko 市值前 100 中有自己网络的 ${n} 个币，点选档位可筛选表格。`,
+    ov_note: (n, d) => `${d} CoinGecko 市值前 100 中有自己网络的 ${n} 个币。点选档位可筛选下方表格。`,
     ov_seg: (s, nm, c) => `第 ${s} 档 · ${nm}：${c} 条。在表格中只看这些`,
     ov_count: (c) => `${c} 条`,
     ov_rest: (n) => `其余 ${n} 条在第 0 或第 1 档，还没有正式提案。`,
@@ -329,7 +327,7 @@ const UI = {
     keys_h: "颜色说明",
     fig_src: "来源", fig_checked: (d) => `核对于 ${d}`, fig_dl: "下载数据（CSV）", mcap_src: (d) => `CoinGecko 市值，${d}`,
     cum_title: "抗量子主网上线时间线",
-    cum_note: () => "主网上已能用抗量子签名的链，按上线日期累计。",
+    cum_note: (n, k, y, u) => `主网上已能用抗量子签名的链，按上线当天累计，每条链一个点。${n} 条中有 ${k} 条是 ${y} 年上线的。${u ? `另有 ${u} 条尚未找到带出处的日期。` : ""}`,
     cum_total: "条",
     tap_open: "再点一次打开", copy_link: "复制本节链接", link_copied: "链接已复制",
     grp_more: (n) => `另有 ${n} 条`, show_all: (n) => `显示全部 ${n} 条`, show_less: "收起", sub_h: "没找到你的链？", sub_p: "附一个原始出处（代码、版本发布或链上数据）就能申请收录。2 天内回复。", src_site: "本站数据（每条附原始出处）", howc: "数字怎么算的", dym: "你是不是要找：", list_more: (n) => `展开其余 ${n} 条`, list_less: "收起",
@@ -366,7 +364,7 @@ const UI = {
     wk: (d) => `${d} 当周`,
     run_title: "抗量子签名在主网上运行了多久", run_note: (d) => `每条链一根条，从抗量子签名在现行主网可用的那天起，到 ${d} 为止。最早的在上。`,
     run_len: (days) => days >= 365 ? `${(days / 365.25).toFixed(1)} 年` : days >= 60 ? `${Math.round(days / 30.44)} 个月` : `${days} 天`,
-    am_title: "算法版图", am_note: (n) => `第 2 档及以上的 ${n} 条链，按签名家族分行，按 NIST 状态上色。`, am_def: (n) => `第 2 档及以上的 ${n} 条链，按所用或提议的签名所属的数学家族分行（按 NIST 的分法），颜色表示它在 NIST 的状态。`,
+    am_title: "算法版图", am_note: (n) => `第 2 档及以上的 ${n} 条链，按所用或提议的签名所属的数学家族分行（按 NIST 的分法），颜色表示它在 NIST 的状态。`,
     d_algo_h: "算法", d_cov_h: "覆盖", d_prog_h: "进展", d_ev_h: "证据", d_bg_h: "背景",
     d_bg_note: "这些不是抗量子指标，只帮助判断其他信息：出块停了的链谈不上保护，市值说明有多少价值面临风险。",
     k_status: "标准状态", k_level: "强度等级", k_sizes: "参考大小", k_hybrid: "混合签名", k_audit: "抗量子代码的审计",
@@ -446,18 +444,15 @@ Object.assign(UI.en, {
   fields_rows: [["stage, stage_name", "0 to 5, see the method page; the name in English and Chinese"], ["group", "`top` (CoinGecko top 100), `optin` (mainnet opt-in), `native` (post-quantum native), `early` (no mainnet yet)"], ["schemes", "Each signature scheme with its status: `std` (NIST standard), `sel` (NIST-selected, not final), `var` (variant, version not reviewed), `hash` (stateful hash-based, NIST SP 800-208), `custom` (own construction), `none`"], ["coverage", "`default`, `optin`, `testnet` or `none`: who can use post-quantum signatures today"], ["migration, audit", "How existing coins move; whether the post-quantum code has an outside audit"], ["post_quantum_mainnet_since", "The day post-quantum signatures became usable on the current mainnet, or `null`"], ["basis, basis_source", "The sentence the stage rests on, and its primary source"], ["last_reviewed, data_checked", "When a person last reviewed this chain; when the network data was read"], ["page, badge, card", "Links in English and Chinese"], ["attribution, license", "The credit to show and the terms"]],
   emb_h: "Embed a live badge or card", emb_p: "Pick a chain. The badge and card are images served by this site, so they always show the current stage and check date. Both carry the credit, so they meet the license on their own.",
   emb_chain: "Chain", emb_lang: "Language", emb_badge: "Badge", emb_card: "Card", emb_md: "Markdown badge (README)", emb_html: "HTML badge", emb_cardc: "HTML card with credit",
-  emb_btn: "Embed in your website or README",
-  lic_icons: "Chain icons are each project's own logo in its own colours, taken from the project's GitHub organization or a logo file it publishes; their copyright stays with each project.",
-  lic_ask: "Ask in a GitHub issue",
-  charts_h: "Charts", nums_h: "How the home page numbers are counted",
+  emb_btn: "For project teams: put the stage badge in your README or website",
+  nums_h: "How the home page numbers are counted",
   kpi_def_top: (n, d, big) => `The largest blockchains: the ${n} coins in the CoinGecko top 100 (${d}) that run their own network. Usable means stage 4 or 5: a holder can sign with a post-quantum scheme on mainnet today, by default or by opting in.${big ? " " + big : ""}`,
   kpi_def_use: (all, top, use, def, opt) => `All ${all} chains tracked: the ${top} largest plus ${all - top} chains built or upgraded for post-quantum signatures. ${use} are usable on mainnet: ${def} by default for new accounts, ${opt} for holders who opt in.`,
   kpi_def_x: (d, days) => `Posts on X about a chain's post-quantum work, from its official accounts or people with a public identity and a stated role around it, in the ${days} days to ${d}. We open every original post. Claims only: they never change a stage.`,
-  cum_def: (n, k, y, u) => `Each chain is placed on the day post-quantum signatures became usable on its current mainnet. ${k} of the ${n} arrived in ${y}.${u ? ` ${u} more have no sourced date yet.` : ""}`,
   emb_page_h: "Embed this chain", emb_page_p: "Put this chain's live badge or card in a README or on a website. It updates itself and carries the credit.", emb_more: "More embeds and the license",
   lic_h: "License", lic_p: "Data, charts and text: CC BY-NC 4.0 from version 0.5.0. Scripts: MIT. Commercial use is free when all three conditions are met:",
   lic_list: ["Every screen that uses the data shows the credit below with both links, or the official badge or card. A credit only in a footer or an about page does not count.", "The check date is shown, and your copy is updated at least once a week.", "The use is registered in a “Used by” issue. Registered products are listed in the README."],
-  lic_credit: "Credit to show", lic_other: "Can't meet the conditions? Ask in a GitHub issue. Versions up to 0.4.0 stay under CC BY 4.0.", lic_reg: "Register a use", lic_full: "Full license",
+  lic_ask: "Ask in a GitHub issue", lic_credit: "Credit to show", lic_other: "Can't meet the conditions? Ask in a GitHub issue. Versions up to 0.4.0 stay under CC BY 4.0.", lic_reg: "Register a use", lic_full: "Full license",
   credit: "Data: Post-Quantum Blockchains, by Balance Zhao",
 });
 Object.assign(UI.zh, {
@@ -471,18 +466,15 @@ Object.assign(UI.zh, {
   fields_rows: [["stage、stage_name", "0 到 5 档，见评档方法；中英文档位名"], ["group", "`top`（CoinGecko 市值前 100）、`optin`（主网可选用）、`native`（原生抗量子）、`early`（还没有主网）"], ["schemes", "每个签名方案及其状态：`std`（NIST 标准）、`sel`（NIST 选定、未定稿）、`var`（变体，版本未审）、`hash`（有状态哈希签名，NIST SP 800-208）、`custom`（项目自研）、`none`（尚无）"], ["coverage", "`default`、`optin`、`testnet` 或 `none`：今天谁能用上抗量子签名"], ["migration、audit", "已有的币怎样迁移；抗量子代码有没有外部审计"], ["post_quantum_mainnet_since", "抗量子签名在现行主网上可用的日期，没有则为 `null`"], ["basis、basis_source", "档位依据的那句话及其原始出处"], ["last_reviewed、data_checked", "人工最近一次复核这条链的日期；读取网络数据的日期"], ["page、badge、card", "中英文页面、徽章和卡片的链接"], ["attribution、license", "要显示的署名和授权条款"]],
   emb_h: "嵌入实时徽章或卡片", emb_p: "选一条链。徽章和卡片是本站提供的图片，档位和核对日期总是最新的；两者都自带署名，单用就满足授权要求。",
   emb_chain: "链", emb_lang: "语言", emb_badge: "徽章", emb_card: "卡片", emb_md: "Markdown 徽章（README 用）", emb_html: "HTML 徽章", emb_cardc: "带署名的 HTML 卡片",
-  emb_btn: "嵌入到你的网站或 README",
-  lic_icons: "链的图标是各项目自己的标识和配色，取自项目的 GitHub 组织或项目自己发布的标识文件，版权归各项目。",
-  lic_ask: "在 GitHub issue 里联系",
-  charts_h: "图表", nums_h: "首页数字怎么算",
+  emb_btn: "给项目方：把档位徽章放进你的 README 或网站",
+  nums_h: "首页数字怎么算",
   kpi_def_top: (n, d, big) => `市值最大的区块链：${d} CoinGecko 市值前 100 中有自己网络的 ${n} 个币。「能用」指第 4 或第 5 档：持币人今天就能在主网上用抗量子签名，默认开启或自己选用。${big || ""}`,
   kpi_def_use: (all, top, use, def, opt) => `收录的全部 ${all} 条链：市值最大的 ${top} 条，加上为抗量子签名而建或正在升级的 ${all - top} 条。主网能用的 ${use} 条：新账户默认就用的 ${def} 条，持币人可自己选用的 ${opt} 条。`,
   kpi_def_x: (d, days) => `截至 ${d} 的 ${days} 天里，这条链的官方号，或有公开身份、和这条链关系明确的人在 X 上谈抗量子进展的原帖，每条都打开核对。只算说法，不改变档位。`,
-  cum_def: (n, k, y, u) => `每条链按抗量子签名在现行主网上可用的那一天放置。${n} 条中有 ${k} 条是 ${y} 年上线的。${u ? `另有 ${u} 条尚未找到带出处的日期。` : ""}`,
   emb_page_h: "嵌入这条链", emb_page_p: "把这条链的实时徽章或卡片放进 README 或网站。它会自动更新，并且自带署名。", emb_more: "更多嵌入方式和授权说明",
   lic_h: "授权", lic_p: "从 0.5.0 版起，数据、图表和文字采用 CC BY-NC 4.0，脚本采用 MIT。满足下面三个条件即可免费商用：",
   lic_list: ["用到数据的每一屏都显示下面这条带两个链接的署名，或者直接用官方徽章或卡片。只放在页脚或「关于」页不算。", "标出核对日期，并且至少每周同步一次。", "开一个「Used by」issue 登记用途，登记过的产品会列在 README 里。"],
-  lic_credit: "要显示的署名", lic_other: "做不到这些条件？请在 GitHub issue 里联系。0.4.0 及更早的版本仍按 CC BY 4.0。", lic_reg: "登记用途", lic_full: "完整授权条款",
+  lic_ask: "在 GitHub issue 里联系", lic_credit: "要显示的署名", lic_other: "做不到这些条件？请在 GitHub issue 里联系。0.4.0 及更早的版本仍按 CC BY 4.0。", lic_reg: "登记用途", lic_full: "完整授权条款",
   credit: "数据来源：Post-Quantum Blockchains，作者 Balance Zhao",
 });
 const DEFS = {
@@ -741,10 +733,6 @@ const termRef = (label, ref, title, cls) => `<span class="term${cls ? " " + cls 
 const refDef = (ref) => ref.split(".").reduce((o, k) => (o == null ? o : o[k]), DF);
 /* an ⓘ whose definition is looked up at show time (DF path), with a link to its section of the method page */
 const infoRef = (ref, title) => `<span class="term i" tabindex="0" role="button" aria-label="${esc(title)}" data-ref="${ref}" data-title="${esc(title)}">?</span>`;
-/* a chain's icon: its project's own GitHub avatar, served from this site (data/icons.json); a chain without one shows its initial in its stage colour */
-const chainIcon = (c, sz) => c.icon
-  ? `<img class="cic" src="${D.base}assets/icons/${c.id}.png" width="${sz || 20}" height="${sz || 20}" alt="" loading="lazy" decoding="async">`
-  : `<span class="cic ini s${c.stage}" style="--sz:${sz || 20}px" aria-hidden="true" translate="no">${esc(String(c.name || "?").replace(/^[^A-Za-z0-9]+/, "").charAt(0).toUpperCase())}</span>`;
 const info = (def, title) => `<span class="term i" tabindex="0" role="button" aria-label="${esc(title)}" data-def="${esc(def)}" data-title="${esc(title)}">?</span>`;
 const stageName = (s) => L("stage_names")[s];
 const stageTitle = (s) => `${L("stage_word")} ${s} · ${stageName(s)}`;
@@ -944,7 +932,7 @@ let expanded = false, openY = 0; /* openY: where the "Show all" button sat on sc
 function rowHTML(c, later) {
   const sub = [esc(c.ticker), c.rank ? termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap")) : ""].filter(Boolean).join(" · ");
   return `<tr class="row${later ? " later" : ""}" data-id="${c.id}">
-    <td class="c-chain"><div class="chain"><span class="nmr">${chainIcon(c)}<a class="nm" href="${chainURL(c.id)}">${esc(name(c))}</a>${dotHTML(c)}</span><span class="sub">${sub}</span></div></td>
+    <td class="c-chain"><div class="chain"><span class="nmr"><a class="nm" href="${chainURL(c.id)}">${esc(name(c))}</a>${dotHTML(c)}</span><span class="sub">${sub}</span></div></td>
     <td class="c-stage">${stageCell(c.stage)}${dagger(c.basis_grade)}${flagsHTML(c)}</td>
     <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span><span class="chips">${ssChips(c)}${c.stage < 3 && c.schemes.some(([k]) => k !== "none") ? term(`<span class="chip">${esc(L("proposed"))}</span>`, DF.proposed, L("proposed"), "plain") : ""}${c.hybrid ? termRef(`<span class="chip">${esc(L("hybrid"))}</span>`, "hybrid", L("hybrid"), "plain") : ""}${c.chips.includes("broken") ? termRef(`<span class="chip bad">${esc(T(D.chips.broken))}</span>`, "chips.broken", T(D.chips.broken), "plain") : ""}</span>${c.level != null && c.stage >= 3 ? `<span class="lvl">${levelText(c.level, c.level_open)}</span>` : ""}</div></td>
     <td class="c-cov">${covCell(c)}</td>
@@ -1016,7 +1004,7 @@ function sortHTML() {
 const ICON_DL = `<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const ICON_LINK = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 9.5l3-3M7 4.5l1-1a2.8 2.8 0 014 4l-1 1M9 11.5l-1 1a2.8 2.8 0 01-4-4l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 function fig(o) {
-  return `<figure class="fig" id="${o.id}" aria-labelledby="${o.id}-h"><div class="fig-h"><div class="fig-t"><${o.h} id="${o.id}-h">${esc(o.title)}</${o.h}>${o.info ? info(o.info, o.title) : ""}${o.tools || ""}</div><p>${o.sub}</p></div><div class="fig-b">${o.body}</div>
+  return `<figure class="fig" id="${o.id}" aria-labelledby="${o.id}-h"><div class="fig-h"><div class="fig-t"><${o.h} id="${o.id}-h">${esc(o.title)}</${o.h}>${o.tools || ""}</div><p>${o.sub}</p></div><div class="fig-b">${o.body}</div>
     <figcaption class="fig-f"><span>${esc(L("fig_src"))}${CO()}${o.src} · ${esc(L("fig_checked")(fmtDate(D.checked)))}</span>${o.csv ? `<span class="acts"><a href="${D.base}data/${o.csv}" download>${ICON_DL}${esc(L("fig_dl"))}</a></span>` : ""}</figcaption></figure>`;
 }
 const SRC_CHAINS = `<a href="${href("data/")}">${esc(L("src_site"))}</a>`;
@@ -1059,12 +1047,13 @@ function cumHTML() {
   const early = pts.map((c, i) => ({ c, i })).filter(({ c }) => +c.since.date.slice(0, 4) < yc);
   const labels = [];
   for (const p of early) { const last = labels[labels.length - 1]; if (last && X(p.c.since.date) - X(last.at.c.since.date) < 6) { last.names.push(name(p.c)); last.at = p; } else labels.push({ names: [name(p.c)], at: p }); }
-  const lab = labels.map(({ names, at }) => `<span class="sl${X(at.c.since.date) < 40 ? " r" : ""}" style="left:${X(at.c.since.date)}%;bottom:${Y(at.i + 1)}%" aria-hidden="true">${esc(names.join(lang === "zh" ? "、" : ", "))}</span>`).join("");
+  /* labels near the left edge put one name per line, so they stay inside the card */
+  const lab = labels.map(({ names, at }) => { const r = X(at.c.since.date) < 15; return `<span class="sl${r ? " r" : ""}" style="left:${X(at.c.since.date)}%;bottom:${Y(at.i + 1)}%" aria-hidden="true">${esc(names.join(r ? "\n" : lang === "zh" ? "、" : ", "))}</span>`; }).join("");
   const xl = []; for (let y = y0; y <= yc; y++) xl.push(`<span${(yc - y) % 2 ? ' class="d2"' : ""} style="left:${X(`${y}-01-01`)}%">${y}</span>`);
   const yl = [0, top / 2, top].map((v) => `<span style="bottom:${Y(v)}%">${v}</span>`).join("");
   const k = pts.filter((c) => +c.since.date.slice(0, 4) === yc).length;
   const keys = [5, 4].map((s) => `<span class="s${s}"><i class="round"></i>${esc(stageTitle(s))}</span>`).join("");
-  return fig({ id: "fig-since", h: "h2", title: L("cum_title"), sub: esc(L("cum_note")()), info: L("cum_def")(N, k, yc, live.length - N), csv: "chart-mainnet-since.csv", src: SRC_CHAINS,
+  return fig({ id: "fig-since", h: "h2", title: L("cum_title"), sub: esc(L("cum_note")(N, k, yc, live.length - N)), csv: "chart-mainnet-since.csv", src: SRC_CHAINS,
     body: `<div class="cum"><div class="yax" aria-hidden="true">${yl}</div><div class="cw"><div class="plot grow-y">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="${line}V100H0Z"/><path d="${line}"/></svg>${lab}${dots}
       <span class="ann" style="right:0;bottom:calc(${Y(N)}% + 12px)"><b>${N}</b> ${esc(L("cum_total"))}</span></div>
@@ -1191,8 +1180,8 @@ function algoMapHTML() {
   const used = NSTS.filter((v) => entries.some(({ n }) => n.st === v));
   const keys = used.map((v) => `<span><i class="ssw n-${v}"></i>${term(esc(L("nist")[v]), DF.nist[v], L("nist")[v])}</span>`).join("")
     + (entries.some(({ n }) => n.var) ? `<span><i class="ssw vr" aria-hidden="true"></i>${term(esc(L("nist_var_k")), DF.nist_var, L("nist_var_k"))}</span>` : "");
-  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(L("am_note")(cs.length)), info: `${L("am_def")(cs.length)}${SEP(L("am_def")(cs.length))}${L("map_multi")}\n${L("nist_next")}`, src: `${SRC_CHAINS} · <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noopener">NIST ↗</a>`,
-    body: `<div class="amap">${rows}</div><div class="keys">${keys}<span><i class="amd" aria-hidden="true"></i>${esc(L("cov").default)}</span></div>` });
+  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(`${L("am_note")(cs.length)}${SEP(L("am_note")(cs.length))}${L("map_multi")}`), src: `${SRC_CHAINS} · <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noopener">NIST ↗</a>`,
+    body: `<div class="amap">${rows}</div><div class="keys">${keys}<span><i class="amd" aria-hidden="true"></i>${esc(L("cov").default)}</span></div><p class="fine-note">${esc(L("nist_next"))}</p>` });
 }
 /* layer 2: the five questions a holder asks; each card states its rule and opens the matching table */
 function q5HTML() {
@@ -1326,28 +1315,6 @@ function kpiDefs(H) {
   return { top: L("kpi_def_top")(H.top, fmtDate(D.mcap_date || D.checked), H.big.every((b) => b.stage === H.big[0].stage) ? big : ""),
     use: L("kpi_def_use")(H.all, H.top, H.use, H.default, H.optin), x: L("kpi_def_x")(fmtDate(D.checked), H.x.days) };
 }
-/* "Check a coin" suggestions: names, tickers, aliases and near misses, each with its icon and stage; arrows and Enter pick one */
-function initCheckList() {
-  const inp = document.getElementById("check-q"), ul = document.getElementById("check-l");
-  let act = -1, hits = [];
-  const close = () => { ul.hidden = true; inp.setAttribute("aria-expanded", "false"); inp.removeAttribute("aria-activedescendant"); act = -1; };
-  const mark = (i) => { act = i; [...ul.children].forEach((li, k) => li.setAttribute("aria-selected", String(k === i))); if (i >= 0) inp.setAttribute("aria-activedescendant", `cl-${i}`); };
-  inp.addEventListener("input", () => {
-    const n = norm(inp.value);
-    hits = n ? D.chains.map((c) => [c, nameDist(c, n)]).filter(([, d]) => d !== Infinity).sort((a, b) => a[1] - b[1] || (a[0].rank || 999) - (b[0].rank || 999)).slice(0, 8).map(([c]) => c) : [];
-    if (!hits.length) return close();
-    ul.innerHTML = hits.map((c, i) => `<li id="cl-${i}" role="option" aria-selected="false" data-id="${c.id}">${chainIcon(c)}<span class="cn">${esc(name(c))}</span><span class="mono ct">${esc(c.ticker)}</span><b class="gs s${c.stage}" aria-label="${esc(stageTitle(c.stage))}">${c.stage}</b></li>`).join("");
-    ul.hidden = false; inp.setAttribute("aria-expanded", "true"); act = -1;
-  });
-  inp.addEventListener("keydown", (e) => {
-    if (ul.hidden) return;
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); mark((act + (e.key === "ArrowDown" ? 1 : hits.length - 1 + (act < 0 ? 1 : 0))) % hits.length); }
-    else if (e.key === "Enter" && act >= 0) { e.preventDefault(); location.href = chainURL(hits[act].id); }
-    else if (e.key === "Escape") close();
-  });
-  ul.addEventListener("mousedown", (e) => { const li = e.target.closest("li[data-id]"); if (li) { e.preventDefault(); location.href = chainURL(li.dataset.id); } });
-  inp.addEventListener("blur", () => setTimeout(close, 100));
-}
 function renderHome() {
   chrome("home");
   const fromHash = !PRE && readHash();
@@ -1361,8 +1328,8 @@ function renderHome() {
   const kpi = (v, l, cls, ref) => `<div class="card kpi${cls ? " " + cls : ""}">${infoRef(ref, l)}<span class="v">${v}</span><span class="l">${esc(l)}</span></div>`;
   const H = D.head; /* the three figures, counted at build time by headline() in build_site.py, the same numbers as the README */
   DF.kpi = kpiDefs(H);
-  const check = `<form class="check" id="check" role="search"><label for="check-q">${esc(L("check_l"))}</label><span class="search">${ICON_SEARCH}<input id="check-q" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="check-l" autocomplete="off" placeholder="${esc(L("check_ph"))}"><ul id="check-l" class="check-l" role="listbox" aria-label="${esc(L("check_l"))}" hidden></ul></span><button type="submit" class="btn primary">${esc(L("check_go"))}</button>
-    <p class="check-x" id="check-x" role="status" hidden></p></form>`;
+  const check = `<form class="check" id="check" role="search"><label for="check-q">${esc(L("check_l"))}</label><span class="search">${ICON_SEARCH}<input id="check-q" list="check-l" autocomplete="off" placeholder="${esc(L("check_ph"))}"></span><button type="submit" class="btn primary">${esc(L("check_go"))}</button>
+    <datalist id="check-l">${[...D.chains].sort((a, b) => (a.rank || 999) - (b.rank || 999)).map((c) => `<option value="${esc(name(c))} ${esc(c.ticker)}"></option>`).join("")}</datalist><p class="check-x" id="check-x" role="status" hidden></p></form>`;
   const verdict = L("verdict")(usable.length, top.length).replace(/<em>(.*?)<\/em>/, (m, t) => `<em>${term(t, DF.pqsig, t)}</em>`);
   put("app", () => `<div class="page">
     <section id="overview" class="layer" aria-label="${esc(L("nav_overview"))}">
@@ -1371,7 +1338,10 @@ function renderHome() {
         ${kpi(`${num(H.usable_top.length)}<small>/${H.top}</small>`, L("kpi_top"), "lead", "kpi.top")}${kpi(`${num(H.use)}<small>/${H.all}</small>`, L("kpi_use")(H.default, H.optin), "", "kpi.use")}${xCard()}
       </div>
       <p class="kpi-date">${esc(L("kpi_date_line")(fmtDate(D.checked)))}</p>
+      <div class="duo">${stackHTML(top)}${cumHTML()}</div>
+      ${algoMapHTML()}
     </section>
+    ${q5HTML()}
     <section id="chains" class="layer" aria-labelledby="chains-h">
       ${secH("chains", L("nav_chains"), L("list_h")(D.chains.length), "")}
       <div class="toolbar">
@@ -1387,12 +1357,6 @@ function renderHome() {
       <div class="showall" id="showall"${tb.total > FIRST ? "" : " hidden"}><button type="button" class="btn" aria-expanded="false" aria-controls="tbody">${esc(L("show_all")(tb.total))}</button><noscript><a class="btn" href="${D.base}data/chains.csv">chains.csv</a></noscript></div>
       ${submitBox()}
     </section>
-    <section id="charts" class="layer" aria-labelledby="charts-h">
-      ${secH("charts", "", L("charts_h"), "")}
-      <div class="duo">${stackHTML(top)}${cumHTML()}</div>
-      ${algoMapHTML()}
-    </section>
-    ${q5HTML()}
     <section id="timeline" class="layer" aria-labelledby="timeline-h">
       ${secH("timeline", L("nav_timeline"), L("tl_h"), "")}
       ${runHTML()}
@@ -1455,7 +1419,6 @@ function renderHome() {
   copy.addEventListener("click", () => TIP.copy(copy, document.getElementById("cite-text").textContent, L("copied"), document.getElementById("cite-text")));
   document.querySelectorAll("[data-cite]").forEach((b) => b.addEventListener("click", () => TIP.copy(b, document.getElementById("cite-text").textContent, L("copied"))));
   document.querySelectorAll("[data-bib]").forEach((b) => b.addEventListener("click", () => TIP.copy(b, bibtex(), L("copied"))));
-  initCheckList();
   /* "Check a coin": an exact name or ticker opens its page; anything else opens the table filtered by it */
   document.getElementById("check").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -1604,12 +1567,8 @@ function renderChain() {
     ${kv(L("k_expo"), expo)}
 </div>`;
   const lead = L("today_lead")(c.stage, c.chips.includes("broken"));
-  const ans = L("answer")(c.reviewed, name(c), c.stage, stageName(c.stage));
   const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(lead)}</b>${SEP(lead)}` : ""}${esc(T(four[k]))}</dd></div>` : "";
-  /* the answer card keeps the first sentence of the reasoning; the whole of it opens the section below */
-  const basis = T(c.basis), basis1 = firstSentence(basis);
-  const why = basis1 !== basis ? `<div><dt>${esc(L("holder_why"))}</dt><dd>${esc(basis)}</dd></div>` : "";
-  const holder = `<div class="holder"><h2>${esc(L("holder_h"))}</h2><dl>${why}${hrow("today", "holder_today")}${hrow("next", "holder_next")}${hrow("can", "d_can")}</dl><p class="note-small">${esc(L("holder_note"))}</p></div>`;
+  const holder = `<div class="holder"><h2>${esc(L("holder_h"))}</h2><dl>${hrow("today", "holder_today")}${hrow("next", "holder_next")}${hrow("can", "d_can")}</dl><p class="note-small">${esc(L("holder_note"))}</p></div>`;
   const p = c.prog;
   const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("watch", "d_watch")}</div>${xtalkHTML(c)}${timeline}`;
   const evidence = `${srcList}${unv}<p class="note-small">${esc(L("dagger_key"))}</p>`;
@@ -1626,13 +1585,14 @@ function renderChain() {
   const toc = [["d-algo", "d_algo_h"], ["d-cov", "d_cov_h"], ["d-prog", "d_prog_h"], ["d-ev", "d_ev_h"], ["d-bg", "d_bg_h"]];
   put("app", () => `<div class="page">
     <div class="crumb"><a href="${href("")}">← ${esc(L("d_back"))}</a></div>
-    <header class="dhead"><h1>${chainIcon(c, 40)}${esc(name(c))}${lang === "zh" && c.zh_name ? ` <span class="alt">${esc(c.name)}</span>` : ""}</h1><div class="meta">${meta}</div></header>
+    <header class="dhead"><h1>${esc(name(c))}${lang === "zh" && c.zh_name ? ` <span class="alt">${esc(c.name)}</span>` : ""}</h1><div class="meta">${meta}</div></header>
     <section class="card answer s${c.stage}" aria-label="${esc(L("q")(name(c)))}"><span class="eyebrow">${esc(L("q")(name(c)))}</span>
-      <p class="claim">${esc(lead)}</p>
-      <p class="basis">${esc(basis1)}</p>
+      <p class="claim">${esc(L("answer")(c.reviewed, name(c), c.stage, stageName(c.stage)))}</p>
+      <p class="basis">${esc(T(c.basis))}</p>
+      ${c.basis_src ? `<span class="cite-src">${esc(L("answer_src")(c.stage))}${CO()}${srcLink(c.basis_src)}${dagger(c.basis_grade)}</span>` : ""}
       <div class="scalebox6"><div class="cap">${badgeTerm(c.stage)}<span>${esc(L("d_scale"))}</span>${flagsHTML(c)}</div>${scale6(c.stage)}${sinceLine(c)}</div>
-      <span class="cite-src">${esc(ans)}${c.basis_src ? `${SEP(ans)}${esc(L("answer_src")(c.stage))}${CO()}${srcLink(c.basis_src)}${dagger(c.basis_grade)}` : ""}</span></section>
-    <section class="card hcard">${holder}<div class="appeal"><a class="btn" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("appeal"))} ↗</a><span class="note-small">${esc(L("appeal_def"))}</span></div></section>
+      ${holder}
+      <div class="appeal"><a class="btn" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("appeal"))} ↗</a><span class="note-small">${esc(L("appeal_def"))}</span></div></section>
     ${c.stale_days > 90 ? `<p class="stale" role="note">${esc(L("stale")(c.reviewed, c.stale_days))}</p>` : ""}
     <nav class="toc dtoc" aria-label="${esc(L("toc"))}">${toc.map(([id, k]) => `<a href="#${id}">${esc(L(k))}</a>`).join("")}</nav>
     <div class="dmain">
@@ -1683,7 +1643,7 @@ function renderX() {
     <div class="stat xs">${[s.chains, s.accounts, s.posts, s.posts30].map((n, i) => `<div class="card"><b data-x="${["chains", "accounts", "posts", "posts30"][i]}">${n}</b><span>${esc(L("x_s")[i])}</span></div>`).join("")}</div>
     <p class="xfact">${esc(L("x_fact")(s.chains, s.usable, s.chains - s.usable, br, s.top, s.top_talk, s.top_usable))}</p>
     <div class="xbar"><div class="fgroup" role="group" aria-label="${esc(L("x_filter"))}">${fb("", L("x_all"), X.length)}${types.map((k) => fb(k, L("xt_type")[k], X.filter((t) => t.type === k).length)).join("")}</div><span class="count" id="xcount" role="status">${esc(L("x_count")(X.length))}</span></div>
-    <section class="xtalk xall" aria-label="${esc(L("nav_x"))}"><ol class="xl" id="xlist">${X.map((t) => xItem(t, nameOf(t.chain) ? `<a class="xc" href="${chainURL(t.chain)}">${chainIcon({ id: t.chain, icon: D.names[t.chain].icon, stage: D.names[t.chain].stage, name: D.names[t.chain].en })}${esc(nameOf(t.chain))}</a> · ` : "").replace(/^<li/, `<li data-t="${t.type}"`)).join("")}</ol></section>
+    <section class="xtalk xall" aria-label="${esc(L("nav_x"))}"><ol class="xl" id="xlist">${X.map((t) => xItem(t, nameOf(t.chain) ? `<a href="${chainURL(t.chain)}">${esc(nameOf(t.chain))}</a> · ` : "").replace(/^<li/, `<li data-t="${t.type}"`)).join("")}</ol></section>
     <p class="note-small xrule">${esc(L("x_rule"))}${SEP(L("x_rule"))}<a href="${href("method/")}#xtalk">${esc(L("x_rule_link"))} <span aria-hidden="true">→</span></a></p>
   </div>`);
   if (PRE) return;
@@ -1773,7 +1733,6 @@ function renderData() {
     <div class="snip"><div class="snip-h"><span>${esc(L("lic_credit"))}</span><button type="button" class="btn sm" data-copy="sn-credit">${esc(L("copy"))}</button></div><pre class="mono" id="sn-credit">${esc(snippets(first, embURLs(first.id), lang).credit)}</pre></div>
     <p>${esc(L("lic_other"))}</p>
     <p class="row-btns"><a class="btn primary" href="${REPO}/issues/new?template=used-by.yml" target="_blank" rel="noopener">${esc(L("lic_reg"))} ↗</a><a class="btn" href="${blob("LICENSE")}" target="_blank" rel="noopener">${esc(L("lic_full"))} ↗</a><a class="btn" href="${REPO}/issues/new" target="_blank" rel="noopener">${esc(L("lic_ask"))} ↗</a></p>
-    <p class="fine-note">${esc(L("lic_icons"))}</p>
     ${H("cite", L("data_cite_h"))}<p><code class="cite" id="cite-text">${esc(M.cite(D.release.version, D.release.date, D.site_url))}</code></p>
     <p class="row-btns"><button type="button" class="btn" data-copy="cite-text">${esc(L("copy"))}</button><a class="btn" href="${blob("CITATION.cff")}" target="_blank" rel="noopener">CITATION.cff ↗</a></p>
     ${submitBox()}

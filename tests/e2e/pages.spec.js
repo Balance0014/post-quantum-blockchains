@@ -82,14 +82,6 @@ test.describe('Chain pages', () => {
     await expect(page.locator('#d-embed')).toHaveAttribute('open', '');
   });
 
-  test('The chain title carries the project icon, or an initial where there is none', async ({ page, u }) => {
-    await page.goto(u('chains/bitcoin/'));
-    await expect(page.locator('h1 img.cic')).toHaveCount(1);
-    await expect.poll(() => page.locator('h1 img.cic').evaluate((im) => im.complete && im.naturalWidth > 0)).toBe(true);
-    await page.goto(u('chains/aere-network/'));
-    await expect(page.locator('h1 .cic.ini')).toHaveCount(1);
-  });
-
   test('Copy buttons copy the badge, card and credit code', async ({ page, u }) => {
     await page.goto(u('chains/bitcoin/'));
     await page.locator('#d-embed > summary').click();

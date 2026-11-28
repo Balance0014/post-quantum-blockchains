@@ -15,42 +15,16 @@ test.describe('Home', () => {
   });
 
   test('A figure\'s ⓘ shows its definition and links to how the home figures are counted', async ({ page }) => {
-    const i = page.locator('.kpis .kpi .term.i').first();
-    await i.click();
+    await page.locator('.kpis .kpi .term.i').first().click();
     await expect(page.locator('#pop')).toBeVisible();
     await expect(page.locator('#pop a[href*="method/#numbers"]')).toHaveCount(1);
   });
 
-  test('Check a coin: the list shows matches with their icons, and the keyboard opens one', async ({ page, lang }) => {
-    await page.fill('#check-q', lang === 'zh' ? '比特' : 'bitc');
-    const list = page.locator('#check-l');
-    await expect(list).toBeVisible();
-    const first = list.locator('[role=option]').first();
-    await expect(first).toContainText('BTC');
-    await expect(first.locator('.cic')).toHaveCount(1);
-    await page.press('#check-q', 'ArrowDown');
-    await expect(first).toHaveAttribute('aria-selected', 'true');
-    await page.press('#check-q', 'Enter');
-    await page.waitForURL('**/chains/bitcoin/');
-  });
-
-  test('Check a coin: Escape closes the list', async ({ page }) => {
-    await page.fill('#check-q', 'eth');
-    await expect(page.locator('#check-l')).toBeVisible();
-    await page.press('#check-q', 'Escape');
-    await expect(page.locator('#check-l')).toBeHidden();
-  });
-
-  test('Every chain in the table has an icon, and the icon files load', async ({ page }) => {
-    await page.locator('#showall button').click();
-    const n = await rows(page).count();
-    await expect(page.locator('#tbody tr.row .cic')).toHaveCount(n);
-    const imgs = page.locator('#tbody tr.row img.cic');
-    expect(await imgs.count()).toBeGreaterThan(40);
-    for (const i of [0, 1, 2]) {
-      await imgs.nth(i).scrollIntoViewIfNeeded();
-      await expect.poll(() => imgs.nth(i).evaluate((im) => im.complete && im.naturalWidth > 0)).toBe(true);
-    }
+  test('The stage legend lists only stages that have chains', async ({ page }) => {
+    const items = page.locator('#fig-stages .c');
+    const n = await items.count();
+    expect(n).toBeGreaterThan(0);
+    for (let i = 0; i < n; i++) expect(Number(await items.nth(i).textContent())).toBeGreaterThan(0);
   });
 
   for (const [label, q, id] of [

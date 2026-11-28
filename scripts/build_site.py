@@ -28,7 +28,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE_SRC = ROOT / 'scripts' / 'site'
-ICONS = SITE_SRC / 'icons'  # each project's own mark, 64 px (data/icons.json says where each came from)
 REPO = 'https://github.com/Balance0014/post-quantum-blockchains'
 ORIGIN = 'https://balance0014.github.io'
 
@@ -479,7 +478,6 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
     since = c.get('pq_mainnet_since')
     return {
         'id': c['id'], 'name': c['name'], 'zh_name': c.get('zh_name'), 'ticker': c['ticker'], 'kind': c['kind'],
-        'icon': (ICONS / f"{c['id']}.png").exists(),
         'aliases': c.get('aliases') or [], 'pinyin': c.get('pinyin') or [],
         'group': group_of(c, rank), 'rank': rank, 'stage': c['stage'], 'algo': c['algo'], 'chips': c['algo_chips'], 'fam': families(c),
         'consensus': c.get('consensus'), 'holder': c['holder_can_use_today'], 'note': c.get('note'), 'four': c.get('four'),
@@ -658,7 +656,7 @@ def home_view(v, lang):
     """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page.
     Long texts carry only the page's language, to keep the page small."""
     n, b, code = v['net'], v['net']['block'], v['net']['code']
-    keep = ('id', 'icon', 'name', 'zh_name', 'aliases', 'pinyin', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'nist', 'hybrid',
+    keep = ('id', 'name', 'zh_name', 'aliases', 'pinyin', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'nist', 'hybrid',
             'cov', 'prog', 'scope', 'design', 'netw', 'claim', 'basis_grade', 'flags')
     h = {k: v[k] for k in keep}
     h['level'] = v['ap']['level']
@@ -908,7 +906,7 @@ def main():
               'zh': lambda v, nm: f"截至 {v['reviewed']}，{nm}{' ' if nm[-1].isascii() else ''}处于第 {v['stage']} 档（最高 5 档）：{STAGE_NAMES['zh'][v['stage']]}。{v['basis']['zh']}"}
     cited = {'en': lambda v: f" {'Where we looked' if v['stage'] == 0 else 'Source'}: {v['basis_src']}" if v['basis_src'] else '',
              'zh': lambda v: f"{'查过的地方' if v['stage'] == 0 else '出处'}：{v['basis_src']}" if v['basis_src'] else ''}
-    names = {v['id']: {'en': v['name'], 'zh': v['zh_name'], 'icon': v['icon'], 'stage': v['stage']} for v in views}
+    names = {v['id']: {'en': v['name'], 'zh': v['zh_name']} for v in views}
     mrank = {x['id']: x['rank'] for x in mc['coins']} if mc else {}
     left_out = sorted(({'rank': mrank.get(x['coingecko_id']), 'name': x['name'], 'symbol': x['symbol'],
                         'reason': data['not_listed_reasons'][x['reason']], 'note': x.get('note')}
@@ -978,7 +976,6 @@ def main():
     for name, b in asset_src.items():
         (out / 'assets' / name).write_bytes(b)
     shutil.copyfile(SITE_SRC / 'og.png', out / 'assets' / 'og.png')
-    shutil.copytree(ICONS, out / 'assets' / 'icons')
     # IndexNow: the key file sits next to the pages; .github/workflows/pages.yml pings IndexNow after each deploy.
     key = (SITE_SRC / 'indexnow-key.txt').read_text(encoding='utf-8').strip()
     (out / f'{key}.txt').write_text(key + '\n', encoding='utf-8')
