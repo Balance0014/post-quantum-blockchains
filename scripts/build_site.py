@@ -822,6 +822,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', default='_site')
     ap.add_argument('--base', default='/post-quantum-blockchains/')
+    ap.add_argument('--changes', default='data/changes', help='folder of weekly issues (tests pass a fixture folder)')
     args = ap.parse_args()
     base = args.base if args.base.endswith('/') else args.base + '/'
     out = (ROOT / args.out).resolve()
@@ -833,8 +834,9 @@ def main():
     mcap_date = (mc or data['market_cap'])['queried_at_utc'][:10]
     projects = {p['id']: p for p in load('data/projects.json')['projects']}
     sources = {s['id']: s for s in load('data/sources.json')['sources']}
-    changes = sorted((json.loads(p.read_text(encoding='utf-8')) for p in (ROOT / 'data/changes').glob('*.json')),
-                     key=lambda x: x['date'], reverse=True) if (ROOT / 'data/changes').exists() else []
+    changes_dir = ROOT / args.changes
+    changes = sorted((json.loads(p.read_text(encoding='utf-8')) for p in changes_dir.glob('*.json')),
+                     key=lambda x: x['date'], reverse=True) if changes_dir.exists() else []
     sizes = {p['id']: p for p in load('data/signature-sizes.json')['parameters']}
     checked = (net.get('checked_at_utc') or '')[:10] or max(c['last_reviewed'] for c in data['chains'])
     views = [chain_view(c, net, ranks, projects, sources, sizes, checked) for c in data['chains']]
@@ -874,7 +876,7 @@ def main():
         t = TEXT[lang]
         common = {'lang': lang, 'base': base, 'repo': REPO, 'chips': CHIPS, 'checked': checked, 'mcap_date': mcap_date,
                   'has_changes': bool(changes), 'data_url': REPO + '/tree/main/data', 'chain_count': len(views),
-                  'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, '')}
+                  'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, ''), 'site_root': ORIGIN + path_for('en', '')}
         home = dict(common, page='home', chains=[home_view(v, lang) for v in views], months=months, events=events)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),

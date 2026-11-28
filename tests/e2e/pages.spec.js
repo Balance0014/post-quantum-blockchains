@@ -32,6 +32,21 @@ async function copyButtons(page) {
   }
 }
 
+// every address inside the embed code: the published site, and the same page or image exists in this build
+async function embedLinks(page, request) {
+  const codes = await page.locator('.snip pre').allTextContents();
+  expect(codes.length).toBeGreaterThan(0);
+  const urls = [...new Set(codes.flatMap((c) => [...c.matchAll(/(?:href="|\]\(|src=")(https:\/\/[^"\s)]+)/g)].map((m) => m[1])))];
+  expect(urls.length).toBeGreaterThan(2);
+  for (const url of urls) {
+    if (/^https:\/\/x\.com\//.test(url)) continue; // the author's X profile: scripts never request X
+    expect(url, 'embed links use the published address').toMatch(/^https:\/\/balance0014\.github\.io\/post-quantum-blockchains\//);
+    const local = url.replace('https://balance0014.github.io/post-quantum-blockchains/', '');
+    expect((await request.get(local)).status(), url).toBe(200);
+  }
+  return urls;
+}
+
 test.describe('Chain pages', () => {
   test('Every chain page loads, with its answer and a way back', async ({ page, u, request }) => {
     const ids = (await (await request.get('data/chains/index.json')).json()).chains.map((c) => c.id);
@@ -55,6 +70,12 @@ test.describe('Chain pages', () => {
     await page.goto(u('chains/bitcoin/'));
     await copyButtons(page);
     expect(await clip(page)).toContain('chains/bitcoin/');
+  });
+
+  test('Every link in the embed code, the credit line included, opens our site', async ({ page, u, request }) => {
+    await page.goto(u('chains/bitcoin/'));
+    const urls = await embedLinks(page, request);
+    expect(urls).toContain(`https://balance0014.github.io/post-quantum-blockchains/${u('')}`);
   });
 
   test('The badge and card images load', async ({ page, u }) => {
@@ -134,7 +155,7 @@ test.describe('Method page', () => {
     await d.locator('summary').scrollIntoViewIfNeeded();
     await d.locator('summary').click();
     await expect(d).toHaveAttribute('open', '');
-    await expect(d.locator('tr, li').first()).toBeVisible();
+    await expect(d.locator('tbody tr, li').first()).toBeVisible(); // the header row is hidden on a phone
     await d.locator('summary').click();
     await expect(d).not.toHaveAttribute('open', '');
   });
@@ -179,6 +200,16 @@ test.describe('Data page', () => {
   });
 
   test('Copy buttons copy each snippet', async ({ page }) => { await copyButtons(page); });
+
+  test('Every link in the embed code, the credit line included, opens our site, in both languages', async ({ page, request }) => {
+    for (const l of ['en', 'zh']) {
+      const b = page.locator(`[data-elang="${l}"]`);
+      await b.scrollIntoViewIfNeeded();
+      await b.click();
+      const urls = await embedLinks(page, request);
+      expect(urls).toContain(`https://balance0014.github.io/post-quantum-blockchains/${l === 'zh' ? 'zh/' : ''}`);
+    }
+  });
 
   test('The API files answer, with the license in each chain file', async ({ page, request }) => {
     const idx = await request.get('data/chains/index.json');

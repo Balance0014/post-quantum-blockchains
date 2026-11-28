@@ -96,7 +96,7 @@ def chain_api(v, names_all, checked, version, page, badge, card):
         'basis': v['basis'], 'basis_source': v['basis_src'], 'last_reviewed': v['reviewed'],
         'page': page, 'badge': badge, 'card': card,
         'attribution': {'text': f'Data: {SITE_EN}, by {AUTHOR}', 'text_zh': f'数据来源：{SITE_EN}，作者 {AUTHOR}',
-                        'site': page['en'].split('chains/')[0], 'author': AUTHOR_URL},
+                        'site': SITE_URL, 'author': AUTHOR_URL},
         'license': {k: v for k, v in DATA_LICENSE.items() if k != 'attribution'},
     }
 

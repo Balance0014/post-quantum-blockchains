@@ -12,15 +12,16 @@ test.describe('Navigation', () => {
     const row = page.locator('#tbody tr.row').nth(25);
     await row.scrollIntoViewIfNeeded();
     const id = await row.getAttribute('data-id');
-    const y = await page.evaluate(() => window.scrollY);
+    // where the reader sees the row, not the scroll number: sections off screen are drawn lazily at an estimated height
+    const top = async () => (await page.locator(`#tbody tr.row[data-id="${id}"]`).boundingBox()).y;
+    const y = await top();
     await row.locator('a[href*="/chains/"]').first().click();
     await page.waitForURL(`**/chains/${id}/`);
     await page.goBack();
     await expect(page.locator('#showall button')).toHaveAttribute('aria-expanded', 'true');
     expect(hash(page)).toContain('scope=top');
     await expect(page.locator('.fbtn[data-k="scope"][data-v="top"]')).toHaveAttribute('aria-pressed', 'true');
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(y - 60);
-    expect(Math.abs((await page.evaluate(() => window.scrollY)) - y)).toBeLessThan(60);
+    await expect.poll(async () => Math.abs((await top()) - y), { message: 'the row is back where the reader left it' }).toBeLessThan(60);
     await page.goForward();
     await page.waitForURL(`**/chains/${id}/`);
   });
@@ -69,6 +70,24 @@ test.describe('Navigation', () => {
     expect(n).toBeGreaterThan(0);
   });
 
+  test('A search with no match says so, says how else to search and offers a listing request', async ({ page, u }) => {
+    await page.goto(u('#chains?q=zzqqxx'));
+    await expect(page.locator('#q')).toHaveValue('zzqqxx');
+    const box = page.locator('#tbody .ei');
+    await expect(box).toContainText('zzqqxx');
+    await expect(box).toContainText('BTC');
+    await expect(box.locator('a[href*="new-project"]')).toHaveCount(1);
+  });
+
+  test('"Check a coin" with no match gives the same help', async ({ page, u }) => {
+    await page.goto(u(''));
+    await page.locator('#check-q').fill('zzqqxx');
+    await page.locator('#check-q').press('Enter');
+    const x = page.locator('#check-x');
+    await expect(x).toContainText('zzqqxx');
+    await expect(x.locator('a[href*="new-project"]')).toHaveCount(1);
+  });
+
   test('A link with a search opens the table searched', async ({ page, u }) => {
     await page.goto(u('#chains?q=falcon'));
     await expect(page.locator('#q')).toHaveValue('falcon');
@@ -89,6 +108,23 @@ test.describe('Navigation', () => {
 });
 
 test.describe('Fits the screen', () => {
+  test('Every page fits a 375 px wide phone screen', async ({ page, request, lang, phone }) => {
+    test.skip(!phone, 'phone runs only');
+    test.setTimeout(300000);
+    await page.setViewportSize({ width: 375, height: 812 });
+    const xml = await (await request.get('sitemap.xml')).text();
+    const paths = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname.replace('/post-quantum-blockchains/', ''))
+      .filter((p) => (lang === 'zh') === p.startsWith('zh/'));
+    expect(paths.length).toBeGreaterThan(60);
+    const wide = [];
+    for (const p of [...paths, 'no-such-page/']) {
+      await page.goto(p);
+      const [sw, cw] = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
+      if (sw > cw) wide.push(`/${p}: ${sw} > ${cw}`);
+    }
+    expect(wide, 'pages wider than the screen').toEqual([]);
+  });
+
   for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'method/', 'data/']) {
     test(`No sideways scrolling, everything opened: /${path}`, async ({ page, u }) => {
       await page.goto(u(path));

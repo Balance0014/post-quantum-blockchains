@@ -552,6 +552,7 @@ table.scale{width:100%;border-collapse:collapse;font-size:var(--t-md)}
 .scale tbody tr:last-child td{border-bottom:0}
 .scale th{font-size:var(--t-xs);color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
 .scale td:first-child{white-space:nowrap}
+.scale td:first-child .nk{white-space:normal} /* long NIST status names wrap on a phone */
 .scalebox{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow-x:auto}
 .grades{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3)}
 .grades div{padding:var(--sp-4);display:grid;gap:6px;align-content:start}
@@ -910,3 +911,4 @@ footer.site{contain-intrinsic-size:auto 400px}
 .btn.sm{min-height:32px;padding:4px 12px;font-size:var(--t-xs)}
 .row-btns{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
 .dpage .scale td code{white-space:normal;overflow-wrap:anywhere}
+#check-x .ei{display:grid;gap:var(--sp-2)}

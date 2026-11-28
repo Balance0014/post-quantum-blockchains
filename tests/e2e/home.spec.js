@@ -3,7 +3,6 @@ const { test, expect, pathOf, tagFocusable, tabThrough, outsideLinks, ownLinks }
 
 const rows = (page) => page.locator('#tbody tr.row');
 const hash = (page) => decodeURIComponent(new URL(page.url()).hash);
-const scrollY = (page) => page.evaluate(() => window.scrollY);
 
 test.describe('Home', () => {
   test.beforeEach(async ({ page, u }) => { await page.goto(u('')); });
@@ -117,6 +116,7 @@ test.describe('Home', () => {
     const n = await page.locator('.legend6 button[data-stage]').count();
     for (let i = 0; i < n; i++) {
       const b = page.locator('.legend6 button[data-stage]').nth(i);
+      if (await b.isDisabled()) continue; // a stage no chain has reached yet: nothing to filter
       const st = await b.getAttribute('data-stage');
       await b.click();
       expect(hash(page)).toContain(`stage=${st}`);
@@ -133,6 +133,7 @@ test.describe('Home', () => {
       await b.click();
       await expect(b).toHaveAttribute('aria-expanded', 'true');
       await expect(hidden.first()).toBeVisible();
+      await b.scrollIntoViewIfNeeded(); // the opened list may push the button off screen; measure where the reader taps it
       const top = (await b.boundingBox()).y;
       await b.click();
       await expect(b).toHaveAttribute('aria-expanded', 'false');
@@ -200,7 +201,8 @@ test.describe('Home', () => {
     const btn = page.locator('#showall button');
     await expect(rows(page)).toHaveCount(20);
     await btn.scrollIntoViewIfNeeded();
-    const y0 = await scrollY(page);
+    const at = async () => (await btn.boundingBox()).y; // where the reader sees the button
+    const y0 = await at();
     await btn.click();
     await expect(btn).toHaveAttribute('aria-expanded', 'true');
     expect(await rows(page).count()).toBeGreaterThan(20);
@@ -208,7 +210,7 @@ test.describe('Home', () => {
     await btn.click();
     await expect(btn).toHaveAttribute('aria-expanded', 'false');
     await expect(rows(page)).toHaveCount(20);
-    expect(Math.abs((await scrollY(page)) - y0)).toBeLessThan(5);
+    expect(Math.abs((await at()) - y0)).toBeLessThan(5);
   });
 
   test('"More" on a row expands the latest step and folds it', async ({ page }) => {
@@ -311,20 +313,19 @@ test.describe('All pages', () => {
     expect(await tabThrough(page, n)).toEqual([]);
   });
 
-  test('Home: the header menu opens and closes', async ({ page, u, phone }) => {
+  test('Home: the header menu opens and closes', async ({ page, u }) => {
     await page.goto(u(''));
     const menu = page.locator('details.menu'), link = menu.locator('a[data-sec="timeline"]');
-    if (phone) {
-      await expect(link).toBeHidden();
-      await menu.locator('summary').click();
-      await expect(link).toBeVisible();
-      await page.keyboard.press('Escape');
-      await expect(menu).not.toHaveAttribute('open', '');
-      await menu.locator('summary').click();
-    }
+    // the menu folds behind one button at every screen width
+    await expect(link).toBeHidden();
+    await menu.locator('summary').click();
+    await expect(link).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(menu).not.toHaveAttribute('open', '');
+    await menu.locator('summary').click();
     await link.click();
     await expect(page.locator('#timeline')).toBeInViewport();
-    if (phone) await expect(menu).not.toHaveAttribute('open', '');
+    await expect(menu).not.toHaveAttribute('open', '');
     expect(pathOf(page)).toMatch(/post-quantum-blockchains\/(zh\/)?$/);
   });
 

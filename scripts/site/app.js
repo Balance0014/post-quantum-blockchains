@@ -97,7 +97,7 @@ const UI = {
     today_lead: (s) => s === 5 ? "Yes, by default." : s === 4 ? "Yes, if you opt in." : s === 3 ? "Only on a testnet." : "No.",
     xchk_ok: (h, a) => `Independent explorer: block #${h}, ${a} min old.`, xchk_no: "The independent explorer did not answer.", xchk_none: "Only this source shows an old block, and no independent explorer confirms it, so the network is marked “could not check”.",
     own_src: { project: "Read from the project's own node or explorer, not an independent one.", community: "Read from a community-run explorer." },
-    e_src: "Sources", e_consensus: "Consensus", e_release: "Latest release", e_code: "Code activity", e_reviewed: "Claims last reviewed",
+    e_src: "Sources", e_consensus: "Consensus", e_release: "Latest release", e_code: "Code activity", e_reviewed: "Page checked against sources",
     pre: " (pre-release)", tag_only: " (tag only)", also: "Also",
     lead: "lead",
     stage_names: ["Nothing public", "Research", "Formal proposal", "Testnet", "Mainnet opt-in", "Default"],
@@ -151,6 +151,7 @@ const UI = {
     fam: { mldsa: "ML-DSA", falcon: "Falcon", slhdsa: "SLH-DSA", hash: "Other hash-based", other: "Custom or other", none: "None yet" },
     remove: (x) => `Remove filter: ${x}`, clear_all: "Clear all", clear_filters: "Clear all filters",
     empty_h: "No chains match these filters.", empty_p: "Remove a filter or try a different search.",
+    nf_q: (q) => `No chain matches “${q}”.`, nf_hint: "Try the English name or the ticker (such as BTC or ETH).",
     keys_h: "What the colours mean",
     fig_src: "Source", fig_checked: (d) => `checked ${d}`, fig_dl: "Download data (CSV)", mcap_src: (d) => `CoinGecko market cap, ${d}`,
     cum_title: "Post-quantum mainnet launches over time",
@@ -267,7 +268,7 @@ const UI = {
     today_lead: (s) => s === 5 ? "能，默认就是。" : s === 4 ? "能，需要自己选用。" : s === 3 ? "只在测试网上。" : "不能。",
     xchk_ok: (h, a) => `独立区块浏览器：第 ${h} 号区块，${a} 分钟前。`, xchk_no: "独立区块浏览器没有响应。", xchk_none: "只有这一个来源显示区块过旧，没有独立的区块浏览器可以印证，所以网络状态记为「无法核实」。",
     own_src: { project: "数据来自项目自己的节点或浏览器，不是独立来源。", community: "数据来自社区运营的区块浏览器。" },
-    e_src: "出处", e_consensus: "共识机制", e_release: "最新版本", e_code: "代码活跃度", e_reviewed: "说法最近核对",
+    e_src: "出处", e_consensus: "共识机制", e_release: "最新版本", e_code: "代码活跃度", e_reviewed: "本页对照出处核对",
     pre: "（预发布）", tag_only: "（仅有标签，未发正式版本）", also: "另看",
     lead: "线索",
     stage_names: ["无公开进展", "仅有研究", "已有正式提案", "仅限测试网", "主网可选用", "默认抗量子"],
@@ -321,6 +322,7 @@ const UI = {
     fam: { mldsa: "ML-DSA", falcon: "Falcon", slhdsa: "SLH-DSA", hash: "其他哈希签名", other: "自研或其他", none: "尚无" },
     remove: (x) => `移除筛选：${x}`, clear_all: "全部清除", clear_filters: "清除全部筛选",
     empty_h: "没有符合这些条件的链。", empty_p: "去掉一个筛选条件，或换个搜索词试试。",
+    nf_q: (q) => `没有找到「${q}」。`, nf_hint: "试试英文名、代号（如 BTC、ETH），或中文名的拼音首字母（如狗狗币打 ggb）。",
     keys_h: "颜色说明",
     fig_src: "来源", fig_checked: (d) => `核对于 ${d}`, fig_dl: "下载数据（CSV）", mcap_src: (d) => `CoinGecko 市值，${d}`,
     cum_title: "抗量子主网上线时间线",
@@ -380,12 +382,12 @@ const UI = {
 /* One sentence for every label on the page. */
 /* what people with a public identity say on X about a chain's quantum plans */
 Object.assign(UI.en, {
-  xt_h: "Quantum discussion on X", xt_note: "These are claims. They do not count toward the stage.", xt_post: "Post", xt_checked: (d) => `checked ${d}`,
+  xt_h: "Quantum discussion on X", xt_note: "These are claims. They do not count toward the stage.", xt_post: "Post", xt_checked: (d) => `original post checked ${d}`,
   xt_type: { plan: "Plan or timeline", proposal: "Proposal", release: "Release", research: "Research", statement: "Statement" },
   xt_new_h: "New on X", xt_new_p: "Posts by people with a public identity about a chain's quantum plans, checked against the original post. Claims only: they never change a stage.",
 });
 Object.assign(UI.zh, {
-  xt_h: "X 上的抗量子讨论", xt_note: "这些是说法，不计入档位。", xt_post: "原帖", xt_checked: (d) => `核对于 ${d}`,
+  xt_h: "X 上的抗量子讨论", xt_note: "这些是说法，不计入档位。", xt_post: "原帖", xt_checked: (d) => `原帖核对于 ${d}`,
   xt_type: { plan: "计划或时间表", proposal: "提案讨论", release: "上线", research: "研究", statement: "表态" },
   xt_new_h: "X 上的新动态", xt_new_p: "有公开身份的人谈某条链量子计划的帖子，都已打开原帖核对。只算说法，不改变档位。",
 });
@@ -886,7 +888,7 @@ function progCell(c) {
 }
 /* the list shows the first rows, then a "show all" button (no-JS pages list everything) */
 const FIRST = 20;
-let expanded = false, openY = 0;
+let expanded = false, openY = 0; /* openY: where the "Show all" button sat on screen when the list was opened */
 function rowHTML(c, later) {
   const sub = [esc(c.ticker), c.rank ? termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap")) : ""].filter(Boolean).join(" · ");
   return `<tr class="row${later ? " later" : ""}" data-id="${c.id}">
@@ -910,7 +912,8 @@ function tableBody() {
   if (!rows.length) {
     const sug = state.q.trim() ? suggest(state.q) : [];
     const dym = sug.length ? `<span class="dym">${esc(L("dym"))}${sug.map((c) => `<button type="button" class="link-btn" data-suggest="${esc(name(c))}">${esc(name(c))} <span class="mono">${esc(c.ticker)}</span></button>`).join(lang === "zh" ? "、" : ", ")}</span>` : "";
-    html = `<tr class="none"><td colspan="7" class="empty"><div class="ei"><b>${esc(L("empty_h"))}</b>${dym}<span>${esc(L("empty_p"))}</span><button type="button" class="btn" data-clear>${esc(L("clear_filters"))}</button></div></td></tr>`;
+    const body = state.q.trim() ? notFound(state.q, dym) : `<b>${esc(L("empty_h"))}</b>${dym}<span>${esc(L("empty_p"))}</span>`;
+    html = `<tr class="none"><td colspan="7" class="empty"><div class="ei">${body}<button type="button" class="btn" data-clear>${esc(L("clear_filters"))}</button></div></td></tr>`;
   }
   return { html, count: L("shown")(rows.length, D.chains.length), total: rows.length };
 }
@@ -965,6 +968,8 @@ function fig(o) {
     <figcaption class="fig-f"><span>${esc(L("fig_src"))}${CO()}${o.src} · ${esc(L("fig_checked")(fmtDate(D.checked)))}</span>${o.csv ? `<span class="acts"><a href="${D.base}data/${o.csv}" download>${ICON_DL}${esc(L("fig_dl"))}</a></span>` : ""}</figcaption></figure>`;
 }
 const SRC_CHAINS = `<a href="${href("data/")}">${esc(L("src_site"))}</a>`;
+/* a search with no match: what was searched, how else to search, and the way to ask for a listing */
+const notFound = (q, dym) => `<b>${esc(L("nf_q")(q.trim().slice(0, 40)))}</b>${dym}<span>${esc(L("nf_hint"))}</span><span>${esc(L("sub_h"))}${SEP(L("sub_h"))}<a href="${URL_SUBMIT}" target="_blank" rel="noopener">${esc(L("foot_btn_submit"))} ↗</a></span>`;
 const submitBox = () => `<div class="card subbox"><div><b>${esc(L("sub_h"))}</b><p>${esc(L("sub_p"))}</p></div><a class="btn primary" href="${URL_SUBMIT}" target="_blank" rel="noopener">${esc(L("foot_btn_submit"))} ↗</a></div>`;
 const anchorBtn = (id, title) => `<button type="button" class="anchor" data-anchor="${id}" aria-label="${esc(L("copy_link"))}${CO()}${esc(title)}">${ICON_LINK}</button>`;
 const secH = (id, eyebrow, title, lede) => `<div class="sec-h">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}<div class="h2row"><h2 id="${id}-h">${esc(title)}</h2>${anchorBtn(id, title)}</div>${lede ? `<p>${lede}</p>` : ""}</div>`;
@@ -1242,7 +1247,8 @@ function initSort(onPick) {
   });
   list.addEventListener("click", (e) => { const o = e.target.closest("[role=option]"); if (o) pick(opts().indexOf(o)); });
   list.addEventListener("mousemove", (e) => { const o = e.target.closest("[role=option]"); if (o) mark(opts().indexOf(o)); });
-  document.addEventListener("click", (e) => { if (!list.hidden && !dd.contains(e.target)) close(false); });
+  /* capture phase: a click on a term's tooltip stops the click from bubbling, and must still close the menu */
+  document.addEventListener("click", (e) => { if (!list.hidden && !dd.contains(e.target)) close(false); }, true);
 }
 /* motion: KPI numbers count up once, charts grow the first time they scroll into view (transform and opacity only) */
 function initMotion() {
@@ -1322,6 +1328,7 @@ function renderHome() {
   } else { clampOn = true; clampCheck(); }
   const app = document.getElementById("app");
   const q = document.getElementById("q");
+  q.value = state.q; /* a link such as #chains?q=near fills the search box as well as the table */
   const toTable = () => document.getElementById("chains").scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
   const reset = (keep) => { Object.assign(state, DEFAULT, { sort: state.sort }, keep || {}); q.value = state.q; };
   initSort((v) => { state.sort = v; renderTable(true); });
@@ -1342,8 +1349,8 @@ function renderHome() {
     if (a) { const id = a.dataset.anchor, qs = id === "chains" ? stateQS() : ""; const hash = "#" + id + (qs ? "?" + qs : ""); history.replaceState(null, "", hash); TIP.copy(a, location.origin + location.pathname + hash, L("link_copied")); return; }
     /* "Show all" expands in place; "Show fewer" folds the list and returns the reader to where they opened it */
     if (e.target.closest("#showall button")) {
-      if (!expanded) { expanded = true; openY = window.scrollY; renderTable(false); const r = document.querySelectorAll(".ledger tr.row")[FIRST]; if (r) r.querySelector("a").focus({ preventScroll: true }); }
-      else { expanded = false; renderTable(false); window.scrollTo(0, openY); document.querySelector("#showall button").focus({ preventScroll: true }); }
+      if (!expanded) { expanded = true; openY = document.querySelector("#showall button").getBoundingClientRect().top; renderTable(false); const r = document.querySelectorAll(".ledger tr.row")[FIRST]; if (r) r.querySelector("a").focus({ preventScroll: true }); }
+      else { expanded = false; renderTable(false); const b = document.querySelector("#showall button"); window.scrollBy(0, b.getBoundingClientRect().top - openY); b.focus({ preventScroll: true }); }
       return;
     }
     const fd = e.target.closest("[data-fold]");
@@ -1374,7 +1381,7 @@ function renderHome() {
     const exact = D.chains.find((c) => keysOf(c).includes(n));
     const hits = D.chains.filter((c) => hitQ(c, v));
     if (exact || hits.length === 1) { location.href = chainURL((exact || hits[0]).id); return; }
-    if (!hits.length) { const sug = suggest(v); x.hidden = false; x.innerHTML = sug.length ? `${esc(L("dym"))}${sug.map((c) => `<a href="${chainURL(c.id)}">${esc(name(c))} <span class="mono">${esc(c.ticker)}</span></a>`).join(lang === "zh" ? "、" : ", ")}` : esc(L("empty_h")); return; }
+    if (!hits.length) { const sug = suggest(v); x.hidden = false; x.innerHTML = sug.length ? `${esc(L("dym"))}${sug.map((c) => `<a href="${chainURL(c.id)}">${esc(name(c))} <span class="mono">${esc(c.ticker)}</span></a>`).join(lang === "zh" ? "、" : ", ")}` : `<span class="ei">${notFound(v, "")}</span>`; return; }
     x.hidden = true;
     reset({ q: v.slice(0, 80) }); q.value = state.q; renderTable(true); toTable();
   });
@@ -1409,11 +1416,22 @@ function renderHome() {
      same "show all" state and the same scroll position, saved when they left the page */
   const nav = performance.getEntriesByType ? performance.getEntriesByType("navigation")[0] : null;
   const back = nav && nav.type === "back_forward" && history.state && typeof history.state.y === "number" ? history.state : null;
-  window.addEventListener("pagehide", () => { try { history.replaceState({ y: window.scrollY, exp: expanded }, ""); } catch (e) { /* not allowed in some frames */ } });
+  /* the anchor is the first table row on screen, else the section at the top of the screen, with its distance from
+     the top: sections off screen are drawn lazily at an estimated height, so a bare scroll number lands elsewhere */
+  const anchorNow = () => {
+    for (const r of document.querySelectorAll("#tbody tr.row")) { const t = r.getBoundingClientRect(); if (t.bottom > 0 && t.top < window.innerHeight) return { row: r.dataset.id, off: t.top }; }
+    let s = secs[0]; for (const x of secs) if (x.getBoundingClientRect().top <= 1) s = x;
+    return { sec: s.id, off: s.getBoundingClientRect().top };
+  };
+  window.addEventListener("pagehide", () => { try { history.replaceState(Object.assign({ y: window.scrollY, exp: expanded }, anchorNow()), ""); } catch (e) { /* not allowed in some frames */ } });
   if (back && back.exp) expanded = true;
   if (fromHash || back) { renderTable(false); if (!back) document.getElementById("chains").scrollIntoView(); mark(); }
   /* "#timeline" and other section links: land on the section again once fonts and charts have settled, unless the reader has scrolled */
-  const sec = back ? { scrollIntoView: () => window.scrollTo(0, back.y) } : !fromHash && /^#[a-z]+$/.test(location.hash) && document.getElementById(location.hash.slice(1));
+  const backTo = () => {
+    const el = back.row ? document.querySelector(`#tbody tr.row[data-id="${CSS.escape(back.row)}"]`) : back.sec && document.getElementById(back.sec);
+    if (el) window.scrollBy(0, el.getBoundingClientRect().top - back.off); else window.scrollTo(0, back.y);
+  };
+  const sec = back ? { scrollIntoView: backTo } : !fromHash && /^#[a-z]+$/.test(location.hash) && document.getElementById(location.hash.slice(1));
   if (sec) {
     let moved = false;
     const stop = () => { moved = true; };
@@ -1585,7 +1603,7 @@ function renderChanges() {
 /* ---------- embeds and the data page ---------- */
 /* the three snippets for one chain: a Markdown badge, an HTML badge and an HTML card with the credit line */
 function snippets(c, e, l) {
-  const nm = l === "zh" && c.zh_name ? c.zh_name : c.name, page = e.page[l], site = page.split("chains/")[0];
+  const nm = l === "zh" && c.zh_name ? c.zh_name : c.name, page = e.page[l], site = D.site_root + (l === "zh" ? "zh/" : ""); /* the site's home page in that language */
   const alt = l === "zh" ? `${nm}：抗量子第 ${c.stage} 档` : `${nm}: post-quantum stage ${c.stage} of 5`;
   const credit = l === "zh" ? `数据来源：<a href="${site}">Post-Quantum Blockchains</a>，作者 <a href="${URL_X}">Balance Zhao</a>`
     : `Data: <a href="${site}">Post-Quantum Blockchains</a>, by <a href="${URL_X}">Balance Zhao</a>`;

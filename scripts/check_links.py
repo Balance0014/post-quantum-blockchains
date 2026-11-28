@@ -131,6 +131,15 @@ def fetch(url):
                     last = (e.code, 'GitHub API ' + api)
                     if e.code == 404:
                         return last
+                    # GitHub answers an exhausted quota with 403 (or 429): that says nothing about the link, so it
+                    # is reported like a 429, not judged; waiting for the hourly reset would outlast the job
+                    if e.code in (403, 429):
+                        try:
+                            body = e.read(2000).decode('utf-8', 'replace').lower()
+                        except Exception:
+                            body = ''
+                        if e.code == 429 or e.headers.get('X-RateLimit-Remaining') == '0' or 'rate limit' in body:
+                            return 429, 'GitHub API rate limit'
                 except Exception as e:
                     last = (0, type(e).__name__ + ': ' + str(e)[:120])
                 time.sleep(2 + 4 * attempt)
@@ -188,7 +197,7 @@ def main():
           f'{len(excused)} on allowlisted hosts did not answer, {len(limited)} rate limited (not judged), {len(broken)} broken; '
           f'{len(x_links)} links to X not requested')
     for url, where in limited:
-        print(f'  RATE LIMITED 429, not judged: {url} (in {where})')
+        print(f'  RATE LIMITED, not judged: {url} (in {where})')
     for url, status, note, where in excused:
         print(f'  allowlisted {status or note}: {url} ({allowed[urlparse(url).netloc]})')
     for url, status, note, where in broken:
@@ -198,7 +207,7 @@ def main():
                  f'{len(broken)} broken, {len(limited)} rate limited (not judged). {len(x_links)} links to X are not '
                  'requested by scripts; their posts are checked through X\'s API when the X data is updated.', '']
         if limited:
-            lines += ['Rate limited (429 after retries), not judged:', ''] + [f'- {u} (`{w}`)' for u, w in limited] + ['']
+            lines += ['Rate limited (429 after retries, or GitHub\'s API quota used up), not judged:', ''] + [f'- {u} (`{w}`)' for u, w in limited] + ['']
         if broken:
             lines += ['| Link | Answer | Where |', '|---|---|---|']
             lines += [f'| {u} | {s or n} | `{w}` |' for u, s, n, w in broken]
