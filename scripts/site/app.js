@@ -94,8 +94,8 @@ const UI = {
     queried: "queried",
     st_ok: "Running", st_quiet: "Blocks flowing, code quiet", st_stalled: "Blocks stopped", st_unknown: "Could not check",
     checked_tag: "checked", np_tag: "Not counted", k_supply: "Supply", k_algo_note: "Signing details",
-    /* a chain flagged "still accepts publicly broken legacy parameters" never gets a bare "Yes" */
-    today_lead: (s, broken) => s >= 4 && broken ? `${s === 5 ? "Yes, by default" : "Yes, if you opt in"}; but it still accepts a publicly broken legacy parameter set, see below.` : s === 5 ? "Yes, by default." : s === 4 ? "Yes, if you opt in." : s === 3 ? "Only on a testnet." : "No.",
+    /* a chain whose pre-upgrade keys use broken parameters never gets a bare "Yes" */
+    today_lead: (s, broken) => s >= 4 && broken ? `${s === 5 ? "Yes, by default" : "Yes, if you opt in"}; keys made before the upgrade use broken parameters, so coins on old addresses should move to new keys, see below.` : s === 5 ? "Yes, by default." : s === 4 ? "Yes, if you opt in." : s === 3 ? "Only on a testnet." : "No.",
     xchk_ok: (h, a) => `Independent explorer: block #${h}, ${a} min old.`, xchk_no: "The independent explorer did not answer.", xchk_none: "Only this source shows an old block, and no independent explorer confirms it, so the network is marked “could not check”.",
     own_src: { project: "Read from the project's own node or explorer, not an independent one.", community: "Read from a community-run explorer." },
     e_src: "Sources", e_consensus: "Consensus", e_release: "Latest release", e_code: "Code activity", e_reviewed: "Page checked against sources",
@@ -175,7 +175,7 @@ const UI = {
     fl: { custom: "Own construction", var: "Variant not reviewed", noaudit: "No audit found", projdata: "No independent network data" }, proposed: "Proposed, not deployed", netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
     scope_label: "Scope", design_label: "Design", ss_label: "Standard", cov_label: "Coverage", mig_label: "Migration", audit_label: "Audit", netw_label: "Network", net_label2: "Block status", view_label: "Showing",
     more_filters: "More filters", more_bg: "includes background",
-    view: { use: "Usable today", close: "Closest", move: "Moving now", quiet: "No progress in a year", broken: "Still accepts broken legacy parameters", custom: "Own construction", claim: "Project's own statement" },
+    view: { use: "Usable today", close: "Closest", move: "Moving now", quiet: "No progress in a year", broken: "Keys made before the upgrade use broken parameters", custom: "Own construction", claim: "Project's own statement" },
     sort_prog: "Latest progress", sort_n90: "Most progress, 90 days", sort_by: "Sort",
     q5_h: "Five questions for holders", q5_note: "Each card states its rule; its count matches the table it opens.",
     q_use_h: "Post-quantum signatures usable today", q_use_r: "Stage 4 or 5: on mainnet, holders already sign with a post-quantum scheme by default, or can choose one.",
@@ -184,7 +184,7 @@ const UI = {
     q_move_h: "Moving now", q_move_r: (d) => `At least one post-quantum milestone with a primary source in the 90 days to ${d}. Newest first.`,
     q_quiet_h: "No post-quantum progress in the past year", q_quiet_r: (d) => `Top-100 chains at stage 0 or 1 with no post-quantum milestone recorded here in the 12 months to ${d}.`,
     q_risk_h: "Worth a closer look", q_risk_r: "Select a line to list those chains.",
-    risk: { broken: "still accept a parameter set that was publicly broken", custom: "use their own construction, or a variant whose version no outside body has reviewed", claim: "rest a key date or their stage on the project's own statement" },
+    risk: { broken: "have keys made before an upgrade on parameters that were later publicly broken", custom: "use their own construction, or a variant whose version no outside body has reviewed", claim: "rest a key date or their stage on the project's own statement" },
     q_show: (n) => `Show ${plural(n, "chain", "chains")} in the table`, q_more: (n) => `+${n} more`, q_none: "None at the moment.",
     dagger_key: "† The project's own statement (official claim): shown, never used to raise a stage.",
     rng: { all: "All · by year", y2: "2 years · by month", m3: "3 months · by week" }, rng_label: "Range",
@@ -266,7 +266,7 @@ const UI = {
     queried: "查询时间",
     st_ok: "运行中", st_quiet: "在出块，代码 90 天无提交", st_stalled: "出块停了", st_unknown: "无法核实",
     checked_tag: "核对于", np_tag: "不计入进展", k_supply: "供应说明", k_algo_note: "签名细节",
-    today_lead: (s, broken) => s >= 4 && broken ? `${s === 5 ? "能，默认就是" : "能，需要自己选用"}；但仍接受已被攻破的旧参数，详见下文。` : s === 5 ? "能，默认就是。" : s === 4 ? "能，需要自己选用。" : s === 3 ? "只在测试网上。" : "不能。",
+    today_lead: (s, broken) => s >= 4 && broken ? `${s === 5 ? "能，默认就是" : "能，需要自己选用"}；升级前生成的旧密钥参数已被攻破，旧地址里的币要迁到新密钥，详见下文。` : s === 5 ? "能，默认就是。" : s === 4 ? "能，需要自己选用。" : s === 3 ? "只在测试网上。" : "不能。",
     xchk_ok: (h, a) => `独立区块浏览器：第 ${h} 号区块，${a} 分钟前。`, xchk_no: "独立区块浏览器没有响应。", xchk_none: "只有这一个来源显示区块过旧，没有独立的区块浏览器可以印证，所以网络状态记为「无法核实」。",
     own_src: { project: "数据来自项目自己的节点或浏览器，不是独立来源。", community: "数据来自社区运营的区块浏览器。" },
     e_src: "出处", e_consensus: "共识机制", e_release: "最新版本", e_code: "代码活跃度", e_reviewed: "本页对照出处核对",
@@ -346,7 +346,7 @@ const UI = {
     fl: { custom: "自研方案", var: "变体未审", noaudit: "未找到审计", projdata: "无独立出块数据" }, proposed: "提案中，未部署", netw: { mainnet: "主网", testnet: "还没上主网" },
     scope_label: "范围", design_label: "设计", ss_label: "标准状态", cov_label: "覆盖", mig_label: "迁移路径", audit_label: "审计", netw_label: "网络", net_label2: "出块状态", view_label: "正在看",
     more_filters: "更多筛选", more_bg: "含背景信息",
-    view: { use: "今天已能用", close: "最接近的", move: "正在推进", quiet: "近一年没有进展", broken: "仍接受已被攻破的旧参数", custom: "项目自研", claim: "只有项目方说法" },
+    view: { use: "今天已能用", close: "最接近的", move: "正在推进", quiet: "近一年没有进展", broken: "升级前的旧密钥参数已被攻破", custom: "项目自研", claim: "只有项目方说法" },
     sort_prog: "最近进展", sort_n90: "近 90 天进展最多", sort_by: "排序",
     q5_h: "持币人关心的五个问题", q5_note: "每张卡片都写明规则，数字和点开后的表格一致。",
     q_use_h: "今天已经能用上抗量子签名", q_use_r: "第 4、5 档：主网上已默认使用抗量子签名，或持币人可以选用。",
@@ -355,7 +355,7 @@ const UI = {
     q_move_h: "正在推进", q_move_r: (d) => `截至 ${d} 的 90 天内，至少有一条带原始出处的抗量子进展。最近的在前。`,
     q_quiet_h: "近一年没有抗量子进展", q_quiet_r: (d) => `市值前 100、处于第 0 或第 1 档，截至 ${d} 的 12 个月内本站没有收录任何抗量子进展的链。`,
     q_risk_h: "值得多看一眼", q_risk_r: "点选一行，在表格中列出这些链。",
-    risk: { broken: "仍接受某组已被公开攻破的参数", custom: "使用项目自研方案，或版本未经外部评估的变体", claim: "关键日期或档位只以项目方说法为依据" },
+    risk: { broken: "升级前生成的旧密钥所用参数已被公开攻破", custom: "使用项目自研方案，或版本未经外部评估的变体", claim: "关键日期或档位只以项目方说法为依据" },
     q_show: (n) => `在表格中查看这 ${n} 条`, q_more: (n) => `另有 ${n} 条`, q_none: "目前没有。",
     dagger_key: "† 项目方自己的说法（官方说法）：会列出，但不据此升档。",
     rng: { all: "全部 · 按年", y2: "近 2 年 · 按月", m3: "近 3 个月 · 按周" }, rng_label: "范围",
@@ -511,7 +511,7 @@ const DEFS = {
       wots: "A hash-based one-time signature such as WOTS+. It is a building block of standards like XMSS, not a standard on its own.",
       nonstd: "Not standardized by NIST or the IETF.",
       custom: "A construction designed by the project itself, without an outside standard.",
-      broken: "The protocol still accepts a parameter set that was publicly broken; the chain page names it. A chain that used such parameters only in the past does not get this label.",
+      broken: "Keys made before an upgrade use a parameter set that was later publicly broken. Nodes still verify their signatures so those coins can move, so coins left on old keys are at risk until they move to new keys. The chain page names the parameters. A chain whose nodes no longer accept such keys does not get this label.",
       none: "The chain has no post-quantum signature scheme yet.",
     },
     grades: {
@@ -612,7 +612,7 @@ const DEFS = {
       wots: "WOTS+ 这类哈希一次性签名，是 XMSS 等标准的组成部分，单独使用没有对应标准。",
       nonstd: "没有被 NIST 或 IETF 标准化。",
       custom: "项目自己设计的方案，没有外部标准。",
-      broken: "协议仍接受某组已被公开攻破的参数，链详情页写明是哪一组。只在过去用过、现在已不接受的链不挂这个标签。",
+      broken: "升级前生成的旧密钥所用的参数后来被公开攻破。节点仍能验证旧密钥的签名，旧地址里的币才转得出来；所以还留在旧密钥上的币有风险，要迁到新密钥。链详情页写明是哪一组参数。节点已不再接受这类旧密钥的链不挂这个标签。",
       none: "这条链还没有抗量子签名方案。",
     },
     grades: {
@@ -934,7 +934,7 @@ function rowHTML(c, later) {
   return `<tr class="row${later ? " later" : ""}" data-id="${c.id}">
     <td class="c-chain"><div class="chain"><span class="nmr"><a class="nm" href="${chainURL(c.id)}">${esc(name(c))}</a>${dotHTML(c)}</span><span class="sub">${sub}</span></div></td>
     <td class="c-stage">${stageCell(c.stage)}${dagger(c.basis_grade)}${flagsHTML(c)}</td>
-    <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span><span class="chips">${ssChips(c)}${c.stage < 3 && c.schemes.some(([k]) => k !== "none") ? term(`<span class="chip">${esc(L("proposed"))}</span>`, DF.proposed, L("proposed"), "plain") : ""}${c.hybrid ? termRef(`<span class="chip">${esc(L("hybrid"))}</span>`, "hybrid", L("hybrid"), "plain") : ""}${c.chips.includes("broken") ? termRef(`<span class="chip bad">${esc(T(D.chips.broken))}</span>`, "chips.broken", T(D.chips.broken), "plain") : ""}</span>${c.level != null && c.stage >= 3 ? `<span class="lvl">${levelText(c.level, c.level_open)}</span>` : ""}</div></td>
+    <td class="c-algo"><div class="algo"><span class="a">${esc(T(c.algo))}</span><span class="chips">${ssChips(c)}${c.stage < 3 && c.schemes.some(([k]) => k !== "none") ? term(`<span class="chip">${esc(L("proposed"))}</span>`, DF.proposed, L("proposed"), "plain") : ""}${c.hybrid ? termRef(`<span class="chip">${esc(L("hybrid"))}</span>`, "hybrid", L("hybrid"), "plain") : ""}${c.chips.includes("broken") ? termRef(`<span class="chip ${D.chips.broken.tone}">${esc(T(D.chips.broken))}</span>`, "chips.broken", T(D.chips.broken), "plain") : ""}</span>${c.level != null && c.stage >= 3 ? `<span class="lvl">${levelText(c.level, c.level_open)}</span>` : ""}</div></td>
     <td class="c-cov">${covCell(c)}</td>
     <td class="c-since${c.stage >= 4 ? "" : " none"}">${sinceCell(c)}</td>
     <td class="c-latest">${progCell(c)}</td>

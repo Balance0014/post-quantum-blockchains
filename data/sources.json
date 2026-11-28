@@ -40,13 +40,13 @@
     {
       "id": "mcm-home",
       "url": "https://mochimo.org/",
-      "supports": "WOTS+ and current PoS status.",
+      "supports": "WOTS+, and the website's statement that the network now runs on PoS.",
       "source_type": "project website"
     },
     {
       "id": "mcm-explorer",
       "url": "https://mochimo.org/explorer/",
-      "supports": "PoS blocks and the transition from PoW.",
+      "supports": "Block explorer for the live network.",
       "source_type": "project block explorer"
     },
     {

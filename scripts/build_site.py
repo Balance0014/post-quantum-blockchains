@@ -41,7 +41,7 @@ CHIPS = {
     'wots': {'tone': 'warn', 'en': 'Hash-based · not a standard on its own', 'zh': '哈希签名 · 单独使用无对应标准'},
     'nonstd': {'tone': 'warn', 'en': 'Not a NIST standard', 'zh': '非 NIST 标准'},
     'custom': {'tone': 'warn', 'en': 'Custom construction', 'zh': '项目自研构造'},
-    'broken': {'tone': 'bad', 'en': 'Still accepts publicly broken legacy parameters', 'zh': '仍接受已被攻破的旧参数'},
+    'broken': {'tone': 'warn', 'en': 'Keys made before the upgrade use broken parameters', 'zh': '升级前的旧密钥参数已被攻破'},
     'none': {'tone': 'fam', 'en': 'No post-quantum scheme yet', 'zh': '尚无抗量子方案'},
 }
 
@@ -76,7 +76,8 @@ def families(c):
 
 # Standard status is given per scheme, not per chain: a chain that names ML-DSA and Falcon gets one label for each.
 # 'var' marks a variant or pre-standard version of a NIST scheme whose version no outside body has reviewed. Publicly
-# a protocol that still accepts a publicly broken parameter set is a separate flag (the 'broken' label), not a standard status.
+# keys made before an upgrade on parameters that were later publicly broken, which nodes still verify so the coins can move,
+# are a separate flag (the 'broken' label), not a standard status.
 STATUSES = ('std', 'sel', 'var', 'hash', 'custom', 'none')
 SCHEME_NAMES = {'mldsa': 'ML-DSA', 'falcon': 'Falcon', 'slhdsa': 'SLH-DSA', 'xmss': 'XMSS', 'wots': 'WOTS+',
                 'other': None, 'none': None}
@@ -768,7 +769,7 @@ def write_data_files(out, views, checked, release, base, has_changes):
     lines += ['',
              '## Data (CC BY-NC 4.0; free commercial use with the credit, see LICENSE)',
              f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, default signature (post-quantum or classical), standard status per scheme '
-             f'(nist_standard, nist_selected, variant_not_reviewed, stateful_hash_based, own_construction, none), publicly_broken_parameters (yes when the protocol still accepts a publicly broken parameter set), NIST security level, coverage '
+             f'(nist_standard, nist_selected, variant_not_reviewed, stateful_hash_based, own_construction, none), publicly_broken_parameters (yes when keys made before an upgrade use publicly broken parameters and nodes still verify them so their coins can move), NIST security level, coverage '
              f'(default, opt-in, testnet, none), how existing coins move (migration), audit of the post-quantum code, '
              f'post-quantum milestones with a primary source in the last 90 days and the latest one, network status, '
              f'post-quantum mainnet start date, the sentence the stage rests on and its source',
