@@ -2112,12 +2112,17 @@
   "quantaureum": {
    "threshold_min": 10,
    "block": {
-    "ok": false,
-    "source": null,
-    "error": {
-     "en": "The project has not announced a network, and the testnet endpoint in its network guide did not answer on 2026-11-28.",
-     "zh": "项目还没有宣布任何网络，网络指南里的测试网端点 2026-11-28 没有响应。"
-    }
+    "ok": true,
+    "height": 465489,
+    "time_utc": "2026-11-28T07:09:48Z",
+    "queried_at_utc": "2026-11-28T07:10:06Z",
+    "age_minutes": 0.3,
+    "source": "https://rpc.quantaureum.com",
+    "reads": 3,
+    "heights_seen": [
+     465488,
+     465489
+    ]
    },
    "code": {
     "repo": "Quantaureum/qau",
@@ -2127,10 +2132,10 @@
     "branch": "main",
     "commits_90d": 176,
     "bot_commits_90d": 0,
-    "queried_at_utc": "2026-11-28T06:53:45Z",
+    "queried_at_utc": "2026-11-28T07:10:27Z",
     "last_commit": "2026-11-25"
    },
-   "status": "unknown"
+   "status": "ok"
   }
  }
 }
