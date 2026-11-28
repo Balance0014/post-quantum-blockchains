@@ -150,6 +150,20 @@
      "progress": false
     },
     {
+     "date": "2026-08-26",
+     "type": "proposal",
+     "grade": "primary",
+     "name": "The SHRINCS Working Group posts a first draft of a cryptographic BIP for SHRINCS, a semi-stateful hash-based signature scheme for Bitcoin, to the bitcoindev mailing list.",
+     "zh": "SHRINCS 工作组在 bitcoindev 邮件列表发布 SHRINCS 的密码学 BIP 初稿，这是一种为比特币设计的半有状态哈希签名方案。",
+     "status": {
+      "en": "First draft; no BIP number",
+      "zh": "初稿；没有 BIP 编号"
+     },
+     "source_url": "https://groups.google.com/g/bitcoindev/c/HbVboXIFiG8",
+     "verified": true,
+     "progress": false
+    },
+    {
      "date": null,
      "type": "research",
      "grade": "primary",
@@ -429,6 +443,20 @@
      "name": "EIP-8141 is moved to Scheduled for Inclusion in the Hegotá upgrade meta EIP (EIP-8081).",
      "zh": "EIP-8141 被列入 Hegotá 升级元 EIP（EIP-8081）的「计划纳入」项。",
      "source_url": "https://github.com/ethereum/EIPs/commit/e400af2874d6728bfd369f1851c24f250c8825f7",
+     "verified": true,
+     "progress": false
+    },
+    {
+     "date": "2026-06-03",
+     "type": "proposal",
+     "grade": "primary",
+     "name": "EIP-8288 In-mempool signature and proof aggregation: a new EIP-8141 frame mode that aggregates signatures and STARK proofs into one recursive STARK per block, to make post-quantum signatures cheaper to verify. It adds no signature scheme of its own.",
+     "zh": "EIP-8288 交易池内签名与证明聚合：为 EIP-8141 帧交易新增一种模式，把签名和 STARK 证明聚合成每个区块一个递归 STARK，降低抗量子签名的验证成本；本身不新增签名方案。",
+     "status": {
+      "en": "Draft",
+      "zh": "草案"
+     },
+     "source_url": "https://eips.ethereum.org/EIPS/eip-8288",
      "verified": true,
      "progress": false
     }
