@@ -10,8 +10,8 @@ A continuously maintained, source-checked map of post-quantum cryptography in bl
 Data as of November 27, 2026:
 
 - Of the 43 largest blockchains (CoinGecko top 100 with their own network), **3** let holders use a post-quantum signature on mainnet today: NEAR Protocol, Bittensor and Algorand.
-- Of all **67** chains tracked, **26** offer post-quantum signatures on mainnet (19 by default, 7 opt-in).
-- **34** of the 67 had an official account or a core figure post about their quantum plans on X in the last 90 days (61 original posts, each checked): [see the posts](https://balance0014.github.io/post-quantum-blockchains/x/).
+- Of all **68** chains tracked, **26** offer post-quantum signatures on mainnet (19 by default, 7 opt-in).
+- **34** of the 68 had an official account or a core figure post about their quantum plans on X in the last 90 days (61 original posts, each checked): [see the posts](https://balance0014.github.io/post-quantum-blockchains/x/).
 <!-- /summary -->
 
 ## What's in the map
