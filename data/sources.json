@@ -1,4 +1,11 @@
 {
+  "license": {
+    "name": "CC BY-NC 4.0",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "attribution": "Data: Post-Quantum Blockchains (https://balance0014.github.io/post-quantum-blockchains/), by Balance Zhao (https://x.com/balance0014)",
+    "commercial_use": "Free with the attribution on every screen, the check date shown, weekly updates and a \"Used by\" registration.",
+    "terms": "https://github.com/Balance0014/post-quantum-blockchains/blob/main/LICENSE"
+  },
   "sources": [
     {
       "id": "raq-info",
@@ -158,7 +165,7 @@
     },
     {
       "id": "abel-launch",
-      "url": "https://www.pqabelian.io/milestones",
+      "url": "https://web.archive.org/web/20261015195930/https://pqabelian.io/milestones",
       "supports": "2022 mainnet milestone.",
       "source_type": "project documentation"
     },
@@ -212,19 +219,19 @@
     },
     {
       "id": "cell-consensus",
-      "url": "https://cellframe.net/blog/worklog-october-results-2024/",
+      "url": "https://web.archive.org/web/20260308211455/https://cellframe.net/blog/worklog-october-results-2024/",
       "supports": "ESBOCS and DAG-PoA roles.",
       "source_type": "project documentation"
     },
     {
       "id": "cell-assets",
-      "url": "https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/",
+      "url": "https://web.archive.org/web/20260608143702/https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/",
       "supports": "Native assets versus wrapped assets.",
       "source_type": "project documentation"
     },
     {
       "id": "cell-wallet",
-      "url": "https://cellframe.net/",
+      "url": "https://web.archive.org/web/20261013062703/https://cellframe.net/",
       "supports": "Native wallet and supported cryptography.",
       "source_type": "project website"
     },
@@ -278,7 +285,7 @@
     },
     {
       "id": "npt-genesis",
-      "url": "https://explorer.neptune.cash/block/genesis",
+      "url": "https://web.archive.org/web/20260726145233/https://explorer.neptune.cash/block/genesis",
       "supports": "Current-chain genesis.",
       "source_type": "project block explorer"
     },
@@ -485,6 +492,156 @@
       "url": "https://www.sec.gov/files/cft-written-input-daniel-bruno-corvelo-costa-090325.pdf",
       "supports": "Third-party PQFIF submission, Appendix A pages 62 and 69; conceptual application examples, not SEC policy or engineering validation.",
       "source_type": "third-party submission hosted by SEC"
+    },
+    {
+      "id": "spld-readme",
+      "url": "https://github.com/Splendor-Protocol/splendor-quantum-blockchain/blob/ee3e84e2b58399cd5ea2f0e3c69958f06f1d0f39/readme.md",
+      "supports": "Mainnet re-mint date, ML-DSA-65 signing surfaces, two-second block interval, audit status.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "spld-news",
+      "url": "https://splendor.org/news/introducing-splendor-quantum",
+      "supports": "Separation from legacy chain 2691 and address format.",
+      "source_type": "project documentation"
+    },
+    {
+      "id": "spld-status",
+      "url": "https://quantum-rpc.splendor.org/status",
+      "supports": "Live chain id, height and one-of-one validator quorum.",
+      "source_type": "project node API"
+    },
+    {
+      "id": "qbit-spec",
+      "url": "https://github.com/Qbit-Org/qbit/blob/d868462af42b38820c22ecf3d9016e775d922bb6/doc/consensus/p2mr-v1.md",
+      "supports": "P2MR activation at height 0, OP_CHECKSIGPQC and the bounded SLH-DSA profile.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "qbit-params",
+      "url": "https://github.com/Qbit-Org/qbit/blob/d868462af42b38820c22ecf3d9016e775d922bb6/src/kernel/chainparams.cpp",
+      "supports": "Mainnet genesis, restricted-output mode and 60-second target spacing.",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "qbit-release",
+      "url": "https://github.com/Qbit-Org/qbit/releases/tag/v1.0.0",
+      "supports": "v1.0.0 mainnet launch release.",
+      "source_type": "project release record"
+    },
+    {
+      "id": "xds-readme",
+      "url": "https://github.com/discretecoin/discrete/blob/95271fc6b72a434014c53308f2820553417527e3/README.md",
+      "supports": "PQ-only roles: ML-DSA-65 spend and block signatures, ML-KEM-768 view keys.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "xds-site",
+      "url": "https://discrete.cash/",
+      "supports": "Mainnet date, phase-1 scope and stated limitations.",
+      "source_type": "project website"
+    },
+    {
+      "id": "xds-config",
+      "url": "https://github.com/discretecoin/discrete/blob/95271fc6b72a434014c53308f2820553417527e3/src/CryptoNoteConfig.h",
+      "supports": "90-second difficulty target and finality depth.",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "dil-readme",
+      "url": "https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/README.md",
+      "supports": "Mainnet launch date and signature sizes.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "dil-signer",
+      "url": "https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/depends/dilithium/ref/params.h",
+      "supports": "FIPS 204 reference parameters for mode 3.",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "dil-params",
+      "url": "https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/src/core/chainparams.cpp",
+      "supports": "240-second block time and genesis parameters.",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "noid-readme",
+      "url": "https://github.com/ignotusnemo/parano1d/blob/bf9175a2aa8a95998e8b25c8ae9ce7ac03eed1f2/README.md",
+      "supports": "Genesis date, 30-second target and signatureless ownership.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "noid-release",
+      "url": "https://github.com/ignotusnemo/parano1d/releases/tag/v2.1.0",
+      "supports": "Current node release.",
+      "source_type": "project release record"
+    },
+    {
+      "id": "noid-explorer",
+      "url": "https://noidexplorer.org/",
+      "supports": "Public block activity.",
+      "source_type": "ecosystem block explorer"
+    },
+    {
+      "id": "aere-aip20",
+      "url": "https://git.aere.network/aere-network/aere-research/src/commit/6e0f7d6363bfde59f4703c371648aa1bbcd58949/aips/AIP-20.md",
+      "supports": "Type-0x50 ML-DSA transaction format and activation record.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "aere-status",
+      "url": "https://aere.network/press-release-post-quantum-identity.html",
+      "supports": "Validator-layer PQ stages, Foundation-run validators and audit status.",
+      "source_type": "project documentation"
+    },
+    {
+      "id": "aere-claims",
+      "url": "https://aere.network/verifiable-claims.json",
+      "supports": "Chain id, measured block interval and stated limits.",
+      "source_type": "project documentation"
+    },
+    {
+      "id": "qore-readme",
+      "url": "https://github.com/qorechain/qorechain-core/blob/dbd55d11c125de066cd6958bd57c76023bd5bd93/README.md",
+      "supports": "Hybrid ML-DSA-87 signatures, enforcement modes and EVM windows.",
+      "source_type": "pinned source documentation"
+    },
+    {
+      "id": "qore-params",
+      "url": "https://api.qore.host/qorechain/pqc/v1/params",
+      "supports": "Mainnet hybrid_signature_mode = required, classical fallback disabled.",
+      "source_type": "project node API"
+    },
+    {
+      "id": "qore-genesis",
+      "url": "https://rpc.qore.host/block?height=1",
+      "supports": "Mainnet block 1 date.",
+      "source_type": "project node API"
+    },
+    {
+      "id": "mini-wots",
+      "url": "https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/objects/keys/Winternitz.java",
+      "supports": "Winternitz one-time signatures (BouncyCastle, SHA3-256, w = 8).",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "mini-treekey",
+      "url": "https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/objects/keys/TreeKey.java#L21-L22",
+      "supports": "Default key tree of 64 keys per level and 3 levels.",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "mini-checksig",
+      "url": "https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/kissvm/functions/sigs/CHECKSIG.java",
+      "supports": "Script signature check verifies TreeKey signatures.",
+      "source_type": "pinned source code"
+    },
+    {
+      "id": "mini-explorer",
+      "url": "https://explorer.minima.global",
+      "supports": "Live mainnet blocks.",
+      "source_type": "project block explorer"
     }
   ]
 }

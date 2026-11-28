@@ -23,6 +23,14 @@ The [deployment timeline](../charts/deployment-timeline.svg) and [algorithm map]
 | [xCoin (XID)](#xcoin) | PoW | 2026 · Sep 26 · Mainnet launch | ML-DSA-65; SLH-DSA fallback |
 | [qtcchain (QTC)](#qtcchain) | PoW | 2026 · Sep 30 · v1 mainnet launch | ML-DSA-44; SLH-DSA fallback |
 | [Soqucoin (SOQ)](#soqucoin) | PoW | 2026 · Oct 13 · Mainnet launch | ML-DSA-44 transaction signatures |
+| [Splendor Quantum (SPLD)](#splendor-quantum) | BFT | 2026 · Sep 21 · Mainnet genesis (re-mint) | ML-DSA-65 accounts, blocks, votes |
+| [Qbit (QBT)](#qbit) | PoW | 2026 · Jul 15 · Mainnet genesis | Bounded SLH-DSA spends (P2MR) |
+| [Discrete (XDS)](#discrete) | PoW | 2026 · Jul 15 · Mainnet launch | ML-DSA-65 spends; ML-KEM-768 delivery |
+| [Dilithion (DIL)](#dilithion) | PoW | 2026 · Jan 28 · Mainnet launch | ML-DSA-65 (Dilithium3) signatures |
+| [Parano1d (NOID)](#parano1d) | PoW | 2026 · Aug 21 · Mainnet genesis | Hash-based ZK spend proofs; no signatures |
+| [Aere Network (AERE)](#aere-network) | QBFT (PoA) | 2026 · Sep 23 · Opt-in ML-DSA transactions | Opt-in ML-DSA tx; Falcon/SLH-DSA seals |
+| [QoreChain (QOR)](#qorechain) | PoS | 2026 · Jun 29 · Mainnet block 1 | Hybrid classical + ML-DSA-87 (required) |
+| [Minima (MINIMA)](#minima) | PoW | 2024 · Nov · Native coin launch (CMC date) | Winternitz OTS key tree |
 
 ## Raqcoin
 
@@ -168,7 +176,7 @@ Sources:
 
 Sources:
 
-- [abel-launch](https://www.pqabelian.io/milestones) — 2022 mainnet milestone. (project documentation)
+- [abel-launch](https://web.archive.org/web/20261015195930/https://pqabelian.io/milestones) — 2022 mainnet milestone. (project documentation)
 - [abel-upgrade](https://www.pqabelian.io/blog/abelian-completes-major-network-upgrade-at-block-height-464-000) — Aconcagua upgrade and dual PoW. (project documentation)
 - [abel-consensus](https://github.com/pqabelian/abec/blob/35799bed12f326b10df8227aa93646c563d79cb7/blockchain/consensus/consensus.go) — PoW verification dispatch. (pinned source code)
 - [abel-schemes](https://community.pqabelian.io/) — Project cryptographic documentation. (project documentation)
@@ -211,9 +219,9 @@ Sources:
 Sources:
 
 - [cell-launch](https://cellframe.medium.com/ama-with-ceo-dmitry-gerasimov-july-13-2023-f317f5fb1de0) — July 12, 2023 mainnet launch. (project documentation)
-- [cell-consensus](https://cellframe.net/blog/worklog-october-results-2024/) — ESBOCS and DAG-PoA roles. (project documentation)
-- [cell-assets](https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/) — Native assets versus wrapped assets. (project documentation)
-- [cell-wallet](https://cellframe.net/) — Native wallet and supported cryptography. (project website)
+- [cell-consensus](https://web.archive.org/web/20260308211455/https://cellframe.net/blog/worklog-october-results-2024/) — ESBOCS and DAG-PoA roles. (project documentation)
+- [cell-assets](https://web.archive.org/web/20260608143702/https://cellframe.net/blog/ama-transcript-with-dmitry-gerasimov-february-26-2026/) — Native assets versus wrapped assets. (project documentation)
+- [cell-wallet](https://web.archive.org/web/20261013062703/https://cellframe.net/) — Native wallet and supported cryptography. (project website)
 
 ## QuantumCoin
 
@@ -273,7 +281,7 @@ Sources:
 Sources:
 
 - [npt-relaunch](https://neptune.cash/articles/mainnet-relaunch) — Mainnet relaunch history. (project documentation)
-- [npt-genesis](https://explorer.neptune.cash/block/genesis) — Current-chain genesis. (project block explorer)
+- [npt-genesis](https://web.archive.org/web/20260726145233/https://explorer.neptune.cash/block/genesis) — Current-chain genesis. (project block explorer)
 - [npt-mining](https://docs.neptune.cash/consensus/mining.html) — PoW consensus. (project documentation)
 - [npt-spending](https://docs.neptune.cash/consensus/utxo.html) — Spending conditions and proof scope. (project documentation)
 - [npt-lock](https://github.com/Neptune-Crypto/neptune-core/blob/db304e79eb722b1c5654c9854360701af10f3749/neptune-consensus/src/transaction/lock_script.rs) — Lock script interface at snapshot revision. (pinned source code)
@@ -377,3 +385,164 @@ Sources:
 - [soq-foundation](https://soqucoin.org/) — Block 1 date, ML-DSA-44 and PoW. (project foundation website)
 - [soq-code](https://github.com/soqucoin/soqucoin/tree/0b4d6ab18b687d658a42b8debef1d6db2c7b4aa0) — Snapshot implementation and AuxPoW support. (pinned source repository)
 - [soq-explorer](https://explorer.soqu.org/) — Public block activity. (project block explorer)
+
+## Splendor Quantum
+
+**SPLD · mainnet · reviewed 2026-11-27**
+
+**Milestone:** The current mainnet genesis was minted on September 21, 2026, after earlier resets.
+
+**Consensus:** BFT with ML-DSA-65 votes; at review one validator certified blocks and public admission had not opened.
+
+**Cryptographic use:** ML-DSA-65 for native transactions, blocks and validator votes; addresses are SHA3-256 of the public key.
+
+**Crypto-agility:** One account signing scheme; the SQVL module adds dual ML-DSA-65 + SLH-DSA instructions.
+
+**Limits:** SPLD on the legacy Splendor EVM chain 2691 is a separate network until migrated. The repository states there is no third-party audit.
+
+Sources:
+
+- [spld-readme](https://github.com/Splendor-Protocol/splendor-quantum-blockchain/blob/ee3e84e2b58399cd5ea2f0e3c69958f06f1d0f39/readme.md) — Mainnet re-mint date, ML-DSA-65 signing surfaces, two-second block interval, audit status. (pinned source documentation)
+- [spld-news](https://splendor.org/news/introducing-splendor-quantum) — Separation from legacy chain 2691 and address format. (project documentation)
+- [spld-status](https://quantum-rpc.splendor.org/status) — Live chain id, height and one-of-one validator quorum. (project node API)
+
+## Qbit
+
+**QBT · mainnet · reviewed 2026-11-27**
+
+**Milestone:** Mainnet genesis was July 15, 2026; Qbit Core v1.0.0 followed on July 16.
+
+**Consensus:** SHA-256 PoW with an AuxPoW merge-mining lane feeding the same chain.
+
+**Cryptographic use:** OP_CHECKSIGPQC with a single SLH-DSA-SHA2-128s-bounded30 profile inside P2MR outputs.
+
+**Crypto-agility:** One active profile; reserved leaf versions allow a later soft fork to add another.
+
+**Limits:** The bounded profile is not a FIPS 205 parameter set and is safe only up to 2^30 signatures per key.
+
+Sources:
+
+- [qbit-spec](https://github.com/Qbit-Org/qbit/blob/d868462af42b38820c22ecf3d9016e775d922bb6/doc/consensus/p2mr-v1.md) — P2MR activation at height 0, OP_CHECKSIGPQC and the bounded SLH-DSA profile. (pinned source documentation)
+- [qbit-params](https://github.com/Qbit-Org/qbit/blob/d868462af42b38820c22ecf3d9016e775d922bb6/src/kernel/chainparams.cpp) — Mainnet genesis, restricted-output mode and 60-second target spacing. (pinned source code)
+- [qbit-release](https://github.com/Qbit-Org/qbit/releases/tag/v1.0.0) — v1.0.0 mainnet launch release. (project release record)
+
+## Discrete
+
+**XDS · mainnet · reviewed 2026-11-27**
+
+**Milestone:** The project dates mainnet to July 15, 2026.
+
+**Consensus:** PoW using DiscretePower, which binds each mining candidate to an ML-DSA-65 signature.
+
+**Cryptographic use:** ML-DSA-65 spend authorization; ML-KEM-768 encapsulation for output delivery.
+
+**Crypto-agility:** One active signing scheme; changing frozen parameters requires a hard fork.
+
+**Limits:** Spending reveals the long-term spend key and amounts are public in Phase 1; finality is node-local.
+
+Sources:
+
+- [xds-readme](https://github.com/discretecoin/discrete/blob/95271fc6b72a434014c53308f2820553417527e3/README.md) — PQ-only roles: ML-DSA-65 spend and block signatures, ML-KEM-768 view keys. (pinned source documentation)
+- [xds-site](https://discrete.cash/) — Mainnet date, phase-1 scope and stated limitations. (project website)
+- [xds-config](https://github.com/discretecoin/discrete/blob/95271fc6b72a434014c53308f2820553417527e3/src/CryptoNoteConfig.h) — 90-second difficulty target and finality depth. (pinned source code)
+
+## Dilithion
+
+**DIL · mainnet · reviewed 2026-11-27**
+
+**Milestone:** The repository dates the mainnet launch (a fair-launch reset) to January 28, 2026.
+
+**Consensus:** RandomX PoW; a VDF consensus phase is implemented but pending activation.
+
+**Cryptographic use:** Dilithium mode 3 from the FIPS 204 reference code, i.e. ML-DSA-65 sizes and encoding.
+
+**Crypto-agility:** One active signing scheme.
+
+**Limits:** DIL bridged to Base relies on Base accounts, not on Dilithium. The project uses the Dilithium3 name rather than ML-DSA-65.
+
+Sources:
+
+- [dil-readme](https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/README.md) — Mainnet launch date and signature sizes. (pinned source documentation)
+- [dil-signer](https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/depends/dilithium/ref/params.h) — FIPS 204 reference parameters for mode 3. (pinned source code)
+- [dil-params](https://github.com/dilithion/dilithion/blob/2afb0e96b064741fa2bfb92d5b9b8c0e61734769/src/core/chainparams.cpp) — 240-second block time and genesis parameters. (pinned source code)
+
+## Parano1d
+
+**NOID · mainnet · reviewed 2026-11-27**
+
+**Milestone:** Mainnet genesis was August 21, 2026; v2 releases followed in October 2026.
+
+**Consensus:** PoW orders blocks whose state transitions are already proven.
+
+**Cryptographic use:** No public-key transaction signature: spends prove knowledge of a secret's Poseidon2b preimage.
+
+**Crypto-agility:** Protocol versions activate at announced heights.
+
+**Limits:** A zero-knowledge proof of a hash preimage is not a standard digital signature, and the proof stack is not standardized. P2P peer identity uses Ed25519.
+
+Sources:
+
+- [noid-readme](https://github.com/ignotusnemo/parano1d/blob/bf9175a2aa8a95998e8b25c8ae9ce7ac03eed1f2/README.md) — Genesis date, 30-second target and signatureless ownership. (pinned source documentation)
+- [noid-release](https://github.com/ignotusnemo/parano1d/releases/tag/v2.1.0) — Current node release. (project release record)
+- [noid-explorer](https://noidexplorer.org/) — Public block activity. (ecosystem block explorer)
+
+## Aere Network
+
+**AERE · mainnet · reviewed 2026-11-27**
+
+**Milestone:** Type-0x50 ML-DSA transactions were enabled on chain 2800 from block 19,900,000 (September 23, 2026).
+
+**Consensus:** QBFT with ten validators, all run by the Aere Foundation at review.
+
+**Cryptographic use:** Opt-in ML-DSA-44/65/87 transactions beside the default secp256k1 path; Falcon-512 and SLH-DSA validator seals.
+
+**Crypto-agility:** The ML-DSA parameter set is chosen per transaction by an algorithm identifier.
+
+**Limits:** PQ accounts are opt-in; secp256k1 accounts, node transport and part of each consensus message remain classical. No completed third-party audit.
+
+Sources:
+
+- [aere-aip20](https://git.aere.network/aere-network/aere-research/src/commit/6e0f7d6363bfde59f4703c371648aa1bbcd58949/aips/AIP-20.md) — Type-0x50 ML-DSA transaction format and activation record. (pinned source documentation)
+- [aere-status](https://aere.network/press-release-post-quantum-identity.html) — Validator-layer PQ stages, Foundation-run validators and audit status. (project documentation)
+- [aere-claims](https://aere.network/verifiable-claims.json) — Chain id, measured block interval and stated limits. (project documentation)
+
+## QoreChain
+
+**QOR · mainnet · reviewed 2026-11-27**
+
+**Milestone:** Mainnet block 1 is dated June 29, 2026.
+
+**Consensus:** CometBFT PoS; validator consensus keys were Ed25519 at review.
+
+**Cryptographic use:** Every Cosmos-lane transaction carries a classical and an ML-DSA-87 signature; mainnet parameters require the hybrid form.
+
+**Crypto-agility:** Enforcement mode (disabled/optional/required) and key migration are governed on chain.
+
+**Limits:** EVM transactions inside an open window are authorized by secp256k1 alone, and validator keys are classical.
+
+Sources:
+
+- [qore-readme](https://github.com/qorechain/qorechain-core/blob/dbd55d11c125de066cd6958bd57c76023bd5bd93/README.md) — Hybrid ML-DSA-87 signatures, enforcement modes and EVM windows. (pinned source documentation)
+- [qore-params](https://api.qore.host/qorechain/pqc/v1/params) — Mainnet hybrid_signature_mode = required, classical fallback disabled. (project node API)
+- [qore-genesis](https://rpc.qore.host/block?height=1) — Mainnet block 1 date. (project node API)
+
+## Minima
+
+**MINIMA · mainnet · reviewed 2026-11-27**
+
+**Milestone:** CoinMarketCap dates the native coin's launch to November 26, 2024; no project source dating the mainnet launch was found.
+
+**Consensus:** TxPoW: transactions carry their own proof of work, and blocks are formed from them.
+
+**Cryptographic use:** KISS VM signature checks verify TreeKey signatures built from Winternitz one-time signatures (SHA3-256, w = 8).
+
+**Crypto-agility:** Coins are locked by scripts, so the locking logic is programmable; the signature primitive itself is fixed in the node.
+
+**Limits:** One-time keys depend on correct use tracking, and the Winternitz key-tree construction is not a standardized scheme.
+
+Sources:
+
+- [mini-wots](https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/objects/keys/Winternitz.java) — Winternitz one-time signatures (BouncyCastle, SHA3-256, w = 8). (pinned source code)
+- [mini-treekey](https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/objects/keys/TreeKey.java#L21-L22) — Default key tree of 64 keys per level and 3 levels. (pinned source code)
+- [mini-checksig](https://github.com/minima-global/Minima/blob/52542f25605a28a776e9b3b43b0808a05dceab01/src/org/minima/kissvm/functions/sigs/CHECKSIG.java) — Script signature check verifies TreeKey signatures. (pinned source code)
+- [mini-explorer](https://explorer.minima.global) — Live mainnet blocks. (project block explorer)

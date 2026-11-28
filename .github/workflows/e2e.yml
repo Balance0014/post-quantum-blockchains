@@ -1,0 +1,46 @@
+name: Browser tests
+# Clicks every control on every page of the built website in a real browser (Chromium, through Playwright), in
+# English and Chinese, on a desktop screen and a phone: filters, search, sorting, folds, tooltips, copy buttons,
+# the embed picker, keyboard use, Back and Forward, the language switch, links that open with filters or at a section,
+# and the 404 page. The run's summary page shows the result as a table of page × control × run; the full report,
+# with a trace of anything that failed, is kept as the "browser-test-report" artifact.
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:  # a newer push cancels the older run of the same branch
+  group: e2e-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build the website under its published path
+        run: python3 -B scripts/build_site.py --out "$RUNNER_TEMP/serve/post-quantum-blockchains"
+      - name: Install Playwright and Chromium
+        working-directory: tests/e2e
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Run the tests
+        working-directory: tests/e2e
+        env:
+          SERVE_DIR: ${{ runner.temp }}/serve
+        run: npx playwright test
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-test-report
+          path: |
+            tests/e2e/report
+            tests/e2e/test-results
+          retention-days: 14

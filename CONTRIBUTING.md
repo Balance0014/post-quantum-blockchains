@@ -12,31 +12,24 @@ Any blockchain, layer 2 or other network that uses a post-quantum scheme to sign
 
 ## How review works
 
-1. A new submission or correction gets an automatic reply that checks the links and looks for an existing entry. A maintainer replies within 7 days.
+1. A new submission or correction gets an automatic reply that checks the links and looks for an existing entry. A maintainer replies within 2 days; a review decision usually comes within 3 days.
 2. Every claim is checked against its sources. Anything the sources don't support is narrowed or left out, and the reason is given on the issue.
 3. Accepted entries are added to `data/`, the tables and charts are regenerated, and the change is noted in [CHANGELOG.md](CHANGELOG.md). The entry's `last_reviewed` date is the day its claims were checked.
-4. Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
-5. If you work on the project or have a financial interest in it, say so. It doesn't block a listing; it's recorded with the submission.
+4. Once the entry is live on the website, the maintainer's closing reply links its page and gives its badge code (made with `python3 scripts/triage.py --approved <chain id>`).
+5. Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
+6. If you work on the project or have a financial interest in it, say so. It doesn't block a listing; it's recorded with the submission.
 
-## Listed badge
+## Stage badge
 
-Once your project is listed, you can link your README to its entry:
-
-[![Listed on Post-Quantum Blockchains](badges/listed.svg)](docs/projects.md)
-
-Markdown:
+Once your chain is listed, you can show its stage in your README or on your website. The badge is rebuilt from the data, so it always shows the current stage, and it links to the chain's page, which carries the credit the license asks for. Pick a chain and a language on the [data page](https://balance0014.github.io/post-quantum-blockchains/data/#embed) and copy the code, or use this pattern:
 
 ```markdown
-[![Listed on Post-Quantum Blockchains](https://raw.githubusercontent.com/Balance0014/post-quantum-blockchains/main/badges/listed.svg)](https://github.com/Balance0014/post-quantum-blockchains/blob/main/docs/projects.md#PROJECT-ID)
+[![CHAIN: post-quantum stage N of 5](https://balance0014.github.io/post-quantum-blockchains/badges/CHAIN-ID.svg)](https://balance0014.github.io/post-quantum-blockchains/chains/CHAIN-ID/)
 ```
 
-HTML:
+Replace `CHAIN-ID` with the chain's `id` in [data/chains.json](data/chains.json), for example `algorand`. A 360 × 112 card with the check date is at `badges/card/CHAIN-ID.svg`, and Chinese versions are under `badges/zh/` and `badges/card/zh/`. The badge states a stage. It isn't an endorsement or a security rating.
 
-```html
-<a href="https://github.com/Balance0014/post-quantum-blockchains/blob/main/docs/projects.md#PROJECT-ID"><img src="https://raw.githubusercontent.com/Balance0014/post-quantum-blockchains/main/badges/listed.svg" alt="Listed on Post-Quantum Blockchains" height="20"></a>
-```
-
-Replace `PROJECT-ID` with your entry's `id` from [data/projects.csv](data/projects.csv), for example `nervos-ckb`. The badge only says the project is listed. It isn't an endorsement or a security rating, and your entry describes limits as well as features.
+The earlier "Listed on Post-Quantum Blockchains" badge (`badges/listed.svg`) keeps working.
 
 ## Pull requests
 
@@ -60,7 +53,7 @@ Include the regenerated CSVs, tables, charts and README summaries in the same pu
 
 Maintainers review evidence before merging. Promotional copy, price targets and unsupported whole-chain security labels will not be added. Source disagreement is useful information; describe it rather than hiding it.
 
-Contributions to data, charts and prose follow CC BY 4.0; script contributions follow MIT, as described in [LICENSE](LICENSE). Submit only work you have the right to contribute. Linked third-party material keeps its own license.
+Contributions to data, charts and prose are published under the repository's license for them (CC BY-NC 4.0 with the additional permission for commercial use in [LICENSE](LICENSE)); script contributions follow MIT, as described in [LICENSE](LICENSE). Submit only work you have the right to contribute. Linked third-party material keeps its own license.
 
 ## Migration research notes
 

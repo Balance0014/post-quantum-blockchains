@@ -1,7 +1,15 @@
 name: Data checks
+# Runs once per change: on pull requests, and on pushes to main (a push to a branch with a pull request is
+# checked by the pull request run). A newer push cancels the older run of the same branch, so the GitHub
+# API quota that the link and golden checks share is not spent on runs nobody reads.
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+concurrency:
+  group: data-checks-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -16,10 +24,46 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python3 -B scripts/validate.py
-      - run: python3 -B -m py_compile scripts/triage.py
+      - name: Ten hand-checked facts are still stated in the data (data/golden.json)
+        run: python3 -B scripts/golden.py
+      - run: python3 -B -m py_compile scripts/triage.py scripts/patrol.py scripts/rank.py scripts/check_links.py scripts/og_image.py scripts/indexnow.py scripts/golden.py
+      - name: Every top-100 coin is tracked or left out with a reason
+        run: python3 -B scripts/rank.py --check
+      - name: The website builds; Chinese pages use full-width punctuation; no banned words; every internal link resolves
+        run: python3 -B scripts/build_site.py --out _site
+      - name: The weekly changes page, built from a fixture issue, lists its changes and the new X posts (tests/test_changes_page.py)
+        run: python3 -B tests/test_changes_page.py
+      - name: English pages have no Chinese; Chinese pages use Latin script only for names (scripts/lang_purity.py says which)
+        run: python3 -B scripts/lang_purity.py --site _site
+      - name: The share image shows the current chain count and review date
+        run: python3 -B scripts/og_image.py --check
+      - name: Keep the built website for review (download "website-preview" from the run page)
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-preview
+          path: _site
+          retention-days: 14
       - name: Generated charts, tables and README summaries match the data
         run: |
           python3 -B scripts/export.py
           git status --short
           git diff --exit-code
           test -z "$(git status --porcelain)"
+  links:
+    # Every source link must open (200-399); links to X are never requested (see scripts/check_links.py).
+    # Hosts that block automated requests are in data/link-allowlist.json
+    # with the reason. The weekly patrol runs the same check and opens an issue when a link breaks.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -B scripts/check_links.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: The pinned source of each golden fact still shows it
+        run: python3 -B scripts/golden.py --online
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

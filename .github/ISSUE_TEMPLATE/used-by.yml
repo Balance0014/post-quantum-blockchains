@@ -1,0 +1,59 @@
+name: Used by (register a use of the data)
+description: Register a product or page that uses the data, as the license asks for commercial use. Registered uses are listed in the README.
+title: "Used by: "
+labels: ["used by"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for using the data. Commercial use is free when every screen that uses it shows the credit with both links, shows the check date and updates at least weekly, and is registered here. See [LICENSE](https://github.com/Balance0014/post-quantum-blockchains/blob/main/LICENSE). A maintainer replies within 2 days.
+  - type: input
+    id: product
+    attributes:
+      label: Product or page name
+      placeholder: "Example Wallet"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link to the screen that shows the data
+      placeholder: "https://…"
+    validations:
+      required: true
+  - type: dropdown
+    id: how
+    attributes:
+      label: How do you show the data?
+      options:
+        - Official badge or card
+        - Our own design, with the credit line and both links
+        - Through the JSON files (API), with the credit line and both links
+    validations:
+      required: true
+  - type: dropdown
+    id: commercial
+    attributes:
+      label: Is the use commercial?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: input
+    id: sync
+    attributes:
+      label: How often do you update your copy?
+      placeholder: "Daily, from data/chains.json"
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Conditions
+      options:
+        - label: Every screen that uses the data shows "Data: Post-Quantum Blockchains, by Balance Zhao" with both links, or the official badge or card.
+          required: true
+        - label: The check date is shown and the copy is updated at least once a week.
+          required: true
+        - label: "OK to list this product under \"Used by\" in the README."

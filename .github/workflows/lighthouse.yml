@@ -1,0 +1,68 @@
+name: Lighthouse
+# Audits the built website on a simulated phone (Lighthouse's default mobile settings), three runs per page, served
+# compressed as GitHub Pages serves it. On the English and Chinese home pages, a chain page and the method page, the
+# median of performance, accessibility, best practices and SEO must each be 95 or more. The HTML reports are kept as
+# the "lighthouse-reports" artifact of each run.
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build the website under its published path
+        run: python3 -B scripts/build_site.py --out "$RUNNER_TEMP/serve/post-quantum-blockchains"
+      - name: Audit four pages, three runs each
+        run: |
+          # served compressed and cacheable, as GitHub Pages serves it (scripts/serve_site.py says why)
+          python3 scripts/serve_site.py "$RUNNER_TEMP/serve" 8080 &
+          sleep 2
+          mkdir -p lighthouse
+          for run in 1 2 3; do
+            for page in home:/ zh-home:/zh/ chain-bitcoin:/chains/bitcoin/ method:/method/; do
+              name="${page%%:*}"; path="${page#*:}"
+              npx --yes lighthouse@12.6.1 "http://localhost:8080/post-quantum-blockchains$path" --quiet \
+                --chrome-flags="--headless=new --no-sandbox" \
+                --only-categories=performance,accessibility,best-practices,seo \
+                --output=json --output=html --output-path="lighthouse/$name-$run"
+            done
+          done
+      - name: Every category's median scores 95 or more
+        run: |
+          python3 - <<'EOF'
+          import glob, json, os, statistics, sys
+          runs = {}
+          for f in sorted(glob.glob('lighthouse/*.report.json')):
+              name, run = os.path.basename(f).split('.')[0].rsplit('-', 1)
+              r = json.load(open(f))
+              runs.setdefault(name, []).append({k: round(v['score'] * 100) for k, v in r['categories'].items()})
+          cats = ['performance', 'accessibility', 'best-practices', 'seo']
+          rows, low = [], []
+          for name, rs in runs.items():
+              med = {k: statistics.median(x[k] for x in rs) for k in cats}
+              cell = lambda k: f"{med[k]:g} ({'/'.join(str(x[k]) for x in rs)})"
+              rows.append(f"| {name} | {' | '.join(cell(k) for k in cats)} |")
+              low += [f'{name} {k} {v:g}' for k, v in med.items() if v < 95]
+          table = '\n'.join(['| Page | Performance | Accessibility | Best practices | SEO |', '| --- | --- | --- | --- | --- |'] + rows)
+          table += '\n\nMedian of three runs; the three scores in brackets.'
+          print(table)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              out.write('## Lighthouse, mobile\n\n' + table + '\n')
+          if len(runs) != 4 or any(len(rs) != 3 for rs in runs.values()) or low:
+              sys.exit('Below 95: ' + ', '.join(low) if low else f'expected 4 pages with 3 runs each, found {[(k, len(v)) for k, v in runs.items()]}')
+          EOF
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lighthouse
+          retention-days: 14

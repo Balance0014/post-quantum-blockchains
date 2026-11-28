@@ -1,0 +1,49 @@
+{
+ "about": "Hosts that refuse automated requests. Their links are still checked and printed; a failure on these hosts does not fail the check. Every entry needs a reason.",
+ "hosts": [
+  {
+   "host": "medium.com",
+   "reason": "Medium answers 403 to automated requests (bot protection); the articles open in a browser."
+  },
+  {
+   "host": "cellframe.medium.com",
+   "reason": "Medium-hosted blog; same 403 bot protection as medium.com."
+  },
+  {
+   "host": "www.sec.gov",
+   "reason": "SEC.gov answers 403 to automated requests that do not declare a contact email in the User-Agent (sec.gov/os/accessing-edgar-data); the PDF opens in a browser."
+  },
+  {
+   "host": "cryptobriefing.com",
+   "reason": "Crypto Briefing answers 403 to automated requests (bot protection); the article opens in a browser. Cited only as an unverified lead."
+  },
+  {
+   "host": "techflowpost.com",
+   "reason": "TechFlow answers 403 to automated requests (bot protection); the article opens in a browser. Cited only as an unverified lead."
+  },
+  {
+   "host": "www.coingecko.com",
+   "reason": "CoinGecko coin pages answer 403 to automated requests (bot challenge); they open in a browser. Market-cap ranks come from the CoinGecko API in scripts/rank.py."
+  },
+  {
+   "host": "neptune.cash",
+   "reason": "Answers 403 to requests from GitHub Actions runners (bot protection); every cited article opened with plain curl and in a browser when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "docs.neptune.cash",
+   "reason": "Same protection as neptune.cash: 403 from GitHub Actions runners; both cited pages opened with plain curl when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "explorer.theqrl.org",
+   "reason": "Answers 403 to requests from GitHub Actions runners; the cited block page opened with plain curl when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "hacken.io",
+   "reason": "Answers 403 to automated requests (bot protection); the Minima audit page and its report opened in a browser when checked by hand on 2026-11-27 (UTC)."
+  },
+  {
+   "host": "blockonomi.com",
+   "reason": "Blockonomi intermittently answers 403 to CI runners (bot protection); the article returned 200 three times from a normal connection, checked by hand on 2026-11-27 (UTC). Cited only as an unverified lead."
+  }
+ ]
+}

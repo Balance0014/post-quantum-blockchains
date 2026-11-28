@@ -1,0 +1,11 @@
+{
+  "name": "post-quantum-blockchains-e2e",
+  "private": true,
+  "description": "Browser tests for the website: every control on every page, in English and Chinese, on a desktop and a phone screen.",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.52.0"
+  }
+}

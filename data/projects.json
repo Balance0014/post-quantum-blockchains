@@ -555,6 +555,272 @@
         "soq-code",
         "soq-explorer"
       ]
+    },
+    {
+      "id": "splendor-quantum",
+      "name": "Splendor Quantum",
+      "ticker": "SPLD",
+      "network_status": "mainnet",
+      "consensus": "BFT",
+      "timeline_year": 2026,
+      "timeline_milestone": "Sep 21 · Mainnet genesis (re-mint)",
+      "chart_cryptography": "ML-DSA-65 accounts, blocks, votes",
+      "chart_agility": "Agility: one account signing scheme",
+      "chart_note": "One validator today; chain 2691 is separate",
+      "crypto_uses": [
+        {
+          "scheme": "ML-DSA-65",
+          "family": "lattice-based",
+          "scope": "transactions, blocks and validator votes"
+        },
+        {
+          "scheme": "SLH-DSA",
+          "family": "hash-based",
+          "scope": "second signature on SQVL dual-signed instructions"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "The current mainnet genesis was minted on September 21, 2026, after earlier resets.",
+      "consensus_note": "BFT with ML-DSA-65 votes; at review one validator certified blocks and public admission had not opened.",
+      "signing_note": "ML-DSA-65 for native transactions, blocks and validator votes; addresses are SHA3-256 of the public key.",
+      "agility_note": "One account signing scheme; the SQVL module adds dual ML-DSA-65 + SLH-DSA instructions.",
+      "caveat": "SPLD on the legacy Splendor EVM chain 2691 is a separate network until migrated. The repository states there is no third-party audit.",
+      "sources": [
+        "spld-readme",
+        "spld-news",
+        "spld-status"
+      ]
+    },
+    {
+      "id": "qbit",
+      "name": "Qbit",
+      "ticker": "QBT",
+      "network_status": "mainnet",
+      "consensus": "PoW",
+      "timeline_year": 2026,
+      "timeline_milestone": "Jul 15 · Mainnet genesis",
+      "chart_cryptography": "Bounded SLH-DSA spends (P2MR)",
+      "chart_agility": "Agility: reserved P2MR leaf versions",
+      "chart_note": "SHA-256 PoW plus AuxPoW merge mining",
+      "crypto_uses": [
+        {
+          "scheme": "SLH-DSA-SHA2-128s-bounded30",
+          "family": "hash-based",
+          "scope": "P2MR spend authorization"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "Mainnet genesis was July 15, 2026; Qbit Core v1.0.0 followed on July 16.",
+      "consensus_note": "SHA-256 PoW with an AuxPoW merge-mining lane feeding the same chain.",
+      "signing_note": "OP_CHECKSIGPQC with a single SLH-DSA-SHA2-128s-bounded30 profile inside P2MR outputs.",
+      "agility_note": "One active profile; reserved leaf versions allow a later soft fork to add another.",
+      "caveat": "The bounded profile is not a FIPS 205 parameter set and is safe only up to 2^30 signatures per key.",
+      "sources": [
+        "qbit-spec",
+        "qbit-params",
+        "qbit-release"
+      ]
+    },
+    {
+      "id": "discrete",
+      "name": "Discrete",
+      "ticker": "XDS",
+      "network_status": "mainnet",
+      "consensus": "PoW",
+      "timeline_year": 2026,
+      "timeline_milestone": "Jul 15 · Mainnet launch",
+      "chart_cryptography": "ML-DSA-65 spends; ML-KEM-768 delivery",
+      "chart_agility": "Agility: one active signing scheme",
+      "chart_note": "CryptoNote lineage; amounts public",
+      "crypto_uses": [
+        {
+          "scheme": "ML-DSA-65",
+          "family": "lattice-based",
+          "scope": "spend authorization and block signatures"
+        },
+        {
+          "scheme": "ML-KEM-768",
+          "family": "lattice-based",
+          "scope": "stealth output delivery (key encapsulation)"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "The project dates mainnet to July 15, 2026.",
+      "consensus_note": "PoW using DiscretePower, which binds each mining candidate to an ML-DSA-65 signature.",
+      "signing_note": "ML-DSA-65 spend authorization; ML-KEM-768 encapsulation for output delivery.",
+      "agility_note": "One active signing scheme; changing frozen parameters requires a hard fork.",
+      "caveat": "Spending reveals the long-term spend key and amounts are public in Phase 1; finality is node-local.",
+      "sources": [
+        "xds-readme",
+        "xds-site",
+        "xds-config"
+      ]
+    },
+    {
+      "id": "dilithion",
+      "name": "Dilithion",
+      "ticker": "DIL",
+      "network_status": "mainnet",
+      "consensus": "PoW",
+      "timeline_year": 2026,
+      "timeline_milestone": "Jan 28 · Mainnet launch",
+      "chart_cryptography": "ML-DSA-65 (Dilithium3) signatures",
+      "chart_agility": "Agility: one active signing scheme",
+      "chart_note": "RandomX PoW; DilV is a second chain",
+      "crypto_uses": [
+        {
+          "scheme": "ML-DSA-65 (named Dilithium3)",
+          "family": "lattice-based",
+          "scope": "transaction signing"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "The repository dates the mainnet launch (a fair-launch reset) to January 28, 2026.",
+      "consensus_note": "RandomX PoW; a VDF consensus phase is implemented but pending activation.",
+      "signing_note": "Dilithium mode 3 from the FIPS 204 reference code, i.e. ML-DSA-65 sizes and encoding.",
+      "agility_note": "One active signing scheme.",
+      "caveat": "DIL bridged to Base relies on Base accounts, not on Dilithium. The project uses the Dilithium3 name rather than ML-DSA-65.",
+      "sources": [
+        "dil-readme",
+        "dil-signer",
+        "dil-params"
+      ]
+    },
+    {
+      "id": "parano1d",
+      "name": "Parano1d",
+      "ticker": "NOID",
+      "network_status": "mainnet",
+      "consensus": "PoW",
+      "timeline_year": 2026,
+      "timeline_milestone": "Aug 21 · Mainnet genesis",
+      "chart_cryptography": "Hash-based ZK spend proofs; no signatures",
+      "chart_agility": "Agility: height-activated protocol versions",
+      "chart_note": "Own proof stack; Poseidon2b hash",
+      "crypto_uses": [
+        {
+          "scheme": "Poseidon2b preimage proof",
+          "family": "hash-based",
+          "scope": "spend authorization"
+        },
+        {
+          "scheme": "FROST-GKR / FRI-Binius proofs",
+          "family": "hash-based",
+          "scope": "transaction, state and history validity"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "Mainnet genesis was August 21, 2026; v2 releases followed in October 2026.",
+      "consensus_note": "PoW orders blocks whose state transitions are already proven.",
+      "signing_note": "No public-key transaction signature: spends prove knowledge of a secret's Poseidon2b preimage.",
+      "agility_note": "Protocol versions activate at announced heights.",
+      "caveat": "A zero-knowledge proof of a hash preimage is not a standard digital signature, and the proof stack is not standardized. P2P peer identity uses Ed25519.",
+      "sources": [
+        "noid-readme",
+        "noid-release",
+        "noid-explorer"
+      ]
+    },
+    {
+      "id": "aere-network",
+      "name": "Aere Network",
+      "ticker": "AERE",
+      "network_status": "mainnet",
+      "consensus": "QBFT (PoA)",
+      "timeline_year": 2026,
+      "timeline_milestone": "Sep 23 · Opt-in ML-DSA transactions",
+      "chart_cryptography": "Opt-in ML-DSA tx; Falcon/SLH-DSA seals",
+      "chart_agility": "Agility: per-transaction ML-DSA parameter set",
+      "chart_note": "ECDSA accounts remain the default",
+      "crypto_uses": [
+        {
+          "scheme": "ML-DSA-44 / ML-DSA-65 / ML-DSA-87",
+          "family": "lattice-based",
+          "scope": "opt-in type-0x50 transactions"
+        },
+        {
+          "scheme": "Falcon-512",
+          "family": "lattice-based",
+          "scope": "validator seals and header proposer seal"
+        },
+        {
+          "scheme": "SLH-DSA-SHA2-128s",
+          "family": "hash-based",
+          "scope": "anchor certificate seals"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "Type-0x50 ML-DSA transactions were enabled on chain 2800 from block 19,900,000 (September 23, 2026).",
+      "consensus_note": "QBFT with ten validators, all run by the Aere Foundation at review.",
+      "signing_note": "Opt-in ML-DSA-44/65/87 transactions beside the default secp256k1 path; Falcon-512 and SLH-DSA validator seals.",
+      "agility_note": "The ML-DSA parameter set is chosen per transaction by an algorithm identifier.",
+      "caveat": "PQ accounts are opt-in; secp256k1 accounts, node transport and part of each consensus message remain classical. No completed third-party audit.",
+      "sources": [
+        "aere-aip20",
+        "aere-status",
+        "aere-claims"
+      ]
+    },
+    {
+      "id": "qorechain",
+      "name": "QoreChain",
+      "ticker": "QOR",
+      "network_status": "mainnet",
+      "consensus": "PoS",
+      "timeline_year": 2026,
+      "timeline_milestone": "Jun 29 · Mainnet block 1",
+      "chart_cryptography": "Hybrid classical + ML-DSA-87 (required)",
+      "chart_agility": "Agility: governance-set enforcement mode",
+      "chart_note": "EVM lane uses PQ-opened windows",
+      "crypto_uses": [
+        {
+          "scheme": "ML-DSA-87 (hybrid with classical)",
+          "family": "lattice-based",
+          "scope": "required transaction signature; EVM window authorization"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "Mainnet block 1 is dated June 29, 2026.",
+      "consensus_note": "CometBFT PoS; validator consensus keys were Ed25519 at review.",
+      "signing_note": "Every Cosmos-lane transaction carries a classical and an ML-DSA-87 signature; mainnet parameters require the hybrid form.",
+      "agility_note": "Enforcement mode (disabled/optional/required) and key migration are governed on chain.",
+      "caveat": "EVM transactions inside an open window are authorized by secp256k1 alone, and validator keys are classical.",
+      "sources": [
+        "qore-readme",
+        "qore-params",
+        "qore-genesis"
+      ]
+    },
+    {
+      "id": "minima",
+      "name": "Minima",
+      "ticker": "MINIMA",
+      "network_status": "mainnet",
+      "consensus": "PoW",
+      "timeline_year": 2024,
+      "timeline_milestone": "Nov · Native coin launch (CMC date)",
+      "chart_cryptography": "Winternitz OTS key tree",
+      "chart_agility": "Agility: programmable scripts (KISS VM)",
+      "chart_note": "One-time keys; use counter matters",
+      "crypto_uses": [
+        {
+          "scheme": "Winternitz OTS (TreeKey)",
+          "family": "hash-based",
+          "scope": "transaction signatures"
+        }
+      ],
+      "last_reviewed": "2026-11-27",
+      "milestone_note": "CoinMarketCap dates the native coin's launch to November 26, 2024; no project source dating the mainnet launch was found.",
+      "consensus_note": "TxPoW: transactions carry their own proof of work, and blocks are formed from them.",
+      "signing_note": "KISS VM signature checks verify TreeKey signatures built from Winternitz one-time signatures (SHA3-256, w = 8).",
+      "agility_note": "Coins are locked by scripts, so the locking logic is programmable; the signature primitive itself is fixed in the node.",
+      "caveat": "One-time keys depend on correct use tracking, and the Winternitz key-tree construction is not a standardized scheme.",
+      "sources": [
+        "mini-wots",
+        "mini-treekey",
+        "mini-checksig",
+        "mini-explorer"
+      ]
     }
   ]
 }

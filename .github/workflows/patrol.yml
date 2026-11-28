@@ -1,0 +1,90 @@
+name: Weekly patrol
+# Every Monday 01:00 UTC: read each chain's newest block, latest release, commits in 90 days and the watched
+# proposals (scripts/patrol.py), then propose the new data in a pull request. A person reviews it before
+# anything is published; the patrol never changes a stage.
+# It also checks every source link except links to X, which scripts never request (scripts/check_links.py), and opens an issue if one is broken.
+# On the first Monday of a month it also refreshes the market-cap list (scripts/rank.py) and opens a
+# re-check issue for the monthly review of every row.
+on:
+  schedule:
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+concurrency:
+  group: patrol
+  cancel-in-progress: false
+jobs:
+  patrol:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Read blocks, releases, commits and watched proposals
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 -B scripts/patrol.py --report "$RUNNER_TEMP/report.md"
+      - name: Check that every source link still opens
+        id: links
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 -B scripts/check_links.py --report "$RUNNER_TEMP/links.md"
+      - name: Open an issue for broken source links
+        if: steps.links.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "The weekly link check found source links that no longer open. Replace each with a working or archived copy of the same page, or add the host to data/link-allowlist.json with the reason if it only blocks automated requests."
+            echo ""
+            cat "$RUNNER_TEMP/links.md"
+          } > "$RUNNER_TEMP/links-issue.md"
+          gh issue create --title "Broken source links $(date -u +%F)" --body-file "$RUNNER_TEMP/links-issue.md"
+      - name: First Monday of the month, refresh market-cap ranks
+        id: rank
+        run: |
+          if [ "$(date -u +%d)" -le 7 ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "monthly=true" >> "$GITHUB_OUTPUT"
+            {
+              echo ""
+              echo "## Market-cap list"
+              echo ""
+              echo '```'
+              python3 -B scripts/rank.py || true
+              echo '```'
+            } >> "$RUNNER_TEMP/report.md"
+          fi
+      - name: Propose the new data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain -- data)" ]; then echo "No data changed."; exit 0; fi
+          day="$(date -u +%F)"
+          branch="patrol/$day"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          # the README's figures are counted from the data (scripts/export.py); keep them in step
+          python3 -B scripts/export.py > /dev/null
+          git add data README.md README.zh-CN.md
+          git commit -q -m "Weekly patrol $day"
+          git push -f origin "$branch"
+          if gh pr create --base main --head "$branch" --title "Weekly patrol $day" --body-file "$RUNNER_TEMP/report.md"; then exit 0; fi
+          # Repositories can stop Actions from opening pull requests. Then open an issue that links the branch.
+          {
+            echo "This week's patrol data is on branch \`$branch\`. Actions may not open pull requests in this repository, so open one from the branch: https://github.com/$GITHUB_REPOSITORY/compare/main...$branch"
+            echo ""
+            cat "$RUNNER_TEMP/report.md"
+          } > "$RUNNER_TEMP/issue.md"
+          gh issue create --title "Weekly patrol $day" --body-file "$RUNNER_TEMP/issue.md"
+      - name: Open the monthly re-check issue
+        if: steps.rank.outputs.monthly == 'true' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --title "Monthly re-check $(date -u +%Y-%m)" --body "Re-check every row of data/chains.json against its sources (rules: docs/stages.md) and update last_reviewed. Classify any coin that scripts/rank.py lists as new to the top 100: add it to chains.json or to not_listed with a reason. Check that every source link still opens."

@@ -54,7 +54,7 @@ Engineering statements are tied to algorithm specifications: small signatures ca
 
 Change the affected claim, attach sources and update that entry's review date. Record substantive corrections in the changelog. Then run `scripts/export.py`: it redraws both charts and rebuilds the tables, CSVs and README summaries from the JSON. Each chart is stamped "data as of" the latest review date in the data it draws on. CI fails if a committed chart or table no longer matches the data, so a chart can't silently go stale. Earlier editions, including the hand-drawn October 23 maps, stay in the git history.
 
-Submissions and corrections get a maintainer's reply within 7 days. No scheduled re-check of every network is running: an entry's `last_reviewed` date says when it was last checked, and a repository update date is not a promise that every network has been checked that day.
+Submissions and corrections get a maintainer's reply within 2 days, and a review decision usually within 3 days. No scheduled re-check of every network is running: an entry's `last_reviewed` date says when it was last checked, and a repository update date is not a promise that every network has been checked that day.
 
 ## Bitcoin migration notes
 
