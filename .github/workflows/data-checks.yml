@@ -41,7 +41,8 @@ jobs:
           git diff --exit-code
           test -z "$(git status --porcelain)"
   links:
-    # Every source link must open (200-399). Hosts that block automated requests are in data/link-allowlist.json
+    # Every source link must open (200-399); links to X are never requested (see scripts/check_links.py).
+    # Hosts that block automated requests are in data/link-allowlist.json
     # with the reason. The weekly patrol runs the same check and opens an issue when a link breaks.
     runs-on: ubuntu-24.04
     steps:

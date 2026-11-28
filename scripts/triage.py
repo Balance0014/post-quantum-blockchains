@@ -15,8 +15,11 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
+
+from check_links import NO_REQUEST_HOSTS
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO_URL = 'https://github.com/Balance0014/post-quantum-blockchains'
@@ -44,6 +47,8 @@ def check(url):
     """Return None if the URL opens, else a short reason."""
     if not url.startswith('https://'):
         return 'not https'
+    if urllib.parse.urlparse(url).netloc.lower() in NO_REQUEST_HOSTS:
+        return None  # links to X are never requested by scripts; a maintainer checks the post through X's API
     headers = {'User-Agent': 'post-quantum-blockchains-triage (+%s)' % REPO_URL}
     for method in ('HEAD', 'GET'):
         req = urllib.request.Request(url, method=method, headers=headers)

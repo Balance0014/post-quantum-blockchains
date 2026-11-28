@@ -2,7 +2,7 @@ name: Weekly patrol
 # Every Monday 01:00 UTC: read each chain's newest block, latest release, commits in 90 days and the watched
 # proposals (scripts/patrol.py), then propose the new data in a pull request. A person reviews it before
 # anything is published; the patrol never changes a stage.
-# It also checks every source link (scripts/check_links.py) and opens an issue if one is broken.
+# It also checks every source link except links to X, which scripts never request (scripts/check_links.py), and opens an issue if one is broken.
 # On the first Monday of a month it also refreshes the market-cap list (scripts/rank.py) and opens a
 # re-check issue for the monthly review of every row.
 on:

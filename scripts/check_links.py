@@ -7,6 +7,10 @@ data/link-allowlist.json with the reason; they are reported but do not fail the 
 (the RPC endpoints in chains.json, which only answer POST requests) are checked by patrol.py instead, and are
 skipped here wherever they appear.
 
+Links to X (x.com, twitter.com) are never requested by any script, not even anonymously: X answers 200 for deleted
+posts too, so the request proves nothing. They are counted and listed as not requested; whether a post still exists
+is checked through X's official API when the X data is updated.
+
 github.com links are checked through the GitHub API (with GITHUB_TOKEN when set): github.com answers 503 to
 many page requests from CI machines, and the API also confirms that a pinned file exists at its pinned commit.
 
@@ -30,6 +34,7 @@ from urllib.parse import parse_qs, quote, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data'
 FILES = ['chains.json', 'projects.json', 'sources.json', 'source-revision-checks.json']
+NO_REQUEST_HOSTS = {'x.com', 'www.x.com', 'mobile.x.com', 'twitter.com', 'www.twitter.com', 'mobile.twitter.com'}
 SKIP_KEYS = {'probe', 'check', 'license'}  # network probes, and our own license block (not a source)
 UA = 'post-quantum-blockchains-link-check/1.0 (+https://github.com/Balance0014/post-quantum-blockchains)'
 PER_HOST = 1  # requests to one host go one at a time (some hosts rate-limit parallel requests)
@@ -164,6 +169,8 @@ def main():
     ap.add_argument('--report')
     args = ap.parse_args()
     links = collect()
+    x_links = {u: w for u, w in links.items() if urlparse(u).netloc.lower() in NO_REQUEST_HOSTS}
+    links = {u: w for u, w in links.items() if u not in x_links}
     allowed = allowlist()
     with ThreadPoolExecutor(max_workers=16) as pool:
         results = dict(zip(links, pool.map(fetch, links)))
@@ -178,7 +185,8 @@ def main():
         row = (url, status, note, links[url])
         (excused if host in allowed else broken).append(row)
     print(f'{len(links)} links checked: {len(links) - len(broken) - len(excused)} open, '
-          f'{len(excused)} on allowlisted hosts did not answer, {len(limited)} rate limited (not judged), {len(broken)} broken')
+          f'{len(excused)} on allowlisted hosts did not answer, {len(limited)} rate limited (not judged), {len(broken)} broken; '
+          f'{len(x_links)} links to X not requested')
     for url, where in limited:
         print(f'  RATE LIMITED 429, not judged: {url} (in {where})')
     for url, status, note, where in excused:
@@ -187,7 +195,8 @@ def main():
         print(f'  BROKEN {status or note}: {url} (in {where})')
     if args.report:
         lines = [f'{len(links)} source links checked on {time.strftime("%Y-%m-%d", time.gmtime())}; '
-                 f'{len(broken)} broken, {len(limited)} rate limited (not judged).', '']
+                 f'{len(broken)} broken, {len(limited)} rate limited (not judged). {len(x_links)} links to X are not '
+                 'requested by scripts; their posts are checked through X\'s API when the X data is updated.', '']
         if limited:
             lines += ['Rate limited (429 after retries), not judged:', ''] + [f'- {u} (`{w}`)' for u, w in limited] + ['']
         if broken:
