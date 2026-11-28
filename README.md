@@ -120,7 +120,7 @@ Download the data, cite the review date of the entries you use and say what you 
 2. Show the date the data was checked, and update your copy at least once a week.
 3. Register the use in a ["Used by" issue](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml).
 
-Can't meet them? Ask in a GitHub issue or by direct message on [X](https://x.com/balance0014). Versions up to 0.4.0 stay under CC BY 4.0. The website's [data page](https://balance0014.github.io/post-quantum-blockchains/data/) documents the JSON files as an API.
+Can't meet them? Ask in a [GitHub issue](https://github.com/Balance0014/post-quantum-blockchains/issues). Versions up to 0.4.0 stay under CC BY 4.0. The website's [data page](https://balance0014.github.io/post-quantum-blockchains/data/) documents the JSON files as an API.
 
 ### Used by
 

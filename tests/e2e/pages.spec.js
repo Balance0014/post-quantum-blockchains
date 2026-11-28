@@ -68,8 +68,31 @@ test.describe('Chain pages', () => {
     });
   }
 
+  test('The embed code is folded into one button that opens and closes', async ({ page, u }) => {
+    await page.goto(u('chains/bitcoin/'));
+    const d = page.locator('#d-embed'), s = d.locator('summary');
+    await expect(d).not.toHaveAttribute('open', '');
+    await s.click(); await expect(d).toHaveAttribute('open', '');
+    await expect(d.locator('.snip').first()).toBeVisible();
+    await s.click(); await expect(d).not.toHaveAttribute('open', '');
+  });
+
+  test('A link to the embed code opens it', async ({ page, u }) => {
+    await page.goto(u('chains/bitcoin/#d-embed'));
+    await expect(page.locator('#d-embed')).toHaveAttribute('open', '');
+  });
+
+  test('The chain title carries the project icon, or an initial where there is none', async ({ page, u }) => {
+    await page.goto(u('chains/bitcoin/'));
+    await expect(page.locator('h1 img.cic')).toHaveCount(1);
+    await expect.poll(() => page.locator('h1 img.cic').evaluate((im) => im.complete && im.naturalWidth > 0)).toBe(true);
+    await page.goto(u('chains/aere-network/'));
+    await expect(page.locator('h1 .cic.ini')).toHaveCount(1);
+  });
+
   test('Copy buttons copy the badge, card and credit code', async ({ page, u }) => {
     await page.goto(u('chains/bitcoin/'));
+    await page.locator('#d-embed > summary').click();
     await copyButtons(page);
     expect(await clip(page)).toContain('chains/bitcoin/');
   });
@@ -82,6 +105,7 @@ test.describe('Chain pages', () => {
 
   test('The badge and card images load', async ({ page, u }) => {
     await page.goto(u('chains/bitcoin/'));
+    await page.locator('#d-embed > summary').click();
     const imgs = page.locator('#d-embed img');
     await imgs.first().scrollIntoViewIfNeeded();
     const n = await imgs.count();

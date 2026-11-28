@@ -104,6 +104,13 @@ def validate_chains():
     project_ids={p['id'] for p in read('projects.json')['projects']}
     from build_site import CHIPS, banned_words
     projects_by_id={p['id']:p for p in read('projects.json')['projects']}
+    # chain icons: the avatar of the project's own GitHub organization, one PNG per listed chain, no image without a record
+    icons=read('icons.json')['icons']; idir=ROOT/'scripts'/'site'/'icons'; ids={c['id'] for c in chains}
+    require(set(icons)<=ids,f'icons.json names only listed chains: {sorted(set(icons)-ids)}')
+    require({f.stem for f in idir.glob('*.png')}==set(icons),'every icon file has an entry in icons.json and every entry has a file')
+    for cid,i in icons.items():
+        require(re.fullmatch(r'[A-Za-z0-9-]+',i.get('github') or '') and (idir/f'{cid}.png').read_bytes()[:8]==b'\x89PNG\r\n\x1a\n',f'icon {cid}: a GitHub organization and a PNG file')
+        require(re.fullmatch(r'https://[^\s]+',i['src']) if 'src' in i else True,f'icon {cid}: src is an https address of the file the logo came from')
     source_type={s['id']:s['source_type'] for s in read('sources.json')['sources']}
     gecko=[c['coingecko_id'] for c in chains if c.get('coingecko_id')]
     require(len(gecko)==len(set(gecko)),'Duplicate coingecko_id in chains.json')

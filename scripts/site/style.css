@@ -925,3 +925,37 @@ footer.site{contain-intrinsic-size:auto 400px}
 @media (max-width:640px){.stat.xs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* long labels (such as the NIST family label) wrap on a phone instead of widening the page */
 @media (max-width:640px){.chip{white-space:normal;overflow-wrap:anywhere;border-radius:var(--r-sm)}}
+/* chain icons: each project's own GitHub avatar, or its initial on the stage colour */
+.cic{width:var(--sz,20px);height:var(--sz,20px);border-radius:50%;flex:none;object-fit:cover;background:var(--surface);box-shadow:0 0 0 1px var(--line);vertical-align:middle}
+/* a project's mark sits on a white plate, ringed, so dark logos stay visible on the dark theme */
+img.cic{background:#fff;box-shadow:0 0 0 1px var(--line-2)}
+:root[data-theme="dark"] img.cic{box-shadow:0 0 0 1.5px var(--ink-3)}
+.cic.ini{display:inline-grid;place-items:center;background:var(--sc);color:var(--si);font:600 calc(var(--sz,20px) * .5)/1 var(--f-display);box-shadow:none}
+.dhead h1{display:flex;align-items:center;gap:.3em;flex-wrap:wrap}
+.dhead h1 .cic{width:.85em;height:.85em}
+.dhead h1 .cic.ini{--sz:.85em}
+.xc{display:inline-flex;align-items:center;gap:6px}
+.xc .cic{--sz:18px;width:18px;height:18px}
+/* the three home figures: an ⓘ in the corner holds the definition */
+.kpi{position:relative}
+.kpi > .term.i{position:absolute;top:var(--sp-3);right:var(--sp-3);margin:0}
+/* "Check a coin" suggestions */
+.check .search{position:relative}
+.check-l{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:30;list-style:none;margin:0;padding:4px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-md);box-shadow:var(--shadow-2,0 8px 24px rgba(0,0,0,.12));max-height:320px;overflow:auto}
+.check-l li{display:flex;align-items:center;gap:var(--sp-2);padding:7px var(--sp-2);border-radius:var(--r-sm);cursor:pointer;font-size:var(--t-sm)}
+.check-l li[aria-selected="true"],.check-l li:hover{background:var(--sunk)}
+.check-l .cn{font-weight:600;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.check-l .ct{color:var(--ink-3);font-size:var(--t-xs)}
+.check-l .gs{margin-left:auto;display:grid;place-items:center;width:18px;height:18px;border-radius:5px;background:var(--sc);color:var(--si);font:600 11px/1 var(--f-mono);flex:none}
+/* step labels near the chart's left edge sit to the right of their step, inside the card */
+.cum .sl.r{transform:translate(8px,-2px)}
+/* chain page: the holder box under the answer card; embeds behind one button at the foot */
+.hcard{display:grid;gap:var(--sp-4);padding:var(--sp-5) var(--sp-6)}
+.hcard .holder{border-top:0;padding-top:0}
+.answer .cite-src{display:block}
+.embx > summary{list-style:none;display:inline-flex;align-items:center;gap:var(--sp-2);cursor:pointer}
+.embx > summary::-webkit-details-marker{display:none}
+.embx[open] > summary svg{transform:rotate(180deg)}
+.embx-b{display:grid;gap:var(--sp-4);margin-top:var(--sp-4)}
+.numbers{display:grid;gap:var(--sp-3)}
+@media (max-width:640px){.hcard{padding:var(--sp-4) 18px}}

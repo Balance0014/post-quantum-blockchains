@@ -117,7 +117,7 @@ r8 的时间设定保留情景归属，历史容量算例单独说明。原图�
 2. 标出数据的核对日期，并且至少每周同步一次。
 3. 开一个[「Used by」issue](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml) 登记用途。
 
-做不到的话，请在 GitHub issue 里或在 [X](https://x.com/balance0014) 上私信联系。0.4.0 及更早的版本仍按 CC BY 4.0。网站的[数据页](https://balance0014.github.io/post-quantum-blockchains/zh/data/)把这些 JSON 文件写成了接口文档。
+做不到的话，请在 [GitHub issue](https://github.com/Balance0014/post-quantum-blockchains/issues) 里联系。0.4.0 及更早的版本仍按 CC BY 4.0。网站的[数据页](https://balance0014.github.io/post-quantum-blockchains/zh/data/)把这些 JSON 文件写成了接口文档。
 
 ### 谁在用
 

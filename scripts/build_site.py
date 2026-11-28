@@ -28,6 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE_SRC = ROOT / 'scripts' / 'site'
+ICONS = SITE_SRC / 'icons'  # each project's own mark, 64 px (data/icons.json says where each came from)
 REPO = 'https://github.com/Balance0014/post-quantum-blockchains'
 ORIGIN = 'https://balance0014.github.io'
 
@@ -478,6 +479,7 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
     since = c.get('pq_mainnet_since')
     return {
         'id': c['id'], 'name': c['name'], 'zh_name': c.get('zh_name'), 'ticker': c['ticker'], 'kind': c['kind'],
+        'icon': (ICONS / f"{c['id']}.png").exists(),
         'aliases': c.get('aliases') or [], 'pinyin': c.get('pinyin') or [],
         'group': group_of(c, rank), 'rank': rank, 'stage': c['stage'], 'algo': c['algo'], 'chips': c['algo_chips'], 'fam': families(c),
         'consensus': c.get('consensus'), 'holder': c['holder_can_use_today'], 'note': c.get('note'), 'four': c.get('four'),
@@ -656,7 +658,7 @@ def home_view(v, lang):
     """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page.
     Long texts carry only the page's language, to keep the page small."""
     n, b, code = v['net'], v['net']['block'], v['net']['code']
-    keep = ('id', 'name', 'zh_name', 'aliases', 'pinyin', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'nist', 'hybrid',
+    keep = ('id', 'icon', 'name', 'zh_name', 'aliases', 'pinyin', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'nist', 'hybrid',
             'cov', 'prog', 'scope', 'design', 'netw', 'claim', 'basis_grade', 'flags')
     h = {k: v[k] for k in keep}
     h['level'] = v['ap']['level']
@@ -869,8 +871,13 @@ def headline(views, checked):
     usable_top = sorted((v for v in top if v['stage'] >= 4), key=lambda v: v['rank'])
     use = [v for v in views if v['stage'] >= 4]
     default = sum(1 for v in use if v['stage'] == 5)
-    return {'checked': checked, 'top': len(top), 'usable_top': [{'en': v['name'], 'zh': v['zh_name'] or v['name']} for v in usable_top],
-            'all': len(views), 'use': len(use), 'default': default, 'optin': len(use) - default, 'x': x_stats(views, checked)[0]}
+    nm = lambda v: {'en': v['name'], 'zh': v['zh_name'] or v['name']}
+    return {'checked': checked, 'top': len(top), 'usable_top': [nm(v) for v in usable_top],
+            'all': len(views), 'use': len(use), 'default': default, 'optin': len(use) - default, 'x': x_stats(views, checked)[0],
+            # for "How the home page numbers are counted" on the method page
+            'big': [dict(nm(v), stage=v['stage']) for v in sorted((v for v in top if v['rank'] <= 2), key=lambda v: v['rank'])],
+            'dated': sum(1 for v in use if v['since']), 'nat_mig': sum(1 for v in views if v['mig'] and v['mig']['value'] == 'native'),
+            'not_nat': [nm(v) for v in use if v['stage'] == 5 and not (v['mig'] and v['mig']['value'] == 'native')]}
 
 
 def main():
@@ -901,7 +908,7 @@ def main():
               'zh': lambda v, nm: f"截至 {v['reviewed']}，{nm}{' ' if nm[-1].isascii() else ''}处于第 {v['stage']} 档（最高 5 档）：{STAGE_NAMES['zh'][v['stage']]}。{v['basis']['zh']}"}
     cited = {'en': lambda v: f" {'Where we looked' if v['stage'] == 0 else 'Source'}: {v['basis_src']}" if v['basis_src'] else '',
              'zh': lambda v: f"{'查过的地方' if v['stage'] == 0 else '出处'}：{v['basis_src']}" if v['basis_src'] else ''}
-    names = {v['id']: {'en': v['name'], 'zh': v['zh_name']} for v in views}
+    names = {v['id']: {'en': v['name'], 'zh': v['zh_name'], 'icon': v['icon'], 'stage': v['stage']} for v in views}
     mrank = {x['id']: x['rank'] for x in mc['coins']} if mc else {}
     left_out = sorted(({'rank': mrank.get(x['coingecko_id']), 'name': x['name'], 'symbol': x['symbol'],
                         'reason': data['not_listed_reasons'][x['reason']], 'note': x.get('note')}
@@ -940,7 +947,7 @@ def main():
             page_u, badge_u, card_u = embed_urls(v, base)
             pages.append((lang, f"chains/{v['id']}/", dict(common, page='chain', chains=[v], embed={'page': page_u, 'badge': badge_u, 'card': card_u}),
                           t['chain_title'].format(name=nm, sp=sp), desc, ld))
-        pages.append((lang, 'method/', dict(common, page='method', chains=[], left_out=left_out), t['method_title'], t['method_desc'], None))
+        pages.append((lang, 'method/', dict(common, page='method', chains=[], left_out=left_out, head=head), t['method_title'], t['method_desc'], None))
         pick = [{'id': v['id'], 'name': v['name'], 'zh_name': v['zh_name'], 'ticker': v['ticker'], 'stage': v['stage'], 'rank': v['rank']} for v in views]
         pages.append((lang, 'data/', dict(common, page='data', chains=[], pick=pick, origin=ORIGIN), t['data_title'], t['data_desc'], None))
         pages.append((lang, 'x/', dict(common, page='x', chains=[], names=names, xs=xs,
@@ -971,6 +978,7 @@ def main():
     for name, b in asset_src.items():
         (out / 'assets' / name).write_bytes(b)
     shutil.copyfile(SITE_SRC / 'og.png', out / 'assets' / 'og.png')
+    shutil.copytree(ICONS, out / 'assets' / 'icons')
     # IndexNow: the key file sits next to the pages; .github/workflows/pages.yml pings IndexNow after each deploy.
     key = (SITE_SRC / 'indexnow-key.txt').read_text(encoding='utf-8').strip()
     (out / f'{key}.txt').write_text(key + '\n', encoding='utf-8')
@@ -1026,8 +1034,8 @@ def main():
                 f'<a class="btn quiet" href="{path_for(l, "method/")}">{esc(t["nf_method"])}</a></div></section>')
     t = TEXT['en']
     (out / '404.html').write_text(
-        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
-        '<meta name="color-scheme" content="light dark"><meta name="robots" content="noindex">'
+        '<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
+        '<meta name="color-scheme" content="dark light"><meta name="robots" content="noindex">'
         '<script>try{var t=localStorage.getItem("pq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>'
         f'<title>{esc(t["nf_title"])}</title><link rel="icon" href="{base}assets/logo.svg" type="image/svg+xml">'
         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600&display=swap">'

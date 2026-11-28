@@ -7,18 +7,50 @@ const hash = (page) => decodeURIComponent(new URL(page.url()).hash);
 test.describe('Home', () => {
   test.beforeEach(async ({ page, u }) => { await page.goto(u('')); });
 
-  test('First screen: title, search and three figures', async ({ page }) => {
+  test('First screen: title, search and three figures, each with a definition', async ({ page }) => {
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('#check-q')).toBeVisible();
     await expect(page.locator('.kpis .kpi')).toHaveCount(3);
-    await expect(page.locator('details.howc')).not.toHaveAttribute('open', '');
+    await expect(page.locator('.kpis .kpi .term.i')).toHaveCount(3);
   });
 
-  test('"How the numbers are counted" opens and closes', async ({ page }) => {
-    const d = page.locator('details.howc'), s = d.locator('summary');
-    await s.click(); await expect(d).toHaveAttribute('open', '');
-    await expect(d.locator('.howc-b')).toBeVisible();
-    await s.click(); await expect(d).not.toHaveAttribute('open', '');
+  test('A figure\'s ⓘ shows its definition and links to how the home figures are counted', async ({ page }) => {
+    const i = page.locator('.kpis .kpi .term.i').first();
+    await i.click();
+    await expect(page.locator('#pop')).toBeVisible();
+    await expect(page.locator('#pop a[href*="method/#numbers"]')).toHaveCount(1);
+  });
+
+  test('Check a coin: the list shows matches with their icons, and the keyboard opens one', async ({ page, lang }) => {
+    await page.fill('#check-q', lang === 'zh' ? '比特' : 'bitc');
+    const list = page.locator('#check-l');
+    await expect(list).toBeVisible();
+    const first = list.locator('[role=option]').first();
+    await expect(first).toContainText('BTC');
+    await expect(first.locator('.cic')).toHaveCount(1);
+    await page.press('#check-q', 'ArrowDown');
+    await expect(first).toHaveAttribute('aria-selected', 'true');
+    await page.press('#check-q', 'Enter');
+    await page.waitForURL('**/chains/bitcoin/');
+  });
+
+  test('Check a coin: Escape closes the list', async ({ page }) => {
+    await page.fill('#check-q', 'eth');
+    await expect(page.locator('#check-l')).toBeVisible();
+    await page.press('#check-q', 'Escape');
+    await expect(page.locator('#check-l')).toBeHidden();
+  });
+
+  test('Every chain in the table has an icon, and the icon files load', async ({ page }) => {
+    await page.locator('#showall button').click();
+    const n = await rows(page).count();
+    await expect(page.locator('#tbody tr.row .cic')).toHaveCount(n);
+    const imgs = page.locator('#tbody tr.row img.cic');
+    expect(await imgs.count()).toBeGreaterThan(40);
+    for (const i of [0, 1, 2]) {
+      await imgs.nth(i).scrollIntoViewIfNeeded();
+      await expect.poll(() => imgs.nth(i).evaluate((im) => im.complete && im.naturalWidth > 0)).toBe(true);
+    }
   });
 
   for (const [label, q, id] of [
@@ -333,6 +365,15 @@ test.describe('All pages', () => {
     await expect(page.locator('#timeline')).toBeInViewport();
     await expect(menu).not.toHaveAttribute('open', '');
     expect(pathOf(page)).toMatch(/post-quantum-blockchains\/(zh\/)?$/);
+  });
+
+  test('Home: opens dark for a first-time visitor, whatever the system setting', async ({ page, u }) => {
+    for (const colorScheme of ['light', 'dark']) {
+      await page.emulateMedia({ colorScheme });
+      await page.goto(u(''));
+      await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+      await expect(page.locator('#theme')).toHaveAttribute('aria-pressed', 'true');
+    }
   });
 
   test('Home: the theme switch flips and is remembered', async ({ page, u }) => {
