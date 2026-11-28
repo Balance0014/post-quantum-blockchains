@@ -2328,8 +2328,8 @@
    "stage": 5,
    "stage_label": "Default",
    "stage_basis": {
-    "en": "Every mainnet transfer is signed with multivariate Rainbow or UOV keys by default. A 2022 public attack (Kannwischer and Panny, breaking-abc) recovered private keys for the older Rainbow(16,32,32,32) parameters; the default configuration 274 uses a different parameter set, and as of 2026-11-27 this site found no public analysis of it.",
-    "zh": "主网每笔转账默认使用多变量 Rainbow 或 UOV 密钥签名。2022 年的公开攻击（Kannwischer 与 Panny，breaking-abc）恢复出旧版 Rainbow（16,32,32,32）参数的私钥；默认配置 274 用的是另一套参数，截至 2026-11-27 本站没有找到针对它的公开分析。"
+    "en": "Every mainnet transfer is signed with multivariate Rainbow or UOV keys by default. New keys default to configuration 274 (RAINBOW16_72_8_48); as of 2026-11-27 this site found no public analysis of that parameter set. The public node code still accepts the legacy configuration 0, Rainbow(16,32,32,32), at any block height, and a published method recovers private keys made with those parameters (shown in 2022 by Kannwischer and Panny).",
+    "zh": "主网每笔转账默认使用多变量 Rainbow 或 UOV 密钥签名。新密钥默认用配置 274（RAINBOW16_72_8_48）；截至 2026-11-27，本站没有找到针对这组参数的公开分析。公开的节点代码在任何区块高度都仍接受旧配置 0，即 Rainbow（16,32,32,32）；用这组参数生成的密钥，私钥可以用已公开的方法恢复（Kannwischer 与 Panny 2022 年演示过）。"
    },
    "pq_mainnet_since": {
     "date": "2018-06-18",
@@ -2354,12 +2354,12 @@
     "zh": "工作量证明（PoW）"
    },
    "holder_can_use_today": {
-    "en": "Every address signs with Rainbow or UOV keys. The early Rainbow(16,32,32,32) parameters were publicly broken; the default configuration 274 is a different parameter set.",
-    "zh": "每个地址都用 Rainbow 或 UOV 密钥签名。早期 Rainbow（16,32,32,32）参数已被公开破解；默认配置 274 是另一套参数。"
+    "en": "Every address signs with Rainbow or UOV keys. New keys default to configuration 274, which has no public analysis. The public node code still accepts the legacy configuration 0, Rainbow(16,32,32,32), whose private keys can be recovered with a published method; whether the official abcmint client's prebuilt signing library does the same was not checked.",
+    "zh": "每个地址都用 Rainbow 或 UOV 密钥签名。新密钥默认用配置 274，目前没有公开分析。公开的节点代码仍接受旧配置 0，即 Rainbow（16,32,32,32），这组参数的私钥可以用已公开的方法恢复；官方 abcmint 客户端预编译的签名库是否同样接受，未核实。"
    },
    "note": {
-    "en": "The guide lists Rainbow configuration 274 (RAINBOW16_72_8_48) as the default. In 2022 Kannwischer and Panny recovered the private key of a legacy ABCMint address that used Rainbow(16,32,32,32) parameters; configuration 274 is a different parameter set with no public analysis. NIST UOV candidate parameters are not Raqcoin deployment parameters.",
-    "zh": "使用指南将 Rainbow 配置 274（RAINBOW16_72_8_48）列为默认。2022 年 Kannwischer 与 Panny 恢复出一个使用 Rainbow（16,32,32,32） 参数的旧版 ABCMint 地址的私钥；配置 274 是另一套参数，目前没有公开分析。NIST 的 UOV 候选参数并非 Raqcoin 的实际部署参数。"
+    "en": "The guide lists Rainbow configuration 274 (RAINBOW16_72_8_48) as the default; no public analysis of it was found. The public node code (src/key.cpp) still verifies the legacy configuration 0, Rainbow(16,32,32,32), with no block-height condition; the official abcmint client's signing library is prebuilt, and whether it does the same was not checked. In 2022 Kannwischer and Panny recovered the private key of a legacy ABCMint address that used those parameters. NIST UOV candidate parameters are not Raqcoin deployment parameters.",
+    "zh": "使用指南将 Rainbow 配置 274（RAINBOW16_72_8_48）列为默认，没有找到针对它的公开分析。公开的节点代码（src/key.cpp）验证旧配置 0，即 Rainbow（16,32,32,32）时没有任何区块高度条件；官方 abcmint 客户端的签名库是预编译的，是否同样接受未核实。2022 年 Kannwischer 与 Panny 恢复出一个使用这组参数的旧版 ABCMint 地址的私钥。NIST 的 UOV 候选参数并非 Raqcoin 的实际部署参数。"
    },
    "latest_step": {
     "date": "2026-01-22",
@@ -2383,6 +2383,20 @@
      "name": "Kannwischer and Panny forge a signature for a legacy ABCMint address by recovering its Rainbow(16,32,32,32) private key with Beullens' attack.",
      "zh": "Kannwischer 与 Panny 用 Beullens 的攻击方法恢复出一个旧版 ABCMint 地址的 Rainbow（16,32,32,32） 私钥，并伪造了签名。",
      "source_url": "https://github.com/mkannwischer/breaking-abc/blob/9bab731ed77727ff1c0b5663b0f89269df25460b/README.md",
+     "verified": true,
+     "progress": false
+    },
+    {
+     "date": "2026-01-22",
+     "type": "code",
+     "grade": "primary",
+     "name": "The public node code (RAQ-coin/Raqcoin main at 160790d5) verifies the legacy configuration 0, Rainbow(16,32,32,32), at any block height; the fork height 267120 only opens the newer configurations.",
+     "zh": "公开的节点代码（RAQ-coin/Raqcoin main 分支 160790d5）在任何区块高度都验证旧配置 0，即 Rainbow（16,32,32,32）；分叉高度 267120 只是放行新配置。",
+     "status": {
+      "en": "Still accepted",
+      "zh": "仍被接受"
+     },
+     "source_url": "https://github.com/RAQ-coin/Raqcoin/blob/160790d5bedd1332722159ce0e0035d6c81f88aa/src/key.cpp#L110-L133",
      "verified": true,
      "progress": false
     }
@@ -2414,8 +2428,8 @@
    "last_reviewed": "2026-11-27",
    "migration": {
     "value": "native",
-    "en": "Raqcoin addresses have signed with Rainbow multivariate signatures since the 2018 genesis, so there are no classical-key coins to move. Keys made with the older Rainbow(16,32,32,32) parameters are publicly broken, which is a separate risk (see Algorithm).",
-    "zh": "自 2018 年创世起，Raqcoin 的每个地址都用 Rainbow 多变量签名，没有传统密钥下的币需要迁移。用旧参数 Rainbow（16,32,32,32）生成的密钥已被公开破解，这是另一项风险，见「算法」。",
+    "en": "Raqcoin addresses have signed with Rainbow multivariate signatures since the 2018 genesis, so there are no classical-key coins to move. Keys made with the legacy Rainbow(16,32,32,32) parameters can have their private keys recovered with a published method, and the public node code still accepts them; that is a separate risk (see Algorithm).",
+    "zh": "自 2018 年创世起，Raqcoin 的每个地址都用 Rainbow 多变量签名，没有传统密钥下的币需要迁移。用旧参数 Rainbow（16,32,32,32）生成的密钥，私钥可以用已公开的方法恢复，而公开的节点代码仍接受这组参数；这是另一项风险，见「算法」。",
     "source_url": "https://github.com/abcmint/abcmint/blob/50594f47b04b1f0119804eafda9fc9d58ad712cb/src/main.cpp#L2836",
     "grade": "primary",
     "date": "2018-06-18"

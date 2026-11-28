@@ -174,7 +174,7 @@ const UI = {
     fl: { custom: "Own construction", var: "Variant not reviewed", noaudit: "No audit found", projdata: "No independent network data" }, proposed: "Proposed, not deployed", netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
     scope_label: "Scope", design_label: "Design", ss_label: "Standard", cov_label: "Coverage", mig_label: "Migration", audit_label: "Audit", netw_label: "Network", net_label2: "Block status", view_label: "Showing",
     more_filters: "More filters", more_bg: "includes background",
-    view: { use: "Usable today", close: "Closest", move: "Moving now", quiet: "No progress in a year", broken: "Publicly broken parameters", custom: "Own construction", claim: "Project's own statement" },
+    view: { use: "Usable today", close: "Closest", move: "Moving now", quiet: "No progress in a year", broken: "Still accepts broken legacy parameters", custom: "Own construction", claim: "Project's own statement" },
     sort_prog: "Latest progress", sort_n90: "Most progress, 90 days", sort_by: "Sort",
     q5_h: "Five questions for holders", q5_note: "Each card states its rule; its count matches the table it opens.",
     q_use_h: "Post-quantum signatures usable today", q_use_r: "Stage 4 or 5: on mainnet, holders already sign with a post-quantum scheme by default, or can choose one.",
@@ -183,7 +183,7 @@ const UI = {
     q_move_h: "Moving now", q_move_r: (d) => `At least one post-quantum milestone with a primary source in the 90 days to ${d}. Newest first.`,
     q_quiet_h: "No post-quantum progress in the past year", q_quiet_r: (d) => `Top-100 chains at stage 0 or 1 with no post-quantum milestone recorded here in the 12 months to ${d}.`,
     q_risk_h: "Worth a closer look", q_risk_r: "Select a line to list those chains.",
-    risk: { broken: "used, or still allow, a scheme or parameters that were publicly broken", custom: "use their own construction, or a variant whose version no outside body has reviewed", claim: "rest a key date or their stage on the project's own statement" },
+    risk: { broken: "still accept a parameter set that was publicly broken", custom: "use their own construction, or a variant whose version no outside body has reviewed", claim: "rest a key date or their stage on the project's own statement" },
     q_show: (n) => `Show ${plural(n, "chain", "chains")} in the table`, q_more: (n) => `+${n} more`, q_none: "None at the moment.",
     dagger_key: "† The project's own statement (official claim): shown, never used to raise a stage.",
     rng: { all: "All · by year", y2: "2 years · by month", m3: "3 months · by week" }, rng_label: "Range",
@@ -345,7 +345,7 @@ const UI = {
     fl: { custom: "自研方案", var: "变体未审", noaudit: "未找到审计", projdata: "无独立出块数据" }, proposed: "提案中，未部署", netw: { mainnet: "主网", testnet: "还没上主网" },
     scope_label: "范围", design_label: "设计", ss_label: "标准状态", cov_label: "覆盖", mig_label: "迁移路径", audit_label: "审计", netw_label: "网络", net_label2: "出块状态", view_label: "正在看",
     more_filters: "更多筛选", more_bg: "含背景信息",
-    view: { use: "今天已能用", close: "最接近的", move: "正在推进", quiet: "近一年没有进展", broken: "参数已被公开破解", custom: "项目自研", claim: "只有项目方说法" },
+    view: { use: "今天已能用", close: "最接近的", move: "正在推进", quiet: "近一年没有进展", broken: "仍接受已被攻破的旧参数", custom: "项目自研", claim: "只有项目方说法" },
     sort_prog: "最近进展", sort_n90: "近 90 天进展最多", sort_by: "排序",
     q5_h: "持币人关心的五个问题", q5_note: "每张卡片都写明规则，数字和点开后的表格一致。",
     q_use_h: "今天已经能用上抗量子签名", q_use_r: "第 4、5 档：主网上已默认使用抗量子签名，或持币人可以选用。",
@@ -354,7 +354,7 @@ const UI = {
     q_move_h: "正在推进", q_move_r: (d) => `截至 ${d} 的 90 天内，至少有一条带原始出处的抗量子进展。最近的在前。`,
     q_quiet_h: "近一年没有抗量子进展", q_quiet_r: (d) => `市值前 100、处于第 0 或第 1 档，截至 ${d} 的 12 个月内本站没有收录任何抗量子进展的链。`,
     q_risk_h: "值得多看一眼", q_risk_r: "点选一行，在表格中列出这些链。",
-    risk: { broken: "用过或仍允许已被公开破解的方案或参数", custom: "使用项目自研方案，或版本未经外部评估的变体", claim: "关键日期或档位只以项目方说法为依据" },
+    risk: { broken: "仍接受某组已被公开攻破的参数", custom: "使用项目自研方案，或版本未经外部评估的变体", claim: "关键日期或档位只以项目方说法为依据" },
     q_show: (n) => `在表格中查看这 ${n} 条`, q_more: (n) => `另有 ${n} 条`, q_none: "目前没有。",
     dagger_key: "† 项目方自己的说法（官方说法）：会列出，但不据此升档。",
     rng: { all: "全部 · 按年", y2: "近 2 年 · 按月", m3: "近 3 个月 · 按周" }, rng_label: "范围",
@@ -394,17 +394,17 @@ Object.assign(UI.zh, {
 /* the algorithm map: NIST families and statuses */
 Object.assign(UI.en, {
   nfam: { lattice: "Lattice-based", hash: "Hash-based", multivariate: "Multivariate", code: "Code-based", isogeny: "Isogeny-based", mpcith: "MPC-in-the-Head", symmetric: "Symmetric-based", other: "Other" },
-  nist: { fips: "NIST standard (FIPS 204/205)", draft: "NIST-selected, standard in development (FN-DSA)", sp800208: "NIST stateful hash-based standard (SP 800-208)", round3: "Round 3 candidate, NIST additional signatures", broken: "Publicly broken", notnist: "Not submitted to NIST" },
+  nist: { fips: "NIST standard (FIPS 204/205)", draft: "NIST-selected, standard in development (FN-DSA)", sp800208: "NIST stateful hash-based standard (SP 800-208)", round3: "Round 3 candidate, NIST additional signatures", dropped: "Dropped by NIST after round 3 (2022)", broken: "Publicly broken at every parameter set", notnist: "Not submitted to NIST" },
   nist_var: "variant or version not reviewed by NIST", nist_h: "NIST status on the algorithm map", nist_p: "The map groups schemes by NIST\u2019s mathematical families and colours them by where each stands at NIST. A variant keeps the colour of the scheme it varies and gets a dashed outline.", nist_cols: ["Status", "What it means", "NIST record"], nist_var_k: "Dashed: variant, version not reviewed", nist_own: "own construction",
-  nist_rainbow: "older parameters publicly broken; the default parameter set has no public analysis", nist_wots: "a part of XMSS and SLH-DSA, not a NIST standard on its own",
+  nist_rainbow: "NIST judged all submitted parameter sets below their security targets, and the Rainbow-I (SL1) parameters can be practically broken; no source says the scheme fails at every parameter set. Each chain's parameters are on its chain page", nist_wots: "a part of XMSS and SLH-DSA, not a NIST standard on its own",
   nist_snova: "SNOVA: a key-recovery attack published on 2026-09-22 (Beullens and Hess, ePrint 2026/2154) breaks its six odd-characteristic alternative parameter sets; the recommended q=16 sets are not affected.",
   nist_next: "NIST status as of 2026-11-28. FN-DSA (FIPS 206) has no final version yet. Round 3 of the additional-signature call began on 2026-05-14 with 9 candidates (8 after HAWK withdrew); NIST expects it to take about two years, and the next NIST PQC standardization conference is planned for spring or summer 2027.",
 });
 Object.assign(UI.zh, {
   nfam: { lattice: "格", hash: "哈希", multivariate: "多变量", code: "编码", isogeny: "同源", mpcith: "MPC-in-the-Head", symmetric: "对称", other: "其他" },
-  nist: { fips: "NIST 正式标准（FIPS 204/205）", draft: "NIST 已选定、标准制定中（FN-DSA）", sp800208: "NIST 有状态哈希签名标准（SP 800-208）", round3: "NIST 附加签名第 3 轮候选", broken: "已被公开攻破", notnist: "没有提交 NIST" },
+  nist: { fips: "NIST 正式标准（FIPS 204/205）", draft: "NIST 已选定、标准制定中（FN-DSA）", sp800208: "NIST 有状态哈希签名标准（SP 800-208）", round3: "NIST 附加签名第 3 轮候选", dropped: "NIST 第 3 轮后落选（2022）", broken: "任何参数下都已被公开攻破", notnist: "没有提交 NIST" },
   nist_var: "变体，或 NIST 没有审查过的版本", nist_h: "算法版图上的 NIST 状态", nist_p: "版图按 NIST 的数学家族给方案分行，按各自在 NIST 的进度上色。变体沿用所变方案的颜色，加虚线框。", nist_cols: ["状态", "含义", "NIST 记录"], nist_var_k: "虚线框：变体，版本未审", nist_own: "项目自研",
-  nist_rainbow: "旧参数已被公开攻破；默认参数集目前没有公开分析", nist_wots: "是 XMSS 和 SLH-DSA 的组成部分，单独使用不是 NIST 标准",
+  nist_rainbow: "NIST 判定全部提交参数组都低于目标强度，其中 Rainbow-I（SL1）参数可被实际攻破；没有来源说这个方案在任何参数下都被攻破。各链现用的参数见链详情页", nist_wots: "是 XMSS 和 SLH-DSA 的组成部分，单独使用不是 NIST 标准",
   nist_snova: "SNOVA：2026-09-22 公布的密钥恢复攻击（Beullens 和 Hess，ePrint 2026/2154）攻破了它的 6 组奇数特征备选参数；推荐的 q=16 参数不受影响。",
   nist_next: "NIST 状态截至 2026-11-28。FN-DSA（FIPS 206）还没有正式版。附加签名征集第 3 轮于 2026-05-14 开始，共 9 个候选（HAWK 退出后剩 8 个）；NIST 预计第 3 轮约需两年，下一届 NIST 抗量子密码标准化会议计划在 2027 年春夏举行。",
 });
@@ -477,7 +477,7 @@ const DEFS = {
       wots: "A hash-based one-time signature such as WOTS+. It is a building block of standards like XMSS, not a standard on its own.",
       nonstd: "Not standardized by NIST or the IETF.",
       custom: "A construction designed by the project itself, without an outside standard.",
-      broken: "A public attack breaks parameters this chain used or still allows.",
+      broken: "The protocol still accepts a parameter set that was publicly broken; the chain page names it. A chain that used such parameters only in the past does not get this label.",
       none: "The chain has no post-quantum signature scheme yet.",
     },
     grades: {
@@ -577,7 +577,7 @@ const DEFS = {
       wots: "WOTS+ 这类哈希一次性签名，是 XMSS 等标准的组成部分，单独使用没有对应标准。",
       nonstd: "没有被 NIST 或 IETF 标准化。",
       custom: "项目自己设计的方案，没有外部标准。",
-      broken: "该链用过或仍允许使用的参数，已有公开的破解方法。",
+      broken: "协议仍接受某组已被公开攻破的参数，链详情页写明是哪一组。只在过去用过、现在已不接受的链不挂这个标签。",
       none: "这条链还没有抗量子签名方案。",
     },
     grades: {
@@ -653,7 +653,8 @@ Object.assign(DEFS.en, {
     draft: "NIST selected Falcon and is writing it up as FN-DSA in FIPS 206; no final version has been published. Chains run the Falcon submission, which the standard may change in details.",
     sp800208: "LMS/HSS and XMSS/XMSS^MT, final since 2020-10-29. These schemes are stateful: a key must never sign twice from the same state.",
     round3: "One of the 8 schemes left in round 3 of NIST's call for additional signatures (9 announced on 2026-05-14; HAWK withdrew on 2026-07-29). The multivariate candidates are UOV, MAYO, QR-UOV and SNOVA. NIST expects round 3 to take about two years.",
-    broken: "A published attack breaks this scheme's parameters, as happened to Rainbow in 2022 after it reached NIST's third round. The chain page says whether the parameters the chain itself uses have been analysed.",
+    dropped: "A round 3 finalist that NIST did not advance in 2022. For Rainbow, NIST judged all submitted parameter sets below their security targets, and a 2022 attack recovers keys for the round-2 SL1 parameters, Rainbow(16,32,32,32), in about 53 hours on a laptop. No source says the scheme fails at every parameter set; each chain page names the parameters that chain uses.",
+    broken: "A published attack breaks the scheme at every parameter set, as the 2022 attack on SIDH did for SIKE (a key exchange scheme). No signature scheme on this map is in this group.",
     notnist: "Not a NIST standard or candidate: constructions a project designed itself, and WOTS+ used on its own (NIST uses WOTS+ only inside XMSS and SLH-DSA).",
   },
   nist_var: "A variant of a NIST scheme, or a version NIST has not reviewed, such as a deterministic Falcon, a project's own Dilithium, a reduced-use SLH-DSA profile that is not one of the draft SP 800-230 parameter sets, or UOV with its own parameters.",
@@ -664,7 +665,8 @@ Object.assign(DEFS.zh, {
     draft: "NIST 已选定 Falcon，正在把它制定为 FIPS 206（FN-DSA），还没有正式版。链上用的是 Falcon 的提交版本，正式标准可能在细节上有改动。",
     sp800208: "LMS/HSS 和 XMSS/XMSS^MT，2020-10-29 起为正式标准。属于有状态签名：同一状态的密钥绝不能签两次。",
     round3: "NIST 附加签名征集第 3 轮剩下的 8 个方案之一（2026-05-14 公布 9 个，HAWK 于 2026-07-29 退出）。多变量类的候选是 UOV、MAYO、QR-UOV 和 SNOVA。NIST 预计第 3 轮约需两年。",
-    broken: "已有公开攻击攻破这个方案的参数，例如 Rainbow：它进入过 NIST 第三轮，2022 年被攻破。链的详情页写明该链自己用的参数有没有被分析过。",
+    dropped: "进入过第 3 轮决赛、2022 年未被 NIST 选中的方案。对 Rainbow，NIST 判定全部提交参数组都低于目标强度；2022 年的一项攻击可在笔记本上约 53 小时恢复出第二轮 SL1 参数 Rainbow（16,32,32,32）的密钥。没有来源说这个方案在任何参数下都被攻破；各链详情页写明该链用的参数。",
+    broken: "已有公开攻击在任何参数下都攻破这个方案，例如 2022 年针对 SIDH 的攻击攻破了 SIKE（一个密钥交换方案）。本版图上没有签名方案属于这一组。",
     notnist: "不是 NIST 标准或候选：项目自己设计的构造，以及单独使用的 WOTS+（NIST 只在 XMSS 和 SLH-DSA 内部使用 WOTS+）。",
   },
   nist_var: "NIST 方案的变体，或 NIST 没有审查过的版本，例如确定性的 Falcon、项目自己的 Dilithium、不属于 SP 800-230 草案参数集的限次 SLH-DSA，或者用自己参数的 UOV。",
@@ -1112,13 +1114,14 @@ function runHTML() {
    each scheme coloured by its NIST status. A chain naming two schemes appears twice; a dashed outline marks a variant or
    a version NIST has not reviewed, and a filled dot marks chains whose new accounts use the scheme by default */
 const NFAMS = ["lattice", "hash", "multivariate", "code", "isogeny", "mpcith", "symmetric", "other"];
-const NSTS = ["fips", "draft", "sp800208", "round3", "broken", "notnist"];
+const NSTS = ["fips", "draft", "sp800208", "round3", "dropped", "broken", "notnist"];
 const NIST_SRC = {
   fips: [["https://csrc.nist.gov/pubs/fips/204/final", "FIPS 204"], ["https://csrc.nist.gov/pubs/fips/205/final", "FIPS 205"]],
   draft: [["https://csrc.nist.gov/projects/post-quantum-cryptography", "NIST PQC"]],
   sp800208: [["https://csrc.nist.gov/pubs/sp/800/208/final", "SP 800-208"]],
   round3: [["https://csrc.nist.gov/projects/pqc-dig-sig/round-3-additional-signatures", "NIST round 3"]],
-  broken: [["https://eprint.iacr.org/2022/214", "Beullens 2022"]],
+  dropped: [["https://nvlpubs.nist.gov/nistpubs/ir/2022/NIST.IR.8413-upd1.pdf", "NIST IR 8413"], ["https://eprint.iacr.org/2022/214", "Beullens 2022"]],
+  broken: [["https://eprint.iacr.org/2022/975", "Castryck and Decru 2022 (SIKE)"]],
 };
 function algoMapHTML() {
   const cs = D.chains.filter((c) => c.stage >= 2 && c.nist && c.nist.length);

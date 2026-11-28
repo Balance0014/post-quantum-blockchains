@@ -39,7 +39,7 @@ The stage answers one question. The table and chain pages add the dimensions bel
 
 | Dimension | What it counts | Where it comes from | How often | Limits |
 | --- | --- | --- | --- | --- |
-| Standard status | Given per scheme, so a chain that names two schemes has two statuses (Ethereum: ML-DSA is a NIST standard, Falcon is selected but not final). Each scheme is a NIST standard (ML-DSA, SLH-DSA), NIST-selected but not final (Falcon / FN-DSA, SPHINCS+), a variant whose version no outside body has reviewed (a project's own Dilithium, a deterministic Falcon, a reduced-usage SLH-DSA profile), stateful hash-based (XMSS, WOTS+), the project's own construction, or none. Publicly broken parameters are a separate flag | The algorithm labels in `chains.json` | Each review | Says what the scheme is, not how well the chain implemented it |
+| Standard status | Given per scheme, so a chain that names two schemes has two statuses (Ethereum: ML-DSA is a NIST standard, Falcon is selected but not final). Each scheme is a NIST standard (ML-DSA, SLH-DSA), NIST-selected but not final (Falcon / FN-DSA, SPHINCS+), a variant whose version no outside body has reviewed (a project's own Dilithium, a deterministic Falcon, a reduced-usage SLH-DSA profile), stateful hash-based (XMSS, WOTS+), the project's own construction, or none. A protocol that still accepts a publicly broken parameter set gets a separate flag | The algorithm labels in `chains.json` | Each review | Says what the scheme is, not how well the chain implemented it |
 | Security level | Stage 3 and up only ("not applicable" before a scheme is deployed). The NIST category of each parameter set the entry names (ML-DSA-44 is 2, ML-DSA-65 is 3, ML-DSA-87 is 5, Falcon-512 is 1, Falcon-1024 is 5, SLH-DSA-SHA2-128s is 1) | The parameter set named in the algorithm text | Each review | A family named without a parameter set is shown as not stated; an own construction is not assessed |
 | Design | Post-quantum native (the current mainnet has signed post-quantum by default since genesis), added later (launched with classical signatures, post-quantum signatures now run on a public testnet or mainnet: stage 3 and up), or not yet (stage 0 to 2) | `kind` and the stage | Each review | A chain relaunched from a new genesis counts as native from that genesis |
 | Evidence boundary | Tags beside a stage 4 or 5 rating: own construction, variant not reviewed, no audit found, and no independent network data (outside the top 100, where the only block data we read comes from the project's own node or explorer) | Standard status, `audit` and `network` in `chains.json` | Each review | The stage is unchanged; the tags show where the evidence stops |
@@ -91,7 +91,7 @@ Public RPCs often sit behind load balancers, and a lagging node can answer with 
 | Hash-based · not a standard on its own | A one-time signature such as WOTS+, a building block of standards like XMSS |
 | Not a NIST standard | Not standardized by NIST or the IETF |
 | Custom construction | Designed by the project itself, without an outside standard |
-| Older parameters publicly broken | A public attack breaks parameters this chain used or still allows |
+| Still accepts publicly broken legacy parameters | The protocol still accepts a parameter set that was publicly broken; the chain page names it. A chain that used such parameters only in the past does not get this label |
 | No post-quantum scheme yet | The chain has no post-quantum signature scheme |
 
 ### On the algorithm map
@@ -104,7 +104,8 @@ The map groups each scheme a chain uses by NIST's mathematical family and colour
 | Selected, standard in development | FN-DSA (Falcon): selected by NIST; FIPS 206 is not final |
 | Stateful hash-based standard | NIST SP 800-208 (LMS/HSS, XMSS/XMSS^MT), final 2020-10-29 |
 | Round 3 candidate | In round 3 of NIST's additional signatures call (8 candidates, among them UOV, MAYO, SQIsign and FAEST); NIST expects the round to take about two years |
-| Publicly broken | A public attack breaks the parameters, as for Rainbow in 2022 |
+| Dropped by NIST after round 3 (2022) | A round 3 finalist NIST did not advance. Rainbow: NIST IR 8413 judged all submitted parameter sets below their security targets and the Rainbow-I (SL1) parameters practically attackable; Beullens (2022) recovers keys for the round-2 SL1 parameters, Rainbow(16,32,32,32). No source says the scheme fails at every parameter set |
+| Publicly broken at every parameter set | A public attack breaks the scheme whatever the parameters, as for SIKE in 2022. No signature scheme on the map is in this group |
 | Not submitted to NIST | Not in a NIST standard or call, for example WOTS+ used on its own or a project's own construction |
 
 ## Posts on X

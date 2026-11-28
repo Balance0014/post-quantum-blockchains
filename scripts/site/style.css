@@ -17,7 +17,7 @@
   /* network status */
   --ok:#1b7a4b; --ok-bg:#e3f3ea; --warn:#8f5c10; --warn-bg:#fbf0dc; --bad:#b0352e; --bad-bg:#fbe5e3; --unk:#686779;
   /* standard status: NIST standard, NIST-selected, stateful hash, own construction, broken, none */
-  --ss-std:#0e7468; --ss-sel:#2459c9; --nist-r3:#b02d7a; --ss-hash:#5d6b12; --ss-custom:var(--warn); --ss-var:#8a4fc4; --ss-broken:var(--bad); --ss-none:var(--unk);
+  --ss-std:#0e7468; --ss-sel:#2459c9; --nist-r3:#b02d7a; --ss-hash:#5d6b12; --ss-custom:var(--warn); --ss-var:#8a4fc4; --ss-broken:var(--bad); --nist-dropped:#5f6f86; --ss-none:var(--unk);
   /* type */
   --f-display:"Space Grotesk","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
   --f-body:"Inter","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
@@ -42,7 +42,7 @@
   --s0:#3d4045; --s1:#535075; --s2:#6b61a9; --s3:#8f84dd; --s4:#b4adf4; --s5:#dcd9fe;
   --s0-ink:#eeecf6; --s1-ink:#eeecf6; --s2-ink:#eeecf6; --s3-ink:#0f0e18; --s4-ink:#0f0e18; --s5-ink:#0f0e18;
   --ok:#4cc68a; --ok-bg:#12291e; --warn:#e1ac52; --warn-bg:#2c2312; --bad:#f07b72; --bad-bg:#311816; --unk:#9a99a9;
-  --ss-std:#4fd1bf; --ss-sel:#8fb2ff; --ss-hash:#c3d36a; --ss-var:#c9a2f0; --nist-r3:#f08ac4;
+  --ss-std:#4fd1bf; --ss-sel:#8fb2ff; --ss-hash:#c3d36a; --ss-var:#c9a2f0; --nist-r3:#f08ac4; --nist-dropped:#a3b1c6;
   --sh-1:none; --sh-2:0 8px 24px rgba(0,0,0,.4); --sh-pop:0 12px 32px rgba(0,0,0,.55);
   color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -52,7 +52,7 @@
   --s0:#3d4045; --s1:#535075; --s2:#6b61a9; --s3:#8f84dd; --s4:#b4adf4; --s5:#dcd9fe;
   --s0-ink:#eeecf6; --s1-ink:#eeecf6; --s2-ink:#eeecf6; --s3-ink:#0f0e18; --s4-ink:#0f0e18; --s5-ink:#0f0e18;
   --ok:#4cc68a; --ok-bg:#12291e; --warn:#e1ac52; --warn-bg:#2c2312; --bad:#f07b72; --bad-bg:#311816; --unk:#9a99a9;
-  --ss-std:#4fd1bf; --ss-sel:#8fb2ff; --ss-hash:#c3d36a; --ss-var:#c9a2f0; --nist-r3:#f08ac4;
+  --ss-std:#4fd1bf; --ss-sel:#8fb2ff; --ss-hash:#c3d36a; --ss-var:#c9a2f0; --nist-r3:#f08ac4; --nist-dropped:#a3b1c6;
   --sh-1:none; --sh-2:0 8px 24px rgba(0,0,0,.4); --sh-pop:0 12px 32px rgba(0,0,0,.55);
   color-scheme:dark}
 :root[data-theme="light"]{color-scheme:light}
@@ -879,7 +879,7 @@ footer.site{contain-intrinsic-size:auto 400px}
 .fixrow .subbox{margin-top:0}
 .check-x{flex-basis:100%;margin:0;font-size:var(--t-sm);color:var(--ink-2)}
 /* NIST status colours on the algorithm map; dashed = variant or version not reviewed */
-.n-fips{--ssc:var(--ss-std)}.n-draft{--ssc:var(--ss-sel)}.n-sp800208{--ssc:var(--ss-hash)}.n-round3{--ssc:var(--nist-r3)}.n-broken{--ssc:var(--ss-broken)}.n-notnist{--ssc:var(--ss-custom)}
+.n-fips{--ssc:var(--ss-std)}.n-draft{--ssc:var(--ss-sel)}.n-sp800208{--ssc:var(--ss-hash)}.n-round3{--ssc:var(--nist-r3)}.n-dropped{--ssc:var(--nist-dropped)}.n-broken{--ssc:var(--ss-broken)}.n-notnist{--ssc:var(--ss-custom)}
 .keys i.ssw[class*="n-"]{background:var(--ssc)}
 .am.vr{border-style:dashed;border-width:1.5px}
 .keys i.ssw.vr{background:none;box-shadow:none;border:1.5px dashed var(--ink-3)}
