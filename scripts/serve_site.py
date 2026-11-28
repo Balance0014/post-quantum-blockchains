@@ -1,8 +1,9 @@
 """Serve the built website the way GitHub Pages does, for Lighthouse in CI and for local previews.
 
 GitHub Pages compresses HTML, CSS, JavaScript, JSON, SVG and text with gzip and lets browsers cache files for ten
-minutes. Python's plain http.server does neither, so an audit against it measures every file at full size and scores
-the page slower than visitors see it. This server adds both and is otherwise the standard library's file server.
+minutes, and answers a missing address with the site's 404.html. Python's plain http.server does none of this, so an
+audit against it measures every file at full size and scores the page slower than visitors see it. This server adds
+all three and is otherwise the standard library's file server.
 
 Usage: python3 scripts/serve_site.py <directory> [port]
 """
@@ -26,6 +27,8 @@ class Handler(SimpleHTTPRequestHandler):
             if not self.path.split('?', 1)[0].endswith('/'):
                 return super().do_GET()  # the standard redirect to the address with a trailing slash
             path = os.path.join(path, 'index.html')
+        if not os.path.exists(path):
+            return self.not_found()
         ctype = self.guess_type(path)
         if not os.path.isfile(path) or 'gzip' not in self.headers.get('Accept-Encoding', '') or not ctype.startswith(COMPRESS):
             return super().do_GET()
@@ -35,6 +38,21 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header('Content-Type', ctype)
         self.send_header('Content-Encoding', 'gzip')
         self.send_header('Vary', 'Accept-Encoding')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def not_found(self):
+        # GitHub Pages serves a project site's own 404.html for any missing address under it
+        top = self.path.split('?', 1)[0].strip('/').split('/')[0]
+        page = next((p for p in (os.path.join(self.directory, top, '404.html'), os.path.join(self.directory, '404.html'))
+                     if top and os.path.isfile(p)), None)
+        if not page:
+            return self.send_error(404)
+        with open(page, 'rb') as f:
+            body = f.read()
+        self.send_response(404)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
         self.wfile.write(body)
