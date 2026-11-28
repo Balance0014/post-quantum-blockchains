@@ -341,13 +341,9 @@ test.describe('All pages', () => {
     expect(pathOf(page)).toMatch(/post-quantum-blockchains\/(zh\/)?$/);
   });
 
-  test('Home: opens dark for a first-time visitor, whatever the system setting', async ({ page, u }) => {
-    for (const colorScheme of ['light', 'dark']) {
-      await page.emulateMedia({ colorScheme });
-      await page.goto(u(''));
-      await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-      await expect(page.locator('#theme')).toHaveAttribute('aria-pressed', 'true');
-    }
+  test('Home: a first-time visitor gets the system setting, not a forced theme', async ({ page, u }) => {
+    await page.goto(u(''));
+    await expect(page.locator('html')).not.toHaveAttribute('data-theme', /./);
   });
 
   test('Home: the theme switch flips and is remembered', async ({ page, u }) => {

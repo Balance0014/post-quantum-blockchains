@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="{{html_lang}}" data-theme="dark">
+<html lang="{{html_lang}}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="dark light">
-<!-- dark by default for every visitor; a reader who picks light with the switch keeps it -->
+<meta name="color-scheme" content="light dark">
 <script>try{var t=localStorage.getItem("pq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<meta name="theme-color" content="#0d0c13">
+<meta name="theme-color" content="#f8f8fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0c13" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="{{base}}assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{base}}assets/apple-touch-icon.png">
 <title>{{title}}</title>

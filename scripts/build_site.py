@@ -1034,8 +1034,8 @@ def main():
                 f'<a class="btn quiet" href="{path_for(l, "method/")}">{esc(t["nf_method"])}</a></div></section>')
     t = TEXT['en']
     (out / '404.html').write_text(
-        '<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
-        '<meta name="color-scheme" content="dark light"><meta name="robots" content="noindex">'
+        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
+        '<meta name="color-scheme" content="light dark"><meta name="robots" content="noindex">'
         '<script>try{var t=localStorage.getItem("pq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>'
         f'<title>{esc(t["nf_title"])}</title><link rel="icon" href="{base}assets/logo.svg" type="image/svg+xml">'
         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600&display=swap">'
