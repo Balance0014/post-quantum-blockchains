@@ -125,7 +125,7 @@ test.describe('Fits the screen', () => {
     expect(wide, 'pages wider than the screen').toEqual([]);
   });
 
-  for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'method/', 'data/']) {
+  for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'x/', 'method/', 'data/']) {
     test(`No sideways scrolling, everything opened: /${path}`, async ({ page, u }) => {
       await page.goto(u(path));
       await openEverything(page);
@@ -136,7 +136,7 @@ test.describe('Fits the screen', () => {
 });
 
 test.describe('One language per page', () => {
-  for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'method/', 'data/']) {
+  for (const path of ['', 'chains/bitcoin/', 'chains/raqcoin/', 'x/', 'method/', 'data/']) {
     test(`Everything opened, still one language: /${path}`, async ({ page, u, lang }) => {
       await page.goto(u(path));
       await openEverything(page);

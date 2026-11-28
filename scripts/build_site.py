@@ -23,7 +23,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -36,7 +36,7 @@ CHIPS = {
     'fips205': {'tone': 'std', 'en': 'SLH-DSA · NIST FIPS 205', 'zh': 'SLH-DSA · NIST 标准 FIPS 205'},
     'falcon': {'tone': 'std', 'en': 'Falcon · NIST-selected (FN-DSA)', 'zh': 'Falcon · NIST 选定（FN-DSA）'},
     'xmss': {'tone': 'std', 'en': 'XMSS · IETF RFC 8391, NIST SP 800-208', 'zh': 'XMSS · IETF 标准 RFC 8391、NIST SP 800-208'},
-    'family': {'tone': 'fam', 'en': 'NIST family · version not reviewed', 'zh': 'NIST 同族方案 · 版本未核实'},
+    'family': {'tone': 'fam', 'en': 'NIST family · pre-standard version or parameters not reviewed', 'zh': 'NIST 同族 · 标准前版本或参数未核'},
     'sphincs': {'tone': 'fam', 'en': 'SPHINCS+ · basis of SLH-DSA', 'zh': 'SPHINCS+ · SLH-DSA 的前身'},
     'wots': {'tone': 'warn', 'en': 'Hash-based · not a standard on its own', 'zh': '哈希签名 · 单独使用无对应标准'},
     'nonstd': {'tone': 'warn', 'en': 'Not a NIST standard', 'zh': '非 NIST 标准'},
@@ -264,6 +264,8 @@ TEXT = {
            'data_desc': 'Download the data, read it as a JSON API, embed a live badge or card for any chain, and see the license: CC BY-NC 4.0, free for commercial use with credit.',
            'changes_title': 'This week in post-quantum blockchains · Post-Quantum Blockchains',
            'changes_desc': 'What the weekly patrol found: new releases, proposal status changes, network status changes and stage changes, each with its source.',
+           'x_title': 'What blockchains say about their quantum plans on X · Post-Quantum Blockchains',
+           'x_desc': 'Posts on X from the last 90 days by official accounts and people with a public identity around each chain, about its post-quantum plans. Every original post opened and checked; claims only, they never change a stage.',
            'nf_title': 'Page not found · Post-Quantum Blockchains', 'nf_h': 'This page does not exist.', 'nf_p': 'The link may be old, or the chain may be listed under another name. Search the table or start from the overview.',
            'nf_search': 'Search chains, schemes or tickers', 'nf_go': 'Search', 'nf_all': 'All chains', 'nf_method': 'How we rate'},
     'zh': {'brand': '抗量子区块链进度表', 'other_lang': 'English', 'other_lang_label': 'Switch to English', 'gh': '数据在 GitHub', 'menu': '菜单', 'theme': '深色模式', 'og_locale': 'zh_CN',
@@ -277,6 +279,8 @@ TEXT = {
            'data_desc': '下载数据、按 JSON 接口读取、给任意一条链嵌入实时更新的徽章或卡片，以及授权说明：CC BY-NC 4.0，署名即可免费商用。',
            'changes_title': '本周抗量子进展 · 抗量子区块链进度表',
            'changes_desc': '每周巡查发现的变化：新发布版本、提案状态、网络状态和档位调整，每条都附出处。',
+           'x_title': '各条链在 X 上怎么谈抗量子 · 抗量子区块链进度表',
+           'x_desc': '近 90 天各条链的官方号和有公开身份的人在 X 上谈抗量子计划的帖子，每条都打开原帖核对；只算说法，不改变档位。',
            'nf_title': '页面不存在 · 抗量子区块链进度表', 'nf_h': '这个页面不存在。', 'nf_p': '链接可能已经过时，或者这条链用的是另一个名字。可以在表格里搜索，或者从总览开始。',
            'nf_search': '搜索链、签名方案或代码', 'nf_go': '搜索', 'nf_all': '全部链', 'nf_method': '评档方法'},
 }
@@ -629,6 +633,25 @@ def one_lang(x, lang):
     return x
 
 
+X_DAYS = 90  # the home card and the x/ page count posts on X in this many days up to the network check
+
+
+def x_stats(views, checked):
+    """Posts on X in the X_DAYS before the check: the numbers on the home card and the x/ page, and the posts themselves."""
+    day = date.fromisoformat(checked)
+    since, since30 = (day - timedelta(days=X_DAYS)).isoformat(), (day - timedelta(days=30)).isoformat()
+    posts = sorted(({**t, 'chain': v['id']} for v in views for t in v['x_talk'] if since <= t['date'] <= checked),
+                   key=lambda t: (t['date'], t['chain']), reverse=True)
+    talk = [v for v in views if any(t['chain'] == v['id'] for t in posts)]
+    top = [v for v in views if v['rank'] is not None]
+    top_talk = [v for v in talk if v['rank'] is not None]
+    stats = {'days': X_DAYS, 'chains': len(talk), 'posts': len(posts), 'accounts': len({t['who'] for t in posts}),
+             'posts30': sum(1 for t in posts if t['date'] >= since30), 'usable': sum(1 for v in talk if v['stage'] >= 4),
+             'rest_by_stage': [sum(1 for v in talk if v['stage'] == s) for s in range(4)],
+             'top': len(top), 'top_talk': len(top_talk), 'top_usable': sum(1 for v in top_talk if v['stage'] >= 4)}
+    return stats, posts
+
+
 def home_view(v, lang):
     """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page.
     Long texts carry only the page's language, to keep the page small."""
@@ -738,6 +761,8 @@ def write_data_files(out, views, checked, release, base, has_changes):
              '## Pages',
              f'- [All chains]({ORIGIN + base}): table, stage charts and timeline; Chinese version at {ORIGIN + base}zh/',
              f'- [Method]({ORIGIN + base}method/): how stages are rated, evidence grades, network checks, coverage and limits']
+    lines.append(f'- [On X]({ORIGIN + base}x/): posts on X from the last {X_DAYS} days by official accounts and people with a public '
+                 f'identity around each chain, about its post-quantum plans; each original post checked; claims only, they never change a stage')
     if has_changes:
         lines.append(f'- [This week]({ORIGIN + base}changes/): changes found by the weekly patrol')
     lines += ['',
@@ -845,6 +870,7 @@ def main():
     today = date.fromisoformat(checked)
     for v in views:
         v['stale_days'] = (today - date.fromisoformat(v['reviewed'])).days
+    xs, xposts = x_stats(views, checked)
     months = milestone_months(views, checked)
     events = milestone_events(views)
     release = load('data/release.json')
@@ -879,7 +905,7 @@ def main():
         common = {'lang': lang, 'base': base, 'repo': REPO, 'chips': CHIPS, 'checked': checked, 'mcap_date': mcap_date,
                   'has_changes': bool(changes), 'data_url': REPO + '/tree/main/data', 'chain_count': len(views),
                   'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, ''), 'site_root': ORIGIN + path_for('en', '')}
-        home = dict(common, page='home', chains=[home_view(v, lang) for v in views], months=months, events=events)
+        home = dict(common, page='home', xs=xs, chains=[home_view(v, lang) for v in views], months=months, events=events)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),
               'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by-nc/4.0/', 'dateModified': checked,
@@ -900,6 +926,9 @@ def main():
         pages.append((lang, 'method/', dict(common, page='method', chains=[], left_out=left_out), t['method_title'], t['method_desc'], None))
         pick = [{'id': v['id'], 'name': v['name'], 'zh_name': v['zh_name'], 'ticker': v['ticker'], 'stage': v['stage'], 'rank': v['rank']} for v in views]
         pages.append((lang, 'data/', dict(common, page='data', chains=[], pick=pick, origin=ORIGIN), t['data_title'], t['data_desc'], None))
+        pages.append((lang, 'x/', dict(common, page='x', chains=[], names=names, xs=xs,
+                                       xposts=[dict(t, summary=one_lang(t['summary'], lang), relation=one_lang(t['relation'], lang)) for t in xposts]),
+                      t['x_title'], t['x_desc'], None))
         if changes:
             since = changes[0]['range']['from']
             xnew = sorted(({**t, 'chain': v['id']} for v in views for t in v['x_talk'] if t['date'] >= since), key=lambda t: t['date'], reverse=True)

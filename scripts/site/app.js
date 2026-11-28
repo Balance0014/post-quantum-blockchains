@@ -36,7 +36,7 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 
 const UI = {
   en: {
-    nav_chains: "Chains", nav_changes: "This week", nav_method: "Method", gh: "Data on GitHub",
+    nav_chains: "Chains", nav_changes: "This week", nav_x: "On X", nav_method: "Method", gh: "Data on GitHub",
     eyebrow: (d) => `Post-quantum signatures · checked ${d}`,
     verdict: (k, n) => k === 0 ? `None of the ${n} largest blockchains lets holders use a post-quantum signature on mainnet today.`
       : `${k} of the ${n} largest blockchains ${k === 1 ? "lets" : "let"} holders use a <em>post-quantum signature</em> on mainnet today.`,
@@ -207,7 +207,7 @@ const UI = {
     since_dagger: "Date from the project's own statement",
   },
   zh: {
-    nav_chains: "链列表", nav_changes: "本周变化", nav_method: "评档方法", gh: "数据在 GitHub",
+    nav_chains: "链列表", nav_changes: "本周变化", nav_x: "X 上的讨论", nav_method: "评档方法", gh: "数据在 GitHub",
     eyebrow: (d) => `抗量子签名 · 核对于 ${d}`,
     verdict: (k, n) => k === 0 ? `市值最大的 ${n} 条区块链，目前没有一条能让持币人在主网上使用抗量子签名。`
       : `市值最大的 ${n} 条区块链中，今天有 ${k} 条能让持币人在主网上使用<em>抗量子签名</em>。`,
@@ -384,11 +384,34 @@ const UI = {
 Object.assign(UI.en, {
   xt_h: "Quantum discussion on X", xt_note: "These are claims. They do not count toward the stage.", xt_post: "Post", xt_checked: (d) => `original post checked ${d}`,
   xt_type: { plan: "Plan or timeline", proposal: "Proposal", release: "Release", research: "Research", statement: "Statement" },
+  /* the home card and the x/ page: every number is counted at build time from data/chains.json */
+  kpi_x: (n) => ["of all tracked chains had an official account or a core figure ", "post about their quantum plans on X", ` in the last 90 days: ${n} original posts, each opened and checked`],
+  kpi_x_go: "See the posts on X", kpi_x_note: "Claims only; they never change a stage.",
+  kpi_date_line: (d) => `Last checked ${d} · network data weekly, sources monthly`,
+  x_eyebrow: (d) => `Discussion on X · 90 days to ${d}`, x_title: "What blockchains say about their quantum plans on X",
+  x_lede: "Posts by official accounts and by people with a public identity and a stated role around a chain. We opened every original post and recorded the date we checked it. These are claims: they never set or change a stage.",
+  x_s: ["chains", "accounts", "original posts", "in the last 30 days"],
+  x_fact: (c, u, r, br, top, tt, tu) => `Of the ${c} chains with posts here, ${u} offer post-quantum signatures on mainnet and ${r} do not yet (${br}). Of the ${top} largest blockchains, ${tt} are discussed on X, and ${tu} of those offer post-quantum signatures on mainnet.`,
+  x_stage_short: ["nothing public", "research", "formal proposal", "testnet"],
+  x_all: "All", x_count: (n) => `${n} ${n === 1 ? "post" : "posts"}`, x_filter: "Type of post",
+  x_rule: "We include only official accounts and people with a public identity and a stated role around the chain. Ordinary users are not named, and questions from holders are not published.",
+  x_rule_link: "How we collect posts on X",
   xt_new_h: "New on X", xt_new_p: "Posts by people with a public identity about a chain's quantum plans, checked against the original post. Claims only: they never change a stage.",
 });
 Object.assign(UI.zh, {
   xt_h: "X 上的抗量子讨论", xt_note: "这些是说法，不计入档位。", xt_post: "原帖", xt_checked: (d) => `原帖核对于 ${d}`,
   xt_type: { plan: "计划或时间表", proposal: "提案讨论", release: "上线", research: "研究", statement: "表态" },
+  kpi_x: (n) => ["全部收录的链中，近 90 天有官方号或核心人物", "在 X 上谈抗量子", `：${n} 条原帖，逐条打开核对`],
+  kpi_x_go: "看 X 上的讨论", kpi_x_note: "只算说法，不计入档位",
+  kpi_date_line: (d) => `最近核对 ${d} · 网络数据每周查，出处每月重核`,
+  x_eyebrow: (d) => `X 上的讨论 · 截至 ${d} 的 90 天`, x_title: "各条链在 X 上怎么谈抗量子",
+  x_lede: "官方号，以及有公开身份、和这条链关系明确的人发的帖子。每一条都打开原帖核对，并记下核对日期。这些都只是说法，不决定也不改变档位。",
+  x_s: ["条链", "个账号", "条原帖", "近 30 天"],
+  x_fact: (c, u, r, br, top, tt, tu) => `这 ${c} 条链里，主网已能用抗量子签名的 ${u} 条，还不能用的 ${r} 条（${br}）；市值最大的 ${top} 条里有 ${tt} 条在 X 上谈，其中主网能用的 ${tu} 条。`,
+  x_stage_short: ["无公开进展", "仅有研究", "已有正式提案", "仅限测试网"],
+  x_all: "全部", x_count: (n) => `${n} 条`, x_filter: "帖子类型",
+  x_rule: "只收官方号，以及有公开身份、和这条链关系明确的人。普通用户不写名字，持币人的追问不上网站。",
+  x_rule_link: "X 上的讨论怎么收录",
   xt_new_h: "X 上的新动态", xt_new_p: "有公开身份的人谈某条链量子计划的帖子，都已打开原帖核对。只算说法，不改变档位。",
 });
 /* the algorithm map: NIST families and statuses */
@@ -536,6 +559,7 @@ const DEFS = {
     fl: { custom: "The chain signs with a construction the project designed itself, with no outside standard. The stage is unchanged; this marks where the evidence stops.", var: "The chain uses a variant of a NIST scheme whose version no outside body has reviewed. The stage is unchanged.", noaudit: "No audit by an outside firm covering the post-quantum signature code was found. The stage is unchanged.", projdata: "Outside the top 100, and the network data this site reads comes only from the project's own node or explorer, with no independent explorer to confirm it. The stage is unchanged." },
     proposed: "The scheme is proposed in the official process but runs on no public network yet, so deployment properties such as security level and hybrid signing do not apply.",
     netw: { mainnet: "A mainnet is running.", testnet: "Public code or a public testnet, but no mainnet." },
+    xtalk: "Posts on X about a chain's post-quantum work, by its official accounts or by people with a public identity and a stated role around it: founders, foundations, core developers, proposal authors, researchers, wallets and exchanges. We open every original post and record the date. Claims only: they never set or change a stage.",
     prog: "Post-quantum events with a primary source, one rule for every chain. Counted: the core team opens or merges a post-quantum proposal in the official process; the official client merges post-quantum code; a testnet or mainnet turns on or changes a post-quantum scheme; an official release whose notes include a post-quantum change; an audit report of the post-quantum code; the mainnet launch of a post-quantum native chain. Not counted: ordinary releases, comments, target dates and roadmaps, checks that found nothing new, proposals by outside contributors, and changes that touch only validators, not holders' signatures.",
     supply: "A neutral note on a premine, treasury or developer share, with its source. Background only; it never changes a stage.",
     np: "Shown for context, not counted as post-quantum progress: an ordinary release, a comment, a target date, a check that found nothing new, an outside contributor's proposal, or a change that touches only validators.",
@@ -636,6 +660,7 @@ const DEFS = {
     fl: { custom: "这条链用项目自己设计的方案签名，没有外部标准。档位不变，这里标出证据的边界。", var: "这条链用 NIST 方案的变体，所用版本没有经过外部机构评估。档位不变。", noaudit: "没有找到外部机构对抗量子签名代码的审计。档位不变。", projdata: "不在市值前 100，本站读取的出块数据只来自项目自己的节点或浏览器，没有独立浏览器可以印证。档位不变。" },
     proposed: "方案已在官方流程中提出，但还没有在任何公开网络上运行，所以强度等级、混合签名这类部署属性不适用。",
     netw: { mainnet: "主网在运行。", testnet: "有公开代码或公开测试网，但还没有主网。" },
+    xtalk: "这条链的官方号，或有公开身份、和这条链关系明确的人（创始人、基金会、核心开发者、提案作者、研究者、钱包、交易所）在 X 上谈这条链抗量子进展的原帖，每条都打开核对，并记下日期。只算说法，不决定也不改变档位。",
     prog: "带原始出处的抗量子事件，所有链用同一条规则。计入：核心团队在官方流程里开出或合并抗量子提案；官方客户端合并抗量子代码；测试网或主网启用或调整抗量子方案；发布说明含抗量子改动的官方版本；抗量子实现的审计报告发布；原生抗量子链主网上线。不计：普通版本发布、评论表态、目标日期和路线图、没有新发现的核查、外部贡献者的提案、只涉及验证者而不涉及持币人签名的改动。",
     supply: "关于预铸、金库或开发者分成的中性说明，附出处。只是背景信息，不影响档位。",
     np: "列出来供参考，不计入抗量子进展：普通版本发布、评论表态、目标日期、没有新发现的核查、外部贡献者的提案，或只涉及验证者的改动。",
@@ -723,7 +748,7 @@ const ICON_GO = `<svg class="go" width="16" height="16" viewBox="0 0 16 16" aria
 
 /* ---------- shared chrome ---------- */
 function chrome(view) {
-  const nav = [["overview", "nav_overview"], ["chains", "nav_chains"], ["timeline", "nav_timeline"], ["method/", "nav_method"], ["data/", "nav_data"], ["contact", "nav_contact"]];
+  const nav = [["overview", "nav_overview"], ["chains", "nav_chains"], ["timeline", "nav_timeline"], ["x/", "nav_x"], ["method/", "nav_method"], ["data/", "nav_data"], ["contact", "nav_contact"]];
   put("nav", nav.map(([p, k]) => p.endsWith("/")
     ? `<a href="${href(p)}"${view === p.slice(0, -1) ? ' aria-current="page"' : ""}>${esc(L(k))}</a>`
     : `<a href="${href("")}#${p}" data-sec="${p}">${esc(L(k))}</a>`).join(""));
@@ -1265,6 +1290,11 @@ function initMotion() {
     el.textContent = "0"; requestAnimationFrame(step);
   });
 }
+/* the third home card: chains with posts on X in the 90 days before the check, counted at build time (D.xs) */
+function xCard() {
+  const s = D.xs, [a, t, b] = L("kpi_x")(s.posts);
+  return `<div class="card kpi xk"><span class="v"><span data-n="${s.chains}">${s.chains}</span><small>/${D.chain_count}</small></span><span class="l">${esc(a)}${termRef(esc(t), "xtalk", t)}${esc(b)}</span><a class="xk-go" href="${href("x/")}">${esc(L("kpi_x_go"))} <span aria-hidden="true">→</span></a><span class="xk-n">${esc(L("kpi_x_note"))}</span></div>`;
+}
 function renderHome() {
   chrome("home");
   const fromHash = !PRE && readHash();
@@ -1290,8 +1320,9 @@ function renderHome() {
     <section id="overview" class="layer" aria-label="${esc(L("nav_overview"))}">
       <div class="hero"><h1>${verdict}</h1><p>${esc(L("verdict_sub")(list(usable.map(name)), list(t3)))}</p>${check}</div>
       <div class="kpis">
-        ${kpi(`${num(usable.length)}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(`${num(use.length)}<small>/${all}</small>`, L("kpi_use")(def, use.length - def))}${kpi(`<span class="date">${esc(fmtDate(D.checked))}</span>`, L("kpi_date"))}
+        ${kpi(`${num(usable.length)}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(`${num(use.length)}<small>/${all}</small>`, L("kpi_use")(def, use.length - def))}${xCard()}
       </div>
+      <p class="kpi-date">${esc(L("kpi_date_line")(fmtDate(D.checked)))}</p>
       <details class="howc"><summary>${esc(L("howc"))}${ICON_CHEV}</summary><div class="howc-b"><p class="big">${bigLine}</p>${recon}<p>${esc(L("scope_eyebrow")(top.length, fmtDate(D.mcap_date || D.checked)))}${lang === "zh" ? "。" : ". "}${esc(L("who"))}</p></div></details>
       <div class="duo">${stackHTML(top)}${cumHTML()}</div>
       ${algoMapHTML()}
@@ -1580,6 +1611,33 @@ function xtalkHTML(c) {
 }
 
 /* ---------- this week ---------- */
+function renderX() {
+  chrome("x");
+  const s = D.xs, X = D.xposts;
+  const nameOf = (id) => { const c = D.names[id]; return c ? (lang === "zh" && c.zh ? c.zh : c.en) : null; };
+  const types = Object.keys(L("xt_type")).filter((k) => X.some((t) => t.type === k));
+  const br = s.rest_by_stage.map((n, st) => (n ? `${L("x_stage_short")[st]} ${n}` : "")).filter(Boolean).join(lang === "zh" ? "、" : ", ");
+  const fb = (v, lab, n) => `<button type="button" class="fbtn" data-xt="${v}" aria-pressed="${v === "" ? "true" : "false"}">${esc(lab)}<span class="n">${n}</span></button>`;
+  put("app", () => `<div class="page">
+    <section class="issue"><span class="eyebrow">${esc(L("x_eyebrow")(fmtDate(D.checked)))}</span><h1>${esc(L("x_title"))}</h1><p>${esc(L("x_lede"))}</p></section>
+    <div class="stat xs">${[s.chains, s.accounts, s.posts, s.posts30].map((n, i) => `<div class="card"><b data-x="${["chains", "accounts", "posts", "posts30"][i]}">${n}</b><span>${esc(L("x_s")[i])}</span></div>`).join("")}</div>
+    <p class="xfact">${esc(L("x_fact")(s.chains, s.usable, s.chains - s.usable, br, s.top, s.top_talk, s.top_usable))}</p>
+    <div class="xbar"><div class="fgroup" role="group" aria-label="${esc(L("x_filter"))}">${fb("", L("x_all"), X.length)}${types.map((k) => fb(k, L("xt_type")[k], X.filter((t) => t.type === k).length)).join("")}</div><span class="count" id="xcount" role="status">${esc(L("x_count")(X.length))}</span></div>
+    <section class="xtalk xall" aria-label="${esc(L("nav_x"))}"><ol class="xl" id="xlist">${X.map((t) => xItem(t, nameOf(t.chain) ? `<a href="${chainURL(t.chain)}">${esc(nameOf(t.chain))}</a> · ` : "").replace(/^<li/, `<li data-t="${t.type}"`)).join("")}</ol></section>
+    <p class="note-small xrule">${esc(L("x_rule"))}${SEP(L("x_rule"))}<a href="${href("method/")}#xtalk">${esc(L("x_rule_link"))} <span aria-hidden="true">→</span></a></p>
+  </div>`);
+  if (PRE) return;
+  const bar = document.querySelector(".xbar");
+  bar.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-xt]");
+    if (!b) return;
+    const v = b.dataset.xt;
+    bar.querySelectorAll("[data-xt]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    let n = 0;
+    document.querySelectorAll("#xlist > li").forEach((li) => { const on = !v || li.dataset.t === v; li.hidden = !on; n += on; });
+    document.getElementById("xcount").textContent = L("x_count")(n);
+  });
+}
 function renderChanges() {
   chrome("changes");
   const [C, ...older] = D.changes;
@@ -1882,6 +1940,7 @@ function methodAnchor(ref) {
   const k = ref.split(".")[0];
   if (["ss", "cov", "mig", "audit", "design", "scope", "netw"].includes(k)) return "groups";
   if (k === "hybrid") return "hybrid";
+  if (k === "xtalk") return "xtalk";
   if (k === "chips" || k === "level") return "algorithms";
   if (k === "stage") return "stages";
   if (k.startsWith("st_")) return "network";
@@ -1940,5 +1999,5 @@ langA.addEventListener("click", () => { langA.href = langA.getAttribute("href").
 }
 
 /* ---------- start ---------- */
-({ home: renderHome, chain: renderChain, changes: renderChanges, method: renderMethod, data: renderData })[D.page]();
+({ home: renderHome, chain: renderChain, changes: renderChanges, x: renderX, method: renderMethod, data: renderData })[D.page]();
 if (PRE) globalThis.OUT = OUT;

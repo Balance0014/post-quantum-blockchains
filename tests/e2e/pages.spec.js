@@ -244,6 +244,65 @@ test.describe('Data page', () => {
   });
 });
 
+// the posts on X the home card and the x/ page count: the 90 days up to the network check, worked out here from the data
+async function xWindow(request) {
+  const [all, net] = await Promise.all([(await request.get('data/chains.json')).json(), (await request.get('data/network.json')).json()]);
+  const to = net.checked_at_utc.slice(0, 10), from = new Date(Date.parse(to) - 90 * 864e5).toISOString().slice(0, 10);
+  const posts = all.chains.flatMap((c) => (c.x_talk || []).filter((t) => t.date >= from && t.date <= to).map((t) => ({ ...t, chain: c.id })));
+  return { posts, chains: new Set(posts.map((t) => t.chain)).size, total: all.chains.length };
+}
+
+test.describe('Discussion on X', () => {
+  test('Home: the X card counts what the data holds and opens the X page', async ({ page, u, request }) => {
+    const w = await xWindow(request);
+    await page.goto(u(''));
+    const card = page.locator('.kpis .kpi.xk');
+    await expect(card.locator('.v [data-n]')).toHaveText(String(w.chains));
+    await expect(card.locator('.v small')).toHaveText(`/${w.total}`);
+    await expect(card.locator('.l')).toContainText(String(w.posts.length));
+    await expect(card.locator('.term')).toHaveCount(1);
+    await card.locator('a.xk-go').click();
+    await page.waitForURL(`**/${u('x/')}`);
+    await expect(page.locator('#xlist > li')).toHaveCount(w.posts.length);
+  });
+
+  test('X page: counts, every post, and the type filters', async ({ page, u, request }) => {
+    const w = await xWindow(request);
+    await page.goto(u('x/'));
+    await expect(page.locator('[data-x="chains"]')).toHaveText(String(w.chains));
+    await expect(page.locator('[data-x="posts"]')).toHaveText(String(w.posts.length));
+    await expect(page.locator('[data-x="accounts"]')).toHaveText(String(new Set(w.posts.map((t) => t.who)).size));
+    const items = page.locator('#xlist > li');
+    await expect(items).toHaveCount(w.posts.length);
+    const dates = await items.locator('.when').allTextContents();
+    expect(dates, 'newest first').toEqual([...dates].sort().reverse());
+    const links = await page.locator('#xlist a[href*="/status/"]').evaluateAll((as) => as.map((x) => x.href));
+    expect(links.length).toBe(w.posts.length);
+    for (const h of links) expect(h).toMatch(/^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/);
+    expect(await page.locator('#xlist a[href*="/chains/"]').count(), 'each post links its chain').toBe(w.posts.length);
+    const btns = page.locator('.xbar [data-xt]');
+    const n = await btns.count();
+    expect(n).toBeGreaterThan(2);
+    for (let i = 1; i < n; i++) {
+      const b = btns.nth(i), type = await b.getAttribute('data-xt'), want = w.posts.filter((t) => t.type === type).length;
+      await b.click();
+      await expect(b).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.locator('#xlist > li:visible')).toHaveCount(want);
+      await expect(page.locator('#xcount')).toContainText(String(want));
+    }
+    await btns.first().click();
+    await expect(page.locator('#xlist > li:visible')).toHaveCount(w.posts.length);
+  });
+
+  test('X page: links to our pages open, outside links open a new tab, the rule links to the method', async ({ page, u, request }) => {
+    await page.goto(u('x/'));
+    await expect(page.locator('.xrule a[href$="method/#xtalk"]')).toHaveCount(1);
+    await expect(page.locator(`nav.main a[href$="/${u('x/')}"]`)).toHaveAttribute('aria-current', 'page');
+    await ownLinks(page, request);
+    await outsideLinks(page);
+  });
+});
+
 test.describe('Weekly changes page', () => {
   test('Loads and links each change to its chain, when there is a weekly issue', async ({ page, u, request }) => {
     const r = await request.get(u('changes/'));

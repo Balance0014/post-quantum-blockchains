@@ -86,7 +86,7 @@ Public RPCs often sit behind load balancers, and a lagging node can answer with 
 | SLH-DSA · NIST FIPS 205 | SLH-DSA as published in NIST FIPS 205 (August 2024) |
 | Falcon · NIST-selected (FN-DSA) | Selected by NIST and being standardized as FN-DSA (FIPS 206, not final yet) |
 | XMSS · IETF RFC 8391 | Stateful hash-based signature standardized in RFC 8391 |
-| NIST family · version not reviewed | From a NIST-selected family, but a pre-standard version or a parameter set not reviewed here |
+| NIST family · pre-standard version or parameters not reviewed | From a NIST-selected family, but a pre-standard version or a parameter set not reviewed here |
 | SPHINCS+ · basis of SLH-DSA | The submission NIST standardized as SLH-DSA; pre-standard versions differ in details |
 | Hash-based · not a standard on its own | A one-time signature such as WOTS+, a building block of standards like XMSS |
 | Not a NIST standard | Not standardized by NIST or the IETF |
