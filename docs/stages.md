@@ -94,6 +94,23 @@ Public RPCs often sit behind load balancers, and a lagging node can answer with 
 | Older parameters publicly broken | A public attack breaks parameters this chain used or still allows |
 | No post-quantum scheme yet | The chain has no post-quantum signature scheme |
 
+### On the algorithm map
+
+The map groups each scheme a chain uses by NIST's mathematical family and colours it by NIST status. Families: lattice-based, hash-based (stateless or stateful), multivariate, code-based, isogeny-based, MPC-in-the-Head and symmetric-based; families with no listed chain are left out. A project's own construction sits in the family it is built on, and a variant of a NIST scheme has a dashed outline.
+
+| Status | Meaning |
+| --- | --- |
+| Final standard | FIPS 204 (ML-DSA) and FIPS 205 (SLH-DSA), published 2024-08-13 |
+| Selected, standard in development | FN-DSA (Falcon): selected by NIST; FIPS 206 is not final |
+| Stateful hash-based standard | NIST SP 800-208 (LMS/HSS, XMSS/XMSS^MT), final 2020-10-29 |
+| Round 3 candidate | In round 3 of NIST's additional signatures call (8 candidates, among them UOV, MAYO, SQIsign and FAEST); NIST expects the round to take about two years |
+| Publicly broken | A public attack breaks the parameters, as for Rainbow in 2022 |
+| Not submitted to NIST | Not in a NIST standard or call, for example WOTS+ used on its own or a project's own construction |
+
+## Posts on X
+
+`x_talk` records posts on X about a chain's quantum plans, only from people or official accounts with a public identity (founders, foundations, core developers, proposal authors, maintainers, mining pools, wallets, exchanges and the chain's community account). Each entry has the post's date, who wrote it and their relation to the chain, the type (a plan or timeline, a proposal discussion, research, a reply to holders, or other), a one-sentence summary in English and Chinese, the link and the day we opened the post to check it. `x_asks` records about how many different people asked about the chain's quantum plans in the last 90 days, with two or three example posts; ordinary users are not named. Both are claims: they never change a stage, and a chain with no entries shows nothing rather than "nobody said anything", so a decentralized chain without a spokesperson is not marked down.
+
 ## Data and scripts
 
 | File | Written by | Holds |
@@ -103,12 +120,15 @@ Public RPCs often sit behind load balancers, and a lagging node can answer with 
 | `data/changes/<date>.json` | [`scripts/patrol.py`](../scripts/patrol.py), weekly | What differs from the previous patrol |
 | [`data/market_cap.json`](../data/market_cap.json) | [`scripts/rank.py`](../scripts/rank.py), monthly | CoinGecko's top 100: rank, ID, symbol and name only |
 | [`data/projects.json`](../data/projects.json) | People, through pull requests | The projects that already use post-quantum cryptography; the tracker links these entries with `projects_id` |
+| `data/chains/<id>.json`, `badges/` on the website | [`scripts/build_site.py`](../scripts/build_site.py), on every build | The JSON API (one file per chain and `data/chains/index.json`), and each chain's badge and card in English and Chinese |
 
 [`scripts/build_site.py`](../scripts/build_site.py) builds the website from these files, and [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) publishes it whenever `main` changes.
+
+`chains.json`, `sources.json` and `network.json` start with a `license` block: CC BY-NC 4.0, with free commercial use on the conditions in [LICENSE](../LICENSE).
 
 ## How it stays current
 
 - **Weekly**, every Monday at 01:00 UTC, [`.github/workflows/patrol.yml`](../.github/workflows/patrol.yml) runs the patrol and proposes the new data in a pull request. A person checks each change against its source before merging.
 - **Monthly**, on the first Monday, the patrol also refreshes the market-cap list and opens a re-check issue: every row is checked against its sources, `last_reviewed` is updated, and any coin new to the top 100 is classified.
 - **On every change**, CI checks ten facts in [`data/golden.json`](../data/golden.json) that were checked by hand against pinned primary sources (for example Algorand's consensus version 42, NEAR's protocol version 85 and Raqcoin's default key configuration 274). An edit that drops or contradicts one fails, and [`scripts/golden.py`](../scripts/golden.py) `--online` confirms that each pinned source still shows its fact.
-- **Any time**, anyone can [report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) or [submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml) with primary sources.
+- **Any time**, anyone can [report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) or [submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml) with primary sources. The automatic reply comes at once, a maintainer replies within 2 days, and a decision usually comes within 3 days.
