@@ -2481,16 +2481,16 @@
     "wots"
    ],
    "consensus": {
-    "en": "PoS",
-    "zh": "权益证明（PoS）"
+    "en": "PoW (the website says it has moved to PoS)",
+    "zh": "工作量证明（PoW；官网说已转为权益证明）"
    },
    "holder_can_use_today": {
     "en": "Every transfer is signed with a WOTS+ one-time signature.",
     "zh": "每笔转账都用 WOTS+ 一次性签名。"
    },
    "note": {
-    "en": "The switch to proof of stake rests on the project's website alone. The signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.",
-    "zh": "改为权益证明只有项目官网一处说法。签名方案仍是 WOTS+。这不代表未来的协议升级不会改变签名方案。"
+    "en": "The public node code (v3.1.0-beta, April 2026) still contains PoW code only; the website says the network has moved to proof of stake and mining is retired, with no date or block height. The signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.",
+    "zh": "公开节点代码（v3.1.0-beta，2026 年 4 月）里仍只有工作量证明的代码；官网说网络已改为权益证明、挖矿已结束，没有给出日期或区块高度。签名方案仍是 WOTS+。这不代表未来的协议升级不会改变签名方案。"
    },
    "latest_step": {
     "date": null,

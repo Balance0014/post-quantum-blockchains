@@ -319,7 +319,7 @@ def validate():
     # These are scope safeguards for the original snapshot, not security ratings.
     by_name={p['name']:p for p in projects}
     require(by_name['QANplatform']['network_status']=='testnet','QANplatform snapshot must retain testnet scope')
-    require(by_name['Mochimo']['consensus']=='PoS','Mochimo snapshot must retain post-transition PoS')
+    require(by_name['Mochimo']['consensus']=='PoW','Mochimo consensus follows the public node code (PoW); the website PoS claim stays in consensus_note')
     require('L2' in by_name['Starknet']['consensus'],'Starknet snapshot must retain L2 scope')
     validate_research()
     validate_chains()

@@ -7,7 +7,7 @@ The [deployment timeline](../charts/deployment-timeline.svg) and [algorithm map]
 | Project | Consensus | Milestone | Signing / proof scope |
 | --- | --- | --- | --- |
 | [Raqcoin (RAQ)](#raqcoin) | PoW | 2018 · Jun · ABCMint genesis | RainbowPro / UOV; multisig |
-| [Mochimo (MCM)](#mochimo) | PoS | 2018 · Jun · Mainnet launch | WOTS+ transaction signatures |
+| [Mochimo (MCM)](#mochimo) | PoW | 2018 · Jun · Mainnet launch | WOTS+ transaction signatures |
 | [QRL (QRL)](#qrl) | PoW | 2018 · Jun · Mainnet launch | XMSS transaction signatures |
 | [Nexus (NXS)](#nexus) | PoW + PoS | 2019 · Nov · Tritium mainnet upgrade | Opt-in Falcon-512; Brainpool also valid |
 | [Tidecoin (TDC)](#tidecoin) | PoW | 2020 · Dec · Mainnet launch | Falcon-512 live; ML-DSA in upgrade code |
@@ -60,7 +60,7 @@ Sources:
 
 **Milestone:** Mainnet launched in June 2018.
 
-**Consensus:** The project website states a switch from PoW to PoS in October 2026; the public node repository (v3.1.0-beta, April 2026) still contains PoW code only.
+**Consensus:** The public node repository (v3.1.0-beta, April 2026) still contains PoW code only. The project website says the network has moved from PoW to PoS and mining is retired, without a date or block height.
 
 **Cryptographic use:** WOTS+ transaction signatures.
 
@@ -70,8 +70,8 @@ Sources:
 
 Sources:
 
-- [mcm-home](https://mochimo.org/) — WOTS+ and current PoS status. (project website)
-- [mcm-explorer](https://mochimo.org/explorer/) — PoS blocks and the transition from PoW. (project block explorer)
+- [mcm-home](https://mochimo.org/) — WOTS+, and the website's statement that the network now runs on PoS. (project website)
+- [mcm-explorer](https://mochimo.org/explorer/) — Block explorer for the live network. (project block explorer)
 - [mcm-code](https://github.com/mochimodev/mochimo/tree/bbbaceabe5c21b5d8a094cf34c050d28e4ae93f4) — Pinned implementation reviewed for the chart. (pinned source repository)
 
 ## QRL

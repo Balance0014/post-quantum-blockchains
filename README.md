@@ -74,7 +74,7 @@ The images below reproduce the original English edition, including r8's market s
 
 ## Easy to misread
 
-- **Mochimo** is recorded as PoS, after its October 2026 switch. It ran PoW before that.
+- **Mochimo** is recorded as PoW, which is what the public node code shows. Its website says the network has moved to PoS, without a date or block height, and that statement is kept as a claim.
 - **QANplatform:** the QANX token trades, but QAN's post-quantum chain is still a testnet.
 - **Starknet:** the 2021 milestone is L2 Mainnet Alpha. The vote on becoming an independent L1 backed research; it didn't approve leaving Ethereum.
 - **Raqcoin:** 2018 is when its predecessor ABCMint launched, not when UOV was added. Since the upgrade at fork height 267120, new keys default to Rainbow configuration 274, which has no public break; this repo hasn't analyzed that configuration. Keys made before the upgrade use ABCMint's original Rainbow(16,32,32,32) parameters, publicly broken in 2022. Nodes still verify signatures from those older keys so their coins can move, so coins left on them are at risk and should move to new keys.

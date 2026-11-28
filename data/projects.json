@@ -39,12 +39,12 @@
       "name": "Mochimo",
       "ticker": "MCM",
       "network_status": "mainnet",
-      "consensus": "PoS",
+      "consensus": "PoW",
       "timeline_year": 2018,
       "timeline_milestone": "Jun · Mainnet launch",
       "chart_cryptography": "WOTS+ transaction signatures",
       "chart_agility": "Agility: WOTS+ only today",
-      "chart_note": "Website says PoS since Oct 2026; public code is PoW",
+      "chart_note": "Website says PoS; public code is PoW",
       "crypto_uses": [
         {
           "scheme": "WOTS+",
@@ -54,7 +54,7 @@
       ],
       "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet launched in June 2018.",
-      "consensus_note": "The project website states a switch from PoW to PoS in October 2026; the public node repository (v3.1.0-beta, April 2026) still contains PoW code only.",
+      "consensus_note": "The public node repository (v3.1.0-beta, April 2026) still contains PoW code only. The project website says the network has moved from PoW to PoS and mining is retired, without a date or block height.",
       "signing_note": "WOTS+ transaction signatures.",
       "agility_note": "One active signing scheme in the reviewed material.",
       "caveat": "The switch to proof of stake rests on the project's website alone; the public node repository still shows PoW code. The signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.",
