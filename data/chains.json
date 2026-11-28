@@ -3501,7 +3501,7 @@
      "type": "release",
      "summary": {
       "zh": "发布 Neptune Core v0.19.1，改进并加固点对点网络。",
-      "en": "Released Neptune Core v0.19.1 with improvements to peer-to-peer networking and its hardening."
+      "en": "Released Neptune Core v0.19.1, which improves and hardens peer-to-peer networking."
      },
      "url": "https://x.com/NeptuneCash/status/2110425346633843020",
      "checked": "2026-11-28"
@@ -4517,21 +4517,21 @@
     "zh": "工作量证明（PoW）"
    },
    "holder_can_use_today": {
-    "en": "Nothing at the protocol level; the next planned hard fork (ECIP-1130 Bastion) adds no post-quantum change.",
-    "zh": "协议层没有；下一次计划中的硬分叉（ECIP-1130 Bastion）也没有抗量子改动。"
+    "en": "Nothing at the protocol level. A third-party, unaudited demo contract (skinnyCAT by Classix) lets holders lock ETC to a leanSPHINCS key on mainnet; it is not part of ETC and does not change the stage.",
+    "zh": "协议层没有。第三方、未审计的演示合约 skinnyCAT（Classix 团队）允许持币人在主网把 ETC 锁到 leanSPHINCS 密钥下；它不属于 ETC 协议，不改变档位。"
    },
    "note": {
-    "en": "Even if the draft precompile were adopted, it would let contracts verify ML-DSA signatures; ordinary accounts would still be controlled by their existing keys.",
-    "zh": "即使那个预编译草案被采纳，也只是让合约能验证 ML-DSA 签名，普通账户仍由原有密钥控制。"
+    "en": "Even if the draft precompile were adopted, it would let contracts verify ML-DSA signatures; ordinary accounts would still be controlled by their existing keys. skinnyCAT still needs an ordinary ECDSA account to pay gas.",
+    "zh": "即使那个预编译草案被采纳，也只是让合约能验证 ML-DSA 签名，普通账户仍由原有密钥控制。skinnyCAT 仍需要普通 ECDSA 账户来付 gas。"
    },
    "four": {
     "today": {
-     "en": "Nothing at the protocol level; the next planned hard fork (ECIP-1130 Bastion) adds no post-quantum change.",
-     "zh": "协议层没有；下一次计划中的硬分叉（ECIP-1130 Bastion）也没有抗量子改动。"
+     "en": "Nothing at the protocol level. A third-party, unaudited demo contract (skinnyCAT by Classix) lets holders lock ETC to a leanSPHINCS key on mainnet; it is not part of ETC and does not change the stage.",
+     "zh": "协议层没有。第三方、未审计的演示合约 skinnyCAT（Classix 团队）允许持币人在主网把 ETC 锁到 leanSPHINCS 密钥下；它不属于 ETC 协议，不改变档位。"
     },
     "watch": {
-     "en": "Even if the draft precompile were adopted, it would let contracts verify ML-DSA signatures; ordinary accounts would still be controlled by their existing keys.",
-     "zh": "即使那个预编译草案被采纳，也只是让合约能验证 ML-DSA 签名，普通账户仍由原有密钥控制。"
+     "en": "Even if the draft precompile were adopted, it would let contracts verify ML-DSA signatures; ordinary accounts would still be controlled by their existing keys. skinnyCAT still needs an ordinary ECDSA account to pay gas.",
+     "zh": "即使那个预编译草案被采纳，也只是让合约能验证 ML-DSA 签名，普通账户仍由原有密钥控制。skinnyCAT 仍需要普通 ECDSA 账户来付 gas。"
     },
     "can": {
      "en": "No post-quantum option exists on Ethereum Classic today.",
@@ -4589,6 +4589,20 @@
      "source_url": "https://github.com/ethereumclassic/ECIPs/blob/master/_specs/ecip-1130.md",
      "verified": true,
      "progress": false
+    },
+    {
+     "date": "2026-11-16",
+     "type": "thirdparty",
+     "grade": "primary",
+     "name": "Classix deployed skinnyCAT on ETC mainnet: an unaudited demo contract (scETC ledger) that verifies leanSPHINCS signatures; first payment in block 25,742,237. Contract-level, not a protocol change.",
+     "zh": "Classix 在 ETC 主网部署 skinnyCAT：未审计的演示合约（scETC 账本），用 leanSPHINCS 验证签名；首笔支付在区块 25,742,237。属合约层，不是协议改动。",
+     "status": {
+      "en": "Third-party contract; stage unchanged",
+      "zh": "第三方合约；不改变档位"
+     },
+     "source_url": "https://etc.blockscout.com/tx/0x120ca292224e17de96101e2ff3f34966a9e601001cc2519a73219bbbf055c4ad",
+     "verified": true,
+     "progress": false
     }
    ],
    "unverified": [],
@@ -4629,12 +4643,14 @@
     "ethereumclassic/ECIPs issues/PRs 'quantum': PR #557 (open), PR #576 = ECIP-1130 (merged 2026-07-05; spec has no quantum content), plus 2019/2020 Keccak-mining issues (unrelated)",
     "etclabscore/core-geth issues/PRs 'quantum' — none; ethereumclassic/core-geth PR #5 (open)",
     "GitHub Discussions org:ethereumclassic 'quantum': discussion #556 only (same proposal)",
-    "ethereumclassic.org clients page read (CoreGeth listed as recommended)"
+    "ethereumclassic.org clients page read (CoreGeth listed as recommended)",
+    "classix-dev/skinnyCAT (created 2026-11-10, last push 2026-11-16; README: educational demo, not audited); first payment tx confirmed on etc.blockscout.com (block 25,742,237, 2026-11-16 UTC)"
    ],
    "sources": [
     "https://github.com/ethereumclassic/ECIPs/pull/557",
     "https://github.com/ethereumclassic/core-geth/pull/5",
-    "https://github.com/ethereumclassic/ECIPs/blob/master/_specs/ecip-1130.md"
+    "https://github.com/ethereumclassic/ECIPs/blob/master/_specs/ecip-1130.md",
+    "https://github.com/classix-dev/skinnyCAT"
    ],
    "network": {
     "probe": {
@@ -4651,7 +4667,7 @@
      "ethereumclassic/core-geth"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-28"
   },
   {
    "id": "dash",
@@ -4793,11 +4809,11 @@
    "layer": "L1",
    "coingecko_id": "kaspa",
    "mcap_rank": 79,
-   "stage": 0,
-   "stage_label": "Nothing public",
+   "stage": 1,
+   "stage_label": "Research",
    "stage_basis": {
-    "en": "No post-quantum work from Kaspa's core developers. The only related proposal, KIP-22, is an outside contributor's open pull request.",
-    "zh": "Kaspa 核心开发者没有抗量子方面的工作；唯一相关的提案 KIP-22 是外部贡献者提交、尚未合并的拉取请求。"
+    "en": "A Kaspa core developer (Ori Newman, author of KIP-17) opened KIP-22 'Pay-to-Public-Key-Hash via P2SH' as a Draft on 2026-10-19. It is an open pull request, not merged, and it hides keys only; it adds no post-quantum signature.",
+    "zh": "Kaspa 核心开发者 Ori Newman（KIP-17 作者）于 2026-10-19 提交 KIP-22「Pay-to-Public-Key-Hash via P2SH」草案；该拉取请求尚未合并，只做公钥隐藏，不含抗量子签名。"
    },
    "algo": {
     "en": "None",
@@ -4811,35 +4827,35 @@
     "zh": "工作量证明（PoW）"
    },
    "holder_can_use_today": {
-    "en": "Nothing at the protocol level. A standard Kaspa address carries the 32-byte Schnorr public key itself, so the key is public wherever the address is.",
-    "zh": "协议层没有。Kaspa 标准地址里直接就是 32 字节的 Schnorr 公钥，地址公开在哪里，公钥就公开在哪里。"
+    "en": "Nothing at the protocol level. A standard Kaspa address carries the 32-byte Schnorr public key itself, so the key is public wherever the address is. A wallet can already build P2SH addresses that hide the key until spending, but this is not a post-quantum signature.",
+    "zh": "协议层没有。Kaspa 标准地址里直接就是 32 字节的 Schnorr 公钥，地址公开在哪里，公钥就公开在哪里。钱包现在就能用 P2SH 地址把公钥藏到花费时，但这不是抗量子签名。"
    },
    "note": {
-    "en": "Pay-to-public-key addresses expose keys from the start, and the core team has published no plan to change this.",
-    "zh": "这类直接付款给公钥的地址从一开始就暴露公钥，核心团队也没有公布改动计划。"
+    "en": "Pay-to-public-key addresses expose keys from the start. KIP-22 (Draft, open PR #48) would standardise a hashed-key wallet convention with no consensus change; spends still reveal the key and remain breakable by a quantum computer. An older, different 'KIP22' P2MR pull request (#37, outside contributor) is also open.",
+    "zh": "直接付款给公钥的地址从一开始就暴露公钥。KIP-22（草案，PR #48）要把「哈希公钥」钱包做法标准化，不改共识；花费时仍会暴露公钥，量子计算机仍可破解。另有一个外部贡献者提交的、内容不同的旧「KIP22」P2MR 拉取请求（#37）也未合并。"
    },
    "four": {
     "today": {
-     "en": "Nothing at the protocol level. A standard Kaspa address carries the 32-byte Schnorr public key itself, so the key is public wherever the address is.",
-     "zh": "协议层没有。Kaspa 标准地址里直接就是 32 字节的 Schnorr 公钥，地址公开在哪里，公钥就公开在哪里。"
+     "en": "Nothing at the protocol level. A standard Kaspa address carries the 32-byte Schnorr public key itself, so the key is public wherever the address is. A wallet can already build P2SH addresses that hide the key until spending, but this is not a post-quantum signature.",
+     "zh": "协议层没有。Kaspa 标准地址里直接就是 32 字节的 Schnorr 公钥，地址公开在哪里，公钥就公开在哪里。钱包现在就能用 P2SH 地址把公钥藏到花费时，但这不是抗量子签名。"
     },
     "watch": {
-     "en": "Pay-to-public-key addresses expose keys from the start, and the core team has published no plan to change this.",
-     "zh": "这类直接付款给公钥的地址从一开始就暴露公钥，核心团队也没有公布改动计划。"
+     "en": "Pay-to-public-key addresses expose keys from the start. KIP-22 (Draft, open PR #48) would standardise a hashed-key wallet convention with no consensus change; spends still reveal the key and remain breakable by a quantum computer. An older, different 'KIP22' P2MR pull request (#37, outside contributor) is also open.",
+     "zh": "直接付款给公钥的地址从一开始就暴露公钥。KIP-22（草案，PR #48）要把「哈希公钥」钱包做法标准化，不改共识；花费时仍会暴露公钥，量子计算机仍可破解。另有一个外部贡献者提交的、内容不同的旧「KIP22」P2MR 拉取请求（#37）也未合并。"
     },
     "can": {
-     "en": "No post-quantum option. A community draft suggests pay-to-script-hash addresses that hide the key until spending; that is a wallet practice, not a protocol feature.",
-     "zh": "没有抗量子选项。社区草案建议用 P2SH 地址，把公钥藏到花费时才露出；这只是钱包层做法，不是协议功能。"
+     "en": "No post-quantum option. A wallet can use P2SH addresses that hide the key until spending, the convention KIP-22 (#48) would standardise; the key is still revealed when coins move.",
+     "zh": "没有抗量子选项。钱包可以用 P2SH 地址把公钥藏到花费时，也就是 KIP-22（#48）要标准化的做法；动币时公钥仍会暴露。"
     },
     "next": {
-     "en": "A KIP from core developers, or KIP-22 being merged (stage 2 at most, since it only hides keys).",
-     "zh": "核心开发者提交 KIP，或 KIP-22 合并（它只隐藏公钥，最多 2 档）。"
+     "en": "KIP-22 (#48) being merged (stage 2 at most, since it only hides keys), or a KIP that adds a post-quantum signature.",
+     "zh": "KIP-22（#48）合并（它只隐藏公钥，最多 2 档），或出现加入抗量子签名的 KIP。"
     }
    },
    "latest_step": {
-    "date": "2026-07-13",
-    "text": "A kaspanet contributor replied on KIP-22 that covenants can already build MAST-style trees; the pull request remains open.",
-    "zh": "kaspanet 贡献者在 KIP-22 下回复，现有 covenant 已能构造类似 MAST 的树；该拉取请求仍未合并。"
+    "date": "2026-10-19",
+    "text": "A Kaspa core developer opened KIP-22 (Pay-to-Public-Key-Hash via P2SH) as a Draft pull request: it hides public keys until spending, adds no post-quantum signature, and is not merged.",
+    "zh": "Kaspa 核心开发者提交 KIP-22（Pay-to-Public-Key-Hash via P2SH）草案拉取请求：把公钥藏到花费时，不含抗量子签名，尚未合并。"
    },
    "milestones": [
     {
@@ -4874,8 +4890,8 @@
      "date": "2026-03-06",
      "type": "proposal",
      "grade": "primary",
-     "name": "KIP-22 'P2MR ScriptPublicKey for quantum resistance' opened by an outside contributor: a pay-to-Merkle-root output type that hides public keys.",
-     "zh": "外部贡献者提交 KIP-22「P2MR ScriptPublicKey for quantum resistance」：一种付款给默克尔根、隐藏公钥的输出类型。",
+     "name": "KIP-22 'P2MR ScriptPublicKey for quantum resistance' (pull request #37) opened by an outside contributor: a pay-to-Merkle-root output type that hides public keys. It is a different proposal from the core developer's KIP-22 in pull request #48.",
+     "zh": "外部贡献者提交 KIP-22「P2MR ScriptPublicKey for quantum resistance」（拉取请求 #37）：一种付款给默克尔根、隐藏公钥的输出类型。它和核心开发者在拉取请求 #48 提交的 KIP-22 是两个不同的提案。",
      "status": {
       "en": "Open pull request; not merged",
       "zh": "拉取请求未合并"
@@ -4883,6 +4899,20 @@
      "source_url": "https://github.com/kaspanet/kips/pull/37",
      "verified": true,
      "progress": false
+    },
+    {
+     "date": "2026-10-19",
+     "type": "proposal",
+     "grade": "primary",
+     "name": "A Kaspa core developer opened KIP-22 (Pay-to-Public-Key-Hash via P2SH) as a Draft pull request: it hides public keys until spending, adds no post-quantum signature, and is not merged.",
+     "zh": "Kaspa 核心开发者提交 KIP-22（Pay-to-Public-Key-Hash via P2SH）草案拉取请求：把公钥藏到花费时，不含抗量子签名，尚未合并。",
+     "status": {
+      "en": "Open pull request; not merged",
+      "zh": "拉取请求未合并"
+     },
+     "source_url": "https://github.com/kaspanet/kips/pull/48",
+     "verified": true,
+     "progress": true
     }
    ],
    "unverified": [],
@@ -4905,16 +4935,19 @@
    ],
    "searched": [
     "kaspanet/kips (cloned, KIP-1 to KIP-21): grepped quantum, ML-DSA, Dilithium, Falcon, FN-DSA, SLH-DSA, SPHINCS, XMSS, Winternitz, lattice, Lamport — only KIP-16 (STARK note)",
-    "kaspanet/kips and kaspanet/rusty-kaspa issues/PRs 'quantum': KIP-22 PR #37 (open), rusty-kaspa #767 (closed 2026-01-17), KIP-16 PRs",
+    "kaspanet/kips and kaspanet/rusty-kaspa issues/PRs 'quantum': KIP-22 PR #37 (open, outside contributor) and KIP-22 PR #48 (open, Draft, Ori Newman, 2026-10-19), rusty-kaspa #767 (closed 2026-01-17), KIP-16 PRs",
     "GitHub Discussions org:kaspanet 'quantum' — none",
     "kaspanet/rusty-kaspa crypto/addresses/src/lib.rs: PubKey address (version 0) carries a 32-byte public key",
-    "Web search for an official Kaspa quantum roadmap — none found; press items describe community proposals"
+    "Web search for an official Kaspa quantum roadmap — none found; press items describe community proposals",
+    "research.kas.pa thread for KIP-22 (PR #48), posted 2026-10-19, no replies; rusty-kaspa PRs 'quantum' / 'KIP-22': none (2026-11-28)"
    ],
    "sources": [
     "https://github.com/bitcoinsSG/Kaspas-Phase-I-Towards-Quantum-Resiliency",
     "https://github.com/kaspanet/kips/blob/master/kip-0016.md",
     "https://github.com/kaspanet/rusty-kaspa/issues/767",
-    "https://github.com/kaspanet/kips/pull/37"
+    "https://github.com/kaspanet/kips/pull/37",
+    "https://github.com/kaspanet/kips/pull/48",
+    "https://research.kas.pa/t/kip-22-pay-to-public-key-hash-via-p2sh/545"
    ],
    "network": {
     "probe": {
@@ -4946,7 +4979,7 @@
    "code": {
     "repo": "kaspanet/rusty-kaspa"
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-28"
   },
   {
    "id": "beldex",
@@ -5974,9 +6007,9 @@
     "zh": "Cosmos SDK v0.55.0 已支持 ML-DSA-65 密钥，但 Cosmos Hub 仍运行 SDK v0.53.8，只接受 ed25519 和 secp256k1 签名。"
    },
    "latest_step": {
-    "date": "2026-11-11",
-    "text": "An open cosmos-sdk issue reports that rotating a validator key from ed25519 to ML-DSA-65 with init --recover derives the new key from the same seed as the old one.",
-    "zh": "cosmos-sdk 新开 issue 指出：用 init --recover 把验证者密钥从 ed25519 换成 ML-DSA-65 时，新密钥与旧密钥由同一个种子派生。"
+    "date": "2026-11-24",
+    "text": "gaia main bumped CometBFT to v0.38.26 so Hub light clients can verify counterparties with ML-DSA-65 validators; unreleased, and the Hub itself still accepts only ed25519 validator keys.",
+    "zh": "gaia 主干升级 CometBFT 至 v0.38.26，使 Hub 的轻客户端能验证使用 ML-DSA-65 验证者的对手链；尚未发布，Hub 自身仍只允许 ed25519 验证者密钥。"
    },
    "milestones": [
     {
@@ -6007,7 +6040,7 @@
      "verified": true
     },
     {
-     "date": "2026-07-27",
+     "date": "2026-07-28",
      "type": "code",
      "grade": "primary",
      "name": "Cosmos SDK v0.55.0 released with ML-DSA-65 account and validator keys; account keys need no chain-level permission once a chain runs v0.55.",
@@ -6088,7 +6121,9 @@
     "cometbft/cometbft issues/PRs: 'quantum' — issue #5755 (closed), PR #5875 merged",
     "Cosmos Hub on-chain governance (gov v1, 332 proposals up to #1061): titles and summaries searched for quantum, ML-DSA, Dilithium, Falcon — none relevant",
     "Cosmos Hub REST: node_info (gaia v29.1.0, SDK v0.53.8) and /cosmos/auth/v1beta1/params (ed25519 and secp256k1 costs only)",
-    "docs.cosmos.network: v0.55 release notes, post-quantum keys and enable-ML-DSA pages"
+    "docs.cosmos.network: v0.55 release notes, post-quantum keys and enable-ML-DSA pages",
+    "Cosmos Hub consensus parameters read from a public REST endpoint on 2026-11-27: validator.pub_key_types is ed25519 only (no explorer page shows this parameter, so it is recorded here rather than cited)",
+    "cosmos/gaia PR #4241 (merged to main 2026-11-24, not in a release): CometBFT v0.38.26 with ML-DSA-65 pubkey decoding for light clients"
    ],
    "sources": [
     "https://github.com/cometbft/cometbft/pull/5875",
@@ -6096,7 +6131,8 @@
     "https://github.com/cosmos/cosmos-sdk/blob/main/CHANGELOG.md",
     "https://github.com/cosmos/cosmos-sdk/pull/26872",
     "https://github.com/cosmos/gaia/blob/f4e63e3abe4a4ced05533ca572d344bf774a2cad/go.mod#L25",
-    "https://github.com/cosmos/cosmos-sdk/issues/26954"
+    "https://github.com/cosmos/cosmos-sdk/issues/26954",
+    "https://github.com/cosmos/gaia/pull/4241"
    ],
    "network": {
     "probe": {
@@ -6113,7 +6149,7 @@
      "cometbft/cometbft"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-28"
   },
   {
    "id": "internet-computer",
@@ -7617,81 +7653,94 @@
    "layer": "L1",
    "coingecko_id": "crypto-com-chain",
    "mcap_rank": 42,
-   "stage": 0,
-   "stage_label": "Nothing public",
+   "stage": 1,
+   "stage_label": "Research",
    "algo": {
-    "en": "None yet",
-    "zh": "暂无"
+    "en": "ML-DSA-65 validator consensus keys (planned, unreleased); none for user accounts",
+    "zh": "ML-DSA-65 验证者共识密钥（计划中，未发布）；用户账户没有"
    },
    "algo_chips": [
-    "none"
+    "fips204"
    ],
    "consensus": {
     "en": "PoS (CometBFT, Cosmos SDK with EVM)",
     "zh": "权益证明（PoS，CometBFT，Cosmos SDK 加 EVM）"
    },
    "holder_can_use_today": {
-    "en": "Accounts use secp256k1 (EVM) signatures only.",
-    "zh": "账户只用 secp256k1（EVM）签名。"
+    "en": "Nothing. Accounts use secp256k1 (EVM) signatures only, and v1.9 is not released.",
+    "zh": "暂无。账户只用 secp256k1（EVM）签名，v1.9 尚未发布。"
    },
    "note": {
-    "en": "Cronos shares upstream Cosmos SDK and Ethereum code; post-quantum work there is not a Cronos plan and does not change this stage.",
-    "zh": "Cronos 复用上游 Cosmos SDK 与以太坊代码；上游的抗量子工作不是 Cronos 的计划，不改变本阶段。"
+    "en": "v1.9 targets validators' consensus signatures, not user accounts. Cronos' own migration notes say ML-DSA-65 needs a later governance vote and relayer support before it can be switched on.",
+    "zh": "v1.9 针对的是验证者的共识签名，不是用户账户。Cronos 自己的迁移文档说明，ML-DSA-65 要等之后的治理投票和中继器支持才能开启。"
    },
    "four": {
     "today": {
-     "en": "Accounts use secp256k1 (EVM) signatures only.",
-     "zh": "账户只用 secp256k1（EVM）签名。"
+     "en": "Nothing. Accounts use secp256k1 (EVM) signatures only, and v1.9 is not released.",
+     "zh": "暂无。账户只用 secp256k1（EVM）签名，v1.9 尚未发布。"
     },
     "watch": {
-     "en": "Cronos shares upstream Cosmos SDK and Ethereum code; post-quantum work there is not a Cronos plan and does not change this stage.",
-     "zh": "Cronos 复用上游 Cosmos SDK 与以太坊代码；上游的抗量子工作不是 Cronos 的计划，不改变本阶段。"
+     "en": "v1.9 targets validators' consensus signatures, not user accounts. Cronos' own migration notes say ML-DSA-65 needs a later governance vote and relayer support before it can be switched on.",
+     "zh": "v1.9 针对的是验证者的共识签名，不是用户账户。Cronos 自己的迁移文档说明，ML-DSA-65 要等之后的治理投票和中继器支持才能开启。"
     },
     "can": {
-     "en": "Nothing post-quantum at protocol level.",
-     "zh": "协议层面没有任何抗量子功能可用。"
+     "en": "Nothing post-quantum for accounts. ML-DSA-65 validator keys exist only in an unmerged pull request.",
+     "zh": "账户层面没有任何抗量子功能。ML-DSA-65 验证者密钥只存在于一个未合并的拉取请求里。"
     },
     "next": {
-     "en": "A Cronos or Crypto.com post or proposal on post-quantum signatures, or a post-quantum PR in crypto-org-chain/cronos.",
-     "zh": "Cronos 或 Crypto.com 发布抗量子签名的文章或提案，或 crypto-org-chain/cronos 出现抗量子 PR。"
+     "en": "Pull request #2263 merged and a v1.9 release, then a governance vote that adds ML-DSA-65 to the allowed validator key types. A post-quantum option for accounts would be a separate step.",
+     "zh": "拉取请求 #2263 合并并发布 v1.9，之后治理投票把 ML-DSA-65 加入允许的验证者密钥类型。账户的抗量子选项会是另一步。"
     }
    },
    "stage_basis": {
-    "en": "As of 2026-11-27, no post-quantum research, roadmap or proposal from the Cronos team found.",
-    "zh": "截至 2026-11-27 未找到 Cronos 团队的抗量子研究、路线图或提案。"
+    "en": "Cronos v1.9 is planned to add ML-DSA-65 validator consensus keys. The upgrade exists only as an open, unmerged draft pull request (cronos #2263, SDK v0.55.1 / CometBFT v0.40); there is no v1.9 release or testnet, and the PR keeps ML-DSA-65 out of the allowed validator key types for now.",
+    "zh": "Cronos v1.9 计划加入 ML-DSA-65 验证者共识密钥，但目前只有一个未合并的草案拉取请求（cronos #2263，SDK v0.55.1 / CometBFT v0.40）；没有 v1.9 发布版，也没有测试网，且该 PR 暂不把 ML-DSA-65 加入允许的验证者密钥类型。"
    },
    "latest_step": {
-    "date": "2026-11-27",
-    "text": "As of 2026-11-27, no public post-quantum work found.",
-    "zh": "截至 2026-11-27 未找到公开的抗量子工作。",
-    "is_check_date": true
+    "date": "2026-11-25",
+    "text": "Cronos described v1.9 as adding ML-DSA validator signatures from Cosmos SDK v0.55 / CometBFT v0.40; the code is an open draft pull request, with no release date.",
+    "zh": "Cronos 官方介绍 v1.9 将引入来自 Cosmos SDK v0.55 / CometBFT v0.40 的 ML-DSA 验证者签名；代码目前是未合并的草案拉取请求，没有发布日期。"
    },
    "milestones": [
     {
-     "date": "2026-11-27",
-     "type": "research",
+     "date": "2026-11-13",
+     "type": "code",
      "grade": "primary",
-     "name": "crypto-org-chain/cronos: no quantum-related issue or PR (only dependency bumps matched the word).",
-     "zh": "crypto-org-chain/cronos：没有与抗量子相关的议题或 PR（搜索词只命中依赖升级）。",
+     "name": "Pull request #2263 (draft, open): upgrades Cronos to Cosmos SDK v0.55.1 and CometBFT v0.40, adds the v1.9 upgrade handler, and tests ML-DSA-65 validator key rotation.",
+     "zh": "拉取请求 #2263（草案，未合并）：把 Cronos 升级到 Cosmos SDK v0.55.1 和 CometBFT v0.40，加入 v1.9 升级处理器，并测试 ML-DSA-65 验证者密钥轮换。",
      "status": {
-      "en": "No public progress",
-      "zh": "无公开进展"
+      "en": "Open pull request; not merged",
+      "zh": "拉取请求未合并"
      },
-     "source_url": "https://github.com/crypto-org-chain/cronos/issues?q=quantum",
+     "source_url": "https://github.com/crypto-org-chain/cronos/pull/2263",
      "verified": true,
-     "checked": true
+     "progress": false
+    },
+    {
+     "date": "2026-11-25",
+     "type": "research",
+     "grade": "official",
+     "name": "Cronos article 'What's coming on Cronos Network: v1.9' announces ML-DSA validator signatures; no release date.",
+     "zh": "Cronos 官方长文「What's coming on Cronos Network: v1.9」宣布 ML-DSA 验证者签名；没有发布日期。",
+     "status": {
+      "en": "Plan; no date",
+      "zh": "计划；没有日期"
+     },
+     "source_url": "https://x.com/CronosNetwork/status/2125409165048950951",
+     "verified": true,
+     "progress": false
     },
     {
      "date": "2026-11-27",
      "type": "research",
      "grade": "primary",
-     "name": "crypto-org-chain/chain-main and cronos-docs: no quantum-related issue or PR.",
-     "zh": "crypto-org-chain/chain-main 与 cronos-docs：没有与抗量子相关的议题或 PR。",
+     "name": "The releases page shows v1.8.2 as the latest release; there is no v1.9 tag.",
+     "zh": "发布页最新版本是 v1.8.2，没有 v1.9 标签。",
      "status": {
-      "en": "No public progress",
-      "zh": "无公开进展"
+      "en": "Not released",
+      "zh": "未发布"
      },
-     "source_url": "https://github.com/crypto-org-chain/chain-main",
+     "source_url": "https://github.com/crypto-org-chain/cronos/releases",
      "verified": true,
      "checked": true
     }
@@ -7715,14 +7764,16 @@
     }
    ],
    "searched": [
-    "crypto-org-chain/cronos issues+PRs 'quantum' (6 hits, all dependency bumps)",
+    "crypto-org-chain/cronos PRs: #2263 (open, 2026-11-13) upgrades to Cosmos SDK v0.55.1 / CometBFT v0.40 and tests ML-DSA-65 validator key rotation; branch feat/sdk-v0.55 unmerged; latest release v1.8.2 (2026-11-09)",
     "crypto-org-chain/chain-main 'quantum' (0)",
     "crypto-org-chain/cronos-docs 'quantum' (0)",
-    "Web search: Cronos / Crypto.com post-quantum plan — no official statement found",
+    "Official article 'What's coming on Cronos Network: v1.9' (X, 2026-11-25), opened 2026-11-28",
     "Cronos has no separate improvement-proposal repo found"
    ],
    "sources": [
-    "https://github.com/crypto-org-chain/cronos/issues?q=quantum",
+    "https://github.com/crypto-org-chain/cronos/pull/2263",
+    "https://github.com/crypto-org-chain/cronos/blob/63f2d11859c67885920df88259f56e06f274d546/docs/migrations/v1.8-to-v1.9.md",
+    "https://github.com/crypto-org-chain/cronos/releases",
     "https://github.com/crypto-org-chain/chain-main",
     "https://github.com/crypto-org-chain/cronos"
    ],
@@ -7740,7 +7791,7 @@
      "crypto-org-chain/chain-main"
     ]
    },
-   "last_reviewed": "2026-11-27"
+   "last_reviewed": "2026-11-28"
   },
   {
    "id": "mantle",
