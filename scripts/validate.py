@@ -91,6 +91,9 @@ def https(url,where):
     require(u.scheme=='https' and u.hostname and not u.username and not u.password,f'Invalid URL: {where}')
 
 X_TYPES={'plan','proposal','release','research','statement'}
+X_SCHEMES=r'ML-DSA|ML-KEM|SLH-DSA|FN-DSA|Falcon|SPHINCS|Dilithium|XMSS|WOTS|LMS|Kyber|NIST|Rainbow|UOV|SQIsign|lattice'
+X_QUANTUM_EN=re.compile(r'quantum|signature|'+X_SCHEMES,re.I)
+X_QUANTUM_ZH=re.compile(r'量子|签名|格密码|哈希签名|'+X_SCHEMES,re.I)
 X_POST=re.compile(r'https://(x|twitter)\.com/[A-Za-z0-9_]+/status/\d+')
 
 def validate_chains():
@@ -238,6 +241,10 @@ def validate_chains():
             bilingual(t.get('relation'),f'{w}.relation')
             require(t.get('type') in X_TYPES,f'type is one of {sorted(X_TYPES)}: {w}')
             bilingual(t.get('summary'),f'{w}.summary')
+            # only posts about quantum or post-quantum work: a project's ordinary updates (releases, forks, wallet listings,
+            # audit dates) are left out, on post-quantum native chains too. Both summaries must say what the quantum content is.
+            require(X_QUANTUM_EN.search((t.get('summary') or {}).get('en') or '') and X_QUANTUM_ZH.search((t.get('summary') or {}).get('zh') or ''),
+                    f'summary names the quantum or post-quantum content in English and Chinese (ordinary project updates are not listed): {w}')
             require(X_POST.fullmatch(t.get('url') or ''),f'url is an x.com post: {w}')
         talk=c.get('x_talk') or []
         require(len({t['url'] for t in talk})==len(talk),f'each X post is listed once: {cid}')

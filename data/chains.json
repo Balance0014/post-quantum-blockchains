@@ -220,7 +220,7 @@
      "type": "research",
      "summary": {
       "zh": "发文认为量子迁移之争不只是「冻不冻结有风险的币」，而是 ECDSA 失效时怎样把产权损失降到最小。",
-      "en": "Argues the migration debate is about minimizing property-rights violations if ECDSA stops proving ownership, not only whether to freeze vulnerable coins."
+      "en": "Argues the quantum migration debate is about minimizing property-rights violations if ECDSA stops proving ownership, not only whether to freeze vulnerable coins."
      },
      "url": "https://x.com/lopp/status/2100267873822249329",
      "checked": "2026-11-28"
@@ -2794,21 +2794,6 @@
      },
      "url": "https://x.com/QRLedger/status/2110460501113323832",
      "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-09-02",
-     "who": "QRL",
-     "relation": {
-      "zh": "QRL 官方号",
-      "en": "Official QRL account"
-     },
-     "type": "plan",
-     "summary": {
-      "zh": "核心团队今夏在新加坡集中开发 QRL 2.0。",
-      "en": "The core team met in Singapore this summer to build QRL 2.0."
-     },
-     "url": "https://x.com/QRLedger/status/2095134180237545635",
-     "checked": "2026-11-28"
     }
    ],
    "network": {
@@ -2918,21 +2903,6 @@
    ],
    "unverified": [],
    "x_talk": [
-    {
-     "date": "2026-11-23",
-     "who": "Tidecoin",
-     "relation": {
-      "zh": "Tidecoin 官方号",
-      "en": "Official Tidecoin account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "v1.0.0rc4 开放测试；主网合并挖矿仍未开启。",
-      "en": "v1.0.0rc4 is available for testing; merged mining on mainnet remains disabled."
-     },
-     "url": "https://x.com/tidecoin/status/2124848260036595853",
-     "checked": "2026-11-28"
-    },
     {
      "date": "2026-10-14",
      "who": "Tidecoin",
@@ -3205,23 +3175,6 @@
       "zh": "2026-11-27 我们的核查环境打不开 scan.cellframe.net 和 cellframe.net；代码仓库 2026-11-26 仍有更新。"
      },
      "url": "https://github.com/demlabs-cellframe/cellframe-node"
-    }
-   ],
-   "x_talk": [
-    {
-     "date": "2026-10-26",
-     "who": "Cellframe Network",
-     "relation": {
-      "zh": "Cellframe 官方号",
-      "en": "Official Cellframe account"
-     },
-     "type": "plan",
-     "summary": {
-      "zh": "团队眼下两件事：加固网络，并把 6.0 分支的主要功能移植到现在的 5.7 和即将发布的过渡版 5.8。",
-      "en": "The team is focused on hardening the network and backporting the main 6.0 features to the current 5.7 release and the imminent interim 5.8 release."
-     },
-     "url": "https://x.com/cellframenet/status/2114635661164658959",
-     "checked": "2026-11-28"
     }
    ],
    "network": {
@@ -3538,53 +3491,6 @@
      "url": "https://neptune.cash/"
     }
    ],
-   "x_talk": [
-    {
-     "date": "2026-11-12",
-     "who": "Neptune Cash",
-     "relation": {
-      "zh": "Neptune Cash 官方号",
-      "en": "Official Neptune Cash account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "软分叉 epsilon 并入主代码：从 62,500 号区块起，每个新区块都证明前一个区块有效。",
-      "en": "Softfork epsilon is merged: from block 62,500, every new block proves the one before it is valid."
-     },
-     "url": "https://x.com/NeptuneCash/status/2120937299693228153",
-     "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-10-14",
-     "who": "Neptune Cash",
-     "relation": {
-      "zh": "Neptune Cash 官方号",
-      "en": "Official Neptune Cash account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "发布 Neptune Core v0.19.1，改进并加固点对点网络。",
-      "en": "Released Neptune Core v0.19.1, which improves and hardens peer-to-peer networking."
-     },
-     "url": "https://x.com/NeptuneCash/status/2110425346633843020",
-     "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-09-22",
-     "who": "Neptune Cash",
-     "relation": {
-      "zh": "Neptune Cash 官方号",
-      "en": "Official Neptune Cash account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "硬分叉 Delta 在 55,000 号区块生效：Triton VM 8 和交易串联上线。",
-      "en": "Hard Fork Delta activates at block 55,000: Triton VM 8 and transaction chaining go live."
-     },
-     "url": "https://x.com/NeptuneCash/status/2102473403399545304",
-     "checked": "2026-11-28"
-    }
-   ],
    "network": {
     "probe": null,
     "no_probe_reason": {
@@ -3714,21 +3620,6 @@
       "en": "Weekly recap after mainnet launch: every transaction has used post-quantum signatures since genesis, so there are no legacy ECDSA accounts to migrate."
      },
      "url": "https://x.com/QuantusNetwork/status/2099964907659592031",
-     "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-09-09",
-     "who": "Quantus",
-     "relation": {
-      "zh": "Quantus 官方号",
-      "en": "Official Quantus account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "宣布 Quantus 主网上线，币只能靠挖矿获得。",
-      "en": "Announced that Quantus is live; coins can only be obtained by mining."
-     },
-     "url": "https://x.com/QuantusNetwork/status/2097684989814919380",
      "checked": "2026-11-28"
     }
    ],
@@ -4112,21 +4003,6 @@
      },
      "url": "https://x.com/soqucoin/status/2125635698594378097",
      "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-10-21",
-     "who": "Soqucoin",
-     "relation": {
-      "zh": "Soqucoin 官方号",
-      "en": "Official Soqucoin account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "主网上线一周：SoquShield 钱包已上架 iOS 和安卓。",
-      "en": "One week after mainnet launch, the SoquShield wallet is available on iOS and Android."
-     },
-     "url": "https://x.com/soqucoin/status/2112724538253627883",
-     "checked": "2026-11-28"
     }
    ],
    "network": {
@@ -4243,21 +4119,6 @@
    "unverified": [],
    "x_talk": [
     {
-     "date": "2026-11-20",
-     "who": "QANplatform",
-     "relation": {
-      "zh": "QANplatform 官方号",
-      "en": "Official QANplatform account"
-     },
-     "type": "plan",
-     "summary": {
-      "zh": "主网代码已写完；下周做内部复查和文档，11 月 30 日那一周把代码交给审计方。",
-      "en": "The mainnet codebase is complete; internal review and documentation come next week, with the code handed to the auditor in the week of Nov 30."
-     },
-     "url": "https://x.com/QANplatform/status/2123861188895244442",
-     "checked": "2026-11-28"
-    },
-    {
      "date": "2026-11-16",
      "who": "QANplatform",
      "relation": {
@@ -4270,21 +4131,6 @@
       "en": "October update: the execution-layer code went to an external auditor, and the team found a way to add post-quantum protection without modifying Lighthouse."
      },
      "url": "https://x.com/QANplatform/status/2122347496680632779",
-     "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-10-13",
-     "who": "QANplatform",
-     "relation": {
-      "zh": "QANplatform 官方号",
-      "en": "Official QANplatform account"
-     },
-     "type": "plan",
-     "summary": {
-      "zh": "主网的共识层选定 Sigma Prime 开发的 Lighthouse。",
-      "en": "Chose Lighthouse by Sigma Prime as the consensus client for the mainnet stack."
-     },
-     "url": "https://x.com/QANplatform/status/2110047432608305527",
      "checked": "2026-11-28"
     }
    ],
@@ -9972,36 +9818,6 @@
    ],
    "x_talk": [
     {
-     "date": "2026-11-20",
-     "who": "Qbit",
-     "relation": {
-      "zh": "Qbit 官方号",
-      "en": "Official Qbit account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "Qbit 钱包升级：多钱包切换、批量签名和发送更顺、最低手续费率降到 0.25 bits/vB。",
-      "en": "Upgraded Qbit Wallet: an account switcher, smoother batch signing and sending, and a minimum fee rate lowered to 0.25 bits/vB."
-     },
-     "url": "https://x.com/QbitDotOrg/status/2123875322412073365",
-     "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-11-16",
-     "who": "Qbit",
-     "relation": {
-      "zh": "Qbit 官方号",
-      "en": "Official Qbit account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "发布 Qbit Core v1.0.1，主网上线后的第一个维护版本，含 75 个合并请求，不用重建索引或迁移钱包。",
-      "en": "Released Qbit Core v1.0.1, the first maintenance release since mainnet launch, with 75 pull requests and no reindex or wallet migration needed."
-     },
-     "url": "https://x.com/QbitDotOrg/status/2122403676484403515",
-     "checked": "2026-11-28"
-    },
-    {
      "date": "2026-10-27",
      "who": "Qbit",
      "relation": {
@@ -10601,21 +10417,6 @@
      },
      "url": "https://x.com/ignotus_nemo/status/2118956254945030177",
      "checked": "2026-11-28"
-    },
-    {
-     "date": "2026-11-04",
-     "who": "Ignotus",
-     "relation": {
-      "zh": "Parano1d 创始人（化名，账号链接到 parano1d.org）",
-      "en": "Founder of Parano1d (pseudonymous; the account links to parano1d.org)"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "Parano1d v2.1 在主网生效，分叉在 279,370 号区块激活。",
-      "en": "Parano1d v2.1 is live on mainnet; the fork activated at block 279,370."
-     },
-     "url": "https://x.com/ignotus_nemo/status/2117839293125128233",
-     "checked": "2026-11-28"
     }
    ],
    "searched": [
@@ -10992,21 +10793,6 @@
     }
    ],
    "x_talk": [
-    {
-     "date": "2026-11-25",
-     "who": "QoreChain",
-     "relation": {
-      "zh": "QoreChain 官方号",
-      "en": "Official QoreChain account"
-     },
-     "type": "release",
-     "summary": {
-      "zh": "测试网 v3.2.10：EVM 合约可以直接调用经治理批准的 Solana 式程序。",
-      "en": "Testnet v3.2.10 lets an EVM contract call a governance-approved Solana-style program directly."
-     },
-     "url": "https://x.com/QoreChain/status/2125652917709590722",
-     "checked": "2026-11-28"
-    },
     {
      "date": "2026-10-22",
      "who": "QoreChain",

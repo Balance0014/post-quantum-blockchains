@@ -1872,11 +1872,11 @@ const METHOD = {
 };
 Object.assign(METHOD.en, {
   x_h: "Discussion on X",
-  x_list: ["Chain pages can show what people say on X about a chain's post-quantum work. We include only people and accounts with a public identity and a stated role around the chain, such as founders, foundations, core developers, proposal authors, researchers, wallets, exchanges and official accounts.", "We open every original post and record the date we checked it. Each line gives the date, who posted and their role, the kind of post (a plan or timeline, a proposal, a release, research or a statement), our one-sentence summary and a link to the post. A chain page shows the three newest; the rest open with \"Show more\".", "These are claims. They never set or change a stage, and a chain with no posts listed is not marked down: a decentralized chain may have no single voice. Ordinary users are not named."],
+  x_list: ["Chain pages can show what people say on X about a chain's post-quantum work. We include only people and accounts with a public identity and a stated role around the chain, such as founders, foundations, core developers, proposal authors, researchers, wallets, exchanges and official accounts. The post itself must be about quantum computing or post-quantum work: a project's ordinary updates, such as releases, forks, wallet listings or audit dates, are not listed, on post-quantum native chains too.", "We open every original post and record the date we checked it. Each line gives the date, who posted and their role, the kind of post (a plan or timeline, a proposal, a release, research or a statement), our one-sentence summary and a link to the post. A chain page shows the three newest; the rest open with \"Show more\".", "These are claims. They never set or change a stage, and a chain with no posts listed is not marked down: a decentralized chain may have no single voice. Ordinary users are not named."],
 });
 Object.assign(METHOD.zh, {
   x_h: "X 上的讨论",
-  x_list: ["链的详情页可以列出 X 上关于这条链抗量子进展的说法。只收有公开身份、和这条链关系明确的人和账号，例如创始人、基金会、核心开发者、提案作者、研究者、钱包、交易所和官方号。", "每一条我们都打开原帖核对，并记下核对日期。每行写明日期、谁发的及其身份、帖子类型（计划或时间表、提案讨论、上线、研究、表态）、我们的一句话转述和原帖链接。详情页显示最新的 3 条，其余点「展开」查看。", "这些都只是说法，不决定也不改变档位。没有列出帖子的链不会因此扣分：去中心化的链可能本来就没有统一的发言人。普通用户不写名字。"],
+  x_list: ["链的详情页可以列出 X 上关于这条链抗量子进展的说法。只收有公开身份、和这条链关系明确的人和账号，例如创始人、基金会、核心开发者、提案作者、研究者、钱包、交易所和官方号。帖子本身要谈量子或抗量子才收：项目的普通更新，例如发版、分叉、钱包上架、审计排期，不收，原生抗量子链也一样。", "每一条我们都打开原帖核对，并记下核对日期。每行写明日期、谁发的及其身份、帖子类型（计划或时间表、提案讨论、上线、研究、表态）、我们的一句话转述和原帖链接。详情页显示最新的 3 条，其余点「展开」查看。", "这些都只是说法，不决定也不改变档位。没有列出帖子的链不会因此扣分：去中心化的链可能本来就没有统一的发言人。普通用户不写名字。"],
 });
 function howHTML() {
   const M = METHOD[lang];
