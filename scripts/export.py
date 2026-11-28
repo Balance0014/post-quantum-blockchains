@@ -12,6 +12,8 @@ from charts import charts, long_date, status
 ROOT = Path(__file__).resolve().parents[1]
 SUBMIT = 'https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml'
 SUMMARY = re.compile(r'(<!-- summary: [^\n]*-->\n).*?(\n<!-- /summary -->)', re.S)
+PROJECTS_SUMMARY = re.compile(r'(<!-- projects-summary: [^\n]*-->\n).*?(\n<!-- /projects-summary -->)', re.S)
+SITE = 'https://balance0014.github.io/post-quantum-blockchains/'
 PINNED = re.compile(r'(<!-- pinned: [^\n]*-->).*?(<!-- /pinned -->)', re.S)
 ZH_NETWORK = {'testnet': '测试网', 'devnet': '开发网', 'demo': '演示', 'planned': '计划中'}
 
@@ -82,8 +84,8 @@ def outputs():
         'docs/projects.md': '\n'.join(lines)+'\n',
         'docs/signature-sizes.md': '\n'.join(sizes),
         **charts(),
-        'README.md': with_pinned(with_summary('README.md', summary_en(projects)), pinned_en(list(refs.values()))),
-        'README.zh-CN.md': with_pinned(with_summary('README.zh-CN.md', summary_zh(projects)), pinned_zh(list(refs.values()))),
+        'README.md': readme('README.md', site_summary_en(), summary_en(projects), pinned_en(list(refs.values()))),
+        'README.zh-CN.md': readme('README.zh-CN.md', site_summary_zh(), summary_zh(projects), pinned_zh(list(refs.values()))),
     }
 
 def spell(n):
@@ -99,9 +101,34 @@ def as_of(projects):
 def and_list(names):
     return names[0] if len(names) == 1 else ', '.join(names[:-1]) + ' and ' + names[-1]
 
+def site_headline():
+    """The website's three home-page figures, from build_site.headline(), so the README and the site say the same."""
+    import build_site
+    _, _, _, checked, views = build_site.site_views()
+    return build_site.headline(views, checked)
+
+def site_summary_en():
+    h = site_headline()
+    x, k, n = h['x'], len(h['usable_top']), h['all']
+    names = and_list([u['en'] for u in h['usable_top']]) if k else ''
+    return '\n'.join([f"Data as of {long_date(h['checked'])}:", '',
+        f"- Of the {h['top']} largest blockchains (CoinGecko top 100 with their own network), **{k}** {'lets' if k == 1 else 'let'} holders use a post-quantum signature on mainnet today{': ' + names if k else ''}.",
+        f"- Of all **{n}** chains tracked, **{h['use']}** {'offers' if h['use'] == 1 else 'offer'} post-quantum signatures on mainnet ({h['default']} by default, {h['optin']} opt-in).",
+        f"- **{x['chains']}** of the {n} had an official account or a core figure post about their quantum plans on X in the last {x['days']} days ({x['posts']} original {'post' if x['posts'] == 1 else 'posts'}, each checked): [see the posts]({SITE}x/)."])
+
+def site_summary_zh():
+    h = site_headline()
+    x, k, n = h['x'], len(h['usable_top']), h['all']
+    d = date.fromisoformat(h['checked'])
+    names = '：' + '、'.join(u['zh'] for u in h['usable_top']) if k else ''
+    return '\n'.join([f'数据截至 {d.year} 年 {d.month} 月 {d.day} 日：', '',
+        f"- 市值最大的 {h['top']} 条区块链（CoinGecko 市值前 100 中有自己网络的）里，今天有 **{k}** 条能让持币人在主网上使用抗量子签名{names}。",
+        f"- 收录的全部 **{n}** 条链里，主网已能用抗量子签名的有 **{h['use']}** 条（默认 {h['default']} 条、可选 {h['optin']} 条）。",
+        f"- {n} 条里有 **{x['chains']}** 条，近 {x['days']} 天有官方号或核心人物在 X 上谈抗量子（{x['posts']} 条原帖，逐条核对）：[看 X 上的讨论]({SITE}zh/x/)。"])
+
 def summary_en(projects):
     g, n = groups(projects), len(projects)
-    out = [f'Across the {n} listed projects (data as of {long_date(as_of(projects))}):', '']
+    out = [f'**The chains and projects list** covers {n} projects that already use post-quantum cryptography (data as of {long_date(as_of(projects))}):', '']
     if g['default']:
         k = len(g['default'])
         out.append(f"- **{k} of the {n}** {'uses' if k == 1 else 'use'} a post-quantum scheme on {'its' if k == 1 else 'their'} default transaction path.")
@@ -117,7 +144,7 @@ def summary_en(projects):
 def summary_zh(projects):
     g, n = groups(projects), len(projects)
     d = date.fromisoformat(as_of(projects))
-    out = [f'已收录 {n} 个项目（数据截至 {d.year} 年 {d.month} 月 {d.day} 日）：', '']
+    out = [f'**链与项目清单**收录了 {n} 个已经用上抗量子密码的项目（数据截至 {d.year} 年 {d.month} 月 {d.day} 日）：', '']
     if g['default']:
         out.append(f"- **{n} 个里有 {len(g['default'])} 个**，日常交易默认就走抗量子方案。")
     if g['optin']:
@@ -144,12 +171,18 @@ def with_pinned(text, sentence):
         raise ValueError('README: expected one <!-- pinned: ... --> block')
     return new
 
-def with_summary(relative, block):
-    text = (ROOT / relative).read_text(encoding='utf-8')
-    new, count = SUMMARY.subn(lambda m: m.group(1) + block + m.group(2), text)
+def with_block(text, pattern, block, relative, name):
+    new, count = pattern.subn(lambda m: m.group(1) + block + m.group(2), text)
     if count != 1:
-        raise ValueError(f'{relative}: expected one <!-- summary: ... --> block')
+        raise ValueError(f'{relative}: expected one <!-- {name}: ... --> block')
     return new
+
+def readme(relative, site, projects, pinned):
+    """The README's generated parts: the site's figures at the top, the project list's summary under "What's in the map"."""
+    text = (ROOT / relative).read_text(encoding='utf-8')
+    text = with_block(text, SUMMARY, site, relative, 'summary')
+    text = with_block(text, PROJECTS_SUMMARY, projects, relative, 'projects-summary')
+    return with_pinned(text, pinned)
 
 if __name__ == '__main__':
     for relative, text in outputs().items():

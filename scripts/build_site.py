@@ -845,6 +845,34 @@ def script_json(obj):
     return json.dumps(obj, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
 
+def site_views():
+    """Every chain as the pages show it, read from data/: (chains.json, market caps, market-cap date, check date, views)."""
+    data = load('data/chains.json')
+    net = load('data/network.json', {})
+    mc = load('data/market_cap.json')
+    ranks = {x['id']: x['rank'] for x in mc['coins']} if mc else None
+    mcap_date = (mc or data['market_cap'])['queried_at_utc'][:10]
+    projects = {p['id']: p for p in load('data/projects.json')['projects']}
+    sources = {s['id']: s for s in load('data/sources.json')['sources']}
+    sizes = {p['id']: p for p in load('data/signature-sizes.json')['parameters']}
+    checked = (net.get('checked_at_utc') or '')[:10] or max(c['last_reviewed'] for c in data['chains'])
+    views = [chain_view(c, net, ranks, projects, sources, sizes, checked) for c in data['chains']]
+    today = date.fromisoformat(checked)
+    for v in views:
+        v['stale_days'] = (today - date.fromisoformat(v['reviewed'])).days
+    return data, mc, mcap_date, checked, views
+
+
+def headline(views, checked):
+    """The three figures on the home page, counted once: the website's cards and the README summaries both read them."""
+    top = [v for v in views if v['rank'] is not None]
+    usable_top = sorted((v for v in top if v['stage'] >= 4), key=lambda v: v['rank'])
+    use = [v for v in views if v['stage'] >= 4]
+    default = sum(1 for v in use if v['stage'] == 5)
+    return {'checked': checked, 'top': len(top), 'usable_top': [{'en': v['name'], 'zh': v['zh_name'] or v['name']} for v in usable_top],
+            'all': len(views), 'use': len(use), 'default': default, 'optin': len(use) - default, 'x': x_stats(views, checked)[0]}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', default='_site')
@@ -854,23 +882,12 @@ def main():
     base = args.base if args.base.endswith('/') else args.base + '/'
     out = (ROOT / args.out).resolve()
 
-    data = load('data/chains.json')
-    net = load('data/network.json', {})
-    mc = load('data/market_cap.json')
-    ranks = {x['id']: x['rank'] for x in mc['coins']} if mc else None
-    mcap_date = (mc or data['market_cap'])['queried_at_utc'][:10]
-    projects = {p['id']: p for p in load('data/projects.json')['projects']}
-    sources = {s['id']: s for s in load('data/sources.json')['sources']}
+    data, mc, mcap_date, checked, views = site_views()
     changes_dir = ROOT / args.changes
     changes = sorted((json.loads(p.read_text(encoding='utf-8')) for p in changes_dir.glob('*.json')),
                      key=lambda x: x['date'], reverse=True) if changes_dir.exists() else []
-    sizes = {p['id']: p for p in load('data/signature-sizes.json')['parameters']}
-    checked = (net.get('checked_at_utc') or '')[:10] or max(c['last_reviewed'] for c in data['chains'])
-    views = [chain_view(c, net, ranks, projects, sources, sizes, checked) for c in data['chains']]
-    today = date.fromisoformat(checked)
-    for v in views:
-        v['stale_days'] = (today - date.fromisoformat(v['reviewed'])).days
-    xs, xposts = x_stats(views, checked)
+    head = headline(views, checked)
+    xs, xposts = head['x'], x_stats(views, checked)[1]
     months = milestone_months(views, checked)
     events = milestone_events(views)
     release = load('data/release.json')
@@ -905,7 +922,7 @@ def main():
         common = {'lang': lang, 'base': base, 'repo': REPO, 'chips': CHIPS, 'checked': checked, 'mcap_date': mcap_date,
                   'has_changes': bool(changes), 'data_url': REPO + '/tree/main/data', 'chain_count': len(views),
                   'release': release, 'examples': examples, 'site_url': ORIGIN + path_for(lang, ''), 'site_root': ORIGIN + path_for('en', '')}
-        home = dict(common, page='home', xs=xs, chains=[home_view(v, lang) for v in views], months=months, events=events)
+        home = dict(common, page='home', xs=xs, head=head, chains=[home_view(v, lang) for v in views], months=months, events=events)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),
               'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by-nc/4.0/', 'dateModified': checked,

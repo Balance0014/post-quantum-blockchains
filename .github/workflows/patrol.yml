@@ -69,7 +69,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git add data
+          # the README's figures are counted from the data (scripts/export.py); keep them in step
+          python3 -B scripts/export.py > /dev/null
+          git add data README.md README.zh-CN.md
           git commit -q -m "Weekly patrol $day"
           git push -f origin "$branch"
           if gh pr create --base main --head "$branch" --title "Weekly patrol $day" --body-file "$RUNNER_TEMP/report.md"; then exit 0; fi

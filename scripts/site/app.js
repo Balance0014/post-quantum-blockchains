@@ -1311,6 +1311,7 @@ function renderHome() {
   const big = top.filter((c) => c.rank <= 2).sort((a, b) => a.rank - b.rank);
   const bigLine = [...new Set(big.map((c) => c.stage))].map((st) => { const g = big.filter((c) => c.stage === st); return esc(L("big")(list(g.map(name)), st, "\u0001")).replace("\u0001", stageTerm(st)); }).join(" ");
   const all = D.chains.length, use = D.chains.filter((c) => c.stage >= 4), def = use.filter((c) => c.stage === 5).length;
+  const H = D.head; /* the three figures, counted at build time by headline() in build_site.py, the same numbers as the README */
   const dated = use.filter((c) => c.since).length, natMig = D.chains.filter((c) => c.mig && c.mig.value === "native").length;
   const notNat = use.filter((c) => c.stage === 5 && !(c.mig && c.mig.value === "native")).map(name);
   const recon = `<div class="recon"><p>${esc(L("recon")(all, top.length, all - top.length, use.length, def, use.length - def, usable.length))}</p><ul>${dated < use.length ? `<li>${esc(L("recon_dates")(dated, use.length))}</li>` : ""}${notNat.length ? `<li>${esc(L("recon_mig")(natMig, def, list(notNat)))}</li>` : ""}</ul></div>`;
@@ -1321,7 +1322,7 @@ function renderHome() {
     <section id="overview" class="layer" aria-label="${esc(L("nav_overview"))}">
       <div class="hero"><h1>${verdict}</h1><p>${esc(L("verdict_sub")(list(usable.map(name)), list(t3)))}</p>${check}</div>
       <div class="kpis">
-        ${kpi(`${num(usable.length)}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(`${num(use.length)}<small>/${all}</small>`, L("kpi_use")(def, use.length - def))}${xCard()}
+        ${kpi(`${num(H.usable_top.length)}<small>/${H.top}</small>`, L("kpi_top"), "lead")}${kpi(`${num(H.use)}<small>/${H.all}</small>`, L("kpi_use")(H.default, H.optin))}${xCard()}
       </div>
       <p class="kpi-date">${esc(L("kpi_date_line")(fmtDate(D.checked)))}</p>
       <details class="howc"><summary>${esc(L("howc"))}${ICON_CHEV}</summary><div class="howc-b"><p class="big">${bigLine}</p>${recon}<p>${esc(L("scope_eyebrow")(top.length, fmtDate(D.mcap_date || D.checked)))}${lang === "zh" ? "。" : ". "}${esc(L("who"))}</p></div></details>

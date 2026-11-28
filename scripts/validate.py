@@ -309,6 +309,10 @@ def validate():
     require({c['path'] for c in release['charts']}=={k for k in generated if k.startswith('charts/')},'release.json must list the generated charts')
     for relative,text in generated.items():
         require((ROOT/relative).read_text(encoding='utf-8')==text,f'Generated file is stale: {relative}; run scripts/export.py')
+    # The README's top figures are the website's home-page figures, counted from chains.json by build_site.headline().
+    from export import site_summary_en, site_summary_zh
+    for relative,block in (('README.md',site_summary_en()),('README.zh-CN.md',site_summary_zh())):
+        require(block in (ROOT/relative).read_text(encoding='utf-8'),f'{relative}: the figures at the top must equal the website figures counted from the data; run scripts/export.py')
     # docs/projects.md headings become anchors; badge and table links use the project ID.
     for p in projects:
         require(re.sub(r'[^a-z0-9 -]','',p['name'].lower()).replace(' ','-')==p['id'],f"ID must match the heading anchor: {p['id']}")
