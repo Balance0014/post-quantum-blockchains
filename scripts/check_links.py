@@ -11,8 +11,10 @@ Links to X (x.com, twitter.com) are never requested by any script, not even anon
 posts too, so the request proves nothing. They are counted and listed as not requested; whether a post still exists
 is checked through X's official API when the X data is updated.
 
-github.com links are checked through the GitHub API (with GITHUB_TOKEN when set): github.com answers 503 to
-many page requests from CI machines, and the API also confirms that a pinned file exists at its pinned commit.
+github.com links to a file (/blob/<ref>/<path>) are checked at raw.githubusercontent.com/<repo>/<ref>/<path>, which has
+no API quota and answers 404 when the file is not at that commit. Other github.com links are checked through the GitHub
+API (with GITHUB_TOKEN when set), because github.com answers 503 to many page requests from CI machines. When the API
+quota is used up (403 or 429 with a rate-limit signal), the link is reported as rate limited, not judged.
 
 Usage:
   python3 scripts/check_links.py               # exit 1 on any broken link
@@ -114,8 +116,19 @@ def github_api(url):
     return repo  # repository home, issue searches, release lists, discussions: the repository must exist
 
 
+def raw_url(url):
+    """raw.githubusercontent.com address of a github.com file link, or None if the link is not to a file."""
+    u = urlparse(url)
+    parts = u.path.split('/')  # ['', owner, repo, 'blob', ref..., path...]
+    if u.netloc == 'github.com' and len(parts) > 5 and parts[3] == 'blob':
+        return f"https://raw.githubusercontent.com/{'/'.join(parts[1:3] + parts[4:])}"
+    return None
+
+
 def fetch(url):
-    if urlparse(url).netloc == 'github.com':
+    if raw_url(url):  # files: no API quota spent
+        url = raw_url(url)
+    elif urlparse(url).netloc == 'github.com':
         api = github_api(url)
         if api:
             headers = {'User-Agent': UA, 'Accept': 'application/vnd.github+json'}
@@ -193,8 +206,9 @@ def main():
         host = urlparse(url).netloc
         row = (url, status, note, links[url])
         (excused if host in allowed else broken).append(row)
-    print(f'{len(links)} links checked: {len(links) - len(broken) - len(excused)} open, '
-          f'{len(excused)} on allowlisted hosts did not answer, {len(limited)} rate limited (not judged), {len(broken)} broken; '
+    print(f'{len(links)} links: {len(links) - len(broken) - len(excused) - len(limited)} open, '
+          f'{len(excused)} on allowlisted hosts did not answer, {len(limited)} rate limited and not judged '
+          f'({100 * len(limited) / max(len(links), 1):.1f}%), {len(broken)} broken; '
           f'{len(x_links)} links to X not requested')
     for url, where in limited:
         print(f'  RATE LIMITED, not judged: {url} (in {where})')

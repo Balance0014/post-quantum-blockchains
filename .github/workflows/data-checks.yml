@@ -1,7 +1,15 @@
 name: Data checks
+# Runs once per change: on pull requests, and on pushes to main (a push to a branch with a pull request is
+# checked by the pull request run). A newer push cancels the older run of the same branch, so the GitHub
+# API quota that the link and golden checks share is not spent on runs nobody reads.
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+concurrency:
+  group: data-checks-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

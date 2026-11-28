@@ -133,12 +133,12 @@ test.describe('Home', () => {
       await b.click();
       await expect(b).toHaveAttribute('aria-expanded', 'true');
       await expect(hidden.first()).toBeVisible();
-      await b.scrollIntoViewIfNeeded(); // the opened list may push the button off screen; measure where the reader taps it
-      const top = (await b.boundingBox()).y;
-      await b.click();
+      await b.scrollIntoViewIfNeeded();
+      // measured in the page at the moment of the click: while the page settles, a real click may scroll first
+      const [before, after] = await b.evaluate((el) => { const y = el.getBoundingClientRect().top; el.click(); return [y, el.getBoundingClientRect().top]; });
       await expect(b).toHaveAttribute('aria-expanded', 'false');
       await expect(hidden.first()).toBeHidden();
-      expect(Math.abs((await b.boundingBox()).y - top)).toBeLessThan(400);
+      expect(Math.abs(after - before), 'the button stays where the reader clicked it').toBeLessThan(2);
     }
   });
 
@@ -201,16 +201,16 @@ test.describe('Home', () => {
     const btn = page.locator('#showall button');
     await expect(rows(page)).toHaveCount(20);
     await btn.scrollIntoViewIfNeeded();
-    const at = async () => (await btn.boundingBox()).y; // where the reader sees the button
-    const y0 = await at();
-    await btn.click();
+    // where the button is on screen, measured in the page at the moment of each click (a real click may scroll first)
+    const click = () => btn.evaluate((el) => { const y = el.getBoundingClientRect().top; el.click(); return [y, document.querySelector('#showall button').getBoundingClientRect().top]; });
+    const [y0] = await click();
     await expect(btn).toHaveAttribute('aria-expanded', 'true');
     expect(await rows(page).count()).toBeGreaterThan(20);
     await btn.scrollIntoViewIfNeeded();
-    await btn.click();
+    const [, y1] = await click();
     await expect(btn).toHaveAttribute('aria-expanded', 'false');
     await expect(rows(page)).toHaveCount(20);
-    expect(Math.abs((await at()) - y0)).toBeLessThan(5);
+    expect(Math.abs(y1 - y0), 'the button is back where it was when the list was opened').toBeLessThan(5);
   });
 
   test('"More" on a row expands the latest step and folds it', async ({ page }) => {
@@ -315,14 +315,18 @@ test.describe('All pages', () => {
 
   test('Home: the header menu opens and closes', async ({ page, u }) => {
     await page.goto(u(''));
-    const menu = page.locator('details.menu'), link = menu.locator('a[data-sec="timeline"]');
-    // the menu folds behind one button at every screen width
-    await expect(link).toBeHidden();
-    await menu.locator('summary').click();
-    await expect(link).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(menu).not.toHaveAttribute('open', '');
-    await menu.locator('summary').click();
+    // up to 1100 px wide the section links fold behind the menu button; wider, they sit in the header bar
+    const menu = page.locator('details.menu'), summary = menu.locator('summary');
+    const folded = await summary.isVisible();
+    const link = folded ? menu.locator('a[data-sec="timeline"]') : page.locator('nav.main a[data-sec="timeline"]');
+    if (folded) {
+      await expect(link).toBeHidden();
+      await summary.click();
+      await expect(link).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(menu).not.toHaveAttribute('open', '');
+      await summary.click();
+    }
     await link.click();
     await expect(page.locator('#timeline')).toBeInViewport();
     await expect(menu).not.toHaveAttribute('open', '');

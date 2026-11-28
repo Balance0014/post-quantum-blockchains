@@ -6,15 +6,19 @@ primary source that shows it. A data edit that drops or contradicts one of them 
 edit cannot slip through quietly. When a fact really changes, update data/golden.json in the same pull request.
 
     python3 scripts/golden.py            # check the data (no network)
-    python3 scripts/golden.py --online   # also check that each pinned source still shows the fact (GitHub API)
+    python3 scripts/golden.py --online   # also check that each pinned source still shows the fact
+
+Online, a pinned file is read from raw.githubusercontent.com (no API quota) and a release through the GitHub API (with
+GITHUB_TOKEN when set). If GitHub refuses because a quota is used up, that fact is listed as not judged, not failed.
 """
 import argparse
-import base64
 import json
 import os
 import ssl
 import sys
+import urllib.error
 import urllib.request
+from urllib.parse import quote
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -63,12 +67,37 @@ def github(path):
         return json.loads(r.read())
 
 
+class RateLimited(Exception):
+    pass
+
+
+def rate_limited(e):
+    """GitHub's answer when a quota is used up: 429, or 403 with no requests left or a rate-limit message."""
+    if not isinstance(e, urllib.error.HTTPError) or e.code not in (403, 429):
+        return False
+    try:
+        body = e.read(2000).decode('utf-8', 'replace').lower()
+    except Exception:
+        body = ''
+    return e.code == 429 or e.headers.get('X-RateLimit-Remaining') == '0' or 'rate limit' in body
+
+
+def raw(src):
+    url = f"https://raw.githubusercontent.com/{src['repo']}/{src['ref']}/{quote(src['path'])}"
+    with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA}), context=CTX, timeout=30) as r:
+        return r.read().decode('utf-8', 'replace')
+
+
 def source_text(src):
-    if 'release' in src:
-        rel = github(f"repos/{src['release']}/releases/tags/{src['tag']}")
-        return f"{rel.get('name') or ''}\n{rel.get('body') or ''}"
-    blob = github(f"repos/{src['repo']}/contents/{src['path']}?ref={src['ref']}")
-    lines = base64.b64decode(blob['content']).decode('utf-8', 'replace').splitlines()
+    try:
+        if 'release' in src:
+            rel = github(f"repos/{src['release']}/releases/tags/{quote(src['tag'])}")
+            return f"{rel.get('name') or ''}\n{rel.get('body') or ''}"
+        lines = raw(src).splitlines()
+    except urllib.error.HTTPError as e:
+        if rate_limited(e):
+            raise RateLimited(f'HTTP {e.code}, quota used up') from e
+        raise
     a, b = src['lines']
     return '\n'.join(lines[a - 1:b])
 
@@ -86,14 +115,16 @@ def main():
     args = ap.parse_args()
     facts = json.loads((ROOT / 'data/golden.json').read_text(encoding='utf-8'))['facts']
     chains = {c['id']: c for c in json.loads((ROOT / 'data/chains.json').read_text(encoding='utf-8'))['chains']}
-    failed = 0
+    failed, limited = 0, []
     for f in facts:
         bad = check_data(f, chains)
         if args.online:
             try:
                 text = source_text(f['source'])
                 bad += [f'source {source_url(f["source"])} no longer shows {w!r}' for w in f['source']['contains'] if w not in text]
-            except Exception as e:  # a source we cannot read is a failure too: the fact is then unchecked
+            except RateLimited as e:  # GitHub refused for quota: says nothing about the source, so not judged, and listed
+                limited.append(f"{f['id']}: {source_url(f['source'])} ({e})")
+            except Exception as e:  # any other source we cannot read is a failure: the fact is then unchecked
                 bad.append(f'could not read {source_url(f["source"])}: {e}')
         if bad:
             failed += 1
@@ -104,7 +135,12 @@ def main():
         print(f'\n{failed} of {len(facts)} golden facts no longer hold. If a fact really changed, update data/golden.json '
               'in the same pull request, with a new pinned source.')
         return 1
-    print(f"OK: {len(facts)} golden facts hold{' and their pinned sources still show them' if args.online else ''}")
+    if limited:
+        print(f'Rate limited, not judged ({len(limited)} of {len(facts)} sources):')
+        for x in limited:
+            print(f'  - {x}')
+    read = len(facts) - len(limited)
+    print(f"OK: {len(facts)} golden facts hold in the data" + (f'; {read} of {len(facts)} pinned sources read online and still show them' if args.online else ''))
     return 0
 
 
