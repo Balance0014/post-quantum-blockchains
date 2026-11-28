@@ -200,6 +200,7 @@ const UI = {
     size_ref: (r) => `Reference encoding of ${r}; a chain's own encoding can differ.`,
     expo_none: "No reliable data. We cite published research only and do not estimate this ourselves.",
     commits2: (n) => `Main repository: ${n.toLocaleString("en-US")} commit${n === 1 ? "" : "s"} in 90 days (all changes, bots left out)`,
+    code_off_gh: (h) => `Code is hosted on ${h}, not GitHub, so commits are not counted.`, mirror: "Official mirror",
     commits_tip: (repo, br, q) => `Repository: github.com/${repo}${br ? `, branch ${br}` : ""}. Every commit on that branch in the 90 days before the check, whatever it changed; commits by bot accounts (logins ending in [bot]) are left out. Queried ${q}.`,
     bg_tag: "background",
     since_dagger: "Date from the project's own statement",
@@ -369,6 +370,7 @@ const UI = {
     size_ref: (r) => `${r} 的参考编码大小；各链自己的编码可能不同。`,
     expo_none: "暂无可靠数据。本站只引用已发表的研究，不自行估算。",
     commits2: (n) => `主仓库 90 天提交 ${n.toLocaleString("en-US")} 次（全部改动，不含机器人）`,
+    code_off_gh: (h) => `代码托管在 ${h}，不在 GitHub，没有统计提交次数。`, mirror: "官方镜像",
     commits_tip: (repo, br, q) => `代码库：github.com/${repo}${br ? `，${br} 分支` : ""}。核查日之前 90 天该分支上的每次提交，不论改了什么；机器人账户（用户名以 [bot] 结尾）的提交不计。查询时间 ${q}。`,
     bg_tag: "背景",
     since_dagger: "日期来自项目方说法",
@@ -1444,7 +1446,8 @@ function codeHTML(code) {
   const tip = code.repo ? L("commits_tip")(code.repo, code.branch, (code.q || "").slice(0, 16).replace("T", " ") + " UTC") : "";
   const c90 = code.c90 == null ? "" : term(esc(L("commits2")(code.c90)), tip, L("e_code")) + (code.rel && T(code.note) ? PAR(esc(T(code.note))) : "") + "<br>";
   const also = (code.also || []).filter((a) => a.c90 != null).map((a) => `${esc(L("also"))}${CO()}github.com/${esc(a.repo)} · ${esc(L("commits")(a.c90))}`).join("<br>");
-  return `${esc(L("e_release"))}${CO()}${rel}<br>${c90}${also ? also + "<br>" : ""}${code.repo ? `<a href="https://github.com/${esc(code.repo)}" target="_blank" rel="noopener">github.com/${esc(code.repo)} ↗</a>` : ""}`;
+  if (code.host) return `${esc(L("e_release"))}${CO()}—<br>${esc(L("code_off_gh")(code.host_name || code.host))}<br><a href="https://${esc(code.host)}/${esc(code.repo)}" target="_blank" rel="noopener">${esc(code.host)}/${esc(code.repo)} ↗</a>`;
+  return `${esc(L("e_release"))}${CO()}${rel}<br>${c90}${also ? also + "<br>" : ""}${code.repo ? `<a href="https://github.com/${esc(code.repo)}" target="_blank" rel="noopener">github.com/${esc(code.repo)} ↗</a>` : ""}${(code.mirrors || []).map((u) => `<br>${esc(L("mirror"))}${CO()}<a href="${esc(u)}" target="_blank" rel="noopener">${esc(host(u))} ↗</a>`).join("")}`;
 }
 const srcLink = (u, label) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(label || host(u))} ↗</a>` : "";
 function tlItem(m) {

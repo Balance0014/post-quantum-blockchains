@@ -388,11 +388,19 @@ def main():
         else:
             entry['block'] = {'ok': False, 'source': None, 'error': c['network'].get('no_probe_reason', 'no public endpoint')}
         repo = (c.get('code') or {}).get('repo')
-        if repo and not args.no_code:
+        host = (c.get('code') or {}).get('host')
+        if repo and host:
+            # hosted outside GitHub: no release or commit count, and no "quiet" status from it
+            entry['code'] = {'repo': repo, 'host': host, 'not_github': True}
+        elif repo and not args.no_code:
             try:
                 entry['code'] = code_activity(repo, since)
                 for extra in c['code'].get('also', []):
-                    entry.setdefault('code_also', []).append(code_activity(extra, since))
+                    try:
+                        entry.setdefault('code_also', []).append(code_activity(extra, since))
+                    except Exception as e:
+                        failures += 1
+                        entry.setdefault('code_also', []).append({'repo': extra, 'error': str(e)[:200]})
             except Exception as e:
                 failures += 1
                 entry['code'] = {'repo': repo, 'error': str(e)[:200]}

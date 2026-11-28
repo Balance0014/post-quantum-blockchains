@@ -76,7 +76,7 @@ Each chain names the explorer or public RPC it is read from (`network.probe` in 
 
 Public RPCs often sit behind load balancers, and a lagging node can answer with an old block. The patrol reads every endpoint at least twice, three seconds apart, and a third time when the two reads disagree; it keeps the highest block and records when it read it and every height it saw. When the newest block is older than the limit, the patrol reads an independent explorer (`network.check`), if the chain has one. A chain is marked stopped only when both sources agree; with one source, it is marked could not check.
 
-**The 90-day window** runs from the patrol date minus 90 days. Commits are counted on the default branch of the repository in `code.repo`; repositories in `code.also` are shown but don't change the status. The latest release is the newest non-draft GitHub release, or the newest tag if the repository publishes no releases.
+**The 90-day window** runs from the patrol date minus 90 days. Commits are counted on the default branch of the repository in `code.repo`; repositories in `code.also` are shown but don't change the status. A repository hosted outside GitHub names its host in `code.host` (and the host's software in `code.host_name`); the chain page links to it and says its commits are not counted, and its status never becomes "no code commits". Official mirrors elsewhere go in `code.mirrors` as links and are not counted. The latest release is the newest non-draft GitHub release, or the newest tag if the repository publishes no releases.
 
 ## Algorithm labels
 

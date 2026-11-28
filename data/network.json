@@ -2033,8 +2033,9 @@
     "source": "https://rpc.aere.network"
    },
    "code": {
-    "repo": "git.aere.network/aere-network/aere-node (Gitea, not GitHub)",
-    "error": "URL can't contain control characters. '/repos/git.aere.network/aere-network/aere-node (Gitea, not GitHub)/releases?per_page=10' (found at least ' ')"
+    "repo": "aere-network/aere-node",
+    "host": "git.aere.network",
+    "not_github": true
    },
    "status": "ok"
   },

@@ -10639,8 +10639,8 @@
    },
    "code": {
     "repo": "ignotusnemo/parano1d",
-    "also": [
-     "git.parano1d.org/ignotusnemo/parano1d (official mirror)"
+    "mirrors": [
+     "https://git.parano1d.org/ignotusnemo/parano1d"
     ]
    },
    "last_reviewed": "2026-11-27",
@@ -10827,10 +10827,12 @@
     "block_interval_note": "0.5 s target stated on the project site; the project's verifiable-claims.json measured 0.591 s over 100,000 blocks on 2026-11-24."
    },
    "code": {
-    "repo": "git.aere.network/aere-network/aere-node (Gitea, not GitHub)",
+    "repo": "aere-network/aere-node",
+    "host": "git.aere.network",
+    "host_name": "Gitea",
     "also": [
-     "git.aere.network/aere-network/aere-client2",
-     "git.aere.network/aere-network/aere-research"
+     "aere-network/aere-client2",
+     "aere-network/aere-research"
     ]
    },
    "last_reviewed": "2026-11-27",

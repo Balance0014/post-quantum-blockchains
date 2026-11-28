@@ -444,7 +444,7 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
     spec = c.get('code') or {}
     code = None
     if spec:
-        code = {'repo': spec.get('repo'), 'note': spec.get('note'), 'c90': None, 'also': []}
+        code = {'repo': spec.get('repo'), 'host': spec.get('host'), 'host_name': spec.get('host_name'), 'mirrors': spec.get('mirrors') or [], 'note': spec.get('note'), 'c90': None, 'also': []}
         got = n.get('code') or {}
         if got and 'error' not in got:
             code.update(rel=got.get('release'), rel_date=got.get('release_date'), rel_pre=bool(got.get('prerelease')),

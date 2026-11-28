@@ -169,6 +169,15 @@ def validate_chains():
             https(s if isinstance(s,str) else s['url'],f'{cid}.sources')
         for s in c.get('extra_sources') or []:
             https(s['url'],f'{cid}.extra_sources')
+        # code.repo is a GitHub owner/repo; a repository hosted elsewhere names its host (and the host's software)
+        code=c.get('code')
+        if code:
+            for r in ([code['repo']] if code.get('repo') is not None else [])+list(code.get('also') or []):
+                require(isinstance(r,str) and re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',r),f'code.repo and code.also are owner/repo (put another host in code.host): {cid}: {r!r}')
+            for u in code.get('mirrors') or []:
+                https(u,f'{cid}.code.mirrors')
+            if 'host' in code:
+                require(re.fullmatch(r'[a-z0-9-]+(\.[a-z0-9-]+)+',code['host'] or '') and code['host']!='github.com' and code.get('host_name'),f'code.host is a hostname other than github.com, with code.host_name: {cid}')
         n=c['network']
         # Without block_interval_s a chain gets the 10-minute limit; a slower target must be stated with its source.
         if n.get('block_interval_s') is not None:
