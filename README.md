@@ -26,7 +26,7 @@ Across the 25 listed projects (data as of November 27, 2026):
 
 **What gets listed:** every claim needs a public primary source, such as release notes, a specification, governance records or code pinned to a commit, and a clear status: on by default, opt-in, testnet, demo or planned. The full bar is in the [methodology](docs/methodology.md) and under [Submit a project](#submit-a-project).
 
-**How it stays current:** a maintainer replies to every submission and correction within 7 days. Accepted changes go into the data, the tables, both charts and the [changelog](CHANGELOG.md) when they're merged, and each entry keeps its own review date. The first 17 entries were reviewed October 23, 2026. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3.
+**How it stays current:** a maintainer replies to every submission and correction within 2 days, and a review decision usually comes within 3 days. Accepted changes go into the data, the tables, both charts and the [changelog](CHANGELOG.md) when they're merged, and each entry keeps its own review date. The first 17 entries were reviewed October 23, 2026. The Bitcoin note uses sources reviewed October 31, with a GitHub edition dated November 3.
 
 It began as two maps I posted on [X](https://x.com/balance0014) on October 23, 2026, and the first entries were [re-checked](docs/release-review.md) before release. It isn't a security ranking or a price signal.
 
@@ -94,17 +94,29 @@ Building with post-quantum cryptography, or know a project that is? [Open a subm
 
 **How review works**
 
-- You get an automatic reply that checks your links and looks for an existing entry. A maintainer replies within 7 days.
+- You get an automatic reply that checks your links and looks for an existing entry. A maintainer replies within 2 days; a review decision usually comes within 3 days.
 - Every claim is checked against its sources before it's added, and the entry records the date it was checked.
 - Accepted entries appear in the [project comparison](docs/projects.md), the CSV and both charts, which are redrawn from the data, and the change is noted in the [changelog](CHANGELOG.md).
 - Listing is free and isn't for sale. Entries describe what is deployed; they aren't scores or endorsements.
 - If you work on the project, say so in the form. Team submissions are welcome and get the same check.
 
-**Listed?** Link back to your entry with the [![Listed on Post-Quantum Blockchains](badges/listed.svg)](CONTRIBUTING.md#listed-badge) badge. The copy-paste snippet is in [CONTRIBUTING](CONTRIBUTING.md#listed-badge).
+**Listed?** Show your chain's stage with its live badge, for example [![Algorand: post-quantum stage 4 of 5](https://balance0014.github.io/post-quantum-blockchains/badges/algorand.svg)](https://balance0014.github.io/post-quantum-blockchains/chains/algorand/). It updates with the data and links to your chain's page. Copy the code from the [data page](https://balance0014.github.io/post-quantum-blockchains/data/#embed) or [CONTRIBUTING](CONTRIBUTING.md#stage-badge).
 
 ## Reuse or contribute
 
-Download the data, cite the review date of the entries you use and link back here. If you change it, say what changed. Data, charts and prose are **CC BY 4.0**; scripts are **MIT**. Linked third-party material keeps its own terms. See [LICENSE](LICENSE).
+Download the data, cite the review date of the entries you use and say what you changed. From version 0.5.0, data, charts and prose are **CC BY-NC 4.0**, and scripts are **MIT**. Linked third-party material keeps its own terms. See [LICENSE](LICENSE).
+
+**Commercial use is free on three conditions** (an additional permission beyond CC BY-NC):
+
+1. Every screen that uses the data shows this credit with both links: "Data: [Post-Quantum Blockchains](https://balance0014.github.io/post-quantum-blockchains/), by [Balance Zhao](https://x.com/balance0014)". The [official badge and card](https://balance0014.github.io/post-quantum-blockchains/data/#embed) carry it for you.
+2. Show the date the data was checked, and update your copy at least once a week.
+3. Register the use in a ["Used by" issue](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml).
+
+Can't meet them? Ask in a GitHub issue or by direct message on [X](https://x.com/balance0014). Versions up to 0.4.0 stay under CC BY 4.0. The website's [data page](https://balance0014.github.io/post-quantum-blockchains/data/) documents the JSON files as an API.
+
+### Used by
+
+Products that registered a use are listed here. None yet: [register yours](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml).
 
 To correct something, send the specific claim, a primary source and the network or version it applies to. Project teams are welcome; changes go through the same evidence check. [Report a correction](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml) or [submit a project](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml).
 

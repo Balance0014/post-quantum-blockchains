@@ -1,5 +1,12 @@
 {
  "schema_version": 1,
+ "license": {
+  "name": "CC BY-NC 4.0",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "attribution": "Data: Post-Quantum Blockchains (https://balance0014.github.io/post-quantum-blockchains/), by Balance Zhao (https://x.com/balance0014)",
+  "commercial_use": "Free with the attribution on every screen, the check date shown, weekly updates and a \"Used by\" registration.",
+  "terms": "https://github.com/Balance0014/post-quantum-blockchains/blob/main/LICENSE"
+ },
  "about": "Post-quantum stage of each chain on the site. Stage rules: docs/stages.md. Network results are written by scripts/patrol.py to data/network.json.",
  "market_cap": {
   "source": "CoinGecko /coins/markets, top 100 by market cap",
@@ -11,6 +18,15 @@
    "id": "bitcoin",
    "name": "Bitcoin",
    "zh_name": "比特币",
+   "aliases": [
+    "比特",
+    "大饼"
+   ],
+   "pinyin": [
+    "btb",
+    "bt",
+    "db"
+   ],
    "ticker": "BTC",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -198,6 +214,7 @@
    },
    "exposure": {
     "figure": "6.04 million BTC (30.2% of issued supply)",
+    "figure_zh": "604 万枚 BTC（占已发行量的 30.2%）",
     "en": "Bitcoin in outputs whose public key is already visible on chain. Other published estimates differ, for example Google Quantum AI (arXiv 2603.28846, 2026-03-30).",
     "zh": "公钥已经在链上可见的输出里的比特币。其他已发表的估算不尽相同，例如 Google Quantum AI（arXiv 2603.28846，2026-03-30）。",
     "publisher": "Glassnode",
@@ -210,6 +227,16 @@
    "id": "ethereum",
    "name": "Ethereum",
    "zh_name": "以太坊",
+   "aliases": [
+    "以太币",
+    "以太",
+    "Ether"
+   ],
+   "pinyin": [
+    "ytf",
+    "ytb",
+    "yt"
+   ],
    "ticker": "ETH",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -410,9 +437,11 @@
    },
    "exposure": {
     "figure": "20.5 million ETH in the 1,000 largest accounts",
+    "figure_zh": "余额最大的 1,000 个账户里有 2,050 万枚 ETH",
     "en": "Babbush et al. (arXiv 2603.28846, March 2026) count the ETH with an exposed public key among the 1,000 largest accounts at the time of writing (section V.1). It covers only those accounts, so the total is higher (this site's summary).",
-    "zh": "Babbush 等（arXiv 2603.28846，2026 年 3 月）统计了写作时市值最大的 1,000 个账户里公钥已暴露的 ETH（第 V.1 节）。只统计了这些账户，所以总数更高（这一句是本站的概括）。",
+    "zh": "Babbush 等（arXiv 2603.28846，2026 年 3 月）统计了写作时余额最大的 1,000 个账户里公钥已暴露的 ETH（第 V.1 节）。只统计了这些账户，所以总数更高（这一句是本站的概括）。",
     "publisher": "Google Quantum AI (Babbush et al.), arXiv 2603.28846",
+    "publisher_zh": "Google Quantum AI（Babbush 等），arXiv 2603.28846",
     "date": "2026-03-30",
     "source_url": "https://arxiv.org/abs/2603.28846",
     "grade": "primary"
@@ -421,6 +450,21 @@
   {
    "id": "bnb-chain",
    "name": "BNB Chain",
+   "zh_name": "币安链",
+   "aliases": [
+    "BSC",
+    "BNB Smart Chain",
+    "Binance Smart Chain",
+    "币安智能链",
+    "币安币",
+    "Binance Chain",
+    "Binance Coin"
+   ],
+   "pinyin": [
+    "bal",
+    "baznl",
+    "bab"
+   ],
    "ticker": "BNB",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -551,7 +595,18 @@
   {
    "id": "xrp-ledger",
    "name": "XRP Ledger",
-   "zh_name": "XRP Ledger",
+   "zh_name": "瑞波币",
+   "aliases": [
+    "Ripple",
+    "瑞波",
+    "XRPL",
+    "瑞波链"
+   ],
+   "pinyin": [
+    "rbb",
+    "rb",
+    "rbl"
+   ],
    "ticker": "XRP",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -650,6 +705,9 @@
   {
    "id": "solana",
    "name": "Solana",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "SOL",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -799,6 +857,16 @@
   {
    "id": "tron",
    "name": "TRON",
+   "zh_name": "波场",
+   "aliases": [
+    "波场链",
+    "波场币"
+   ],
+   "pinyin": [
+    "bc",
+    "bcl",
+    "bcb"
+   ],
    "ticker": "TRX",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -968,6 +1036,9 @@
   {
    "id": "hyperliquid",
    "name": "Hyperliquid",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "HYPE",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1071,6 +1142,13 @@
    "id": "zcash",
    "name": "Zcash",
    "zh_name": "大零币",
+   "aliases": [
+    "零币"
+   ],
+   "pinyin": [
+    "dlb",
+    "lb"
+   ],
    "ticker": "ZEC",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1193,6 +1271,13 @@
    "id": "dogecoin",
    "name": "Dogecoin",
    "zh_name": "狗狗币",
+   "aliases": [
+    "狗币"
+   ],
+   "pinyin": [
+    "ggb",
+    "gb"
+   ],
    "ticker": "DOGE",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1305,6 +1390,13 @@
    "id": "monero",
    "name": "Monero",
    "zh_name": "门罗币",
+   "aliases": [
+    "门罗"
+   ],
+   "pinyin": [
+    "mlb",
+    "ml"
+   ],
    "ticker": "XMR",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1409,6 +1501,9 @@
   {
    "id": "nexus",
    "name": "Nexus",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "NXS",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1549,6 +1644,9 @@
   {
    "id": "starknet",
    "name": "Starknet",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "STRK",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1665,6 +1763,9 @@
   {
    "id": "algorand",
    "name": "Algorand",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "ALGO",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1774,6 +1875,13 @@
   {
    "id": "nervos-ckb",
    "name": "Nervos CKB",
+   "zh_name": null,
+   "aliases": [
+    "Nervos Network",
+    "Nervos",
+    "Nervos CKB"
+   ],
+   "pinyin": [],
    "ticker": "CKB",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -1878,6 +1986,9 @@
   {
    "id": "raqcoin",
    "name": "Raqcoin",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "RAQ",
    "kind": "native",
    "network_status": "mainnet",
@@ -1993,6 +2104,9 @@
   {
    "id": "mochimo",
    "name": "Mochimo",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "MCM",
    "kind": "native",
    "network_status": "mainnet",
@@ -2111,6 +2225,11 @@
   {
    "id": "qrl",
    "name": "QRL",
+   "zh_name": null,
+   "aliases": [
+    "Quantum Resistant Ledger"
+   ],
+   "pinyin": [],
    "ticker": "QRL",
    "kind": "native",
    "network_status": "mainnet",
@@ -2346,6 +2465,9 @@
   {
    "id": "tidecoin",
    "name": "Tidecoin",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "TDC",
    "kind": "native",
    "network_status": "mainnet",
@@ -2458,6 +2580,9 @@
   {
    "id": "abelian",
    "name": "Abelian",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "ABEL",
    "kind": "native",
    "network_status": "mainnet",
@@ -2559,6 +2684,9 @@
   {
    "id": "cellframe",
    "name": "Cellframe",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "CELL",
    "kind": "native",
    "network_status": "mainnet",
@@ -2681,6 +2809,9 @@
   {
    "id": "quantumcoin",
    "name": "QuantumCoin",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "Q",
    "kind": "native",
    "network_status": "mainnet",
@@ -2790,6 +2921,9 @@
   {
    "id": "neptune-cash",
    "name": "Neptune Cash",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "NPT",
    "kind": "native",
    "network_status": "mainnet",
@@ -2935,6 +3069,9 @@
   {
    "id": "quantus",
    "name": "Quantus",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "QTC",
    "kind": "native",
    "network_status": "mainnet",
@@ -3056,6 +3193,9 @@
   {
    "id": "xcoin",
    "name": "xCoin",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "XID",
    "kind": "native",
    "network_status": "mainnet",
@@ -3163,6 +3303,9 @@
   {
    "id": "qtcchain",
    "name": "qtcchain",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "QTC",
    "kind": "native",
    "network_status": "mainnet",
@@ -3291,6 +3434,9 @@
   {
    "id": "soqucoin",
    "name": "Soqucoin",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "SOQ",
    "kind": "native",
    "network_status": "mainnet",
@@ -3403,6 +3549,9 @@
   {
    "id": "qanplatform",
    "name": "QANplatform",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "QANX",
    "kind": "native",
    "network_status": "testnet",
@@ -3488,6 +3637,15 @@
   {
    "id": "bitcoin-cash",
    "name": "Bitcoin Cash",
+   "zh_name": "比特币现金",
+   "aliases": [
+    "比特现金",
+    "BCash"
+   ],
+   "pinyin": [
+    "btbxj",
+    "btxj"
+   ],
    "ticker": "BCH",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -3691,6 +3849,14 @@
   {
    "id": "litecoin",
    "name": "Litecoin",
+   "zh_name": "莱特币",
+   "aliases": [
+    "莱特"
+   ],
+   "pinyin": [
+    "ltb",
+    "lt"
+   ],
    "ticker": "LTC",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -3830,6 +3996,14 @@
   {
    "id": "ethereum-classic",
    "name": "Ethereum Classic",
+   "zh_name": "以太经典",
+   "aliases": [
+    "以太坊经典"
+   ],
+   "pinyin": [
+    "ytjd",
+    "ytfjd"
+   ],
    "ticker": "ETC",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -3961,6 +4135,17 @@
   {
    "id": "dash",
    "name": "Dash",
+   "zh_name": "达世币",
+   "aliases": [
+    "达世",
+    "Darkcoin",
+    "暗黑币"
+   ],
+   "pinyin": [
+    "dsb",
+    "ds",
+    "ahb"
+   ],
    "ticker": "DASH",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -4078,6 +4263,9 @@
   {
    "id": "kaspa",
    "name": "Kaspa",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "KAS",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -4225,6 +4413,9 @@
   {
    "id": "beldex",
    "name": "Beldex",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "BDX",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -4367,6 +4558,18 @@
   {
    "id": "cardano",
    "name": "Cardano",
+   "zh_name": "艾达币",
+   "aliases": [
+    "卡尔达诺",
+    "艾达",
+    "卡尔达诺链"
+   ],
+   "pinyin": [
+    "adb",
+    "ad",
+    "kedn",
+    "kednl"
+   ],
    "ticker": "ADA",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -4569,6 +4772,9 @@
   {
    "id": "near",
    "name": "NEAR Protocol",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "NEAR",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -4791,6 +4997,16 @@
   {
    "id": "avalanche",
    "name": "Avalanche",
+   "zh_name": "雪崩",
+   "aliases": [
+    "雪崩协议",
+    "雪崩币"
+   ],
+   "pinyin": [
+    "xb",
+    "xbxy",
+    "xbb"
+   ],
    "ticker": "AVAX",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -4931,6 +5147,16 @@
   {
    "id": "polkadot",
    "name": "Polkadot",
+   "zh_name": "波卡",
+   "aliases": [
+    "波卡币",
+    "波卡链"
+   ],
+   "pinyin": [
+    "bk",
+    "bkb",
+    "bkl"
+   ],
    "ticker": "DOT",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -5073,6 +5299,15 @@
   {
    "id": "cosmos",
    "name": "Cosmos Hub",
+   "zh_name": "阿童木",
+   "aliases": [
+    "Cosmos",
+    "阿童木币"
+   ],
+   "pinyin": [
+    "att",
+    "attb"
+   ],
    "ticker": "ATOM",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -5235,6 +5470,14 @@
   {
    "id": "internet-computer",
    "name": "Internet Computer",
+   "zh_name": null,
+   "aliases": [
+    "互联网计算机",
+    "Dfinity"
+   ],
+   "pinyin": [
+    "hlwjsj"
+   ],
    "ticker": "ICP",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -5374,6 +5617,17 @@
   {
    "id": "stellar",
    "name": "Stellar",
+   "zh_name": "恒星币",
+   "aliases": [
+    "恒星",
+    "Lumens",
+    "流明"
+   ],
+   "pinyin": [
+    "hxb",
+    "hx",
+    "lm"
+   ],
    "ticker": "XLM",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -5541,6 +5795,13 @@
   {
    "id": "ton",
    "name": "TON",
+   "zh_name": null,
+   "aliases": [
+    "Toncoin",
+    "The Open Network",
+    "Telegram Open Network"
+   ],
+   "pinyin": [],
    "ticker": "GRAM",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -5683,6 +5944,9 @@
   {
    "id": "sui",
    "name": "Sui",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "SUI",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -5900,6 +6164,9 @@
   {
    "id": "hedera",
    "name": "Hedera",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "HBAR",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6042,6 +6309,9 @@
   {
    "id": "xdc-network",
    "name": "XDC Network",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "XDC",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6166,6 +6436,11 @@
   {
    "id": "canton-network",
    "name": "Canton Network",
+   "zh_name": null,
+   "aliases": [
+    "Canton"
+   ],
+   "pinyin": [],
    "ticker": "CC",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6325,6 +6600,9 @@
   {
    "id": "bittensor",
    "name": "Bittensor",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "TAO",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6534,6 +6812,12 @@
   {
    "id": "cronos",
    "name": "Cronos",
+   "zh_name": null,
+   "aliases": [
+    "Crypto.com Chain",
+    "Cronos Chain"
+   ],
+   "pinyin": [],
    "ticker": "CRO",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6651,6 +6935,9 @@
   {
    "id": "mantle",
    "name": "Mantle",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "MNT",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6768,6 +7055,17 @@
   {
    "id": "kcc",
    "name": "KuCoin Community Chain",
+   "zh_name": null,
+   "aliases": [
+    "KCC",
+    "KuCoin Chain",
+    "库币链",
+    "库币社区链"
+   ],
+   "pinyin": [
+    "kbl",
+    "kbsql"
+   ],
    "ticker": "KCS",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -6883,6 +7181,18 @@
   {
    "id": "polygon",
    "name": "Polygon PoS",
+   "zh_name": null,
+   "aliases": [
+    "MATIC",
+    "Polygon",
+    "马蹄",
+    "马蹄链",
+    "Polygon Ecosystem Token"
+   ],
+   "pinyin": [
+    "mt",
+    "mtl"
+   ],
    "ticker": "POL",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7011,6 +7321,13 @@
   {
    "id": "gate-layer",
    "name": "Gate Layer / GateChain",
+   "zh_name": null,
+   "aliases": [
+    "Gate Layer",
+    "GateChain",
+    "Gate Chain"
+   ],
+   "pinyin": [],
    "ticker": "GT",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7125,6 +7442,9 @@
   {
    "id": "injective",
    "name": "Injective",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "INJ",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7245,6 +7565,13 @@
   {
    "id": "pi-network",
    "name": "Pi Network",
+   "zh_name": "派币",
+   "aliases": [
+    "Pi币"
+   ],
+   "pinyin": [
+    "pb"
+   ],
    "ticker": "PI",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7360,6 +7687,9 @@
   {
    "id": "stacks",
    "name": "Stacks",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "STX",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7502,6 +7832,9 @@
   {
    "id": "whitechain",
    "name": "Whitechain",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "WBT",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7618,6 +7951,9 @@
   {
    "id": "memecore",
    "name": "MemeCore",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "M",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7731,6 +8067,12 @@
   {
    "id": "x-layer",
    "name": "X Layer",
+   "zh_name": null,
+   "aliases": [
+    "OKX X Layer",
+    "OKX Layer"
+   ],
+   "pinyin": [],
    "ticker": "OKB",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7847,6 +8189,9 @@
   {
    "id": "bitway",
    "name": "Bitway",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "BTW",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -7960,6 +8305,9 @@
   {
    "id": "pearl",
    "name": "Pearl",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "PEARL",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -8142,6 +8490,9 @@
   {
    "id": "splendor-quantum",
    "name": "Splendor Quantum",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "SPLD",
    "kind": "native",
    "network_status": "mainnet",
@@ -8342,6 +8693,9 @@
   {
    "id": "qbit",
    "name": "Qbit",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "QBT",
    "kind": "native",
    "network_status": "mainnet",
@@ -8531,6 +8885,9 @@
   {
    "id": "discrete",
    "name": "Discrete",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "XDS",
    "kind": "native",
    "network_status": "mainnet",
@@ -8689,6 +9046,9 @@
   {
    "id": "dilithion",
    "name": "Dilithion",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "DIL",
    "kind": "native",
    "network_status": "mainnet",
@@ -8868,6 +9228,9 @@
   {
    "id": "parano1d",
    "name": "Parano1d",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "NOID",
    "kind": "native",
    "network_status": "mainnet",
@@ -9064,6 +9427,9 @@
   {
    "id": "aere-network",
    "name": "Aere Network",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "AERE",
    "kind": "upgrading",
    "network_status": "mainnet",
@@ -9245,6 +9611,9 @@
   {
    "id": "qorechain",
    "name": "QoreChain",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "QOR",
    "kind": "native",
    "network_status": "mainnet",
@@ -9411,6 +9780,9 @@
   {
    "id": "minima",
    "name": "Minima",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
    "ticker": "MINIMA",
    "kind": "native",
    "network_status": "mainnet",

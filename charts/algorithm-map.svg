@@ -352,6 +352,6 @@
 <text x="32" y="2601" font-size="12" fill="#6e6c66">Key-encapsulation mechanisms such as ML-KEM aren't signatures and aren't shown. Encoding notes for each row, and four more parameter sets, are in</text>
 <text x="32" y="2618" font-size="12" fill="#6e6c66">docs/signature-sizes.md.</text>
 <line x1="32" y1="2643" x2="928" y2="2643" stroke="#e2e0d9"/>
-<text x="32" y="2667" font-size="12" fill="#6e6c66">Drawn by scripts/charts.py from data/projects.json and data/signature-sizes.json. Data and chart: CC BY 4.0.</text>
+<text x="32" y="2667" font-size="12" fill="#6e6c66">Drawn by scripts/charts.py from data/projects.json and data/signature-sizes.json. Data and chart: CC BY-NC 4.0, credit Balance Zhao.</text>
 <text x="32" y="2685" font-size="12" fill="#6e6c66">github.com/Balance0014/post-quantum-blockchains · Balance Zhao (@balance0014)</text>
 </svg>

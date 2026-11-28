@@ -23,6 +23,8 @@ jobs:
         run: python3 -B scripts/rank.py --check
       - name: The website builds; Chinese pages use full-width punctuation; no banned words; every internal link resolves
         run: python3 -B scripts/build_site.py --out _site
+      - name: English pages have no Chinese; Chinese pages use Latin script only for names (scripts/lang_purity.py says which)
+        run: python3 -B scripts/lang_purity.py --site _site
       - name: The share image shows the current chain count and review date
         run: python3 -B scripts/og_image.py --check
       - name: Keep the built website for review (download "website-preview" from the run page)

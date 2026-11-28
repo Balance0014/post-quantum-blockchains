@@ -30,7 +30,7 @@ from urllib.parse import parse_qs, quote, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data'
 FILES = ['chains.json', 'projects.json', 'sources.json', 'source-revision-checks.json']
-SKIP_KEYS = {'probe', 'check'}
+SKIP_KEYS = {'probe', 'check', 'license'}  # network probes, and our own license block (not a source)
 UA = 'post-quantum-blockchains-link-check/1.0 (+https://github.com/Balance0014/post-quantum-blockchains)'
 PER_HOST = 1  # requests to one host go one at a time (some hosts rate-limit parallel requests)
 CTX = ssl.create_default_context()

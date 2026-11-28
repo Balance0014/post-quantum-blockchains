@@ -2,19 +2,57 @@ License notice
 
 Copyright (c) 2026 Balance Zhao
 
-Original data compilation, charts and prose in this repository are licensed
-under Creative Commons Attribution 4.0 International (CC BY 4.0).
-Full terms: LICENSES/CC-BY-4.0.txt
-Canonical license: https://creativecommons.org/licenses/by/4.0/
+Data, charts and text
+---------------------
+From version 0.5.0, the original data compilation, charts and prose in this
+repository and on the website are licensed under Creative Commons
+Attribution-NonCommercial 4.0 International (CC BY-NC 4.0), with the
+additional permission below.
+Full terms: LICENSES/CC-BY-NC-4.0.txt
+Canonical license: https://creativecommons.org/licenses/by-nc/4.0/
 
+Versions up to and including 0.4.0 were released under CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). Those copies stay under
+CC BY 4.0; the change applies only to version 0.5.0 and later.
+
+Attribution
+-----------
+Show this credit, with both links, on every screen, page or view that uses
+the data:
+
+  Data: Post-Quantum Blockchains
+  (https://balance0014.github.io/post-quantum-blockchains/),
+  by Balance Zhao (https://x.com/balance0014)
+
+A credit that appears only in a footer, an "about" page or the source code
+does not meet this condition. The official badge and card (see "Embeds" on
+the website's data page) carry the credit for you.
+
+Additional permission: commercial use
+-------------------------------------
+As an additional permission beyond CC BY-NC 4.0, Balance Zhao permits
+commercial use of the data, charts and text, free of charge, on three
+conditions:
+
+  1. Every screen, page or view that shows the data displays the credit
+     above with both links, or shows the official badge or card.
+  2. The date the data was checked is shown, and the copy you show is
+     updated from this repository or website at least once a week.
+  3. The use is registered by opening a "Used by" issue at
+     https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml
+
+If you cannot meet these conditions, ask for permission through a GitHub
+issue or a direct message to https://x.com/balance0014. Without the
+conditions met or a separate permission, commercial use is not licensed.
+
+Scripts
+-------
 Original scripts in scripts/ and workflow configuration in .github/ are
 licensed under the MIT License in LICENSES/MIT.txt.
 
+Third-party material
+--------------------
 These grants apply only to material the contributor has the right to license.
 Third-party specifications, source code, documents, trademarks and other
 linked material retain their original rights. Merely citing a source does
 not relicense it. No exclusive right is asserted over individual public facts.
-
-Suggested credit: Post-Quantum Crypto Research, maintained by Balance Zhao
-(@balance0014), https://github.com/Balance0014/post-quantum-blockchains
-Include the snapshot date and indicate any changes.

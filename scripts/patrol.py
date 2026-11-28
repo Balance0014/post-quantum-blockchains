@@ -27,6 +27,8 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from embeds import DATA_LICENSE
+
 ROOT = Path(__file__).resolve().parents[1]
 UA = 'post-quantum-blockchains-patrol/1.0 (+https://github.com/Balance0014/post-quantum-blockchains)'
 # A block counts as recent if it is younger than STALL_MIN_MINUTES or STALL_MULTIPLE target block times,
@@ -357,7 +359,7 @@ def main():
     only = set(args.only.split(',')) if args.only else None
     start = now_utc()
     since = iso((start - timedelta(days=WINDOW_DAYS)).replace(hour=0, minute=0, second=0))
-    result = {'checked_at_utc': iso(start), 'window_start': since[:10],
+    result = {'license': DATA_LICENSE, 'checked_at_utc': iso(start), 'window_start': since[:10],
               'rule': {'stall_min_minutes': STALL_MIN_MINUTES, 'stall_multiple': STALL_MULTIPLE, 'window_days': WINDOW_DAYS},
               'chains': dict((old or {}).get('chains', {})) if only else {}}
     failures = 0

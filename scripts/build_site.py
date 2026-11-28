@@ -11,6 +11,7 @@ runs it once in Node (scripts/site/prerender.js) so the HTML is complete before 
 Usage: python3 scripts/build_site.py [--out _site] [--base /post-quantum-blockchains/]
 """
 import argparse
+import embeds
 import csv
 import io
 import hashlib
@@ -118,6 +119,39 @@ def schemes(c):
     return out
 
 
+# The algorithm map sorts each scheme into NIST's mathematical family and colours it by its NIST status (the
+# NIST record as of 2026-11-28: FIPS 204 and 205 final since 2024-08-13; FN-DSA selected, FIPS 206 in development;
+# SP 800-208 final since 2020-10-29 for LMS and XMSS; the additional-signature call in round 3 since 2026-05-14).
+# A variant keeps the status of the scheme it varies, with a mark that NIST has not reviewed this version.
+NIST_FAMILIES = ('lattice', 'hash', 'multivariate', 'code', 'isogeny', 'mpcith', 'symmetric')
+NIST_STATUS = ('fips', 'draft', 'sp800208', 'round3', 'broken', 'notnist')
+OWN_FAMILY = (('multivariate', ('multivariate', 'rainbow', 'uov')), ('lattice', ('lattice', 'ringct', 'dilithium', 'falcon')),
+              ('hash', ('hash', 'poseidon', 'stark', 'preimage', 'wots', 'xmss', 'sphincs')))
+
+
+def nist_map(c):
+    """[{fam, scheme, st, var}] for the algorithm map: one entry per scheme the chain uses or proposes."""
+    text = (c['algo'].get('en') or '').lower()
+    out = []
+    for k, st in schemes(c):
+        if k == 'none':
+            continue
+        if k == 'other':
+            if 'rainbow' in text:  # Raqcoin: Rainbow (NIST round 3 finalist, broken in 2022) and UOV with its own parameters
+                out.append({'fam': 'multivariate', 'scheme': 'Rainbow', 'st': 'broken', 'var': False})
+                if 'uov' in text:
+                    out.append({'fam': 'multivariate', 'scheme': 'UOV', 'st': 'round3', 'var': True})
+                continue
+            fam = next((f for f, words in OWN_FAMILY if any(w in text for w in words)), None)
+            out.append({'fam': fam or 'other', 'scheme': None, 'st': 'notnist', 'var': False})
+            continue
+        fam = 'lattice' if k in ('mldsa', 'falcon') else 'hash'
+        scheme = {'mldsa': 'ML-DSA', 'falcon': 'Falcon', 'slhdsa': 'SLH-DSA', 'xmss': 'XMSS', 'wots': 'WOTS+'}[k]
+        nst = {'mldsa': 'fips', 'falcon': 'draft', 'slhdsa': 'fips', 'xmss': 'sp800208', 'wots': 'notnist'}[k]
+        out.append({'fam': fam, 'scheme': scheme, 'st': nst, 'var': st in ('var', 'sel') and k == 'slhdsa' and 'fips205' not in c['algo_chips'] or st == 'var'})
+    return out
+
+
 def standard_status(c):
     """The chain's best standard status, used where one value is needed (the security level, the sort order)."""
     sts = {st for _, st in schemes(c)}
@@ -193,7 +227,7 @@ def field(c, key):
     x = c.get(key)
     if not x:
         return None
-    return {k: x.get(k) for k in ('value', 'en', 'zh', 'source_url', 'grade', 'date', 'auditor', 'figure', 'publisher') if x.get(k) is not None}
+    return {k: x.get(k) for k in ('value', 'en', 'zh', 'source_url', 'grade', 'date', 'auditor', 'figure', 'figure_zh', 'publisher', 'publisher_zh') if x.get(k) is not None}
 
 
 # The site mark: a staircase of six steps, one per stage, on a dark tile. Inline in the header; also the favicon.
@@ -211,7 +245,7 @@ KIND_ZH = {
     'ecosystem block explorer': '生态区块浏览器', 'pinned source code': '固定版本的源代码',
     'pinned source documentation': '固定版本的源码文档', 'pinned source repository': '固定版本的代码库',
     'project block explorer': '项目区块浏览器', 'project documentation': '项目文档',
-    'project foundation website': '项目基金会官网', 'project release record': '项目发布记录', 'project website': '项目官网',
+    'project foundation website': '项目基金会官网', 'project node API': '项目节点接口', 'project release record': '项目发布记录', 'project website': '项目官网',
     'standards body': '标准机构', 'standards body forum update': '标准机构论坛公告',
     'third-party submission hosted by SEC': 'SEC 网站上的第三方材料',
 }
@@ -224,6 +258,8 @@ TEXT = {
            'chain_q': 'Is {name} quantum-resistant?', 'og_alt': 'Post-Quantum Blockchains: {n} chains rated from stage 0 to 5, each checked against primary sources.',
            'method_title': 'How we rate post-quantum readiness · Post-Quantum Blockchains',
            'method_desc': 'The six stages, the rating rules, the network checks with their thresholds, the algorithm labels, the evidence grades and every data field with its source and script.',
+           'data_title': 'Data, API and embeds · Post-Quantum Blockchains',
+           'data_desc': 'Download the data, read it as a JSON API, embed a live badge or card for any chain, and see the license: CC BY-NC 4.0, free for commercial use with credit.',
            'changes_title': 'This week in post-quantum blockchains · Post-Quantum Blockchains',
            'changes_desc': 'What the weekly patrol found: new releases, proposal status changes, network status changes and stage changes, each with its source.',
            'nf_title': 'Page not found · Post-Quantum Blockchains', 'nf_h': 'This page does not exist.', 'nf_p': 'The link may be old, or the chain may be listed under another name. Search the table or start from the overview.',
@@ -235,26 +271,28 @@ TEXT = {
            'chain_q': '{name}{sp}能抗量子吗？', 'og_alt': '抗量子区块链进度表：{n} 条链按 0 到 5 档评定，每条都对照原始出处核对。',
            'method_title': '评档方法 · 抗量子区块链进度表',
            'method_desc': '六个档位、评档规则、网络核查及其时限、算法标签、证据分级，以及每个数据字段的来源和脚本。',
+           'data_title': '数据、接口和嵌入 · 抗量子区块链进度表',
+           'data_desc': '下载数据、按 JSON 接口读取、给任意一条链嵌入实时更新的徽章或卡片，以及授权说明：CC BY-NC 4.0，署名即可免费商用。',
            'changes_title': '本周抗量子进展 · 抗量子区块链进度表',
            'changes_desc': '每周巡查发现的变化：新发布版本、提案状态、网络状态和档位调整，每条都附出处。',
            'nf_title': '页面不存在 · 抗量子区块链进度表', 'nf_h': '这个页面不存在。', 'nf_p': '链接可能已经过时，或者这条链用的是另一个名字。可以在表格里搜索，或者从总览开始。',
-           'nf_search': '搜索链、签名方案或代码', 'nf_go': '搜索', 'nf_all': '全部链', 'nf_method': '评级方法'},
+           'nf_search': '搜索链、签名方案或代码', 'nf_go': '搜索', 'nf_all': '全部链', 'nf_method': '评档方法'},
 }
 
 
 class ZhText(HTMLParser):
-    """Collects the text a reader sees (text nodes, tooltips, labels), skipping scripts and styles."""
+    """Collects the text a reader sees (text nodes, tooltips, labels), skipping scripts, styles and code samples."""
     def __init__(self):
         super().__init__()
         self.out, self.skip = [], 0
 
     def handle_starttag(self, tag, attrs):
-        if tag in ('script', 'style'):
+        if tag in ('script', 'style', 'pre'):
             self.skip += 1
         self.out += [v for k, v in attrs if k in ('data-def', 'data-title', 'data-tip', 'aria-label', 'placeholder', 'title', 'content') and v]
 
     def handle_endtag(self, tag):
-        if tag in ('script', 'style'):
+        if tag in ('script', 'style', 'pre'):
             self.skip -= 1
 
     def handle_data(self, data):
@@ -424,7 +462,7 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
         for sid in (p or {}).get('sources', []):
             s = sources[sid]
             srcs.append({'url': s['url'], 'label': short_url(s['url']),
-                         'kind': {'en': s['source_type'], 'zh': KIND_ZH.get(s['source_type'], s['source_type'])}})
+                         'kind': {'en': s['source_type'], 'zh': KIND_ZH[s['source_type']]}})
     for s in c.get('extra_sources') or []:
         srcs.append({'url': s['url'], 'label': short_url(s['url'])})
     ls = c['latest_step']
@@ -433,14 +471,16 @@ def chain_view(c, net, ranks, projects, sources, sizes, checked):
     since = c.get('pq_mainnet_since')
     return {
         'id': c['id'], 'name': c['name'], 'zh_name': c.get('zh_name'), 'ticker': c['ticker'], 'kind': c['kind'],
+        'aliases': c.get('aliases') or [], 'pinyin': c.get('pinyin') or [],
         'group': group_of(c, rank), 'rank': rank, 'stage': c['stage'], 'algo': c['algo'], 'chips': c['algo_chips'], 'fam': families(c),
         'consensus': c.get('consensus'), 'holder': c['holder_can_use_today'], 'note': c.get('note'), 'four': c.get('four'),
         'latest': {'date': ls.get('date'), 'en': ls.get('text'), 'zh': ls.get('zh'), 'checked': bool(ls.get('is_check_date'))},
         'checked': (n.get('block', {}).get('queried_at_utc') or net.get('checked_at_utc') or '')[:10] or None,
         'reviewed': c['last_reviewed'], 'basis': c['stage_basis'],
+        'x_talk': sorted(c.get('x_talk') or [], key=lambda t: t['date'], reverse=True), 'x_asks': c.get('x_asks'),
         'basis_src': bsrc, 'basis_grade': bgrade,
         'since': since,
-        'status': standard_status(c), 'schemes': schemes(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
+        'status': standard_status(c), 'schemes': schemes(c), 'nist': nist_map(c), 'ap': algo_params(c, sizes), 'hybrid': bool(HYBRID.search(c['algo']['en'])),
         'cov': COVERAGE.get(c['stage'], 'none'), 'mig': field(c, 'migration'), 'audit': field(c, 'audit'), 'expo': field(c, 'exposure'),
         'prog': progress(c, checked), 'scope': 'top' if rank is not None else 'other',
         'design': 'native' if c['kind'] == 'native' else ('upgraded' if c['stage'] >= 3 else 'notyet'), 'netw': 'mainnet' if c['network_status'] == 'mainnet' else 'testnet',
@@ -590,7 +630,7 @@ def home_view(v, lang):
     """The home page only needs what its table, blocks and charts show; everything else is on the chain's own page.
     Long texts carry only the page's language, to keep the page small."""
     n, b, code = v['net'], v['net']['block'], v['net']['code']
-    keep = ('id', 'name', 'zh_name', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'hybrid',
+    keep = ('id', 'name', 'zh_name', 'aliases', 'pinyin', 'ticker', 'kind', 'group', 'rank', 'stage', 'algo', 'chips', 'fam', 'status', 'schemes', 'nist', 'hybrid',
             'cov', 'prog', 'scope', 'design', 'netw', 'claim', 'basis_grade', 'flags')
     h = {k: v[k] for k in keep}
     h['level'] = v['ap']['level']
@@ -698,7 +738,7 @@ def write_data_files(out, views, checked, release, base, has_changes):
     if has_changes:
         lines.append(f'- [This week]({ORIGIN + base}changes/): changes found by the weekly patrol')
     lines += ['',
-             '## Data (CC BY 4.0)',
+             '## Data (CC BY-NC 4.0; free commercial use with the credit, see LICENSE)',
              f'- [chains.csv]({ORIGIN + base}data/chains.csv): one row per chain: stage, algorithm, default signature (post-quantum or classical), standard status per scheme '
              f'(nist_standard, nist_selected, variant_not_reviewed, stateful_hash_based, own_construction, none), publicly broken parameters, NIST security level, coverage '
              f'(default, opt-in, testnet, none), how existing coins move (migration), audit of the post-quantum code, '
@@ -718,6 +758,37 @@ def write_data_files(out, views, checked, release, base, has_changes):
         extra = ''.join(f'; {k} {x["value"].replace("_", " ")}' for k, x in (('migration', v['mig']), ('audit', v['audit'])) if x)
         lines.append(f"- [{v['name']} ({v['ticker']})]({page(v)}): stage {v['stage']}, {STAGE_NAMES['en'][v['stage']]}{since}{extra}")
     (out / 'llms.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+
+def embed_urls(v, base):
+    """Where a chain's page, badge and card live, in both languages."""
+    o = ORIGIN + base
+    return ({'en': f"{o}chains/{v['id']}/", 'zh': f"{o}zh/chains/{v['id']}/"},
+            {'en': f"{o}badges/{v['id']}.svg", 'zh': f"{o}badges/zh/{v['id']}.svg"},
+            {'en': f"{o}badges/card/{v['id']}.svg", 'zh': f"{o}badges/card/zh/{v['id']}.svg"})
+
+
+def write_embeds(out, views, checked, release, base):
+    """The API (data/chains/index.json and one file per chain) and the badge and card of every chain."""
+    api = out / 'data' / 'chains'
+    for sub in ('badges', 'badges/zh', 'badges/card', 'badges/card/zh'):
+        (out / sub).mkdir(parents=True, exist_ok=True)
+    api.mkdir(parents=True, exist_ok=True)
+    index = []
+    for v in views:
+        page, badge, card = embed_urls(v, base)
+        for lang in ('en', 'zh'):
+            z = '/zh' if lang == 'zh' else ''
+            (out / f'badges{z}' / f"{v['id']}.svg").write_text(embeds.badge_svg(v, STAGE_NAMES[lang], lang), encoding='utf-8')
+            (out / f'badges/card{z}' / f"{v['id']}.svg").write_text(embeds.card_svg(v, STAGE_NAMES[lang], lang, checked), encoding='utf-8')
+        doc = embeds.chain_api(v, STAGE_NAMES, checked, release['version'], page, badge, card)
+        (api / f"{v['id']}.json").write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        index.append({k: doc[k] for k in ('id', 'name', 'zh_name', 'ticker', 'stage', 'group', 'market_cap_rank', 'last_reviewed')}
+                     | {'json': f"{ORIGIN + base}data/chains/{v['id']}.json", 'page': page['en']})
+    meta = {'schema': 'post-quantum-blockchains/index@1', 'version': release['version'], 'data_checked': checked,
+            'license': 'CC BY-NC 4.0, free commercial use on conditions: ' + embeds.LICENSE_URL,
+            'attribution': f'Data: {embeds.SITE_EN}, by {embeds.AUTHOR}', 'author': embeds.AUTHOR_URL, 'chains': index}
+    (api / 'index.json').write_text(json.dumps(meta, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
 
 
 def write_csv(path, header, rows):
@@ -806,7 +877,7 @@ def main():
         home = dict(common, page='home', chains=[home_view(v, lang) for v in views], months=months, events=events)
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': t['brand'],
               'description': t['home_desc'].format(n=len(views)), 'url': ORIGIN + path_for(lang, ''),
-              'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'dateModified': checked,
+              'isAccessibleForFree': True, 'license': 'https://creativecommons.org/licenses/by-nc/4.0/', 'dateModified': checked,
               'distribution': [{'@type': 'DataDownload', 'encodingFormat': enc, 'contentUrl': ORIGIN + base + 'data/' + f}
                                for f, enc in (('chains.csv', 'text/csv'), ('chains.json', 'application/json'), ('network.json', 'application/json'))]}
         pages.append((lang, '', home, t['home_title'], t['home_desc'].format(n=len(views)), ld))
@@ -818,11 +889,16 @@ def main():
                   'dateModified': v['reviewed'], 'url': ORIGIN + path_for(lang, f"chains/{v['id']}/"),
                   'mainEntity': [{'@type': 'Question', 'name': t['chain_q'].format(name=nm, sp=sp),
                                   'acceptedAnswer': {'@type': 'Answer', 'text': desc + cited[lang](v)}}]}
-            pages.append((lang, f"chains/{v['id']}/", dict(common, page='chain', chains=[v]),
+            page_u, badge_u, card_u = embed_urls(v, base)
+            pages.append((lang, f"chains/{v['id']}/", dict(common, page='chain', chains=[v], embed={'page': page_u, 'badge': badge_u, 'card': card_u}),
                           t['chain_title'].format(name=nm, sp=sp), desc, ld))
         pages.append((lang, 'method/', dict(common, page='method', chains=[], left_out=left_out), t['method_title'], t['method_desc'], None))
+        pick = [{'id': v['id'], 'name': v['name'], 'zh_name': v['zh_name'], 'ticker': v['ticker'], 'stage': v['stage'], 'rank': v['rank']} for v in views]
+        pages.append((lang, 'data/', dict(common, page='data', chains=[], pick=pick, origin=ORIGIN), t['data_title'], t['data_desc'], None))
         if changes:
-            pages.append((lang, 'changes/', dict(common, page='changes', chains=[], changes=changes, names=names),
+            since = changes[0]['range']['from']
+            xnew = sorted(({**t, 'chain': v['id']} for v in views for t in v['x_talk'] if t['date'] >= since), key=lambda t: t['date'], reverse=True)
+            pages.append((lang, 'changes/', dict(common, page='changes', chains=[], changes=changes, names=names, xnew=xnew),
                           t['changes_title'], t['changes_desc'], None))
     for lang, rel, d, *_ in pages:
         d['alt'] = path_for('zh' if lang == 'en' else 'en', rel)
@@ -848,6 +924,7 @@ def main():
     key = (SITE_SRC / 'indexnow-key.txt').read_text(encoding='utf-8').strip()
     (out / f'{key}.txt').write_text(key + '\n', encoding='utf-8')
     write_data_files(out, views, checked, release, base, bool(changes))
+    write_embeds(out, views, checked, release, base)
     write_chart_files(out, views, months)
     (out / 'assets' / 'logo.svg').write_text(LOGO_SVG.replace(' class="logo"', ' xmlns="http://www.w3.org/2000/svg" width="32" height="32"')
                                              .replace(' aria-hidden="true" focusable="false"', '') + '\n', encoding='utf-8')

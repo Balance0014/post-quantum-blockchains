@@ -25,7 +25,7 @@ const bibtex = () => `@misc{pqblockchains_${D.release.version.replace(/\W/g, "")
   version = {${D.release.version}},
   year = {${D.release.date.slice(0, 4)}},
   url = {${D.site_url}},
-  note = {Data checked ${D.checked}. Licensed CC BY 4.0}
+  note = {Data checked ${D.checked}. Licensed CC BY-NC 4.0}
 }`;
 const URL_TALK = REPO + "/discussions", URL_X = "https://x.com/balance0014";
 /* page hooks: where the language switch should land, and copy-with-confirmation (set up in the browser) */
@@ -47,7 +47,7 @@ const UI = {
     recon: (all, top, others, use, def, opt, k) => `Tracked: ${all} chains = ${top} of the CoinGecko top 100 that run their own network + ${others} others. Usable on mainnet today: ${use} of the ${all} (${def} by default, ${opt} opt-in); among the ${top} largest, ${k}.`,
     recon_dates: (dated, use) => `The timeline dates ${dated} of the ${use}; the rest have no sourced date yet.`,
     recon_mig: (nat, def, names) => `Migration shows ${nat} native rather than ${def}: ${names} still has coins outside its post-quantum chain.`,
-    strip_v: (v, d) => `Version ${v} · ${d} · CC BY 4.0`, strip_dl: "Download", strip_cite: "Copy citation", strip_bib: "Copy BibTeX",
+    strip_bib: "Copy BibTeX",
     about_h: "About", about_who: "Built and maintained by Balance Zhao, an AI and crypto writer who has researched post-quantum blockchains since 2020.",
     about_money: "Self-funded. Listing is free, no project pays to be listed or rated, and the site carries no sponsors or ads.",
     about_ind: "Stages follow public rules and primary sources that anyone can check. Every data change is a public commit, and corrections are public issues.",
@@ -103,7 +103,7 @@ const UI = {
     d_back: "All chains", d_today: "Protection today", d_watch: "Watch out for", d_can: "What you can do now", d_next: "What to watch next",
     d_timeline: "Timeline", d_facts: "At a glance", d_stage: "Stage", d_algo: "Algorithm", d_net: "Network", d_checked: "Network checked", d_unv: "Claims we could not verify",
     d_unv_note: "These are left out of the stage until a primary source confirms them.", d_no_tl: "No dated milestones recorded yet. The sources below back the current entry.",
-    d_fix: "See something wrong or out of date on this page? Report it with a primary source. We reply within 7 days, and every change is recorded in the public changelog.",
+    d_fix: "See something wrong or out of date on this page? Report it with a primary source. We reply within 2 days, usually decide within 3 days, and every change is recorded in the public changelog.",
     d_fix_btn: "Report an error", d_scale: "Where it stands on the 0 to 5 scale",
     q: (nm) => `Is ${nm} quantum-resistant?`,
     answer: (date, nm, n, label) => `As of ${date}, ${nm} is at stage ${n} of 5: ${label}.`,
@@ -116,10 +116,10 @@ const UI = {
     c_sub: "Found by the weekly patrol and reviewed by a person before publishing. A stage changes only when a primary source supports it.",
     c_s1: "stage changes", c_s2: "changes logged", c_s3: "chains checked", c_stage: "Stage", c_older: "Earlier issues",
     tracker: "Tracker",
-    foot_fix: "The data lives on GitHub. Spot an error, or know a newer milestone? Open a correction with a primary source. We reply within 7 days.",
+    foot_fix: "The data lives on GitHub. Spot an error, or know a newer milestone? Open a correction with a primary source. We reply within 2 days, and a review decision usually comes within 3 days.",
     foot_btn_fix: "Report an error", foot_btn_submit: "Submit a project", foot_btn_repo: "Open the repository",
     foot_fine: "A tracker, not a forecast. It rates only what is already live, never predicts when today's cryptography might be broken, and says nothing about prices. Stages are never paid for. Data and scripts are public, so anyone can check them.",
-    foot_cite: (v, d) => `Version ${v}, ${d}. Data CC BY 4.0, scripts MIT.`, foot_cite_link: "How to cite", foot_log: "Changelog",
+    foot_cite: (v, d) => `Version ${v}, ${d}. Data CC BY-NC 4.0 (free commercial use with credit), scripts MIT.`, foot_cite_link: "How to cite", foot_log: "Changelog",
     how_h: "How we rate", toc: "On this page",
     nav_overview: "Overview", nav_timeline: "Timeline", nav_data: "Data & AI", nav_contact: "Contact",
     grp_h: "Browse by group", grp_note: "Pick a group to list its chains in the table below.",
@@ -141,10 +141,10 @@ const UI = {
     data_dl_h: "Download", data_files: { "chains.csv": "One row per chain, for spreadsheets", "chains.json": "Every chain with its stage, evidence and milestones", "network.json": "The latest weekly network check", "sources.json": "Pinned primary sources" },
     data_ai_h: "For AI assistants", data_ai_p: "llms.txt lists every page and data file in plain text, so AI assistants and AI search can read the tracker and cite the right page.",
     data_llms: "Pages, data files and every chain's stage", data_cite_h: "How to cite", copy: "Copy", copied: "Copied",
-    data_lic: "Data CC BY 4.0, scripts MIT.",
+    data_lic: "Data CC BY-NC 4.0, free for commercial use with the credit shown. Scripts MIT.",
     ct_h: "Talk to us in public", ct_lede: "Questions, corrections and new projects all go through public channels, so every answer stays on the record.",
     ct: [["Questions and ideas", "GitHub Discussions"], ["Report an error", "GitHub issue, with a primary source"], ["Submit a project", "GitHub issue form"], ["Follow updates", "X · @balance0014"]],
-    ct_reply: "We reply within 7 days.",
+    ct_reply: "We reply within 2 days, and a review decision usually comes within 3 days.",
     any: "Any", group_label: "Group", stage_label: "Stage", fam_label: "Algorithm", search_label: "Search",
     fam: { mldsa: "ML-DSA", falcon: "Falcon", slhdsa: "SLH-DSA", hash: "Other hash-based", other: "Custom or other", none: "None yet" },
     remove: (x) => `Remove filter: ${x}`, clear_all: "Clear all", clear_filters: "Clear all filters",
@@ -155,7 +155,7 @@ const UI = {
     cum_note: (n, k, y, u) => `Running total of chains where post-quantum signatures are live on mainnet, each placed on the day they arrived. ${k} of the ${n} arrived in ${y}.${u ? ` ${u} more have no sourced date yet.` : ""}`,
     cum_total: "chains",
     tap_open: "Tap again to open", copy_link: "Copy a link to this section", link_copied: "Link copied",
-    grp_more: (n) => `+${n} more`, show_all: (n) => `Show all ${n} chains`,
+    grp_more: (n) => `+${n} more`, show_all: (n) => `Show all ${n} chains`, show_less: "Show fewer", sub_h: "Chain not listed?", sub_p: "Request a listing with one primary source: code, a release or chain data. We reply within 2 days.", src_site: "This site's data (each entry links its primary source)", howc: "How the numbers are counted", dym: "Did you mean: ", list_more: (n) => `Show ${n} more`, list_less: "Show fewer",
     th_cov: "Coverage", th_prog: "Latest post-quantum progress",
     prog_n90: (n) => `${n} in the last 90 days`, prog_none: "None recorded here",
     ss: { std: "NIST standard", sel: "NIST-selected, not final", var: "Variant, version not reviewed", hash: "Stateful hash-based", custom: "Own construction", none: "No post-quantum scheme" },
@@ -167,7 +167,7 @@ const UI = {
     mig: { native: "No old keys to move", available: "Existing coins can move", testnet: "Moving coins: testnet only", planned: "Moving coins: planned", none: "No way to move coins yet", unknown: "Moving coins: unknown" },
     mig_s: { native: "Native", available: "Available", testnet: "Testnet only", planned: "Planned", none: "None", unknown: "Unknown" },
     audit: { audited: "Audited", partial: "Partly audited", none_found: "No audit found", unknown: "Audit unknown" },
-    scope: { top: "Top 100", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Added later", notyet: "Not yet" }, early_tag: "Early · testnet only", design_built: "Designed as post-quantum native",
+    scope: { top: "Top 100 by market cap", other: "Others" }, design: { native: "Post-quantum native", upgraded: "Added later", notyet: "Not yet" }, early_tag: "Early · testnet only", design_built: "Designed as post-quantum native",
     fl: { custom: "Own construction", var: "Variant not reviewed", noaudit: "No audit found", projdata: "No independent network data" }, proposed: "Proposed, not deployed", netw: { mainnet: "Mainnet", testnet: "Not on mainnet yet" },
     scope_label: "Scope", design_label: "Design", ss_label: "Standard", cov_label: "Coverage", mig_label: "Migration", audit_label: "Audit", netw_label: "Network", net_label2: "Block status", view_label: "Showing",
     more_filters: "More filters", more_bg: "includes background",
@@ -189,7 +189,7 @@ const UI = {
     wk: (d) => `week of ${d}`,
     run_title: "How long post-quantum signatures have run on mainnet", run_note: (d) => `One bar per chain, from the day post-quantum signatures became usable on its current mainnet to ${d}. Earliest first.`,
     run_len: (days) => days >= 365 ? `${(days / 365.25).toFixed(1)} years` : days >= 60 ? `${Math.round(days / 30.44)} months` : plural(days, "day", "days"),
-    am_title: "Algorithm map", am_note: (n) => `The ${n} chains at stage 2 or higher, by the signature family they use or propose, coloured by standard status.`,
+    am_title: "Algorithm map", am_note: (n) => `The ${n} chains at stage 2 or higher, by the mathematical family of the signature they use or propose (NIST\u2019s grouping), coloured by its NIST status.`,
     d_algo_h: "Algorithm", d_cov_h: "Coverage", d_prog_h: "Progress", d_ev_h: "Evidence", d_bg_h: "Background",
     d_bg_note: "Not post-quantum measures. They help judge the rest: a chain that stops producing blocks protects nothing, and market cap shows how much value is at stake.",
     k_status: "Standard status", k_level: "Security level", k_sizes: "Reference sizes", k_hybrid: "Hybrid signature", k_audit: "Audit of the post-quantum code",
@@ -216,7 +216,7 @@ const UI = {
     recon: (all, top, others, use, def, opt, k) => `收录 ${all} 条 = CoinGecko 市值前 100 里有自己网络的 ${top} 条 + 其他 ${others} 条。主网上今天已能用抗量子签名的：${all} 条里有 ${use} 条（默认 ${def} 条、可选 ${opt} 条）；最大的 ${top} 条里有 ${k} 条。`,
     recon_dates: (dated, use) => `时间线标出了这 ${use} 条中 ${dated} 条的上线日期，其余还没有带出处的日期。`,
     recon_mig: (nat, def, names) => `迁移筛选里「原生」是 ${nat} 条而不是 ${def} 条：${names} 还有币不在抗量子链上。`,
-    strip_v: (v, d) => `版本 ${v} · ${d} · CC BY 4.0`, strip_dl: "下载", strip_cite: "复制引用", strip_bib: "复制 BibTeX",
+    strip_bib: "复制 BibTeX",
     about_h: "关于", about_who: "由 Balance Zhao 制作和维护：AI 与加密内容作者，2020 年起研究抗量子区块链。",
     about_money: "自费运营。收录免费，没有项目为收录或评级付费，本站没有赞助和广告。",
     about_ind: "档位只按公开规则和任何人都能核对的原始出处评定。每次数据变更都是公开提交，纠错走公开 issue。",
@@ -241,7 +241,7 @@ const UI = {
     mo_tip: (m, a) => `${m}：提案 ${a[0]} · 测试网 ${a[1]} · 主网 ${a[2]}`,
     list_h: (n) => `全部 ${n} 条链`,
     none: "暂无", and: "、",
-    search: "搜索链名、算法或币种代码", f_all: "全部", f_top: "市值前 100", f_optin: "主网可选用", f_native: "原生抗量子", f_early: "还没上主网",
+    search: "搜索链名、算法或币种代码", f_all: "全部", f_top: "市值前 100 名", f_optin: "主网可选用", f_native: "原生抗量子", f_early: "还没上主网",
     f_label: "按分组筛选", sort_label: "排序",
     stage_chip: (s, nm) => `第 ${s} 档 · ${nm}`, stage_clear: "清除档位筛选",
     sort_default: "大链在前", sort_stage_d: "档位从高到低", sort_stage_a: "档位从低到高", sort_latest: "最近变化", sort_name: "名称",
@@ -272,7 +272,7 @@ const UI = {
     d_back: "全部链", d_today: "当前保护", d_watch: "需要注意", d_can: "现在能做什么", d_next: "接下来关注什么",
     d_timeline: "时间线", d_facts: "速览", d_stage: "档位", d_algo: "算法", d_net: "网络", d_checked: "网络核对", d_unv: "尚未核实的说法",
     d_unv_note: "在原始出处确认之前，这些说法不计入档位。", d_no_tl: "还没有记录带日期的里程碑。当前条目以下方出处为依据。",
-    d_fix: "发现本页有误或已过时？请附上原始出处报错。我们 7 天内回复，每次修改都记录在公开的更新记录里。",
+    d_fix: "发现本页有误或已过时？请附上原始出处报错。我们 2 天内回复，审核结果一般 3 天内给出，每次修改都记录在公开的更新记录里。",
     d_fix_btn: "报错", d_scale: "在 0 到 5 档中的位置",
     q: (nm) => `${nm}${/[\x00-\x7f]$/.test(nm) ? " " : ""}能抗量子吗？`,
     answer: (date, nm, n, label) => `截至 ${date}，${nm}${/[\x00-\x7f]$/.test(nm) ? " " : ""}处于第 ${n} 档（最高 5 档）：${label}。`,
@@ -285,10 +285,10 @@ const UI = {
     c_sub: "由每周自动巡查发现，经人工核对后发布。只有原始出处支持时，才会调整档位。",
     c_s1: "次档位调整", c_s2: "条变化", c_s3: "条链已核对", c_stage: "档位", c_older: "往期",
     tracker: "本站",
-    foot_fix: "数据公开在 GitHub 上。发现错误，或掌握更新的进展？请附上原始出处提交纠错。我们 7 天内回复。",
-    foot_btn_fix: "报错", foot_btn_submit: "提交项目", foot_btn_repo: "打开代码库",
+    foot_fix: "数据公开在 GitHub 上。发现错误，或掌握更新的进展？请附上原始出处提交纠错。我们 2 天内回复，审核结果一般 3 天内给出。",
+    foot_btn_fix: "报错", foot_btn_submit: "申请收录", foot_btn_repo: "打开代码库",
     foot_fine: "本站是进度追踪，不做预测：只按已经上线的内容评档，不预测量子计算机何时能破解现有密码，也不评论币价。档位不能花钱买。数据和脚本全部公开，谁都可以复核。",
-    foot_cite: (v, d) => `版本 ${v}，${d}。数据采用 CC BY 4.0 许可，脚本采用 MIT 许可。`, foot_cite_link: "如何引用", foot_log: "更新记录",
+    foot_cite: (v, d) => `版本 ${v}，${d}。数据采用 CC BY-NC 4.0 许可（署名后可免费商用），脚本采用 MIT 许可。`, foot_cite_link: "如何引用", foot_log: "更新记录",
     how_h: "如何评档", toc: "本页目录",
     nav_overview: "总览", nav_timeline: "时间线", nav_data: "数据与 AI", nav_contact: "联系",
     grp_h: "按分组浏览", grp_note: "选一个分组，下方表格只列这一组的链。",
@@ -310,10 +310,10 @@ const UI = {
     data_dl_h: "下载", data_files: { "chains.csv": "每条链一行，可用表格软件打开", "chains.json": "每条链的档位、依据和里程碑", "network.json": "最近一次每周网络巡查", "sources.json": "固定版本的原始出处" },
     data_ai_h: "给 AI 助手", data_ai_p: "llms.txt 用纯文本列出全部页面和数据文件，方便 AI 助手和 AI 搜索读取本站、引用正确的页面。",
     data_llms: "页面、数据文件和每条链的档位", data_cite_h: "如何引用", copy: "复制", copied: "已复制",
-    data_lic: "数据采用 CC BY 4.0 许可，脚本采用 MIT 许可。",
+    data_lic: "数据采用 CC BY-NC 4.0 许可，按要求署名即可免费商用；脚本采用 MIT 许可。",
     ct_h: "通过公开渠道联系我们", ct_lede: "提问、纠错、提交新项目都走公开渠道，每条回复都留有记录。",
-    ct: [["提问和建议", "GitHub Discussions"], ["报错", "GitHub issue，请附原始出处"], ["提交项目", "GitHub issue 表单"], ["关注更新", "X · @balance0014"]],
-    ct_reply: "我们 7 天内回复。",
+    ct: [["提问和建议", "GitHub Discussions"], ["报错", "GitHub issue，请附原始出处"], ["申请收录", "GitHub issue 表单"], ["关注更新", "X · @balance0014"]],
+    ct_reply: "我们 2 天内回复，审核结果一般 3 天内给出。",
     any: "全部", group_label: "分组", stage_label: "档位", fam_label: "算法", search_label: "搜索",
     fam: { mldsa: "ML-DSA", falcon: "Falcon", slhdsa: "SLH-DSA", hash: "其他哈希签名", other: "自研或其他", none: "尚无" },
     remove: (x) => `移除筛选：${x}`, clear_all: "全部清除", clear_filters: "清除全部筛选",
@@ -324,7 +324,7 @@ const UI = {
     cum_note: (n, k, y, u) => `主网上已能用抗量子签名的链，按上线当天累计，每条链一个点。${n} 条中有 ${k} 条是 ${y} 年上线的。${u ? `另有 ${u} 条尚未找到带出处的日期。` : ""}`,
     cum_total: "条",
     tap_open: "再点一次打开", copy_link: "复制本节链接", link_copied: "链接已复制",
-    grp_more: (n) => `另有 ${n} 条`, show_all: (n) => `显示全部 ${n} 条`,
+    grp_more: (n) => `另有 ${n} 条`, show_all: (n) => `显示全部 ${n} 条`, show_less: "收起", sub_h: "没找到你的链？", sub_p: "附一个原始出处（代码、版本发布或链上数据）就能申请收录。2 天内回复。", src_site: "本站数据（每条附原始出处）", howc: "数字怎么算的", dym: "你是不是要找：", list_more: (n) => `展开其余 ${n} 条`, list_less: "收起",
     th_cov: "覆盖", th_prog: "最近一次抗量子进展",
     prog_n90: (n) => `近 90 天 ${n} 条`, prog_none: "本站未收录",
     ss: { std: "NIST 标准", sel: "NIST 选定、未定稿", var: "变体，版本未审", hash: "有状态哈希签名", custom: "项目自研", none: "尚无抗量子方案" },
@@ -336,7 +336,7 @@ const UI = {
     mig: { native: "原生链，没有旧密钥要迁移", available: "已有的币可以迁移", testnet: "迁移：仅限测试网", planned: "迁移：计划中", none: "还没有迁移办法", unknown: "迁移：情况不明" },
     mig_s: { native: "原生", available: "可迁移", testnet: "仅测试网", planned: "计划中", none: "没有", unknown: "不明" },
     audit: { audited: "已审计", partial: "部分审计", none_found: "未找到审计", unknown: "审计情况不明" },
-    scope: { top: "市值前 100", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来加上", notyet: "还没有" }, early_tag: "早期 · 只有测试网", design_built: "设计为原生抗量子",
+    scope: { top: "市值前 100 名", other: "其他" }, design: { native: "原生抗量子", upgraded: "后来加上", notyet: "还没有" }, early_tag: "早期 · 只有测试网", design_built: "设计为原生抗量子",
     fl: { custom: "自研方案", var: "变体未审", noaudit: "未找到审计", projdata: "无独立出块数据" }, proposed: "提案中，未部署", netw: { mainnet: "主网", testnet: "还没上主网" },
     scope_label: "范围", design_label: "设计", ss_label: "标准状态", cov_label: "覆盖", mig_label: "迁移路径", audit_label: "审计", netw_label: "网络", net_label2: "出块状态", view_label: "正在看",
     more_filters: "更多筛选", more_bg: "含背景信息",
@@ -358,7 +358,7 @@ const UI = {
     wk: (d) => `${d} 当周`,
     run_title: "抗量子签名在主网上运行了多久", run_note: (d) => `每条链一根条，从抗量子签名在现行主网可用的那天起，到 ${d} 为止。最早的在上。`,
     run_len: (days) => days >= 365 ? `${(days / 365.25).toFixed(1)} 年` : days >= 60 ? `${Math.round(days / 30.44)} 个月` : `${days} 天`,
-    am_title: "算法版图", am_note: (n) => `第 2 档及以上的 ${n} 条链，按所用或提议的签名家族分行，颜色表示标准状态。`,
+    am_title: "算法版图", am_note: (n) => `第 2 档及以上的 ${n} 条链，按所用或提议的签名所属的数学家族分行（按 NIST 的分法），颜色表示它在 NIST 的状态。`,
     d_algo_h: "算法", d_cov_h: "覆盖", d_prog_h: "进展", d_ev_h: "证据", d_bg_h: "背景",
     d_bg_note: "这些不是抗量子指标，只帮助判断其他信息：出块停了的链谈不上保护，市值说明有多少价值面临风险。",
     k_status: "标准状态", k_level: "强度等级", k_sizes: "参考大小", k_hybrid: "混合签名", k_audit: "抗量子代码的审计",
@@ -374,6 +374,71 @@ const UI = {
 };
 
 /* One sentence for every label on the page. */
+/* what people with a public identity say on X about a chain's quantum plans */
+Object.assign(UI.en, {
+  xt_h: "Quantum discussion on X", xt_note: "These are claims. They do not count toward the stage.", xt_post: "Post", xt_checked: (d) => `checked ${d}`,
+  xt_rel: { founder: "founder", foundation: "foundation", core_dev: "core developer", proposal_author: "proposal author", maintainer: "maintainer", mining_pool: "mining pool", wallet: "wallet", exchange: "exchange", community_account: "official community account" },
+  xt_type: { plan: "Plan or timeline", proposal: "Proposal", research: "Research", reply: "Reply to holders", other: "Other" },
+  xt_asks: (n, d) => `In the last ${d} days, about ${n} different people on X asked about this chain's quantum plans.`, xt_ex: "For example",
+  xt_new_h: "New on X", xt_new_p: "Posts by people with a public identity about a chain's quantum plans, checked against the original post. Claims only: they never change a stage.",
+});
+Object.assign(UI.zh, {
+  xt_h: "X 上的抗量子讨论", xt_note: "这些是说法，不计入档位。", xt_post: "原帖", xt_checked: (d) => `核对于 ${d}`,
+  xt_rel: { founder: "创始人", foundation: "基金会", core_dev: "核心开发者", proposal_author: "提案作者", maintainer: "维护者", mining_pool: "矿池", wallet: "钱包", exchange: "交易所", community_account: "社区官方号" },
+  xt_type: { plan: "计划或时间表", proposal: "提案讨论", research: "研究", reply: "回应持币人", other: "其他" },
+  xt_asks: (n, d) => `近 ${d} 天，X 上约有 ${n} 个不同的人在问这条链的量子计划。`, xt_ex: "代表帖",
+  xt_new_h: "X 上的新动态", xt_new_p: "有公开身份的人谈某条链量子计划的帖子，都已打开原帖核对。只算说法，不改变档位。",
+});
+/* the algorithm map: NIST families and statuses */
+Object.assign(UI.en, {
+  nfam: { lattice: "Lattice-based", hash: "Hash-based", multivariate: "Multivariate", code: "Code-based", isogeny: "Isogeny-based", mpcith: "MPC-in-the-Head", symmetric: "Symmetric-based", other: "Other" },
+  nist: { fips: "NIST standard (FIPS 204/205)", draft: "NIST-selected, standard in development (FN-DSA)", sp800208: "NIST stateful hash-based standard (SP 800-208)", round3: "Round 3 candidate, NIST additional signatures", broken: "Publicly broken", notnist: "Not submitted to NIST" },
+  nist_var: "variant or version not reviewed by NIST", nist_h: "NIST status on the algorithm map", nist_p: "The map groups schemes by NIST\u2019s mathematical families and colours them by where each stands at NIST. A variant keeps the colour of the scheme it varies and gets a dashed outline.", nist_cols: ["Status", "What it means", "NIST record"], nist_var_k: "Dashed: variant, version not reviewed", nist_own: "own construction",
+  nist_rainbow: "older parameters publicly broken; the default parameter set has no public analysis", nist_wots: "a part of XMSS and SLH-DSA, not a NIST standard on its own",
+  nist_next: "NIST status as of 2026-11-28. FN-DSA (FIPS 206) has no final version yet. Round 3 of the additional-signature call began on 2026-05-14 with 9 candidates (8 after HAWK withdrew); NIST expects it to take about two years, and the next NIST PQC standardization conference is planned for spring or summer 2027.",
+});
+Object.assign(UI.zh, {
+  nfam: { lattice: "格", hash: "哈希", multivariate: "多变量", code: "编码", isogeny: "同源", mpcith: "MPC-in-the-Head", symmetric: "对称", other: "其他" },
+  nist: { fips: "NIST 正式标准（FIPS 204/205）", draft: "NIST 已选定、标准制定中（FN-DSA）", sp800208: "NIST 有状态哈希签名标准（SP 800-208）", round3: "NIST 附加签名第 3 轮候选", broken: "已被公开攻破", notnist: "没有提交 NIST" },
+  nist_var: "变体，或 NIST 没有审查过的版本", nist_h: "算法版图上的 NIST 状态", nist_p: "版图按 NIST 的数学家族给方案分行，按各自在 NIST 的进度上色。变体沿用所变方案的颜色，加虚线框。", nist_cols: ["状态", "含义", "NIST 记录"], nist_var_k: "虚线框：变体，版本未审", nist_own: "项目自研",
+  nist_rainbow: "旧参数已被公开攻破；默认参数集目前没有公开分析", nist_wots: "是 XMSS 和 SLH-DSA 的组成部分，单独使用不是 NIST 标准",
+  nist_next: "NIST 状态截至 2026-11-28。FN-DSA（FIPS 206）还没有正式版。附加签名征集第 3 轮于 2026-05-14 开始，共 9 个候选（HAWK 退出后剩 8 个）；NIST 预计第 3 轮约需两年，下一届 NIST 抗量子密码标准化会议计划在 2027 年春夏举行。",
+});
+/* data page, embeds and license: strings kept together so both languages stay in step */
+Object.assign(UI.en, {
+  dp_eyebrow: "Data & AI", dp_h: "Data, API and embeds", dp_lede: "Everything on this site is public: download the files, read them as a JSON API, or embed a live badge or card for any chain. Free for commercial use when you show the credit.",
+  dp_toc: [["files", "Download"], ["api", "API"], ["fields", "Fields"], ["embed", "Embed"], ["license", "License"], ["cite", "Cite"]],
+  api_h: "API", api_p: "Plain JSON files on GitHub Pages: no key, no rate limit beyond GitHub's own, and open to any website (CORS is allowed). They are rebuilt from the data on every update.",
+  api_cols: ["Request", "Returns"],
+  api_rows: [["data/chains/index.json", "Every chain in one short list: id, name, stage, group, rank, review date and the link to its own file"], ["data/chains/{id}.json", "One chain: stage, algorithm and standard status per scheme, coverage, migration, audit, mainnet start date, the sentence its stage rests on with the source, page, badge and card links, credit and license"], ["data/chains.json", "The full dataset as we maintain it, with milestones and sources"], ["data/chains.csv", "One row per chain, for spreadsheets"], ["data/network.json", "The latest weekly network check"], ["llms.txt", "A plain-text summary for AI assistants"]],
+  api_ex: "Example", api_freq: (v) => `Updates: network data weekly, sources monthly, and whenever a correction is merged. Each file carries the version (now ${v}) and the date its data was checked. A field is only ever added, not renamed or removed, within schema version 1.`,
+  fields_h: "Fields of data/chains/{id}.json", fields_cols: ["Field", "Meaning"],
+  fields_rows: [["stage, stage_name", "0 to 5, see the method page; the name in English and Chinese"], ["group", "`top` (CoinGecko top 100), `optin` (mainnet opt-in), `native` (post-quantum native), `early` (no mainnet yet)"], ["schemes", "Each signature scheme with its status: `std` (NIST standard), `sel` (NIST-selected, not final), `var` (variant, version not reviewed), `hash` (stateful hash-based, NIST SP 800-208), `custom` (own construction), `none`"], ["coverage", "`default`, `optin`, `testnet` or `none`: who can use post-quantum signatures today"], ["migration, audit", "How existing coins move; whether the post-quantum code has an outside audit"], ["post_quantum_mainnet_since", "The day post-quantum signatures became usable on the current mainnet, or `null`"], ["basis, basis_source", "The sentence the stage rests on, and its primary source"], ["last_reviewed, data_checked", "When a person last reviewed this chain; when the network data was read"], ["page, badge, card", "Links in English and Chinese"], ["attribution, license", "The credit to show and the terms"]],
+  emb_h: "Embed a live badge or card", emb_p: "Pick a chain. The badge and card are images served by this site, so they always show the current stage and check date. Both carry the credit, so they meet the license on their own.",
+  emb_chain: "Chain", emb_lang: "Language", emb_badge: "Badge", emb_card: "Card", emb_md: "Markdown badge (README)", emb_html: "HTML badge", emb_cardc: "HTML card with credit",
+  emb_page_h: "Embed this chain", emb_page_p: "Put this chain's live badge or card in a README or on a website. It updates itself and carries the credit.", emb_more: "More embeds and the license",
+  lic_h: "License", lic_p: "Data, charts and text: CC BY-NC 4.0 from version 0.5.0. Scripts: MIT. Commercial use is free when all three conditions are met:",
+  lic_list: ["Every screen that uses the data shows the credit below with both links, or the official badge or card. A credit only in a footer or an about page does not count.", "The check date is shown, and your copy is updated at least once a week.", "The use is registered in a “Used by” issue. Registered products are listed in the README."],
+  lic_credit: "Credit to show", lic_other: "Can't meet the conditions? Ask in a GitHub issue or by direct message on X. Versions up to 0.4.0 stay under CC BY 4.0.", lic_reg: "Register a use", lic_full: "Full license",
+  credit: "Data: Post-Quantum Blockchains, by Balance Zhao",
+});
+Object.assign(UI.zh, {
+  dp_eyebrow: "数据与 AI", dp_h: "数据、接口和嵌入", dp_lede: "本站的一切都公开：可以下载文件、按 JSON 接口读取，也可以给任意一条链嵌入实时更新的徽章或卡片。按要求署名即可免费商用。",
+  dp_toc: [["files", "下载"], ["api", "接口"], ["fields", "字段"], ["embed", "嵌入"], ["license", "授权"], ["cite", "引用"]],
+  api_h: "接口", api_p: "放在 GitHub Pages 上的纯 JSON 文件：不用密钥，除 GitHub 自身的限制外不限频，任何网站都能直接读取（允许跨域）。每次更新都按数据重新生成。",
+  api_cols: ["请求", "返回内容"],
+  api_rows: [["data/chains/index.json", "全部链的简表：编号、名称、档位、分组、市值排名、核对日期和单条文件的链接"], ["data/chains/{id}.json", "单条链：档位、算法和每个方案的标准状态、覆盖范围、迁移、审计、主网起始日期、档位依据和出处、页面、徽章和卡片链接、署名和授权"], ["data/chains.json", "我们维护的完整数据集，含里程碑和出处"], ["data/chains.csv", "每条链一行，可用表格软件打开"], ["data/network.json", "最近一次每周网络巡查"], ["llms.txt", "给 AI 助手的纯文本摘要"]],
+  api_ex: "示例", api_freq: (v) => `更新频率：网络数据每周查，出处每月重核，合并纠错时随时更新。每个文件都带版本号（现在是 ${v}）和数据核对日期。在第 1 版结构内，字段只增加，不改名、不删除。`,
+  fields_h: "data/chains/{id}.json 的字段", fields_cols: ["字段", "含义"],
+  fields_rows: [["stage、stage_name", "0 到 5 档，见评档方法；中英文档位名"], ["group", "`top`（CoinGecko 市值前 100）、`optin`（主网可选用）、`native`（原生抗量子）、`early`（还没有主网）"], ["schemes", "每个签名方案及其状态：`std`（NIST 标准）、`sel`（NIST 选定、未定稿）、`var`（变体，版本未审）、`hash`（有状态哈希签名，NIST SP 800-208）、`custom`（项目自研）、`none`（尚无）"], ["coverage", "`default`、`optin`、`testnet` 或 `none`：今天谁能用上抗量子签名"], ["migration、audit", "已有的币怎样迁移；抗量子代码有没有外部审计"], ["post_quantum_mainnet_since", "抗量子签名在现行主网上可用的日期，没有则为 `null`"], ["basis、basis_source", "档位依据的那句话及其原始出处"], ["last_reviewed、data_checked", "人工最近一次复核这条链的日期；读取网络数据的日期"], ["page、badge、card", "中英文页面、徽章和卡片的链接"], ["attribution、license", "要显示的署名和授权条款"]],
+  emb_h: "嵌入实时徽章或卡片", emb_p: "选一条链。徽章和卡片是本站提供的图片，档位和核对日期总是最新的；两者都自带署名，单用就满足授权要求。",
+  emb_chain: "链", emb_lang: "语言", emb_badge: "徽章", emb_card: "卡片", emb_md: "Markdown 徽章（README 用）", emb_html: "HTML 徽章", emb_cardc: "带署名的 HTML 卡片",
+  emb_page_h: "嵌入这条链", emb_page_p: "把这条链的实时徽章或卡片放进 README 或网站。它会自动更新，并且自带署名。", emb_more: "更多嵌入方式和授权说明",
+  lic_h: "授权", lic_p: "从 0.5.0 版起，数据、图表和文字采用 CC BY-NC 4.0，脚本采用 MIT。满足下面三个条件即可免费商用：",
+  lic_list: ["用到数据的每一屏都显示下面这条带两个链接的署名，或者直接用官方徽章或卡片。只放在页脚或「关于」页不算。", "标出核对日期，并且至少每周同步一次。", "开一个「Used by」issue 登记用途，登记过的产品会列在 README 里。"],
+  lic_credit: "要显示的署名", lic_other: "做不到这些条件？请在 GitHub issue 里或在 X 上私信联系。0.4.0 及更早的版本仍按 CC BY 4.0。", lic_reg: "登记用途", lic_full: "完整授权条款",
+  credit: "数据来源：Post-Quantum Blockchains，作者 Balance Zhao",
+});
 const DEFS = {
   en: {
     pqsig: "A digital signature designed to resist attacks by large quantum computers, such as ML-DSA, Falcon or SLH-DSA. A holder signs with one to authorize a transfer.",
@@ -577,6 +642,29 @@ const DEFS = {
   },
 };
 
+/* NIST status of each scheme on the algorithm map (NIST's record as of 2026-11-28) */
+Object.assign(DEFS.en, {
+  nist: {
+    fips: "Published as a final standard on 2024-08-13: ML-DSA in FIPS 204 (lattice-based) and SLH-DSA in FIPS 205 (stateless hash-based).",
+    draft: "NIST selected Falcon and is writing it up as FN-DSA in FIPS 206; no final version has been published. Chains run the Falcon submission, which the standard may change in details.",
+    sp800208: "LMS/HSS and XMSS/XMSS^MT, final since 2020-10-29. These schemes are stateful: a key must never sign twice from the same state.",
+    round3: "One of the 8 schemes left in round 3 of NIST's call for additional signatures (9 announced on 2026-05-14; HAWK withdrew on 2026-07-29). The multivariate candidates are UOV, MAYO, QR-UOV and SNOVA. NIST expects round 3 to take about two years.",
+    broken: "A published attack breaks this scheme's parameters, as happened to Rainbow in 2022 after it reached NIST's third round. The chain page says whether the parameters the chain itself uses have been analysed.",
+    notnist: "Not a NIST standard or candidate: constructions a project designed itself, and WOTS+ used on its own (NIST uses WOTS+ only inside XMSS and SLH-DSA).",
+  },
+  nist_var: "A variant of a NIST scheme, or a version NIST has not reviewed, such as a deterministic Falcon, a project's own Dilithium, a reduced-use SLH-DSA profile that is not one of the draft SP 800-230 parameter sets, or UOV with its own parameters.",
+});
+Object.assign(DEFS.zh, {
+  nist: {
+    fips: "2024-08-13 正式发布：ML-DSA 为 FIPS 204（格），SLH-DSA 为 FIPS 205（无状态哈希）。",
+    draft: "NIST 已选定 Falcon，正在把它制定为 FIPS 206（FN-DSA），还没有正式版。链上用的是 Falcon 的提交版本，正式标准可能在细节上有改动。",
+    sp800208: "LMS/HSS 和 XMSS/XMSS^MT，2020-10-29 起为正式标准。属于有状态签名：同一状态的密钥绝不能签两次。",
+    round3: "NIST 附加签名征集第 3 轮剩下的 8 个方案之一（2026-05-14 公布 9 个，HAWK 于 2026-07-29 退出）。多变量类的候选是 UOV、MAYO、QR-UOV 和 SNOVA。NIST 预计第 3 轮约需两年。",
+    broken: "已有公开攻击攻破这个方案的参数，例如 Rainbow：它进入过 NIST 第三轮，2022 年被攻破。链的详情页写明该链自己用的参数有没有被分析过。",
+    notnist: "不是 NIST 标准或候选：项目自己设计的构造，以及单独使用的 WOTS+（NIST 只在 XMSS 和 SLH-DSA 内部使用 WOTS+）。",
+  },
+  nist_var: "NIST 方案的变体，或 NIST 没有审查过的版本，例如确定性的 Falcon、项目自己的 Dilithium、不属于 SP 800-230 草案参数集的限次 SLH-DSA，或者用自己参数的 UOV。",
+});
 const L = (k) => UI[lang][k];
 const DF = DEFS[lang];
 const CO = () => (lang === "zh" ? "：" : ": ");
@@ -629,9 +717,9 @@ const ICON_GO = `<svg class="go" width="16" height="16" viewBox="0 0 16 16" aria
 
 /* ---------- shared chrome ---------- */
 function chrome(view) {
-  const nav = [["overview", "nav_overview"], ["chains", "nav_chains"], ["timeline", "nav_timeline"], ["method/", "nav_method"], ["data", "nav_data"], ["contact", "nav_contact"]];
+  const nav = [["overview", "nav_overview"], ["chains", "nav_chains"], ["timeline", "nav_timeline"], ["method/", "nav_method"], ["data/", "nav_data"], ["contact", "nav_contact"]];
   put("nav", nav.map(([p, k]) => p.endsWith("/")
-    ? `<a href="${href(p)}"${view === "method" ? ' aria-current="page"' : ""}>${esc(L(k))}</a>`
+    ? `<a href="${href(p)}"${view === p.slice(0, -1) ? ' aria-current="page"' : ""}>${esc(L(k))}</a>`
     : `<a href="${href("")}#${p}" data-sec="${p}">${esc(L(k))}</a>`).join(""));
   put("foot", `
     <div class="row1"><p>${esc(L("foot_fix"))}</p>
@@ -674,15 +762,52 @@ const VIEW = {
   quiet: (c) => c.rank != null && c.stage <= 1 && !c.prog.y1,
   broken: (c) => c.chips.includes("broken"), custom: (c) => hasSS(c, "custom") || hasSS(c, "var"), claim: (c) => c.claim,
 };
-const MAIN_F = ["scope", "stage", "design", "ss", "cov"], MORE_F = ["fam", "mig", "audit", "netw", "net"];
+const MAIN_F = ["scope", "stage"], MORE_F = ["design", "ss", "cov", "fam", "mig", "audit", "netw", "net"];
 const KEYS = [...MAIN_F, ...MORE_F, "view"];
 const DEFAULT = Object.assign(Object.fromEntries(KEYS.map((k) => [k, null])), { q: "", sort: "default" });
 const state = Object.assign({}, DEFAULT);
 const defaultOrder = (a, b) => GROUP_ORDER[a.group] - GROUP_ORDER[b.group] || (a.rank || 999) - (b.rank || 999) || b.stage - a.stage || a.name.localeCompare(b.name);
 /* search text: names, ticker, algorithm and labels, plus the older names of each family (Dilithium, SPHINCS+, FN-DSA) */
 const FAM_WORDS = { mldsa: "ml-dsa dilithium", falcon: "falcon fn-dsa", slhdsa: "slh-dsa sphincs", hash: "hash xmss wots winternitz", other: "", none: "" };
-const hay = (c) => c._hay || (c._hay = [c.name, c.zh_name, c.ticker, c.algo.en, c.algo.zh, ...c.chips.map((k) => `${D.chips[k].en} ${D.chips[k].zh}`), ...c.fam.map((f) => FAM_WORDS[f])].join(" ").toLowerCase());
-const passes = (c, k, v) => k === "q" ? (!v.trim() || hay(c).includes(v.trim().toLowerCase())) : (v == null || F[k].test(c, v));
+/* search ignores case, spaces, hyphens and dots; names also match their aliases (BSC, MATIC, 瑞波), the pinyin
+   initials of Chinese names (ggb → 狗狗币) and, from four letters on, a name with one letter wrong (two from eight letters) */
+const norm = (s) => String(s || "").normalize("NFKC").toLowerCase().replace(/[\s\-_.·'’()（）]/g, "");
+const hay = (c) => c._hay || (c._hay = norm([c.algo.en, c.algo.zh, ...c.chips.map((k) => `${D.chips[k].en} ${D.chips[k].zh}`), ...c.fam.map((f) => FAM_WORDS[f])].join("|")));
+const keysOf = (c) => c._keys || (c._keys = [c.name, c.zh_name, c.ticker, c.id, `${name(c)} ${c.ticker}`, ...(c.aliases || []), ...(c.pinyin || [])].filter(Boolean).map(norm));
+function editDist(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev2 = null, prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (prev2 && i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) cur[j] = Math.min(cur[j], prev2[j - 2] + 1); /* swapped letters */
+    }
+    prev2 = prev; prev = cur;
+  }
+  return prev[b.length];
+}
+const tol = (q) => (/^[a-z0-9]+$/.test(q) ? (q.length >= 8 ? 2 : q.length >= 4 ? 1 : 0) : 0);
+/* how far a query is from a chain's names: 0 for a hit, 1 or 2 for a near miss, Infinity for none */
+function nameDist(c, q) {
+  const t = tol(q);
+  let best = Infinity;
+  for (const k of keysOf(c)) {
+    if (k.includes(q)) return 0;
+    if (!t) continue;
+    best = Math.min(best, editDist(q, k, t), k.length > q.length ? editDist(q, k.slice(0, q.length), t) : Infinity);
+  }
+  return best <= t ? best : Infinity;
+}
+const hitQ = (c, q) => { const n = norm(q); return !n || nameDist(c, n) !== Infinity || hay(c).includes(n); };
+/* "did you mean": the names closest to a query that matched nothing */
+function suggest(q) {
+  const n = norm(q);
+  if (n.length < 2) return [];
+  return D.chains.map((c) => [c, Math.min(...keysOf(c).map((k) => Math.min(editDist(n, k, 3), k.length > n.length ? editDist(n, k.slice(0, n.length), 3) : 9)))])
+    .filter(([, d]) => d <= 3).sort((a, b) => a[1] - b[1] || (a[0].rank || 999) - (b[0].rank || 999)).slice(0, 3).map(([c]) => c);
+}
+const passes = (c, k, v) => k === "q" ? hitQ(c, v) : (v == null || F[k].test(c, v));
 const matches = (c, over) => [...KEYS, "q"].every((k) => passes(c, k, over && k in over ? over[k] : state[k]));
 const countWith = (k, v) => D.chains.filter((c) => matches(c, { [k]: v })).length;
 const isDefault = () => KEYS.every((k) => state[k] == null) && !state.q.trim();
@@ -759,7 +884,7 @@ function progCell(c) {
 }
 /* the list shows the first rows, then a "show all" button (no-JS pages list everything) */
 const FIRST = 20;
-let expanded = false;
+let expanded = false, openY = 0;
 function rowHTML(c, later) {
   const sub = [esc(c.ticker), c.rank ? termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap")) : ""].filter(Boolean).join(" · ");
   return `<tr class="row${later ? " later" : ""}" data-id="${c.id}">
@@ -780,8 +905,12 @@ function tableBody() {
     if (grouped && c.group !== last) { last = c.group; html += `<tr class="grp"><td colspan="7"><span class="gt">${term(esc(L("g_" + c.group)), DF["g_" + c.group], L("g_" + c.group))}</span><span class="gs">${esc(L("g_" + c.group + "_s"))}</span></td></tr>`; }
     html += rowHTML(c, false); i++;
   }
-  if (!rows.length) html = `<tr class="none"><td colspan="7" class="empty"><div class="ei"><b>${esc(L("empty_h"))}</b><span>${esc(L("empty_p"))}</span><button type="button" class="btn" data-clear>${esc(L("clear_filters"))}</button></div></td></tr>`;
-  return { html, count: L("shown")(rows.length, D.chains.length), hidden: expanded ? 0 : Math.max(0, rows.length - FIRST) };
+  if (!rows.length) {
+    const sug = state.q.trim() ? suggest(state.q) : [];
+    const dym = sug.length ? `<span class="dym">${esc(L("dym"))}${sug.map((c) => `<button type="button" class="link-btn" data-suggest="${esc(name(c))}">${esc(name(c))} <span class="mono">${esc(c.ticker)}</span></button>`).join(lang === "zh" ? "、" : ", ")}</span>` : "";
+    html = `<tr class="none"><td colspan="7" class="empty"><div class="ei"><b>${esc(L("empty_h"))}</b>${dym}<span>${esc(L("empty_p"))}</span><button type="button" class="btn" data-clear>${esc(L("clear_filters"))}</button></div></td></tr>`;
+  }
+  return { html, count: L("shown")(rows.length, D.chains.length), total: rows.length };
 }
 /* filter rows; each button shows how many chains it would list, and its definition on hover */
 const LAB = { scope: "scope_label", stage: "stage_label", design: "design_label", ss: "ss_label", cov: "cov_label", fam: "fam_label", mig: "mig_label", audit: "audit_label", netw: "netw_label", net: "net_label2", view: "view_label", q: "search_label" };
@@ -833,7 +962,8 @@ function fig(o) {
   return `<figure class="fig" id="${o.id}" aria-labelledby="${o.id}-h"><div class="fig-h"><div class="fig-t"><${o.h} id="${o.id}-h">${esc(o.title)}</${o.h}>${o.tools || ""}</div><p>${o.sub}</p></div><div class="fig-b">${o.body}</div>
     <figcaption class="fig-f"><span>${esc(L("fig_src"))}${CO()}${o.src} · ${esc(L("fig_checked")(fmtDate(D.checked)))}</span>${o.csv ? `<span class="acts"><a href="${D.base}data/${o.csv}" download>${ICON_DL}${esc(L("fig_dl"))}</a></span>` : ""}</figcaption></figure>`;
 }
-const SRC_CHAINS = `<a href="${D.base}data/chains.json">chains.json</a>`;
+const SRC_CHAINS = `<a href="${href("data/")}">${esc(L("src_site"))}</a>`;
+const submitBox = () => `<div class="card subbox"><div><b>${esc(L("sub_h"))}</b><p>${esc(L("sub_p"))}</p></div><a class="btn primary" href="${URL_SUBMIT}" target="_blank" rel="noopener">${esc(L("foot_btn_submit"))} ↗</a></div>`;
 const anchorBtn = (id, title) => `<button type="button" class="anchor" data-anchor="${id}" aria-label="${esc(L("copy_link"))}${CO()}${esc(title)}">${ICON_LINK}</button>`;
 const secH = (id, eyebrow, title, lede) => `<div class="sec-h">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}<div class="h2row"><h2 id="${id}-h">${esc(title)}</h2>${anchorBtn(id, title)}</div>${lede ? `<p>${lede}</p>` : ""}</div>`;
 /* chart 1: the largest chains as one bar stacked by stage */
@@ -971,34 +1101,47 @@ function runHTML() {
   return fig({ id: "fig-run", h: "h3", title: L("run_title"), sub: esc(L("run_note")(fmtDate(D.checked))), csv: "chart-mainnet-since.csv", src: SRC_CHAINS,
     body: `<div class="run grow-x">${rows}<div class="rr ax" aria-hidden="true"><span></span><span class="rt xax">${xl.join("")}</span></div></div>` });
 }
-/* algorithm map: chains at stage 2 or higher, one row per scheme as a standard, then variants and own constructions.
-   A chain that names two schemes appears in two rows; a filled dot marks chains whose new accounts use it by default */
+/* algorithm map: chains at stage 2 or higher, one row per NIST mathematical family (lattice, hash-based, multivariate …),
+   each scheme coloured by its NIST status. A chain naming two schemes appears twice; a dashed outline marks a variant or
+   a version NIST has not reviewed, and a filled dot marks chains whose new accounts use the scheme by default */
+const NFAMS = ["lattice", "hash", "multivariate", "code", "isogeny", "mpcith", "symmetric", "other"];
+const NSTS = ["fips", "draft", "sp800208", "round3", "broken", "notnist"];
+const NIST_SRC = {
+  fips: [["https://csrc.nist.gov/pubs/fips/204/final", "FIPS 204"], ["https://csrc.nist.gov/pubs/fips/205/final", "FIPS 205"]],
+  draft: [["https://csrc.nist.gov/projects/post-quantum-cryptography", "NIST PQC"]],
+  sp800208: [["https://csrc.nist.gov/pubs/sp/800/208/final", "SP 800-208"]],
+  round3: [["https://csrc.nist.gov/projects/pqc-dig-sig/round-3-additional-signatures", "NIST round 3"]],
+  broken: [["https://eprint.iacr.org/2022/214", "Beullens 2022"]],
+};
 function algoMapHTML() {
-  const cs = D.chains.filter((c) => c.stage >= 2);
-  const R = [
-    ["ML-DSA", (k, st) => k === "mldsa" && ["std", "sel"].includes(st)],
-    ["Falcon", (k, st) => k === "falcon" && ["std", "sel"].includes(st)],
-    ["SLH-DSA / SPHINCS+", (k, st) => k === "slhdsa" && ["std", "sel"].includes(st)],
-    ["XMSS / WOTS+", (k, st) => st === "hash"],
-    [L("ss").var, (k, st) => st === "var"],
-    [L("ss").custom, (k, st) => st === "custom"],
-  ];
-  const rows = R.map(([lab, ok]) => {
-    const inR = cs.map((c) => [c, c.schemes.find(([k, st]) => ok(k, st))]).filter(([, x]) => x)
-      .sort(([a], [b]) => b.stage - a.stage || (a.rank || 999) - (b.rank || 999) || a.name.localeCompare(b.name));
+  const cs = D.chains.filter((c) => c.stage >= 2 && c.nist && c.nist.length);
+  const entries = cs.flatMap((c) => c.nist.map((n) => ({ c, n })));
+  const rows = NFAMS.map((f) => {
+    const inR = entries.filter(({ n }) => n.fam === f)
+      .sort((a, b) => NSTS.indexOf(a.n.st) - NSTS.indexOf(b.n.st) || b.c.stage - a.c.stage || (a.c.rank || 999) - (b.c.rank || 999) || a.c.name.localeCompare(b.c.name));
     if (!inR.length) return "";
-    return `<div class="am-r"><span class="am-f">${esc(lab)}<b>${inR.length}</b></span><span class="am-c">${inR.map(([c, [k, st]]) => { const tip = `${name(c)} · ${stageTitle(c.stage)} · ${schemeName(k)} · ${L("ss")[st]}${c.stage === 5 ? " · " + L("cov").default : ""}`; return `<a class="am ${st}${c.stage === 5 ? " dft" : ""}" href="${chainURL(c.id)}" data-tip="${esc(tip)}" aria-label="${esc(tip)}"><b>${c.stage}</b>${esc(name(c))}</a>`; }).join("")}</span></div>`;
+    const schemes = [...new Set(inR.map(({ n }) => n.scheme || L("nist_own")))].join(lang === "zh" ? "、" : ", ");
+    const chips = inR.map(({ c, n }) => {
+      const sch = n.scheme || L("nist_own");
+      const tip = `${name(c)} · ${stageTitle(c.stage)} · ${sch} · ${L("nist")[n.st]}${n.var ? " · " + L("nist_var") : ""}${n.scheme === "Rainbow" ? " · " + L("nist_rainbow") : ""}${n.scheme === "WOTS+" ? " · " + L("nist_wots") : ""}${c.stage === 5 ? " · " + L("cov").default : ""}`;
+      return `<a class="am n-${n.st}${n.var ? " vr" : ""}${c.stage === 5 ? " dft" : ""}" href="${chainURL(c.id)}" data-tip="${esc(tip)}" aria-label="${esc(tip)}"><b>${c.stage}</b>${esc(name(c))}<span class="am-s">${esc(sch)}</span></a>`;
+    }).join("");
+    return `<div class="am-r"><div class="am-f"><span>${esc(L("nfam")[f])}<b>${inR.length}</b></span><small>${esc(schemes)}</small></div><span class="am-c">${chips}</span></div>`;
   }).join("");
-  const keys = STATUSES.filter((v) => v !== "none" && cs.some((c) => hasSS(c, v))).map((v) => `<span><i class="ssw ${v}"></i>${termRef(esc(L("ss")[v]), "ss." + v, L("ss")[v])}</span>`).join("");
-  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(`${L("am_note")(cs.length)} ${L("map_multi")}`), src: SRC_CHAINS,
-    body: `<div class="amap">${rows}</div><div class="keys">${keys}<span><i class="amd" aria-hidden="true"></i>${esc(L("cov").default)}</span></div>` });
+  const used = NSTS.filter((v) => entries.some(({ n }) => n.st === v));
+  const keys = used.map((v) => `<span><i class="ssw n-${v}"></i>${term(esc(L("nist")[v]), DF.nist[v], L("nist")[v])}</span>`).join("")
+    + (entries.some(({ n }) => n.var) ? `<span><i class="ssw vr" aria-hidden="true"></i>${term(esc(L("nist_var_k")), DF.nist_var, L("nist_var_k"))}</span>` : "");
+  return fig({ id: "fig-algo", h: "h3", title: L("am_title"), sub: esc(`${L("am_note")(cs.length)} ${L("map_multi")}`), src: `${SRC_CHAINS} · <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noopener">NIST ↗</a>`,
+    body: `<div class="amap">${rows}</div><div class="keys">${keys}<span><i class="amd" aria-hidden="true"></i>${esc(L("cov").default)}</span></div><p class="fine-note">${esc(L("nist_next"))}</p>` });
 }
 /* layer 2: the five questions a holder asks; each card states its rule and opens the matching table */
 function q5HTML() {
   const by = (v) => D.chains.filter(VIEW[v]);
   const show = (v, n) => `<button type="button" class="btn qcta" data-view="${v}"${n ? "" : " disabled"}>${esc(L("q_show")(n))} <span aria-hidden="true">→</span></button>`;
   const link = (c, extra) => `<li><a href="${chainURL(c.id)}"><b class="gs s${c.stage}" aria-label="${esc(stageTitle(c.stage))}">${c.stage}</b>${esc(name(c))}</a>${extra || ""}</li>`;
-  const more = (n, max) => n > max ? `<li class="more-n">${esc(L("q_more")(n - max))}</li>` : "";
+  /* a long list shows its first entries and a button that unfolds the rest in place, and folds them again */
+  const more = (n, max) => n > max ? `<li class="more-n"><button type="button" class="link-btn" data-fold aria-expanded="false" data-n="${n - max}">${esc(L("list_more")(n - max))}</button></li>` : "";
+  const items = (a, max, f) => a.map((c, i) => i < max ? f(c) : f(c).replace(/^<li/, "<li hidden data-x")).join("");
   const card = (cls, h, rule, n, body, v) => `<div class="card qcard ${cls}"><div class="qh"><h3>${esc(h)}</h3><span class="qn">${n}</span></div><p class="qr">${esc(rule)}</p>${body}${v ? show(v, n) : ""}</div>`;
   const use = by("use").sort((a, b) => b.stage - a.stage || (a.since ? a.since.date : "9").localeCompare(b.since ? b.since.date : "9"));
   const tag = (c) => `<span class="qt ${c.stage === 5 ? "def" : "opt"}">${esc(L(c.stage === 5 ? "t_default" : "t_optin"))}</span>${c.schemes.filter(([k]) => k !== "none").map(([k, st]) => `<span class="qt ss ${st}">${esc(SCHEME[k] ? `${SCHEME[k]} · ${L("ss_s")[st]}` : L("ss")[st])}</span>`).join("")}${c.audit ? `<span class="qt au ${c.audit}">${esc(L("audit")[c.audit])}</span>` : ""}`;
@@ -1008,10 +1151,10 @@ function q5HTML() {
   const risk = ["broken", "custom", "claim"].map((v) => { const n = by(v).length; return `<li><button type="button" class="qrisk" data-view="${v}"${n ? "" : " disabled"}><b>${n}</b><span>${esc(L("risk")[v])}</span><span class="go-a" aria-hidden="true">→</span></button></li>`; }).join("");
   const M = 8;
   const cards = [
-    card("q-use", L("q_use_h"), L("q_use_r"), use.length, `<ul class="ql tags">${use.slice(0, M).map((c) => link(c, tag(c))).join("")}${more(use.length, M)}</ul>`, "use"),
+    card("q-use", L("q_use_h"), L("q_use_r"), use.length, `<ul class="ql tags">${items(use, M, (c) => link(c, tag(c)))}${more(use.length, M)}</ul>`, "use"),
     card("q-close", L("q_close_h"), L("q_close_r"), close.length, close.length ? `<ul class="ql">${close.map((c) => link(c, c.next ? `<span class="qx">${esc(T(c.next))}</span>` : "")).join("")}</ul>` : `<p class="qr">${esc(L("q_none"))}</p>`, "close"),
-    card("q-move", L("q_move_h"), L("q_move_r")(fmtDate(D.checked)), move.length, `<ul class="ql">${move.slice(0, M).map((c) => link(c, `<span class="qd mono">${esc(fmtDate(c.prog.latest.date))}</span>`)).join("")}${more(move.length, M)}</ul>`, "move"),
-    card("q-quiet", L("q_quiet_h"), L("q_quiet_r")(fmtDate(D.checked)), quiet.length, `<p class="qnames">${quiet.slice(0, 12).map((c) => `<a href="${chainURL(c.id)}">${esc(name(c))}</a>`).join(lang === "zh" ? "、" : ", ")}${quiet.length > 12 ? (lang === "zh" ? "等" : " …") : ""}</p>`, "quiet"),
+    card("q-move", L("q_move_h"), L("q_move_r")(fmtDate(D.checked)), move.length, `<ul class="ql">${items(move, M, (c) => link(c, `<span class="qd mono">${esc(fmtDate(c.prog.latest.date))}</span>`))}${more(move.length, M)}</ul>`, "move"),
+    card("q-quiet", L("q_quiet_h"), L("q_quiet_r")(fmtDate(D.checked)), quiet.length, `<ul class="qnames">${items(quiet, 12, (c) => `<li><a href="${chainURL(c.id)}">${esc(name(c))}</a></li>`)}${more(quiet.length, 12)}</ul>`, "quiet"),
     card("q-risk", L("q_risk_h"), L("q_risk_r"), "", `<ul class="qrl">${risk}</ul>`, ""),
   ].join("");
   return `<section id="questions" class="layer" aria-labelledby="questions-h">${secH("questions", "", L("q5_h"), esc(L("q5_note")))}<div class="q5">${cards}</div></section>`;
@@ -1049,7 +1192,7 @@ function renderTable(write) {
   tb.innerHTML = t.html;
   if (!reduced()) { tb.classList.remove("enter"); void tb.offsetWidth; tb.classList.add("enter"); }
   document.getElementById("count").textContent = t.count;
-  const more = document.getElementById("showall"); more.hidden = !t.hidden; more.firstElementChild.textContent = L("show_all")(t.hidden + FIRST);
+  const more = document.getElementById("showall"); more.hidden = t.total <= FIRST; more.firstElementChild.textContent = expanded ? L("show_less") : L("show_all")(t.total); more.firstElementChild.setAttribute("aria-expanded", String(expanded));
   document.getElementById("active").innerHTML = activeHTML();
   document.querySelectorAll(".fbtn[data-k]").forEach((b) => {
     const k = b.dataset.k, v = b.dataset.v === "" ? null : (k === "stage" ? +b.dataset.v : b.dataset.v);
@@ -1129,17 +1272,16 @@ function renderHome() {
   const dated = use.filter((c) => c.since).length, natMig = D.chains.filter((c) => c.mig && c.mig.value === "native").length;
   const notNat = use.filter((c) => c.stage === 5 && !(c.mig && c.mig.value === "native")).map(name);
   const recon = `<div class="recon"><p>${esc(L("recon")(all, top.length, all - top.length, use.length, def, use.length - def, usable.length))}</p><ul>${dated < use.length ? `<li>${esc(L("recon_dates")(dated, use.length))}</li>` : ""}${notNat.length ? `<li>${esc(L("recon_mig")(natMig, def, list(notNat)))}</li>` : ""}</ul></div>`;
-  const strip = `<div class="strip"><span>${esc(L("strip_v")(D.release.version, fmtDate(D.release.date)))}</span><span>${esc(L("strip_dl"))}${CO()}<a href="${D.base}data/chains.json">JSON</a> / <a href="${D.base}data/chains.csv">CSV</a></span><button type="button" class="link-btn" data-cite>${esc(L("strip_cite"))}</button><button type="button" class="link-btn" data-bib>${esc(L("strip_bib"))}</button></div>`;
   const check = `<form class="check" id="check" role="search"><label for="check-q">${esc(L("check_l"))}</label><span class="search">${ICON_SEARCH}<input id="check-q" list="check-l" autocomplete="off" placeholder="${esc(L("check_ph"))}"></span><button type="submit" class="btn primary">${esc(L("check_go"))}</button>
-    <datalist id="check-l">${[...D.chains].sort((a, b) => (a.rank || 999) - (b.rank || 999)).map((c) => `<option value="${esc(name(c))}">${esc(c.ticker)}</option>`).join("")}</datalist></form>`;
+    <datalist id="check-l">${[...D.chains].sort((a, b) => (a.rank || 999) - (b.rank || 999)).map((c) => `<option value="${esc(name(c))} ${esc(c.ticker)}"></option>`).join("")}</datalist><p class="check-x" id="check-x" role="status" hidden></p></form>`;
   const verdict = L("verdict")(usable.length, top.length).replace(/<em>(.*?)<\/em>/, (m, t) => `<em>${term(t, DF.pqsig, t)}</em>`);
   put("app", () => `<div class="page">
     <section id="overview" class="layer" aria-label="${esc(L("nav_overview"))}">
-      <div class="hero"><span class="eyebrow">${esc(L("scope_eyebrow")(top.length, fmtDate(D.mcap_date || D.checked)))}</span><h1>${verdict}</h1><p class="who">${esc(L("who"))}</p><p>${esc(L("verdict_sub")(list(usable.map(name)), list(t3)))}</p><p class="big">${bigLine}</p>${check}${strip}</div>
+      <div class="hero"><h1>${verdict}</h1><p>${esc(L("verdict_sub")(list(usable.map(name)), list(t3)))}</p>${check}</div>
       <div class="kpis">
-        ${kpi(`${num(usable.length)}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(`${num(use.length)}<small>/${all}</small>`, L("kpi_use")(def, use.length - def))}${kpi(num(D.chains.length), L("kpi_all"))}${kpi(`<span class="date">${esc(fmtDate(D.checked))}</span>`, L("kpi_date"))}
+        ${kpi(`${num(usable.length)}<small>/${top.length}</small>`, L("kpi_top"), "lead")}${kpi(`${num(use.length)}<small>/${all}</small>`, L("kpi_use")(def, use.length - def))}${kpi(`<span class="date">${esc(fmtDate(D.checked))}</span>`, L("kpi_date"))}
       </div>
-      ${recon}
+      <details class="howc"><summary>${esc(L("howc"))}${ICON_CHEV}</summary><div class="howc-b"><p class="big">${bigLine}</p>${recon}<p>${esc(L("scope_eyebrow")(top.length, fmtDate(D.mcap_date || D.checked)))}${lang === "zh" ? "。" : ". "}${esc(L("who"))}</p></div></details>
       <div class="duo">${stackHTML(top)}${cumHTML()}</div>
       ${algoMapHTML()}
     </section>
@@ -1156,7 +1298,8 @@ function renderHome() {
       <div class="tablebox"><table class="ledger">
         <thead><tr>${th("th_chain", "name", "c-chain")}${th("th_stage", "stage", "c-stage")}${th("th_algo", null, "c-algo")}${th("th_cov", null, "c-cov")}${th("th_since", "since", "c-since")}${th("th_prog", "prog", "c-latest")}<th scope="col" class="c-go"><span class="sr">${esc(L("th_open"))}</span></th></tr></thead>
         <tbody id="tbody">${tb.html}</tbody></table></div>
-      <div class="showall" id="showall"${tb.hidden ? "" : " hidden"}><button type="button" class="btn">${esc(L("show_all")(tb.hidden + FIRST))}</button><noscript><a class="btn" href="${D.base}data/chains.csv">chains.csv</a></noscript></div>
+      <div class="showall" id="showall"${tb.total > FIRST ? "" : " hidden"}><button type="button" class="btn" aria-expanded="false" aria-controls="tbody">${esc(L("show_all")(tb.total))}</button><noscript><a class="btn" href="${D.base}data/chains.csv">chains.csv</a></noscript></div>
+      ${submitBox()}
     </section>
     <section id="timeline" class="layer" aria-labelledby="timeline-h">
       ${secH("timeline", L("nav_timeline"), L("tl_h"), "")}
@@ -1195,7 +1338,16 @@ function renderHome() {
     if (s) { const v = +s.dataset.stage; const on = state.stage === v && state.scope === "top"; reset(on ? {} : { scope: "top", stage: v }); renderTable(true); if (!on) toTable(); return; }
     const a = e.target.closest(".anchor");
     if (a) { const id = a.dataset.anchor, qs = id === "chains" ? stateQS() : ""; const hash = "#" + id + (qs ? "?" + qs : ""); history.replaceState(null, "", hash); TIP.copy(a, location.origin + location.pathname + hash, L("link_copied")); return; }
-    if (e.target.closest("#showall button")) { expanded = true; const n = document.querySelectorAll(".ledger tr.row").length; renderTable(false); const r = document.querySelectorAll(".ledger tr.row")[Math.min(FIRST, n - 1)]; if (r) r.querySelector("a").focus(); return; }
+    /* "Show all" expands in place; "Show fewer" folds the list and returns the reader to where they opened it */
+    if (e.target.closest("#showall button")) {
+      if (!expanded) { expanded = true; openY = window.scrollY; renderTable(false); const r = document.querySelectorAll(".ledger tr.row")[FIRST]; if (r) r.querySelector("a").focus({ preventScroll: true }); }
+      else { expanded = false; renderTable(false); window.scrollTo(0, openY); document.querySelector("#showall button").focus({ preventScroll: true }); }
+      return;
+    }
+    const fd = e.target.closest("[data-fold]");
+    if (fd) { const open = fd.getAttribute("aria-expanded") !== "true", y = fd.getBoundingClientRect().top; fd.closest("ul").querySelectorAll("li[data-x]").forEach((li) => { li.hidden = !open; }); fd.setAttribute("aria-expanded", String(open)); fd.textContent = open ? L("list_less") : L("list_more")(+fd.dataset.n); if (!open) window.scrollBy(0, fd.getBoundingClientRect().top - y); return; }
+    const sg = e.target.closest("[data-suggest]");
+    if (sg) { state.q = sg.dataset.suggest; q.value = state.q; renderTable(true); q.focus(); return; }
     const sb = e.target.closest(".ledger th button");
     if (sb) { const k = sb.dataset.sort; state.sort = k === "stage" ? (state.sort === "stage_d" ? "stage_a" : "stage_d") : (state.sort === k ? "default" : k); renderTable(true); }
   });
@@ -1213,11 +1365,15 @@ function renderHome() {
   /* "Check a coin": an exact name or ticker opens its page; anything else opens the table filtered by it */
   document.getElementById("check").addEventListener("submit", (e) => {
     e.preventDefault();
-    const v = document.getElementById("check-q").value.trim(), lv = v.toLowerCase();
-    if (!v) return;
-    const exact = D.chains.find((c) => [c.name, c.zh_name, c.ticker, c.id].some((x) => x && x.toLowerCase() === lv));
-    const hits = D.chains.filter((c) => hay(c).includes(lv));
+    const v = document.getElementById("check-q").value.trim(), n = norm(v), x = document.getElementById("check-x");
+    if (!n) return;
+    /* an exact name, ticker or alias opens the chain; one close match opens it too; several open the filtered table;
+       none offers the nearest names instead of an empty table */
+    const exact = D.chains.find((c) => keysOf(c).includes(n));
+    const hits = D.chains.filter((c) => hitQ(c, v));
     if (exact || hits.length === 1) { location.href = chainURL((exact || hits[0]).id); return; }
+    if (!hits.length) { const sug = suggest(v); x.hidden = false; x.innerHTML = sug.length ? `${esc(L("dym"))}${sug.map((c) => `<a href="${chainURL(c.id)}">${esc(name(c))} <span class="mono">${esc(c.ticker)}</span></a>`).join(lang === "zh" ? "、" : ", ")}` : esc(L("empty_h")); return; }
+    x.hidden = true;
     reset({ q: v.slice(0, 80) }); q.value = state.q; renderTable(true); toTable();
   });
   /* "/" jumps to the search box */
@@ -1247,9 +1403,15 @@ function renderHome() {
   window.addEventListener("scroll", () => { if (!spy) spy = requestAnimationFrame(mark); }, { passive: true });
   mark();
   TIP.pos = () => { const qs = stateQS(); return qs ? "#chains?" + qs : (cur !== "overview" && window.scrollY > 40 ? "#" + cur : location.hash); };
-  if (fromHash) { renderTable(false); document.getElementById("chains").scrollIntoView(); mark(); }
+  /* coming back (the browser's Back or Forward) puts the reader where they left: same filters from the address,
+     same "show all" state and the same scroll position, saved when they left the page */
+  const nav = performance.getEntriesByType ? performance.getEntriesByType("navigation")[0] : null;
+  const back = nav && nav.type === "back_forward" && history.state && typeof history.state.y === "number" ? history.state : null;
+  window.addEventListener("pagehide", () => { try { history.replaceState({ y: window.scrollY, exp: expanded }, ""); } catch (e) { /* not allowed in some frames */ } });
+  if (back && back.exp) expanded = true;
+  if (fromHash || back) { renderTable(false); if (!back) document.getElementById("chains").scrollIntoView(); mark(); }
   /* "#timeline" and other section links: land on the section again once fonts and charts have settled, unless the reader has scrolled */
-  const sec = !fromHash && /^#[a-z]+$/.test(location.hash) && document.getElementById(location.hash.slice(1));
+  const sec = back ? { scrollIntoView: () => window.scrollTo(0, back.y) } : !fromHash && /^#[a-z]+$/.test(location.hash) && document.getElementById(location.hash.slice(1));
   if (sec) {
     let moved = false;
     const stop = () => { moved = true; };
@@ -1278,7 +1440,7 @@ function blockHTML(c) {
   return `${esc(L("no_block"))}<span class="note-small">${b.q ? PAR(L("queried") + " " + esc(b.q.slice(0, 16).replace("T", " ")) + " UTC") : ""}</span><br><a href="${esc(b.url)}" target="_blank" rel="noopener">${esc(host(b.url))} ↗</a>`;
 }
 function codeHTML(code) {
-  const rel = code.rel ? `${esc(code.rel)}${code.rel_pre ? esc(L("pre")) : ""}${code.rel_tag ? esc(L("tag_only")) : ""} · ${esc(fmtDate(code.rel_date))}` : esc(T(code.note) || "—");
+  const rel = code.rel ? `<span class="mono" translate="no">${esc(code.rel)}</span>${code.rel_pre ? esc(L("pre")) : ""}${code.rel_tag ? esc(L("tag_only")) : ""} · ${esc(fmtDate(code.rel_date))}` : esc(T(code.note) || "—");
   const tip = code.repo ? L("commits_tip")(code.repo, code.branch, (code.q || "").slice(0, 16).replace("T", " ") + " UTC") : "";
   const c90 = code.c90 == null ? "" : term(esc(L("commits2")(code.c90)), tip, L("e_code")) + (code.rel && T(code.note) ? PAR(esc(T(code.note))) : "") + "<br>";
   const also = (code.also || []).filter((a) => a.c90 != null).map((a) => `${esc(L("also"))}${CO()}github.com/${esc(a.repo)} · ${esc(L("commits")(a.c90))}`).join("<br>");
@@ -1329,7 +1491,7 @@ function renderChain() {
     ${kv(L("k_sizes"), sizes)}
     ${c.algo_note ? kv(L("k_algo_note"), esc(T(c.algo_note))) : ""}
     ${c.stage >= 3 ? kv(L("k_audit"), c.audit ? rfield(c.audit, L("audit")) : esc(L("audit").unknown), DF.audit[c.audit ? c.audit.value : "unknown"]) : ""}</div>`;
-  const expo = c.expo ? `<b>${esc(c.expo.figure || "")}</b>${T(c.expo) ? `<br>${esc(T(c.expo))}` : ""}<br><span class="note-small">${esc(c.expo.publisher || "")}${c.expo.date ? " · " + esc(fmtDate(c.expo.date)) : ""} · ${srcLink(c.expo.source_url)}</span>` : `<span class="note-small">${esc(L("expo_none"))}</span>`;
+  const expo = c.expo ? `<b>${esc((lang === "zh" && c.expo.figure_zh) || c.expo.figure || "")}</b>${T(c.expo) ? `<br>${esc(T(c.expo))}` : ""}<br><span class="note-small">${esc((lang === "zh" && c.expo.publisher_zh) || c.expo.publisher || "")}${c.expo.date ? " · " + esc(fmtDate(c.expo.date)) : ""} · ${srcLink(c.expo.source_url)}</span>` : `<span class="note-small">${esc(L("expo_none"))}</span>`;
   const cov = `<div class="card dcard kvgrid">
     ${kv(L("k_new"), `<b>${esc(L("cov")[c.cov])}</b>`, DF.cov[c.cov])}
     ${c.stage >= 2 ? kv(L("k_mig"), c.mig ? rfield(c.mig, L("mig")) : esc(L("mig").unknown), DF.mig[c.mig ? c.mig.value : "unknown"]) : ""}
@@ -1338,7 +1500,7 @@ function renderChain() {
   const hrow = (k, l) => T(four[k]) ? `<div><dt>${esc(L(l))}</dt><dd>${k === "today" ? `<b>${esc(L("today_lead")(c.stage))}</b> ` : ""}${esc(T(four[k]))}</dd></div>` : "";
   const holder = `<div class="holder"><h2>${esc(L("holder_h"))}</h2><dl>${hrow("today", "holder_today")}${hrow("next", "holder_next")}${hrow("can", "d_can")}</dl><p class="note-small">${esc(L("holder_note"))}</p></div>`;
   const p = c.prog;
-  const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("watch", "d_watch")}</div>${timeline}`;
+  const prog = `<div class="four">${`<div class="card"><h3>${term(esc(L("k_n90")), DF.prog, L("k_n90"))}</h3><p><b class="mono">${p.n90}</b> · ${p.latest ? `${esc(L("k_latest"))}${CO()}<span class="mono">${esc(fmtDate(p.latest.date))}</span>${dagger(p.latest.grade)}` : esc(L("prog_none"))}</p></div>`}${box("watch", "d_watch")}</div>${xtalkHTML(c)}${timeline}`;
   const evidence = `${srcList}${unv}<p class="note-small">${esc(L("dagger_key"))}</p>`;
   const b = c.net;
   const bg = `<div class="card dcard kvgrid">
@@ -1350,7 +1512,7 @@ function renderChain() {
     ${kv(L("d_checked"), `<span class="mono">${esc(fmtDate(c.checked) || "—")}</span>`, DF.th_checked)}</div>`;
   const meta = [`<span class="mono">${esc(c.ticker)}</span>`, c.rank ? `<span>${termRef(esc(L("rank")(c.rank)), "bg_rank", L("k_mcap"))}</span>` : "", `<span>${c.group === "early" ? termRef(esc(L("early_tag")), "k_early", L("early_tag")) : termRef(esc(L("design")[c.design]), "design." + c.design, L("design_label"))}</span>`,
     `<span>${term(esc(L("e_reviewed")), DF.reviewed)} <span class="mono">${esc(c.reviewed)}</span></span>`].filter(Boolean).join('<span aria-hidden="true">·</span>');
-  const toc = [["d-algo", "d_algo_h"], ["d-cov", "d_cov_h"], ["d-prog", "d_prog_h"], ["d-ev", "d_ev_h"], ["d-bg", "d_bg_h"]];
+  const toc = [["d-algo", "d_algo_h"], ["d-cov", "d_cov_h"], ["d-prog", "d_prog_h"], ["d-ev", "d_ev_h"], ["d-bg", "d_bg_h"], ["d-embed", "emb_page_h"]];
   put("app", () => `<div class="page">
     <div class="crumb"><a href="${href("")}">← ${esc(L("d_back"))}</a></div>
     <header class="dhead"><h1>${esc(name(c))}${lang === "zh" && c.zh_name ? ` <span class="alt">${esc(c.name)}</span>` : ""}</h1><div class="meta">${meta}</div></header>
@@ -1369,8 +1531,19 @@ function renderChain() {
       ${dsec("d-prog", L("d_prog_h"), prog)}
       ${dsec("d-ev", L("d_ev_h"), evidence)}
       ${dsec("d-bg", L("d_bg_h"), bg, L("d_bg_note"))}
+      ${dsec("d-embed", L("emb_page_h"), `<p class="note-small">${esc(L("emb_page_p"))} <a href="${href("data/")}#embed">${esc(L("emb_more"))} →</a></p>${embedBody(c, D.embed, lang, true)}`)}
       <section class="card fix"><p>${esc(L("d_fix"))}</p><a class="btn primary" href="${fixURL(c)}" target="_blank" rel="noopener">${esc(L("d_fix_btn"))} ↗</a><a class="btn" href="${D.data_url}" target="_blank" rel="noopener">${esc(L("gh"))} ↗</a></section>
     </div></div>`);
+  if (!PRE) initCopy();
+}
+
+/* the X block on a chain page: shown only when there is something; no data means no block, never "nobody said anything" */
+const xItem = (t, who) => `<li><span class="when mono">${esc(fmtDate(t.date))}</span><div class="xb"><div class="xh">${who || ""}<b>${esc(t.who)}</b><span class="xr">${esc(PAR(L("xt_rel")[t.relation]).trim())}</span><span class="ttag">${esc(L("xt_type")[t.type])}</span></div><p>${esc(T(t.summary))}</p><span class="note-small"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(L("xt_post"))} ↗</a> · ${esc(L("xt_checked")(fmtDate(t.checked)))}</span></div></li>`;
+function xtalkHTML(c) {
+  const talk = c.x_talk || [], asks = c.x_asks;
+  if (!talk.length && !asks) return "";
+  const ask = asks ? `<p class="xasks">${esc(L("xt_asks")(asks.people, asks.window_days))} <span class="note-small">${esc(L("xt_ex"))}${CO()}${asks.examples.map((e) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(fmtDate(e.date))} · ${esc(T(e.summary))} ↗</a>`).join(lang === "zh" ? "；" : "; ")}</span></p>` : "";
+  return `<section class="xtalk" aria-labelledby="xt-h"><h3 id="xt-h">${esc(L("xt_h"))}</h3><span class="note-small">${esc(L("xt_note"))}</span>${talk.length ? `<ol class="xl">${talk.map((t) => xItem(t)).join("")}</ol>` : ""}${ask}</section>`;
 }
 
 /* ---------- this week ---------- */
@@ -1391,9 +1564,74 @@ function renderChanges() {
     <section class="issue"><span class="eyebrow">${esc(L("c_eyebrow"))} · ${esc(range)}</span><h1>${esc(L("c_title")(C.items.length, changed))}</h1><p>${esc(L("c_sub"))}</p></section>
     <div class="stat"><div class="card"><b>${changed}</b><span>${esc(L("c_s1"))}</span></div><div class="card"><b>${C.items.length}</b><span>${esc(L("c_s2"))}</span></div><div class="card"><b>${D.chain_count}</b><span>${esc(L("c_s3"))}</span></div></div>
     <ol class="clist">${items}</ol>
+    ${D.xnew && D.xnew.length ? `<section class="xtalk xnew" aria-labelledby="xn-h"><h2 id="xn-h" style="font-size:19px">${esc(L("xt_new_h"))}</h2><p class="note-small">${esc(L("xt_new_p"))}</p><ol class="xl">${D.xnew.map((t) => xItem(t, nameOf(t.chain) ? `<a href="${chainURL(t.chain)}">${esc(nameOf(t.chain))}</a> · ` : "")).join("")}</ol></section>` : ""}
     ${older.length ? `<section class="watch"><h2 style="font-size:19px">${esc(L("c_older"))}</h2><ul>${older.map((o) => `<li>${esc(fmtDate(o.range.from))} – ${esc(fmtDate(o.range.to))} · ${esc(L("c_title")(o.items.length, o.items.filter((i) => i.stage && i.stage[0] !== i.stage[1]).length))}</li>`).join("")}</ul></section>` : ""}
     <section class="card fix" style="max-width:860px"><p>${esc(L("foot_fix"))}</p><a class="btn primary" href="${URL_FIX}" target="_blank" rel="noopener">${esc(L("foot_btn_fix"))} ↗</a></section>
   </div>`);
+}
+
+/* ---------- embeds and the data page ---------- */
+/* the three snippets for one chain: a Markdown badge, an HTML badge and an HTML card with the credit line */
+function snippets(c, e, l) {
+  const nm = l === "zh" && c.zh_name ? c.zh_name : c.name, page = e.page[l], site = page.split("chains/")[0];
+  const alt = l === "zh" ? `${nm}：抗量子第 ${c.stage} 档` : `${nm}: post-quantum stage ${c.stage} of 5`;
+  const credit = l === "zh" ? `数据来源：<a href="${site}">Post-Quantum Blockchains</a>，作者 <a href="${URL_X}">Balance Zhao</a>`
+    : `Data: <a href="${site}">Post-Quantum Blockchains</a>, by <a href="${URL_X}">Balance Zhao</a>`;
+  return {
+    credit,
+    md: `[![${alt}](${e.badge[l]})](${page})`,
+    html: `<a href="${page}"><img src="${e.badge[l]}" alt="${alt}" height="20"></a>`,
+    card: `<div><a href="${page}"><img src="${e.card[l]}" alt="${alt}" width="360" height="112"></a>\n<p style="margin:4px 0 0;font:12px/1.4 sans-serif;color:#5b5873">${credit}</p></div>`,
+  };
+}
+const snipBox = (id, label, code) => `<div class="snip"><div class="snip-h"><span>${esc(label)}</span><button type="button" class="btn sm" data-copy="${id}">${esc(L("copy"))}</button></div><pre class="mono" id="${id}">${esc(code)}</pre></div>`;
+/* the previews load from this site itself (so they also work before launch and in a local preview); the copied code keeps the full address */
+const local = (u) => u.replace(/^https?:\/\/[^/]+/, "");
+function embedBody(c, e, l, withPreview) {
+  const s = snippets(c, e, l);
+  const prev = withPreview ? `<div class="emb-prev"><figure><figcaption>${esc(L("emb_badge"))}</figcaption><img src="${local(e.badge[l])}" alt="" height="20" loading="lazy"></figure><figure><figcaption>${esc(L("emb_card"))}</figcaption><img src="${local(e.card[l])}" alt="" width="360" height="112" loading="lazy"></figure></div>` : "";
+  return `${prev}<div class="snips">${snipBox("sn-md", L("emb_md"), s.md)}${snipBox("sn-html", L("emb_html"), s.html)}${snipBox("sn-card", L("emb_cardc"), s.card)}</div>`;
+}
+const embURLs = (id) => { const o = D.origin + D.base; return { page: { en: `${o}chains/${id}/`, zh: `${o}zh/chains/${id}/` }, badge: { en: `${o}badges/${id}.svg`, zh: `${o}badges/zh/${id}.svg` }, card: { en: `${o}badges/card/${id}.svg`, zh: `${o}badges/card/zh/${id}.svg` } }; };
+function initCopy() {
+  document.getElementById("app").addEventListener("click", (ev) => { const b = ev.target.closest("[data-copy]"); if (b) { const el = document.getElementById(b.dataset.copy); TIP.copy(b, el.textContent, L("copied"), el); } });
+}
+function renderData() {
+  chrome("data");
+  const M = METHOD[lang];
+  const pick = [...D.pick].sort((a, b) => (a.rank || 999) - (b.rank || 999) || a.name.localeCompare(b.name));
+  const first = pick[0], o = D.origin + D.base;
+  const file = (n, sub) => `<a class="file" href="${D.base}${n.endsWith(".txt") ? "" : "data/"}${n}"><span class="fn mono">${n}</span><span class="fs">${esc(sub)}</span></a>`;
+  const rows = (cols, rs) => `<div class="scalebox"><table class="scale"><thead><tr>${cols.map((x) => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rs.map(([a, b]) => `<tr><td data-l="${esc(cols[0])}"><code class="mono">${esc(a)}</code></td><td data-l="${esc(cols[1])}">${esc(b).replace(/`([^`]+)`/g, "<code>$1</code>")}</td></tr>`).join("")}</tbody></table></div>`;
+  const ex = `fetch("${o}data/chains/near.json")\n  .then((r) => r.json())\n  .then((c) => console.log(c.name, c.stage, c.stage_name.en, c.data_checked));`;
+  const opts = pick.map((c) => `<option value="${c.id}"${c === first ? " selected" : ""}>${esc(name(c))} · ${esc(c.ticker)}</option>`).join("");
+  const H = (id, t) => `<h2 id="${id}">${esc(t)}</h2>`;
+  put("app", () => `<div class="page"><article class="prose dpage">
+    <span class="eyebrow">${esc(L("dp_eyebrow"))}</span><h1>${esc(L("dp_h"))}</h1><p class="lede">${esc(L("dp_lede"))}</p>
+    <nav class="toc" aria-label="${esc(L("toc"))}">${L("dp_toc").map(([id, t]) => `<a href="#${id}">${esc(t)}</a>`).join("")}</nav>
+    ${H("files", L("data_dl_h"))}<div class="files">${Object.entries(L("data_files")).map(([n, sub]) => file(n, sub)).join("")}${file("llms.txt", L("data_llms"))}</div><p class="fine-note">${esc(L("data_lic"))} <a href="#license">${esc(L("lic_h"))}</a></p>
+    ${H("api", L("api_h"))}<p>${esc(L("api_p"))}</p>${rows(L("api_cols"), L("api_rows").map(([a, b]) => [`GET ${o}${a}`, b]))}
+    <div class="snip"><div class="snip-h"><span>${esc(L("api_ex"))}</span><button type="button" class="btn sm" data-copy="sn-ex">${esc(L("copy"))}</button></div><pre class="mono" id="sn-ex">${esc(ex)}</pre></div>
+    <p class="note-small">${esc(L("api_freq")(D.release.version))}</p>
+    ${H("fields", L("fields_h"))}${rows(L("fields_cols"), L("fields_rows"))}
+    ${H("embed", L("emb_h"))}<p>${esc(L("emb_p"))}</p>
+    <div class="emb-ctl"><label>${esc(L("emb_chain"))}<select id="emb-c">${opts}</select></label>
+      <div class="seg" role="group" aria-label="${esc(L("emb_lang"))}">${["en", "zh"].map((l) => `<button type="button" data-elang="${l}" lang="${l === "zh" ? "zh-Hans" : "en"}" aria-pressed="${l === lang}">${l === "zh" ? "中文" : "English"}</button>`).join("")}</div></div>
+    <div id="emb-b">${embedBody(first, embURLs(first.id), lang, true)}</div>
+    ${H("license", L("lic_h"))}<p>${esc(L("lic_p"))}</p><ol>${L("lic_list").map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
+    <div class="snip"><div class="snip-h"><span>${esc(L("lic_credit"))}</span><button type="button" class="btn sm" data-copy="sn-credit">${esc(L("copy"))}</button></div><pre class="mono" id="sn-credit">${esc(snippets(first, embURLs(first.id), lang).credit)}</pre></div>
+    <p>${esc(L("lic_other"))}</p>
+    <p class="row-btns"><a class="btn primary" href="${REPO}/issues/new?template=used-by.yml" target="_blank" rel="noopener">${esc(L("lic_reg"))} ↗</a><a class="btn" href="${blob("LICENSE")}" target="_blank" rel="noopener">${esc(L("lic_full"))} ↗</a><a class="btn" href="${URL_X}" target="_blank" rel="noopener">X · @balance0014 ↗</a></p>
+    ${H("cite", L("data_cite_h"))}<p><code class="cite" id="cite-text">${esc(M.cite(D.release.version, D.release.date, D.site_url))}</code></p>
+    <p class="row-btns"><button type="button" class="btn" data-copy="cite-text">${esc(L("copy"))}</button><a class="btn" href="${blob("CITATION.cff")}" target="_blank" rel="noopener">CITATION.cff ↗</a></p>
+    ${submitBox()}
+  </article></div>`);
+  if (PRE) return;
+  initCopy();
+  let el = lang;
+  const draw = () => { const id = document.getElementById("emb-c").value; document.getElementById("emb-b").innerHTML = embedBody(D.pick.find((c) => c.id === id), embURLs(id), el, true); };
+  document.getElementById("emb-c").addEventListener("change", draw);
+  document.querySelectorAll("[data-elang]").forEach((b) => b.addEventListener("click", () => { el = b.dataset.elang; document.querySelectorAll("[data-elang]").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); draw(); }));
 }
 
 /* ---------- how we rate (home bottom and method page) ---------- */
@@ -1413,7 +1651,7 @@ const METHOD = {
     net_rule: "Where blocks come from: each chain's row names the explorer or public RPC we read, and every chain page shows the exact endpoint, the block height and time, and when we read it. The limit is 10 minutes, or six target block times when a chain's target is longer than 100 seconds (for example 60 minutes for Bitcoin's 10-minute blocks). At six target block times, a healthy chain misses the limit by chance about once in 400 checks. Public RPCs can answer from a lagging node, so we read every endpoint two or three times and keep the highest block. A chain is marked stopped only when an independent explorer also shows an old block; with one source, it is marked could not check. Commits are counted on the default branch of the main node repository over the 90 days before the check, whatever they change, leaving out commits by bot accounts (logins ending in [bot]). Blocks and commits are background: they show whether a chain is alive and maintained, not how far its post-quantum work has come.",
     algo_h: "Algorithm labels", algo_cols: ["Label", "What it means"],
     grades_h: "Where evidence comes from",
-    cite_rule: "The opening sentence on each chain page links one source. A chain with an entry in the project list (projects.json) links its pinned code or another pinned primary source. Other chains link the primary source (or, if there is none, the official claim) that supports the stage and best matches the stated reason. Node endpoints are not linked there because the network panel shows them. Every source is listed further down the page.",
+    cite_rule: "The opening sentence on each chain page links one source. A chain with an entry in the project list links its pinned code or another pinned primary source. Other chains link the primary source (or, if there is none, the official claim) that supports the stage and best matches the stated reason. Node endpoints are not linked there because the network panel shows them. Every source is listed further down the page.",
     grades: [["Primary source · can set the stage", "primary"], ["Official claim · recorded as a plan", "official"], ["Lead · marked unverified", "unverified"]],
     charts_h: "How the charts are made",
     charts: [
@@ -1464,7 +1702,7 @@ const METHOD = {
       "A snapshot, not a live feed: every entry shows the date its claims were last checked, and an entry not reviewed for 90 days is flagged on its page.",
       "All data and every script are public on GitHub, so anyone can re-run the checks."],
     cite_h: "How to cite",
-    cite: (v, d, url) => `Balance Zhao. Post-Quantum Blockchains, version ${v} (${d}). ${url}. Data licensed CC BY 4.0.`,
+    cite: (v, d, url) => `Balance Zhao. Post-Quantum Blockchains, version ${v} (${d}). ${url}. Data licensed CC BY-NC 4.0.`,
     cite_p: "To cite one chain, use its page address and the date its claims were last checked, shown at the top of the page. Every data change raises the version number and is recorded in the changelog.",
     cite_files: "Download the data (JSON):", cite_meta: "Citation metadata:",
   },
@@ -1483,7 +1721,7 @@ const METHOD = {
     net_rule: "出块数据从哪来：每条链都写明读取的区块浏览器或公开 RPC，详情页列出具体接口、区块高度和时间，以及读取时间。时限是 10 分钟；目标出块间隔超过 100 秒的链，按 6 倍目标出块间隔算（比如比特币 10 分钟一个块，时限就是 60 分钟）。取 6 倍时，一条正常出块的链大约每 400 次核查才会偶然超时一次。公开 RPC 可能由落后的节点应答，所以每个接口都读两到三次，取最高的区块。只有独立的区块浏览器也显示区块过旧，才判定「出块停了」；只有一个来源时，记为「无法核实」。提交次数按主节点代码库的默认分支、核查日之前 90 天统计，不论改了什么，不计机器人账户（用户名以 [bot] 结尾）的提交。出块和提交是背景信息：说明链还在不在运行、有没有人维护，不说明抗量子工作进展到哪一步。",
     algo_h: "算法标签", algo_cols: ["标签", "含义"],
     grades_h: "证据来源",
-    cite_rule: "每条链详情页开头那句结论附一个出处。在项目清单（projects.json）里有条目的链，附固定版本的代码或其他固定版本的原始出处。其他链附能支持该档位、且与所写依据最贴合的原始出处，没有原始出处时才用官方说法。节点接口不放在这里，因为网络状态栏已经列出。全部来源列在页面下方。",
+    cite_rule: "每条链详情页开头那句结论附一个出处。在项目清单里有条目的链，附固定版本的代码或其他固定版本的原始出处。其他链附能支持该档位、且与所写依据最贴合的原始出处，没有原始出处时才用官方说法。节点接口不放在这里，因为网络状态栏已经列出。全部来源列在页面下方。",
     grades: [["原始出处 · 可作定档依据", "primary"], ["官方说法 · 记为计划", "official"], ["线索 · 标为未核实", "unverified"]],
     charts_h: "图表怎么画的",
     charts: [
@@ -1534,11 +1772,19 @@ const METHOD = {
       "这是某一时点的快照，不是实时数据：每条都标明说法最近核对的日期，超过 90 天没有复核的会在页面上提示。",
       "所有数据和脚本都公开在 GitHub 上，谁都可以重新跑一遍核查。"],
     cite_h: "如何引用",
-    cite: (v, d, url) => `Balance Zhao. Post-Quantum Blockchains, version ${v} (${d}). ${url}. Data licensed CC BY 4.0.`,
+    cite: (v, d, url) => `Balance Zhao. Post-Quantum Blockchains, version ${v} (${d}). ${url}. Data licensed CC BY-NC 4.0.`,
     cite_p: "引用某一条链时，请写它的页面网址和页面顶部标明的最近核对日期。每次数据变更都会升版本号，并记录在更新记录里。",
     cite_files: "下载数据（JSON）：", cite_meta: "引用元数据：",
   },
 };
+Object.assign(METHOD.en, {
+  x_h: "Discussion on X",
+  x_list: ["Chain pages can show what people say on X about a chain's quantum plans. We include only people and accounts with a public identity and a stated relation to the chain: founders, foundations, core developers, proposal authors, maintainers, mining pools, wallets, exchanges and official community accounts.", "We open every original post and record the date we checked it. Each line is our one-sentence summary, with a link to the post.", "These are claims. They never set or change a stage, and a chain with no posts listed is not marked down: a decentralized chain may have no single voice.", "We may also say roughly how many different people asked about a chain's quantum plans in the last 90 days, with two or three example posts. We do not name ordinary users."],
+});
+Object.assign(METHOD.zh, {
+  x_h: "X 上的讨论",
+  x_list: ["链的详情页可以列出 X 上关于这条链量子计划的说法。只收有公开身份、且和这条链关系明确的人和账号：创始人、基金会、核心开发者、提案作者、维护者、矿池、钱包、交易所和社区官方号。", "每一条我们都打开原帖核对，并记下核对日期。每行是我们的一句话转述，附原帖链接。", "这些都只是说法，不决定也不改变档位。没有列出帖子的链不会因此扣分：去中心化的链可能本来就没有统一的发言人。", "我们也可能写出近 90 天大约有多少个不同的人在问这条链的量子计划，并附两三条代表帖。普通用户不写名字。"],
+});
 function howHTML() {
   const M = METHOD[lang];
   const ul = (a) => `<ul>${a.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
@@ -1549,7 +1795,7 @@ function howHTML() {
   const stages = DF.stage.map((t, s) => `<tr><td>${badge(s)}</td><td>${esc(t)}</td><td>${ex(s)}</td></tr>`).join("");
   const raw = (f) => `https://raw.githubusercontent.com/Balance0014/post-quantum-blockchains/main/data/${f}`;
   const H = (id, k) => `<h2 id="${id}">${esc(M[k])}</h2>`;
-  const toc = [["stages", "scale_h"], ["rules", "rules_h"], ["groups", "groups_h"], ["network", "net_h"], ["algorithms", "algo_h"], ["evidence", "grades_h"], ["charts", "charts_h"], ["data", "dims_h"], ["coverage", "who_h"], ["updates", "cad_h"], ["limits", "open_h"], ["cite", "cite_h"]];
+  const toc = [["stages", "scale_h"], ["rules", "rules_h"], ["groups", "groups_h"], ["network", "net_h"], ["algorithms", "algo_h"], ["evidence", "grades_h"], ["xtalk", "x_h"], ["charts", "charts_h"], ["data", "dims_h"], ["coverage", "who_h"], ["updates", "cad_h"], ["limits", "open_h"], ["cite", "cite_h"]];
   const cite = `${H("cite", "cite_h")}<p><code class="cite">${esc(M.cite(D.release.version, D.release.date, D.site_url))}</code></p><p>${esc(M.cite_p)}</p>
     <p>${esc(M.cite_files)} ${["chains.json", "network.json", "projects.json", "sources.json"].map((f) => `<a href="${raw(f)}" target="_blank" rel="noopener" class="mono">${f}</a>`).join(" · ")}</p>
     <p>${esc(M.cite_meta)} <a href="${blob("CITATION.cff")}" target="_blank" rel="noopener" class="mono">CITATION.cff</a> · <a href="${blob("CHANGELOG.md")}" target="_blank" rel="noopener" class="mono">CHANGELOG.md</a></p>`;
@@ -1568,7 +1814,9 @@ function howHTML() {
     ${H("groups", "groups_h")}${table(M.groups_cols, groups)}
     ${H("network", "net_h")}${table(M.net_cols, net)}<p>${esc(M.net_rule)}</p>
     ${H("algorithms", "algo_h")}${table(M.algo_cols, algo)}
+    <h3 id="nist">${esc(L("nist_h"))}</h3><p>${esc(L("nist_p"))}</p>${table(L("nist_cols"), NSTS.map((k) => `<tr><td><span class="nk"><i class="ssw n-${k}"></i>${esc(L("nist")[k])}</span></td><td>${esc(DF.nist[k])}</td><td>${(NIST_SRC[k] || []).map(([u, t]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("<br>") || "—"}</td></tr>`).join(""))}
     ${H("evidence", "grades_h")}${grades}<p>${esc(M.cite_rule)}</p>
+    ${H("xtalk", "x_h")}${ul(M.x_list)}
     ${H("charts", "charts_h")}${ul(M.charts)}
     ${H("data", "dims_h")}${table(M.dims_cols, dims, "dims")}
     ${H("coverage", "who_h")}${ul(M.who)}
@@ -1582,7 +1830,7 @@ function howHTML() {
 function renderMethod() {
   chrome("method");
   put("app", () => `<div class="page">${howHTML()}
-    <section class="card fix" style="max-width:820px"><p>${esc(L("foot_fix"))}</p><a class="btn primary" href="${URL_FIX}" target="_blank" rel="noopener">${esc(L("foot_btn_fix"))} ↗</a></section></div>`);
+    <div class="fixrow">${submitBox()}<section class="card fix"><p>${esc(L("foot_fix"))}</p><a class="btn" href="${URL_FIX}" target="_blank" rel="noopener">${esc(L("foot_btn_fix"))} ↗</a></section></div></div>`);
 }
 
 /* ---------- definitions popover, chart tooltips, theme and language ---------- */
@@ -1659,5 +1907,5 @@ langA.addEventListener("click", () => { langA.href = langA.getAttribute("href").
 }
 
 /* ---------- start ---------- */
-({ home: renderHome, chain: renderChain, changes: renderChanges, method: renderMethod })[D.page]();
+({ home: renderHome, chain: renderChain, changes: renderChanges, method: renderMethod, data: renderData })[D.page]();
 if (PRE) globalThis.OUT = OUT;

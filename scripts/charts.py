@@ -181,7 +181,7 @@ def header(out, title, subtitle, as_of):
 
 def footer(out, y, source):
     out.append(f'<line x1="{M}" y1="{num(y)}" x2="{W - M}" y2="{num(y)}" stroke="{BORDER}"/>')
-    out.append(text(M, y + 24, f'Drawn by scripts/charts.py from {source}. Data and chart: CC BY 4.0.', 12, INK3))
+    out.append(text(M, y + 24, f'Drawn by scripts/charts.py from {source}. Data and chart: CC BY-NC 4.0, credit Balance Zhao.', 12, INK3))
     out.append(text(M, y + 42, f'{REPO} · Balance Zhao (@balance0014)', 12, INK3))
     return y + 62
 

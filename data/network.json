@@ -1,4 +1,11 @@
 {
+ "license": {
+  "name": "CC BY-NC 4.0",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "attribution": "Data: Post-Quantum Blockchains (https://balance0014.github.io/post-quantum-blockchains/), by Balance Zhao (https://x.com/balance0014)",
+  "commercial_use": "Free with the attribution on every screen, the check date shown, weekly updates and a \"Used by\" registration.",
+  "terms": "https://github.com/Balance0014/post-quantum-blockchains/blob/main/LICENSE"
+ },
  "checked_at_utc": "2026-11-27T17:02:08Z",
  "window_start": "2026-08-29",
  "rule": {

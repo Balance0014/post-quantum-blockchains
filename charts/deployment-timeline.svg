@@ -320,6 +320,6 @@
 <text x="569" y="2338" font-size="12.5" fill="#52514e">Agility: governance-set enforcement mode</text>
 <text x="569" y="2358" font-size="12.5" fill="#6e6c66">EVM lane uses PQ-opened windows</text>
 <line x1="32" y1="2399" x2="928" y2="2399" stroke="#e2e0d9"/>
-<text x="32" y="2423" font-size="12" fill="#6e6c66">Drawn by scripts/charts.py from data/projects.json. Data and chart: CC BY 4.0.</text>
+<text x="32" y="2423" font-size="12" fill="#6e6c66">Drawn by scripts/charts.py from data/projects.json. Data and chart: CC BY-NC 4.0, credit Balance Zhao.</text>
 <text x="32" y="2441" font-size="12" fill="#6e6c66">github.com/Balance0014/post-quantum-blockchains · Balance Zhao (@balance0014)</text>
 </svg>

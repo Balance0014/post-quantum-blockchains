@@ -26,7 +26,7 @@
 
 **收录门槛**：每条说法都要有公开的一手出处，比如发布说明、规格文档、治理记录，或固定到具体提交的代码；还要写清状态：主网默认开启、可选、测试网、演示还是计划中。完整标准见[方法说明](docs/methodology.md)（英文）和下文[提交项目](#提交项目)。
 
-**更新节奏**：每条投稿和纠错 7 天内都会有人工回复。收录或更正合并后，数据、表格、两张图和[更新记录](CHANGELOG.md)一起更新，每个条目保留自己的核对日期。最初的 17 个项目核对于 2026 年 10 月 23 日；比特币专题采用 10 月 31 日核对的来源版本，GitHub 版整理于 11 月 3 日。
+**更新节奏**：每条投稿和纠错 2 天内都会有人工回复，审核结果一般 3 天内给出。收录或更正合并后，数据、表格、两张图和[更新记录](CHANGELOG.md)一起更新，每个条目保留自己的核对日期。最初的 17 个项目核对于 2026 年 10 月 23 日；比特币专题采用 10 月 31 日核对的来源版本，GitHub 版整理于 11 月 3 日。
 
 这张图最早是我 2026 年 10 月 23 日在 [X](https://x.com/balance0014) 上发的两张图，开源前又[抽查](docs/release-review.md)了一遍。这不是安全排名，也不是价格信号。
 
@@ -91,16 +91,28 @@ r8 的时间设定保留情景归属，历史容量算例单独说明。原图�
 
 **怎么审核**
 
-- 提交后会自动回复一条，检查链接能不能打开、是不是已经收录过；7 天内会有人工回复。
+- 提交后会自动回复一条，检查链接能不能打开、是不是已经收录过；2 天内会有人工回复，审核结果一般 3 天内给出。
 - 每条说法都对照出处核过才收录，条目上记下核对日期。
 - 收录后出现在[项目对比](docs/projects.md)、CSV 和两张图里（图由数据重新生成），改动记进[更新记录](CHANGELOG.md)。
 - 收录免费，不卖位置。条目只描述已经部署的东西，不是打分，也不是背书。
 - 如果你是项目方成员，请在表里说明。项目方提交一样欢迎，核对标准相同。
 
-**已收录的项目**可以在自己的 README 里放上 [![Listed on Post-Quantum Blockchains](badges/listed.svg)](CONTRIBUTING.md#listed-badge) 徽章，链回你的条目。复制即用的代码见 [CONTRIBUTING](CONTRIBUTING.md#listed-badge)（英文）。
+**已收录的链**可以在自己的 README 或官网上放实时档位徽章，例如 [![Algorand：抗量子第 4 档](https://balance0014.github.io/post-quantum-blockchains/badges/zh/algorand.svg)](https://balance0014.github.io/post-quantum-blockchains/zh/chains/algorand/)。徽章随数据自动更新，并链回这条链的页面。复制即用的代码见[数据页](https://balance0014.github.io/post-quantum-blockchains/zh/data/#embed)或 [CONTRIBUTING](CONTRIBUTING.md#stage-badge)（英文）。
 
 ## 怎么用、怎么纠错
 
-可以下载[项目表 CSV](data/projects.csv) 或 [JSON](data/projects.json) 自己分析。引用时请注明所用条目的核对日期并链回本仓库，改过的请说明改了什么。数据、图片和文字用 CC BY 4.0，脚本用 MIT，详见 [LICENSE](LICENSE)。
+可以下载[项目表 CSV](data/projects.csv) 或 [JSON](data/projects.json) 自己分析。引用时请注明所用条目的核对日期，改过的请说明改了什么。从 0.5.0 版起，数据、图片和文字采用 **CC BY-NC 4.0**，脚本采用 **MIT**。链接到的第三方材料按其原有条款。详见 [LICENSE](LICENSE)（英文）。
+
+**商用免费，但要满足三个条件**（CC BY-NC 之外的额外许可）：
+
+1. 用到数据的每一屏都显示这条带两个链接的署名：「数据来源：[Post-Quantum Blockchains](https://balance0014.github.io/post-quantum-blockchains/zh/)，作者 [Balance Zhao](https://x.com/balance0014)」。直接用[官方徽章和卡片](https://balance0014.github.io/post-quantum-blockchains/zh/data/#embed)就自带署名。
+2. 标出数据的核对日期，并且至少每周同步一次。
+3. 开一个[「Used by」issue](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml) 登记用途。
+
+做不到的话，请在 GitHub issue 里或在 [X](https://x.com/balance0014) 上私信联系。0.4.0 及更早的版本仍按 CC BY 4.0。网站的[数据页](https://balance0014.github.io/post-quantum-blockchains/zh/data/)把这些 JSON 文件写成了接口文档。
+
+### 谁在用
+
+登记过的产品会列在这里。目前还没有，欢迎[登记](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=used-by.yml)。
 
 发现错误请[纠错](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=correction.yml)，写清是哪一条、原始出处、对应的网络和版本，我核实后更新。想补项目请[提交项目](https://github.com/Balance0014/post-quantum-blockchains/issues/new?template=new-project.yml)。

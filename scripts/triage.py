@@ -6,6 +6,9 @@ GITHUB_EVENT_PATH, never from the command line. It checks that the links open an
 an existing entry with the same name or ticker. It does not verify any claim.
 
 Local dry run:  TRIAGE_DRY_RUN=1 GITHUB_EVENT_PATH=event.json python3 scripts/triage.py
+
+After a listing is merged and live, the maintainer's closing reply, with the chain's page and badge code:
+    python3 scripts/triage.py --approved <chain id> [--lang zh]
 """
 import json
 import os
@@ -18,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REPO_URL = 'https://github.com/Balance0014/post-quantum-blockchains'
 MAX_LINKS = 15
-REVIEW_DAYS = 7
+REPLY_DAYS, DECISION_DAYS = 2, 3
 URL_RE = re.compile(r'https?://[^\s<>()\[\]"\'`]+')
 
 
@@ -84,10 +87,10 @@ def comment_for(issue):
         return None
     lines = []
     if kind == 'submission':
-        lines.append(f"Thanks for the submission. It's in the review queue, and a maintainer will reply within {REVIEW_DAYS} days. "
+        lines.append(f"Thanks for the submission. It's in the review queue, and a maintainer will reply within {REPLY_DAYS} days; a review decision usually comes within {DECISION_DAYS} days. "
                      f"Each claim is checked against its sources before anything is listed ([what gets listed]({REPO_URL}#submit-a-project)).")
     else:
-        lines.append(f"Thanks for the correction. A maintainer will check it against the sources and reply within {REVIEW_DAYS} days.")
+        lines.append(f"Thanks for the correction. A maintainer will reply within {REPLY_DAYS} days and check it against the sources; a decision usually comes within {DECISION_DAYS} days.")
     lines += ['', '**Automatic checks** (these don\'t verify any claim):', '']
     urls = links(body)
     if not urls:
@@ -120,7 +123,37 @@ def post(issue, text):
         print('commented:', json.load(r)['html_url'])
 
 
+def approved_reply(chain_id, lang='en'):
+    """The reply that closes an accepted submission: where the chain is listed, its stage, and the live badge code
+    the project can put in its README or on its website (the badge updates itself and carries the credit)."""
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    from embeds import SITE_URL, snippets
+    chains = json.loads((ROOT / 'data/chains.json').read_text(encoding='utf-8'))['chains']
+    v = next((c for c in chains if c['id'] == chain_id), None)
+    if not v:
+        sys.exit(f'no chain "{chain_id}" in data/chains.json')
+    s = snippets(v, lang)
+    if lang == 'zh':
+        name = v.get('zh_name') or v['name']
+        sp = ' ' if name[-1].isascii() else ''
+        return (f"{name}{sp}已收录，现在是第 {v['stage']} 档：{s['page']}\n\n"
+                f"档位依据和出处都写在页面上；以后有新进展，附上原始出处提一个纠错就行。\n\n"
+                f"想在 README 或官网上展示，可以用下面的徽章。它会随数据自动更新，并自带署名：\n\n"
+                f"```markdown\n{s['md']}\n```\n\n网页用：\n\n```html\n{s['html']}\n```\n\n"
+                f"更多样式（卡片、英文版）见数据页：{SITE_URL}zh/data/#embed\n\n谢谢提交！")
+    return (f"{v['name']} is now listed at stage {v['stage']}: {s['page']}\n\n"
+            f"The page shows what the stage rests on and links each source. When something changes, open a correction with a primary source.\n\n"
+            f"To show it in your README or on your website, use the badge below. It updates with the data and carries the credit:\n\n"
+            f"```markdown\n{s['md']}\n```\n\nOn a web page:\n\n```html\n{s['html']}\n```\n\n"
+            f"More styles (a card, a Chinese version) are on the data page: {SITE_URL}data/#embed\n\nThanks for the submission!")
+
+
 def main():
+    if '--approved' in sys.argv:
+        i = sys.argv.index('--approved')
+        lang = sys.argv[sys.argv.index('--lang') + 1] if '--lang' in sys.argv else 'en'
+        print(approved_reply(sys.argv[i + 1], lang))
+        return
     event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text(encoding='utf-8'))
     issue = event['issue']
     text = comment_for(issue)

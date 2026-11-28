@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for submitting. You'll get an automatic reply with link and duplicate checks, and a maintainer replies within 7 days. Each claim is checked against its sources before anything is listed, and the entry records the date it was checked. Listing is free and isn't for sale. See [what gets listed](https://github.com/Balance0014/post-quantum-blockchains#submit-a-project).
+        Thanks for submitting. You'll get an automatic reply with link and duplicate checks, and a maintainer replies within 2 days; a review decision usually comes within 3 days. Each claim is checked against its sources before anything is listed, and the entry records the date it was checked. Listing is free and isn't for sale. See [what gets listed](https://github.com/Balance0014/post-quantum-blockchains#submit-a-project).
   - type: input
     id: name
     attributes:
@@ -97,5 +97,5 @@ body:
           required: true
         - label: I haven't included seed phrases, private keys, private infrastructure details or personal contact information.
           required: true
-        - label: My text can be published under CC BY 4.0, as described in the repository's LICENSE.
+        - label: My text can be published under the repository's license (CC BY-NC 4.0 with its additional permission for commercial use), as described in its LICENSE.
           required: true

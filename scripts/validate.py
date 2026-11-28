@@ -49,6 +49,7 @@ def validate_research():
 STAGE_LABELS=['Nothing public','Research','Formal proposal','Testnet','Mainnet opt-in','Default']
 MILESTONE_TYPES={'research','proposal','code','testnet','mainnet','wallet','thirdparty'}
 DATE_RE=re.compile(r'^\d{4}(-Q[1-4]|-\d{2}(-\d{2})?)?$')
+CJK=re.compile(r'[\u4e00-\u9fff]')
 MONTHS=['january','february','march','april','may','june','july','august','september','october','november','december']
 MONTH_RE=re.compile(r'\b('+'|'.join(MONTHS)+r'|'+'|'.join(m[:3] for m in MONTHS)+r')\b',re.I)
 # Source types in data/sources.json that are primary evidence (code, releases, chain data, specifications).
@@ -81,6 +82,10 @@ def bilingual(obj,where):
 def https(url,where):
     u=urlsplit(url or '')
     require(u.scheme=='https' and u.hostname and not u.username and not u.password,f'Invalid URL: {where}')
+
+X_RELATIONS={'founder','foundation','core_dev','proposal_author','maintainer','mining_pool','wallet','exchange','community_account'}
+X_TYPES={'plan','proposal','research','reply','other'}
+X_POST=re.compile(r'https://(x|twitter)\.com/[A-Za-z0-9_]+/status/\d+')
 
 def validate_chains():
     """data/chains.json feeds the website; data/projects.json stays the list of projects that already use post-quantum signatures."""
@@ -199,11 +204,44 @@ def validate_chains():
         if e:
             bilingual(e,f'{cid}.exposure')
             require(e.get('figure') and e.get('publisher'),f'exposure names its figure and publisher: {cid}')
+            require(e.get('figure_zh') and CJK.search(e['figure_zh']),f'exposure figure has a Chinese version (figure_zh): {cid}')
             https(e.get('source_url'),f'{cid}.exposure.source_url')
             date.fromisoformat(e['date'])
         for w in c.get('watch',[]):
             require(w['type'] in {'pr','issue','file'} and w['label'] and w['repo'],f'Watch entry: {cid}')
         date.fromisoformat(c['last_reviewed'])
+        # Chinese name only where one is in common use; search aliases and pinyin initials of Chinese names
+        require(c.get('zh_name') is None or (isinstance(c['zh_name'],str) and re.search(r'[\u4e00-\u9fff]',c['zh_name'])),f'zh_name is null or a Chinese name: {cid}')
+        for f in ('aliases','pinyin'):
+            require(isinstance(c.get(f,[]),list) and all(isinstance(a,str) and a.strip()==a and a for a in c.get(f,[])),f'{f} is a list of trimmed strings: {cid}')
+        require(all(re.fullmatch(r'[a-z]+',x) for x in c.get('pinyin',[])),f'pinyin holds lowercase initials only: {cid}')
+        # What people with a public identity say on X about the chain's quantum plans: claims, never part of the stage.
+        for i,t in enumerate(c.get('x_talk') or []):
+            w=f'{cid}.x_talk[{i}]'
+            require(DATE_RE.match(t.get('date') or '') and DATE_RE.match(t.get('checked') or '') and t['date']<=t['checked'],f'date and checked (YYYY-MM-DD, date not after checked): {w}')
+            require(isinstance(t.get('who'),str) and t['who'].strip(),f'who names a public identity: {w}')
+            require(t.get('relation') in X_RELATIONS,f'relation is one of {sorted(X_RELATIONS)}: {w}')
+            require(t.get('type') in X_TYPES,f'type is one of {sorted(X_TYPES)}: {w}')
+            bilingual(t.get('summary'),f'{w}.summary')
+            require(X_POST.fullmatch(t.get('url') or ''),f'url is an x.com post: {w}')
+        xa=c.get('x_asks')
+        if xa is not None:
+            w=f'{cid}.x_asks'
+            require(type(xa.get('window_days')) is int and xa['window_days']>0 and type(xa.get('people')) is int and xa['people']>0,f'window_days and people are positive integers: {w}')
+            ex=xa.get('examples') or []
+            require(1<=len(ex)<=3,f'one to three examples: {w}')
+            for j,e in enumerate(ex):
+                require(DATE_RE.match(e.get('date') or ''),f'example date: {w}[{j}]')
+                bilingual(e.get('summary'),f'{w}.examples[{j}].summary')
+                require(X_POST.fullmatch(e.get('url') or ''),f'example url is an x.com post: {w}[{j}]')
+    # an alias or pinyin must not point at two chains
+    owner={}
+    for c in chains:
+        for a in [c['name'],c.get('zh_name')]+c.get('aliases',[])+c.get('pinyin',[]):
+            if not a:
+                continue
+            k=re.sub(r'[\s\-_.]','',a.lower())
+            require(owner.setdefault(k,c['id'])==c['id'],f'Search alias "{a}" names both {owner[k]} and {c["id"]}')
     reasons=data['not_listed_reasons']
     for k,v in reasons.items():
         bilingual(v,f'not_listed_reasons.{k}')
@@ -224,6 +262,9 @@ def validate():
     parameters=read('signature-sizes.json')['parameters']
     sources=read('sources.json')['sources']
     release=read('release.json')
+    from embeds import DATA_LICENSE
+    for name in ('chains.json','sources.json','network.json'):
+        require(read(name).get('license')==DATA_LICENSE,f'{name} starts with the license block in scripts/embeds.py (DATA_LICENSE)')
     for rows,name in [(projects,'project'),(parameters,'parameter'),(sources,'source')]:
         unique(rows,name)
     ids={s['id'] for s in sources}
