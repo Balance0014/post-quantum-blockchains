@@ -11226,6 +11226,161 @@
     "auditor": "Hacken",
     "date": "2023-01-13"
    }
+  },
+  {
+   "id": "quantaureum",
+   "name": "Quantaureum",
+   "zh_name": null,
+   "aliases": [],
+   "pinyin": [],
+   "ticker": "QAU",
+   "kind": "native",
+   "network_status": "testnet",
+   "layer": "L1",
+   "coingecko_id": null,
+   "mcap_rank": null,
+   "stage": 2,
+   "stage_label": "Formal proposal",
+   "algo": {
+    "en": "Dilithium3 (round-3 Dilithium, before FIPS 204) for transactions and consensus; Kyber768 between nodes",
+    "zh": "Dilithium3（第三轮 Dilithium，早于 FIPS 204 的版本）用于交易和共识；节点之间用 Kyber768"
+   },
+   "algo_chips": [
+    "family"
+   ],
+   "consensus": {
+    "en": "PoS (QPOS) · Testnet",
+    "zh": "权益证明（QPOS）· 测试网"
+   },
+   "holder_can_use_today": {
+    "en": "There is no announced network to hold coins on. The project says it is in a testnet phase, and the testnet endpoint in its network guide did not answer on 2026-11-28.",
+    "zh": "目前没有已宣布的网络可以持币。项目说自己处于测试网阶段，网络指南里的测试网端点 2026-11-28 没有响应。"
+   },
+   "note": {
+    "en": "The author calls it an independent developer's technical exploration project. The README names ML-DSA-65 (FIPS 204), but the signing, verification and key-generation code imports round-3 Dilithium mode3; ML-DSA-65 appears only in the list of algorithm identifiers.",
+    "zh": "作者自称这是独立开发者的技术探索项目。README 写的是 ML-DSA-65（FIPS 204），但签名、验签和生成密钥的代码引入的是第三轮 Dilithium mode3；ML-DSA-65 只出现在算法编号列表里。"
+   },
+   "four": {
+    "today": {
+     "en": "There is no announced network to hold coins on. The project says it is in a testnet phase, and the testnet endpoint in its network guide did not answer on 2026-11-28.",
+     "zh": "目前没有已宣布的网络可以持币。项目说自己处于测试网阶段，网络指南里的测试网端点 2026-11-28 没有响应。"
+    },
+    "watch": {
+     "en": "Release v0.1.0 calls chain ID 1668 the mainnet, while the README and the network guide say the mainnet launch has not been announced. The signing code uses a version of Dilithium from before the standard.",
+     "zh": "v0.1.0 发布说明把链 ID 1668 称为主网，而 README 和网络指南写的是主网上线尚未宣布。签名代码用的是标准发布之前的 Dilithium 版本。"
+    },
+    "can": {
+     "en": "Treat it as an experiment: the node can be built from source and run for testing.",
+     "zh": "当作实验项目看待：可以从源码编译节点、运行测试。"
+    },
+    "next": {
+     "en": "An official mainnet announcement or a public testnet that answers, and a switch of the signing code to FIPS 204 ML-DSA.",
+     "zh": "官方的主网公告或能访问的公开测试网，以及签名代码换成 FIPS 204 的 ML-DSA。"
+    }
+   },
+   "stage_basis": {
+    "en": "The core developer publishes a protocol specification (the whitepaper in the node repository) and node code in which every transaction and consensus signature is Dilithium3. Stage 3 needs the official public testnet, and the testnet endpoint in the project's network guide did not answer on 2026-11-28 (HTTP 502). Release v0.1.0 calls chain ID 1668 the mainnet, but the README and the network guide say the project is in a testnet phase and the mainnet launch will be announced, so no mainnet is counted.",
+    "zh": "核心开发者公开了协议说明（节点代码仓里的白皮书）和节点代码，代码里每笔交易和每个共识签名都用 Dilithium3。第 3 档需要官方公开测试网，而项目网络指南里的测试网端点 2026-11-28 没有响应（HTTP 502）。v0.1.0 发布说明把链 ID 1668 称为主网，但 README 和网络指南写的是项目处于测试网阶段、主网上线会另行宣布，所以不按主网算。"
+   },
+   "latest_step": {
+    "date": "2026-11-23",
+    "text": "Release v0.1.0 of the node, which its notes call the mainnet (chain ID 1668) release. The README still says the project is in a testnet phase.",
+    "zh": "节点发布 v0.1.0，发布说明称之为主网（链 ID 1668）版本。README 仍写项目处于测试网阶段。"
+   },
+   "milestones": [
+    {
+     "date": "2026-09-14",
+     "type": "code",
+     "grade": "primary",
+     "name": "Node repository Quantaureum/qau published (Apache-2.0); transactions are signed with Dilithium3.",
+     "zh": "节点代码仓 Quantaureum/qau 公开（Apache-2.0 许可）；交易用 Dilithium3 签名。",
+     "status": {
+      "en": "Public",
+      "zh": "已公开"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/types/quantum_transaction.go#L159-L183",
+     "verified": true
+    },
+    {
+     "date": "2026-10-01",
+     "type": "proposal",
+     "grade": "primary",
+     "name": "Protocol specification (the whitepaper) published in the node repository: every transaction, block and consensus signature is Dilithium3, Kyber-768 encrypts traffic between nodes, and QTD threshold signing finalizes blocks.",
+     "zh": "节点代码仓发布协议说明（白皮书）：每笔交易、每个区块和共识签名都用 Dilithium3，节点之间的通信用 Kyber-768 加密，区块由 QTD 门限签名最终确认。",
+     "status": {
+      "en": "Published",
+      "zh": "已发布"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/docs/WHITEPAPER.md#L33-L73",
+     "verified": true
+    },
+    {
+     "date": "2026-11-04",
+     "type": "testnet",
+     "grade": "official",
+     "name": "Network guide status note: the project is in a testnet phase (chain ID 1669); the mainnet preset (1668) is configured in code and its launch will be announced.",
+     "zh": "网络指南的状态说明：项目处于测试网阶段（链 ID 1669）；主网预设（1668）已写进代码，上线情况会另行宣布。",
+     "status": {
+      "en": "Project statement",
+      "zh": "项目自述"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/docs/NETWORK.md#L3",
+     "verified": true,
+     "progress": false
+    },
+    {
+     "date": "2026-11-23",
+     "type": "code",
+     "grade": "primary",
+     "name": "Release v0.1.0, the first tagged node release; its notes say mainnet chain ID 1668.",
+     "zh": "发布 v0.1.0，节点的第一个正式版本；发布说明写的是主网链 ID 1668。",
+     "status": {
+      "en": "Released",
+      "zh": "已发布"
+     },
+     "source_url": "https://github.com/Quantaureum/qau/releases/tag/v0.1.0",
+     "verified": true
+    }
+   ],
+   "unverified": [
+    {
+     "claim": {
+      "en": "'ECDSA is disabled and there is no classical fallback.'",
+      "zh": "「ECDSA 已禁用，没有经典回退。」"
+     },
+     "reason": {
+      "en": "README statement; not checked on a running network.",
+      "zh": "README 中的说法；未在运行中的网络上核实。"
+     },
+     "url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/README.md#L7"
+    }
+   ],
+   "searched": [
+    "Quantaureum/qau at b8734aa: README.md, README.en.md, docs/NETWORK.md, docs/WHITEPAPER.md, types/quantum_transaction.go, encoding/transaction_authorization.go, crypto/sign.go, verify.go, generate.go, signature_algorithm.go, go.mod (cloudflare/circl v1.6.3)",
+    "GitHub releases of Quantaureum/qau (v0.1.0, 2026-11-23)",
+    "The testnet endpoint and faucet in docs/NETWORK.md (HTTP 502 and 404 on 2026-11-28) and quantaureum.com (HTTP 500)",
+    "CoinGecko search 'quantaureum': no listing"
+   ],
+   "network": {
+    "probe": null,
+    "block_interval_s": null,
+    "block_interval_source": null,
+    "no_probe_reason": {
+     "en": "The project has not announced a network, and the testnet endpoint in its network guide did not answer on 2026-11-28.",
+     "zh": "项目还没有宣布任何网络，网络指南里的测试网端点 2026-11-28 没有响应。"
+    }
+   },
+   "code": {
+    "repo": "Quantaureum/qau"
+   },
+   "last_reviewed": "2026-11-28",
+   "migration": {
+    "value": "native",
+    "en": "Native chain: in the node code every transaction carries a Dilithium3 signature from genesis, so there are no classical-key coins to move.",
+    "zh": "原生链：节点代码里每笔交易从创世起都带 Dilithium3 签名，没有传统密钥下的币需要迁移。",
+    "source_url": "https://github.com/Quantaureum/qau/blob/b8734aaddda799edbef11955f4f5759ebb959b8f/encoding/transaction_authorization.go#L15-L30",
+    "grade": "primary"
+   }
   }
  ],
  "not_listed_reasons": {
