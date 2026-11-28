@@ -11,7 +11,7 @@ The [deployment timeline](../charts/deployment-timeline.svg) and [algorithm map]
 | [QRL (QRL)](#qrl) | PoW | 2018 · Jun · Mainnet launch | XMSS transaction signatures |
 | [Nexus (NXS)](#nexus) | PoW + PoS | 2019 · Nov · Tritium mainnet upgrade | Opt-in Falcon-512; Brainpool also valid |
 | [Tidecoin (TDC)](#tidecoin) | PoW | 2020 · Dec · Mainnet launch | Falcon-512 live; ML-DSA in upgrade code |
-| [Starknet (STRK)](#starknet) | L2 · PoS rollout | 2021 · Nov · L2 Mainnet Alpha | STARK proofs; Falcon-512 account demo |
+| [Starknet (STRK)](#starknet) | L2 · PoS rollout | 2021 · Nov · L2 Mainnet Alpha | STARK proofs; opt-in Falcon-512 account classes |
 | [Abelian (ABEL)](#abelian) | Dual PoW | 2022 · Apr · Mainnet launch | PQRingCT / PQRingCTX lattice schemes |
 | [Algorand (ALGO)](#algorand) | PoS | 2022 · State Proofs deployed on mainnet | Opt-in Falcon accounts; State Proofs |
 | [Cellframe (CELL)](#cellframe) | PoS + PoA | 2023 · Jul · Native mainnet launch | Dilithium / Falcon / SPHINCS+ |
@@ -34,7 +34,7 @@ The [deployment timeline](../charts/deployment-timeline.svg) and [algorithm map]
 
 ## Raqcoin
 
-**RAQ · mainnet · reviewed 2026-10-23**
+**RAQ · mainnet · reviewed 2026-11-28**
 
 **Milestone:** The 2018 milestone is ABCMint genesis, not UOV deployment. Community materials describe a 2022 rename.
 
@@ -56,17 +56,17 @@ Sources:
 
 ## Mochimo
 
-**MCM · mainnet · reviewed 2026-10-23**
+**MCM · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Mainnet launched in June 2018.
 
-**Consensus:** PoS after the October 2026 migration; historically PoW.
+**Consensus:** The project website states a switch from PoW to PoS in October 2026; the public node repository (v3.1.0-beta, April 2026) still contains PoW code only.
 
 **Cryptographic use:** WOTS+ transaction signatures.
 
 **Crypto-agility:** One active signing scheme in the reviewed material.
 
-**Limits:** Consensus changed; the signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.
+**Limits:** The switch to proof of stake rests on the project's website alone; the public node repository still shows PoW code. The signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.
 
 Sources:
 
@@ -76,7 +76,7 @@ Sources:
 
 ## QRL
 
-**QRL · mainnet · reviewed 2026-10-23**
+**QRL · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Mainnet launched in June 2018.
 
@@ -97,7 +97,7 @@ Sources:
 
 ## Nexus
 
-**NXS · mainnet · reviewed 2026-10-23**
+**NXS · mainnet · reviewed 2026-11-28**
 
 **Milestone:** November 2019 is the Tritium upgrade, not the original chain genesis in 2014.
 
@@ -120,7 +120,7 @@ Sources:
 
 ## Tidecoin
 
-**TDC · mainnet · reviewed 2026-10-23**
+**TDC · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Genesis was December 27, 2020.
 
@@ -140,17 +140,17 @@ Sources:
 
 ## Starknet
 
-**STRK · mainnet · reviewed 2026-10-23**
+**STRK · mainnet · reviewed 2026-11-28**
 
 **Milestone:** November 2021 is L2 Mainnet Alpha, not an independent L1 launch.
 
 **Consensus:** Ethereum L2 with a phased PoS rollout.
 
-**Cryptographic use:** STARK validity proofs and a Falcon-512 account demonstration.
+**Cryptographic use:** STARK validity proofs. Falcon-512 account classes are declared on mainnet (an OpenZeppelin pre-release and S2morrow); none has a published audit.
 
 **Crypto-agility:** Account abstraction and contract upgrades can change account verification logic.
 
-**Limits:** A Falcon account demo is not migration of every account. Ethereum settlement and bridge dependencies remain. The L1 vote supported research, not a move.
+**Limits:** The Falcon-512 account classes are pre-release or experimental and have no published audit, and existing accounts must move to them one by one. Ethereum settlement and bridge dependencies remain. The L1 vote supported research, not a move.
 
 Sources:
 
@@ -162,7 +162,7 @@ Sources:
 
 ## Abelian
 
-**ABEL · mainnet · reviewed 2026-10-23**
+**ABEL · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Mainnet launched in April 2022.
 
@@ -183,7 +183,7 @@ Sources:
 
 ## Algorand
 
-**ALGO · mainnet · reviewed 2026-10-23**
+**ALGO · mainnet · reviewed 2026-11-28**
 
 **Milestone:** The timeline uses the 2022 State Proofs milestone. The chain launched in 2019.
 
@@ -204,7 +204,7 @@ Sources:
 
 ## Cellframe
 
-**CELL · mainnet · reviewed 2026-10-23**
+**CELL · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Native mainnet launched in July 2023.
 
@@ -225,7 +225,7 @@ Sources:
 
 ## QuantumCoin
 
-**Q · mainnet · reviewed 2026-10-23**
+**Q · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Mainnet launched on December 31, 2023.
 
@@ -246,7 +246,7 @@ Sources:
 
 ## QANplatform
 
-**QANX · testnet · reviewed 2026-10-23**
+**QANX · testnet · reviewed 2026-11-28**
 
 **Milestone:** May 2024 is the public testnet announcement, not a public mainnet launch.
 
@@ -266,7 +266,7 @@ Sources:
 
 ## Neptune Cash
 
-**NPT · mainnet · reviewed 2026-10-23**
+**NPT · mainnet · reviewed 2026-11-28**
 
 **Milestone:** First launch in February 2025; the current chain relaunched on August 5, 2025.
 
@@ -288,7 +288,7 @@ Sources:
 
 ## Nervos CKB
 
-**CKB · mainnet · reviewed 2026-10-23**
+**CKB · mainnet · reviewed 2026-11-28**
 
 **Milestone:** January 2026 marks the SPHINCS+ lock deployment. CKB mainnet launched in 2019.
 
@@ -309,7 +309,7 @@ Sources:
 
 ## Quantus
 
-**QTC · mainnet · reviewed 2026-10-23**
+**QTC · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Mainnet launched on September 9, 2026.
 
@@ -329,7 +329,7 @@ Sources:
 
 ## xCoin
 
-**XID · mainnet · reviewed 2026-10-23**
+**XID · mainnet · reviewed 2026-11-28**
 
 **Milestone:** The project whitepaper dates mainnet genesis to September 26, 2026.
 
@@ -348,7 +348,7 @@ Sources:
 
 ## qtcchain
 
-**QTC · mainnet · reviewed 2026-10-23**
+**QTC · mainnet · reviewed 2026-11-28**
 
 **Milestone:** v1 launched September 30, 2026; v2 re-genesis was October 5, 2026.
 
@@ -368,7 +368,7 @@ Sources:
 
 ## Soqucoin
 
-**SOQ · mainnet · reviewed 2026-10-23**
+**SOQ · mainnet · reviewed 2026-11-28**
 
 **Milestone:** Mainnet block 1 was mined on October 13, 2026.
 

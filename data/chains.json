@@ -2794,6 +2794,21 @@
      },
      "url": "https://x.com/QRLedger/status/2110460501113323832",
      "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-02",
+     "who": "QRL",
+     "relation": {
+      "zh": "QRL 官方号",
+      "en": "Official QRL account"
+     },
+     "type": "plan",
+     "summary": {
+      "zh": "重申抗量子从 2018 年上线第一天起就是项目的根基，并宣布 QRL 2.0。",
+      "en": "Restates that post-quantum security has been the project's foundation since day one in 2018, and announces QRL 2.0."
+     },
+     "url": "https://x.com/QRLedger/status/2095134180237545635",
+     "checked": "2026-11-28"
     }
    ],
    "network": {
@@ -3620,6 +3635,21 @@
       "en": "Weekly recap after mainnet launch: every transaction has used post-quantum signatures since genesis, so there are no legacy ECDSA accounts to migrate."
      },
      "url": "https://x.com/QuantusNetwork/status/2099964907659592031",
+     "checked": "2026-11-28"
+    },
+    {
+     "date": "2026-09-09",
+     "who": "Quantus",
+     "relation": {
+      "zh": "Quantus 官方号",
+      "en": "Official Quantus account"
+     },
+     "type": "release",
+     "summary": {
+      "zh": "宣布主网上线，称 Quantus 是「抗量子的加密货币」；币只能靠挖矿获得。",
+      "en": "Announced that mainnet is live, calling Quantus \"quantum secure encrypted money\"; coins can only be obtained by mining."
+     },
+     "url": "https://x.com/QuantusNetwork/status/2097684989814919380",
      "checked": "2026-11-28"
     }
    ],

@@ -20,7 +20,7 @@
           "scope": "configuration-dependent"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "The 2018 milestone is ABCMint genesis, not UOV deployment. Community materials describe a 2022 rename.",
       "consensus_note": "PoW.",
       "signing_note": "RainbowPro and UOV configurations; multisig is a separate capability.",
@@ -44,7 +44,7 @@
       "timeline_milestone": "Jun · Mainnet launch",
       "chart_cryptography": "WOTS+ transaction signatures",
       "chart_agility": "Agility: WOTS+ only today",
-      "chart_note": "Switched from PoW to PoS in Oct 2026",
+      "chart_note": "Website says PoS since Oct 2026; public code is PoW",
       "crypto_uses": [
         {
           "scheme": "WOTS+",
@@ -52,12 +52,12 @@
           "scope": "transaction signing"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet launched in June 2018.",
-      "consensus_note": "PoS after the October 2026 migration; historically PoW.",
+      "consensus_note": "The project website states a switch from PoW to PoS in October 2026; the public node repository (v3.1.0-beta, April 2026) still contains PoW code only.",
       "signing_note": "WOTS+ transaction signatures.",
       "agility_note": "One active signing scheme in the reviewed material.",
-      "caveat": "Consensus changed; the signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.",
+      "caveat": "The switch to proof of stake rests on the project's website alone; the public node repository still shows PoW code. The signing scheme remained WOTS+. No claim that a future protocol upgrade could never change it.",
       "sources": [
         "mcm-home",
         "mcm-explorer",
@@ -82,7 +82,7 @@
           "scope": "transaction signing"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet launched in June 2018.",
       "consensus_note": "QRL 1.x mainnet uses PoW; QRL 2.0 PoS was a testnet in this snapshot.",
       "signing_note": "XMSS transaction signatures.",
@@ -113,7 +113,7 @@
           "scope": "opt-in authorization"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "November 2019 is the Tritium upgrade, not the original chain genesis in 2014.",
       "consensus_note": "PoW and PoS channels.",
       "signing_note": "Opt-in Falcon-512; classical Brainpool signatures remain valid.",
@@ -146,7 +146,7 @@
           "scope": "mainnet transaction signing"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Genesis was December 27, 2020.",
       "consensus_note": "PoW; the reviewed default mainnet parameters disable the AuxPoW activation gate.",
       "signing_note": "Falcon-512 active; Falcon-1024 and ML-DSA exist in upgrade code.",
@@ -166,14 +166,14 @@
       "consensus": "L2 · PoS rollout",
       "timeline_year": 2021,
       "timeline_milestone": "Nov · L2 Mainnet Alpha",
-      "chart_cryptography": "STARK proofs; Falcon-512 account demo",
+      "chart_cryptography": "STARK proofs; opt-in Falcon-512 account classes",
       "chart_agility": "Agility: account abstraction / contract upgrades",
       "chart_note": "Independent L1: research proposal stage",
       "crypto_uses": [
         {
           "scheme": "Falcon-512",
           "family": "lattice-based",
-          "scope": "account demonstration"
+          "scope": "opt-in account classes (pre-release, unaudited)"
         },
         {
           "scheme": "STARK",
@@ -181,12 +181,12 @@
           "scope": "validity proofs"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "November 2021 is L2 Mainnet Alpha, not an independent L1 launch.",
       "consensus_note": "Ethereum L2 with a phased PoS rollout.",
-      "signing_note": "STARK validity proofs and a Falcon-512 account demonstration.",
+      "signing_note": "STARK validity proofs. Falcon-512 account classes are declared on mainnet (an OpenZeppelin pre-release and S2morrow); none has a published audit.",
       "agility_note": "Account abstraction and contract upgrades can change account verification logic.",
-      "caveat": "A Falcon account demo is not migration of every account. Ethereum settlement and bridge dependencies remain. The L1 vote supported research, not a move.",
+      "caveat": "The Falcon-512 account classes are pre-release or experimental and have no published audit, and existing accounts must move to them one by one. Ethereum settlement and bridge dependencies remain. The L1 vote supported research, not a move.",
       "sources": [
         "strk-launch",
         "strk-account",
@@ -213,7 +213,7 @@
           "scope": "custom transaction authorization"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet launched in April 2022.",
       "consensus_note": "Dual PoW: ABEL-ETHash and ABEL-Nakamoto after the Aconcagua upgrade.",
       "signing_note": "Custom lattice-based PQRingCT/PQRingCTX schemes.",
@@ -244,7 +244,7 @@
           "scope": "opt-in accounts and State Proofs"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "The timeline uses the 2022 State Proofs milestone. The chain launched in 2019.",
       "consensus_note": "Pure Proof of Stake.",
       "signing_note": "Falcon State Proofs and opt-in Falcon account authorization.",
@@ -280,7 +280,7 @@
           "scope": "native wallet option"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Native mainnet launched in July 2023.",
       "consensus_note": "PoS on the main transaction chain; PoA on the zerochain.",
       "signing_note": "Native-wallet options include Dilithium, Falcon and SPHINCS+.",
@@ -316,7 +316,7 @@
           "scope": "hybrid/emergency component; protocol-dependent"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet launched on December 31, 2023.",
       "consensus_note": "PoS with deposit-weighted BFT.",
       "signing_note": "Hybrid post-quantum and Ed25519 signing; ML-DSA and SLH-DSA components.",
@@ -347,7 +347,7 @@
           "scope": "XLINK testnet pairing with secp256k1"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "May 2024 is the public testnet announcement, not a public mainnet launch.",
       "consensus_note": "PoA on the reviewed public testnet; PoS is planned.",
       "signing_note": "XLINK pairs ML-DSA-65 with secp256k1.",
@@ -382,7 +382,7 @@
           "scope": "validity proofs"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "First launch in February 2025; the current chain relaunched on August 5, 2025.",
       "consensus_note": "PoW.",
       "signing_note": "Hash-preimage spending conditions and Triton STARK validity proofs.",
@@ -414,7 +414,7 @@
           "scope": "opt-in spending lock"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "January 2026 marks the SPHINCS+ lock deployment. CKB mainnet launched in 2019.",
       "consensus_note": "PoW, using NC-Max and Eaglesong.",
       "signing_note": "An opt-in SPHINCS+ spending lock.",
@@ -445,7 +445,7 @@
           "scope": "transaction signing; runtime conditions apply"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet launched on September 9, 2026.",
       "consensus_note": "PoW with Poseidon2 mining.",
       "signing_note": "ML-DSA-87 and ML-DSA-65 transaction signing.",
@@ -480,7 +480,7 @@
           "scope": "precommitted fallback"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "The project whitepaper dates mainnet genesis to September 26, 2026.",
       "consensus_note": "PoW, using MetalDAG.",
       "signing_note": "ML-DSA-65 primary signing; SLH-DSA-SHA2-128s fallback leaves.",
@@ -514,7 +514,7 @@
           "scope": "fallback/multisig"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "v1 launched September 30, 2026; v2 re-genesis was October 5, 2026.",
       "consensus_note": "PoW with MatMul mining.",
       "signing_note": "ML-DSA-44 primary signing; SLH-DSA fallback/multisig.",
@@ -544,7 +544,7 @@
           "scope": "transaction signing"
         }
       ],
-      "last_reviewed": "2026-10-23",
+      "last_reviewed": "2026-11-28",
       "milestone_note": "Mainnet block 1 was mined on October 13, 2026.",
       "consensus_note": "Scrypt PoW with AuxPoW support.",
       "signing_note": "ML-DSA-44 transaction signing.",
