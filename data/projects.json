@@ -12,7 +12,7 @@
       "timeline_milestone": "Jun · ABCMint genesis",
       "chart_cryptography": "RainbowPro / UOV; multisig",
       "chart_agility": "Agility: multiple signature schemes",
-      "chart_note": "Renamed in 2022; old Rainbow parameters broken",
+      "chart_note": "Renamed in 2022; pre-upgrade keys use broken Rainbow parameters",
       "crypto_uses": [
         {
           "scheme": "RainbowPro / UOV",
@@ -25,7 +25,7 @@
       "consensus_note": "PoW.",
       "signing_note": "RainbowPro and UOV configurations; multisig is a separate capability.",
       "agility_note": "Key configuration selects the signing scheme. Existing keys do not change automatically.",
-      "caveat": "The guide lists Rainbow configuration 274 as the default. Legacy ABCMint Rainbow parameters have a public break. New configurations require separate analysis; NIST UOV candidate parameters are not Raqcoin deployment parameters.",
+      "caveat": "Since the upgrade at fork height 267120, new keys default to Rainbow configuration 274, with no public break. Keys made before the upgrade use the legacy Rainbow(16,32,32,32) parameters, publicly broken in 2022 (Kannwischer and Panny). Nodes still verify signatures from those older keys so their coins can move; coins left on them are at risk and should move to new keys. Whether the official client's prebuilt signing library does the same was not checked. NIST UOV candidate parameters are not Raqcoin deployment parameters.",
       "sources": [
         "raq-info",
         "raq-guide",

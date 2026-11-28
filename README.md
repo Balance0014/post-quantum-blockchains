@@ -77,7 +77,7 @@ The images below reproduce the original English edition, including r8's market s
 - **Mochimo** is recorded as PoS, after its October 2026 switch. It ran PoW before that.
 - **QANplatform:** the QANX token trades, but QAN's post-quantum chain is still a testnet.
 - **Starknet:** the 2021 milestone is L2 Mainnet Alpha. The vote on becoming an independent L1 backed research; it didn't approve leaving Ethereum.
-- **Raqcoin:** 2018 is when its predecessor ABCMint launched, not when UOV was added. Private keys made with ABCMint's original Rainbow(16,32,32,32) parameters can be recovered with a published method, and the public node code still accepts those parameters. Raqcoin's guide still lists a Rainbow configuration (274) as the default, and this repo hasn't analyzed that configuration.
+- **Raqcoin:** 2018 is when its predecessor ABCMint launched, not when UOV was added. Since the upgrade at fork height 267120, new keys default to Rainbow configuration 274, which has no public break; this repo hasn't analyzed that configuration. Keys made before the upgrade use ABCMint's original Rainbow(16,32,32,32) parameters, publicly broken in 2022. Nodes still verify signatures from those older keys so their coins can move, so coins left on them are at risk and should move to new keys.
 - **Quantus and qtcchain** both use the ticker QTC. They're different chains, so go by the project ID and the sources.
 
 ## What the data covers

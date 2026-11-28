@@ -44,7 +44,7 @@ The [deployment timeline](../charts/deployment-timeline.svg) and [algorithm map]
 
 **Crypto-agility:** Key configuration selects the signing scheme. Existing keys do not change automatically.
 
-**Limits:** The guide lists Rainbow configuration 274 as the default. Legacy ABCMint Rainbow parameters have a public break. New configurations require separate analysis; NIST UOV candidate parameters are not Raqcoin deployment parameters.
+**Limits:** Since the upgrade at fork height 267120, new keys default to Rainbow configuration 274, with no public break. Keys made before the upgrade use the legacy Rainbow(16,32,32,32) parameters, publicly broken in 2022 (Kannwischer and Panny). Nodes still verify signatures from those older keys so their coins can move; coins left on them are at risk and should move to new keys. Whether the official client's prebuilt signing library does the same was not checked. NIST UOV candidate parameters are not Raqcoin deployment parameters.
 
 Sources:
 
