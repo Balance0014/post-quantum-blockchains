@@ -3365,8 +3365,8 @@
      },
      "type": "research",
      "summary": {
-      "zh": "称 NIST 候选签名方案 SNOVA 已被攻破，攻击的第一版由 AI 系统独立发现。",
-      "en": "Says SNOVA, a candidate in NIST's additional signature round, has been broken, and that an AI system independently found the first version of the attack."
+      "zh": "称 NIST 候选签名方案 SNOVA 已被攻破，攻击的第一版由 AI 系统发现。按论文（ePrint 2026/2154），攻破的是 6 组备选参数，推荐参数不受影响。",
+      "en": "Says SNOVA, a candidate in NIST's additional signature round, has been broken, with an AI system finding the first version of the attack. Per the paper (ePrint 2026/2154), the attack breaks six alternative parameter sets; the recommended sets are not affected."
      },
      "url": "https://x.com/TheQuantumCoin/status/2103497564310130765",
      "checked": "2026-11-28"

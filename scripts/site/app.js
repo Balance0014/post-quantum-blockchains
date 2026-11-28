@@ -393,6 +393,7 @@ Object.assign(UI.en, {
   nist: { fips: "NIST standard (FIPS 204/205)", draft: "NIST-selected, standard in development (FN-DSA)", sp800208: "NIST stateful hash-based standard (SP 800-208)", round3: "Round 3 candidate, NIST additional signatures", broken: "Publicly broken", notnist: "Not submitted to NIST" },
   nist_var: "variant or version not reviewed by NIST", nist_h: "NIST status on the algorithm map", nist_p: "The map groups schemes by NIST\u2019s mathematical families and colours them by where each stands at NIST. A variant keeps the colour of the scheme it varies and gets a dashed outline.", nist_cols: ["Status", "What it means", "NIST record"], nist_var_k: "Dashed: variant, version not reviewed", nist_own: "own construction",
   nist_rainbow: "older parameters publicly broken; the default parameter set has no public analysis", nist_wots: "a part of XMSS and SLH-DSA, not a NIST standard on its own",
+  nist_snova: "SNOVA: a key-recovery attack published on 2026-09-22 (Beullens and Hess, ePrint 2026/2154) breaks its six odd-characteristic alternative parameter sets; the recommended q=16 sets are not affected.",
   nist_next: "NIST status as of 2026-11-28. FN-DSA (FIPS 206) has no final version yet. Round 3 of the additional-signature call began on 2026-05-14 with 9 candidates (8 after HAWK withdrew); NIST expects it to take about two years, and the next NIST PQC standardization conference is planned for spring or summer 2027.",
 });
 Object.assign(UI.zh, {
@@ -400,6 +401,7 @@ Object.assign(UI.zh, {
   nist: { fips: "NIST 正式标准（FIPS 204/205）", draft: "NIST 已选定、标准制定中（FN-DSA）", sp800208: "NIST 有状态哈希签名标准（SP 800-208）", round3: "NIST 附加签名第 3 轮候选", broken: "已被公开攻破", notnist: "没有提交 NIST" },
   nist_var: "变体，或 NIST 没有审查过的版本", nist_h: "算法版图上的 NIST 状态", nist_p: "版图按 NIST 的数学家族给方案分行，按各自在 NIST 的进度上色。变体沿用所变方案的颜色，加虚线框。", nist_cols: ["状态", "含义", "NIST 记录"], nist_var_k: "虚线框：变体，版本未审", nist_own: "项目自研",
   nist_rainbow: "旧参数已被公开攻破；默认参数集目前没有公开分析", nist_wots: "是 XMSS 和 SLH-DSA 的组成部分，单独使用不是 NIST 标准",
+  nist_snova: "SNOVA：2026-09-22 公布的密钥恢复攻击（Beullens 和 Hess，ePrint 2026/2154）攻破了它的 6 组奇数特征备选参数；推荐的 q=16 参数不受影响。",
   nist_next: "NIST 状态截至 2026-11-28。FN-DSA（FIPS 206）还没有正式版。附加签名征集第 3 轮于 2026-05-14 开始，共 9 个候选（HAWK 退出后剩 8 个）；NIST 预计第 3 轮约需两年，下一届 NIST 抗量子密码标准化会议计划在 2027 年春夏举行。",
 });
 /* data page, embeds and license: strings kept together so both languages stay in step */
@@ -1821,7 +1823,7 @@ function howHTML() {
     ${H("groups", "groups_h")}${table(M.groups_cols, groups)}
     ${H("network", "net_h")}${table(M.net_cols, net)}<p>${esc(M.net_rule)}</p>
     ${H("algorithms", "algo_h")}${table(M.algo_cols, algo)}
-    <h3 id="nist">${esc(L("nist_h"))}</h3><p>${esc(L("nist_p"))}</p>${table(L("nist_cols"), NSTS.map((k) => `<tr><td><span class="nk"><i class="ssw n-${k}"></i>${esc(L("nist")[k])}</span></td><td>${esc(DF.nist[k])}</td><td>${(NIST_SRC[k] || []).map(([u, t]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("<br>") || "—"}</td></tr>`).join(""))}
+    <h3 id="nist">${esc(L("nist_h"))}</h3><p>${esc(L("nist_p"))}</p>${table(L("nist_cols"), NSTS.map((k) => `<tr><td><span class="nk"><i class="ssw n-${k}"></i>${esc(L("nist")[k])}</span></td><td>${esc(DF.nist[k])}</td><td>${(NIST_SRC[k] || []).map(([u, t]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("<br>") || "—"}</td></tr>`).join(""))}<p class="note-small">${esc(L("nist_snova"))}${SEP(L("nist_snova"))}<a href="https://eprint.iacr.org/2026/2154" target="_blank" rel="noopener">ePrint 2026/2154 ↗</a></p>
     ${H("evidence", "grades_h")}${grades}<p>${esc(M.cite_rule)}</p>
     ${H("xtalk", "x_h")}${ul(M.x_list)}
     ${H("charts", "charts_h")}${ul(M.charts)}
