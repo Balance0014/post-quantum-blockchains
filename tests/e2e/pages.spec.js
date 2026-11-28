@@ -29,6 +29,8 @@ async function copyButtons(page) {
     await b.scrollIntoViewIfNeeded();
     await b.click();
     expect((await clip(page)).trim()).toBe(text);
+    await expect(b, 'this button shows it copied').toHaveClass(/\bdone\b/);
+    await expect(page.locator('#pop'), 'the "Copied" note next to the button').toHaveText(/^(Copied|已复制)$/);
   }
 }
 

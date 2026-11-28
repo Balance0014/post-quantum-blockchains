@@ -273,12 +273,14 @@ test.describe('Home', () => {
     const id = await a.getAttribute('data-anchor');
     await a.click();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toContain(`#${id}`);
+    await expect(page.locator('#pop')).toHaveText(/^(Link copied|链接已复制)$/);
   });
 
   test('Citation copy buttons', async ({ page }) => {
     const cite = (await page.locator('#cite-text').textContent()).trim();
     await page.locator('#copy-cite').click();
     expect((await page.evaluate(() => navigator.clipboard.readText())).trim()).toBe(cite);
+    await expect(page.locator('#pop')).toHaveText(/^(Copied|已复制)$/);
     await page.locator('[data-bib]').click();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toMatch(/^@\w+\{/);
   });
